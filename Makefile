@@ -1,7 +1,7 @@
 #
 #	Copyright (C) 1987, 1988 Chuck Simmons
 #
-# $Id: Makefile,v 1.40 2003/03/13 19:25:29 jwise Exp $
+# $Id: Makefile,v 1.41 2003/03/13 19:51:24 jwise Exp $
 #
 # See the file COPYING, distributed with empire, for restriction
 # and warranty information.
@@ -144,6 +144,9 @@ LINTFLAGS = -Habcnrsuxz -w
 # -u do not complain about funcs used but not defined
 # -z do not complain about use of pointer to undefined struct
 
+MAKEDEPEND	= mkdep
+DEPENDFLAGS	=
+
 FILES= attack.c compmove.c data.c display.c edit.c empire.c game.c main.c \
 	map.c math.c object.c term.c usermove.c util.c
 
@@ -200,4 +203,10 @@ cempire-$(VERSION).shar: $(SOURCES)
 cempire-$(VERSION).tar.gz.asc: cempire-$(VERSION).tar.gz
 	gpg -bat cempire-$(VERSION).tar.gz
 
-$(OFILES): extern.h empire.h
+depend:
+	$(MAKEDEPEND) $(DEPENDFLAGS) $(CFLAGS) $(FILES)
+
+# DO NOT DELETE THIS LINE -- mkdep uses it.
+# DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
+
+# IF YOU PUT ANYTHING HERE IT WILL GO AWAY

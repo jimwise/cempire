@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.62 1998/03/11 17:54:10 jim Exp $
+ * $Id: display.c,v 1.63 1998/08/04 15:24:00 jwise Exp $
  */
 
 /*
@@ -23,6 +23,7 @@ information:
 #include <curses.h>
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 #include "empire.h"
 #include "extern.h"
 

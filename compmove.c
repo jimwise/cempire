@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: compmove.c,v 1.27 1998/03/03 13:51:05 jim Exp $
+ * $Id: compmove.c,v 1.28 1998/03/03 14:17:46 jim Exp $
  */
 
 /*
@@ -1149,8 +1149,6 @@ check_endgame (void)
 	}
 	else if ((ncomp_city == 0) && (ncomp_army == 0))
 	{
-		term_clear();
-
 		info("The enemy is incapable of defeating you.");
 	    	info("There may be, however, remnants of the enemy fleet");
 	    	info("to be routed out and destroyed.");
@@ -1160,8 +1158,6 @@ check_endgame (void)
 	}
 	else if ((nuser_city == 0) && (nuser_army == 0))
 	{
-	    	term_clear();
-
 	    	info("You have been rendered incapable of defeating");
 	    	info("the rampaging enemy. The empire is lost. If you");
 	    	info("have any ships left, you may hold out at sea.");

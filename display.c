@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.18 1998/03/03 12:25:07 jim Exp $
+ * $Id: display.c,v 1.19 1998/03/03 14:17:47 jim Exp $
  */
 
 /*
@@ -203,7 +203,7 @@ print_sector (char whose, view_map_t vmap[], int sector)
 	   && ref_col <= first_col /* first col on screen? */
 	   && ref_row + display_rows - 1 >= last_row /* bot row on screen? */
 	   && ref_col + display_cols - 1 >= last_col)) /* last col on screen? */
-		wclear(stdscr); /* erase current screen */
+		term_clear(); /* erase current screen */
 
 	/* figure out first row and col to print; subtract half
 	   the extra lines from the first line */

@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: compmove.c,v 1.41 1998/08/09 00:41:18 jwise Exp $
+ * $Id: compmove.c,v 1.42 1999/01/12 23:28:26 jwise Exp $
  */
 
 /*
@@ -1137,6 +1137,7 @@ check_endgame (void)
 	if ((ncomp_city < nuser_city / 3) && (ncomp_army < nuser_army / 3))
 	{
 		if (!to_the_death)
+		{
 			if (getyn("The computer acknowledges defeat. Do you accept?"))
 			{
 				info("The enemy inadvertantly revealed its code used for");
@@ -1149,6 +1150,7 @@ check_endgame (void)
 			}
 			else
 				to_the_death = TRUE;
+		}
 	}
 	else if ((ncomp_city == 0) && (ncomp_army == 0))
 	{

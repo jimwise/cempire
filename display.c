@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.28 1998/03/04 15:01:12 jim Exp $
+ * $Id: display.c,v 1.29 1998/03/04 15:08:26 jim Exp $
  */
 
 /*
@@ -58,7 +58,7 @@ static WINDOW *mapwin;
 void
 map_init (void)
 {
-	mapwin = newwin(lines - NUMTOPS - 1, cols - NUMSIDES - 1, NUMTOPS + 1, 0);
+	mapwin = newwin(lines - NUMTOPS - 1, cols - NUMSIDES - 1, NUMTOPS + 2, 0);
 }
 
 /*
@@ -183,7 +183,7 @@ print_sector (char whose, view_map_t vmap[], int sector)
 	save_sector = sector; /* remember last sector displayed */
 	change_ok = FALSE; /* we are displaying a new sector */
 
-	display_rows = lines - NUMTOPS - 3; /* num lines to display */
+	display_rows = lines - NUMTOPS - 4; /* num lines to display */
 	display_cols = cols - NUMSIDES - 1;
 
 	/* compute row and column edges of sector */
@@ -267,7 +267,7 @@ display_screen (view_map_t vmap[])
 	int r, c;
 	long t;
 
-	display_rows = lines - NUMTOPS - 3; /* num lines to display */
+	display_rows = lines - NUMTOPS - 4; /* num lines to display */
 	display_cols = cols - NUMSIDES - 1;
 
 	for (r = ref_row; r < ref_row + display_rows && r < MAP_HEIGHT; r++)
@@ -325,7 +325,7 @@ on_screen (long loc)
 	new_c = loc_col (loc);
 
 	if (new_r < ref_row /* past top of screen */
-	 || new_r - ref_row > lines - NUMTOPS - 4 /* past bot of screen? */
+	 || new_r - ref_row > lines - NUMTOPS - 5 /* past bot of screen? */
 	 || new_c < ref_col /* past left edge of screen? */
 	 || new_c - ref_col > cols - NUMSIDES) /* past right edge of screen? */
 	return (FALSE);

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: game.c,v 1.29 1998/03/10 22:11:23 jim Exp $
+ * $Id: game.c,v 1.30 1998/03/11 00:03:26 jim Exp $
  */
 
 /*
@@ -736,20 +736,26 @@ save_movie_screen (void)
 	piece_info_t *p;
 
 	f = fopen ("empmovie.dat", "a"); /* open for append */
-	if (f == NULL) {
+	if (f == NULL)
+	{
 		error ("Cannot open empmovie.dat");
 		return;
 	}
 
-	for (i = 0; i < MAP_SIZE; i++) {
-		if (map[i].cityp) mapbuf[i] = city_char[map[i].cityp->owner];
-		else {
+	for (i = 0; i < MAP_SIZE; i++)
+	{
+		if (map[i].cityp)
+			mapbuf[i] = city_char[map[i].cityp->owner];
+		else
+		{
 			p = find_obj_at_loc (i);
 			
-			if (!p) mapbuf[i] = map[i].contents;
+			if (!p)
+				mapbuf[i] = map[i].contents;
 			else if (p->owner == USER)
 				mapbuf[i] = piece_attr[p->type].sname;
-			else mapbuf[i] = tolower (piece_attr[p->type].sname);
+			else
+				mapbuf[i] = tolower(piece_attr[p->type].sname);
 		}
 	}
 	wbuf (mapbuf);
@@ -770,19 +776,21 @@ replay_movie (void)
 	int round;
 	
 	f = fopen ("empmovie.dat", "r"); /* open for input */
-	if (f == NULL) {
+	if (f == NULL)
+	{
 		error ("Cannot open empmovie.dat");
 		return;
 	}
 	round = 0;
 	term_clear();
-	for (;;) {
+	while (1)
+	{
 		if (fread ((char *)mapbuf, 1, sizeof (mapbuf), f) != sizeof (mapbuf))
 			break;
 
 		round += 1;
 		
-		stat_display (mapbuf, round);
+		stat_display(mapbuf, round);
 		
 		row_inc = (MAP_HEIGHT + lines - NUMTOPS - 2) / (lines - NUMTOPS);
 		col_inc = (MAP_WIDTH + cols - 1) / (cols - 1);

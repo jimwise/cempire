@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: term.c,v 1.72 2001/10/23 04:44:11 jwise Exp $
+ * $Id: term.c,v 1.73 2003/08/05 21:09:56 jwise Exp $
  */
 
 /*
@@ -88,7 +88,7 @@ info (const char *fmt, ...)
 	wrefresh(infowin);
 	scrollok(infowin, FALSE);
 
-	va_end(fmt);
+	va_end(ap);
 }
 
 /* Print an error message on the second message line. */
@@ -111,7 +111,7 @@ error (const char *fmt, ...)
 	wrefresh(statuswin);
 	scrollok(statuswin, FALSE);
 
-	va_end(fmt);
+	va_end(ap);
 }
 
 /* Print out a generic error message. */

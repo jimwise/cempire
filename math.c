@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: math.c,v 1.9 1998/03/01 01:35:39 jim Exp $
+ * $Id: math.c,v 1.10 1998/03/01 01:38:17 jim Exp $
  */
 
 /*
@@ -17,7 +17,6 @@ initialization routine 'rand_init' should be called at program startup.
 The flavors of random integers that can be generated are:
 
     irand(n) -- returns a random integer in the range 0..n-1
-    rndint(a,b) -- returns a random integer in the range a..b
 
 Other routines include:
 
@@ -35,7 +34,6 @@ long	dist (long, long);
 long	irand (long);
 int	isqrt (int);
 void	rand_init (void);
-int	rndint (int, int);
 
 void
 rand_init (void)
@@ -50,15 +48,6 @@ irand (long high)
 		return (0);
 
 	return (rand() % high);
-}
-
-int
-rndint (int minp, int maxp)
-{
-	int size;
-
-	size = maxp - minp + 1;
-	return ((rand() % size) + minp);
 }
 
 /*

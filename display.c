@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.31 1998/03/06 21:28:14 jim Exp $
+ * $Id: display.c,v 1.32 1998/03/06 21:38:29 jim Exp $
  */
 
 /*
@@ -53,12 +53,16 @@ static int save_sector; /* the currently displayed sector */
 static int save_cursor; /* currently displayed cursor position */
 static int change_ok = TRUE; /* true if new sector may be displayed */
 
+#define NUMBOTS		2
+#define MAPWIN_HEIGHT	(lines - NUMTOPS - NUMBOTS - 2)
+#define	MAPWIN_WIDTH	(cols - NUMSIDES - 2)
+
 static WINDOW *mapwin;
 
 void
 map_init (void)
 {
-	mapwin = newwin(lines - NUMTOPS - 1, cols - NUMSIDES - 1, NUMTOPS + 2, 0);
+	mapwin = newwin(MAPWIN_HEIGHT, MAPWIN_WIDTH, NUMTOPS, 0);
 }
 
 /*

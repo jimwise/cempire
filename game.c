@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: game.c,v 1.42 2001/02/08 19:24:26 jwise Exp $
+ * $Id: game.c,v 1.43 2001/02/08 19:29:33 jwise Exp $
  */
 
 /* game.c -- Routines to initialize, save, and restore a game. */
@@ -12,6 +12,7 @@
 #include <assert.h>
 #include <ctype.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <strings.h>
 #ifdef USE_ZLIB
 #include <zlib.h>

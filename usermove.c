@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: usermove.c,v 1.31 1998/09/11 17:22:34 jwise Exp $
+ * $Id: usermove.c,v 1.32 2001/02/08 19:29:33 jwise Exp $
  */
 
 /* usermove.c -- Let the user move her troops. */
@@ -12,6 +12,7 @@
 #include <assert.h>
 #include <ctype.h>
 #include <stdio.h>
+#include <string.h>
 #include "empire.h"
 #include "extern.h"
 

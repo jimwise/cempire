@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: display.c,v 1.73 2001/02/07 03:19:55 jwise Exp $
+ * $Id: display.c,v 1.74 2001/02/08 19:29:32 jwise Exp $
  */
 
 /*
@@ -256,7 +256,7 @@ disp_square(view_map_t *vp)
 
 /* Display the portion of the map that appears on the screen. */
 
-void
+static void
 display_screen (view_map_t vmap[])
 {
 	int display_rows, display_cols;

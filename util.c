@@ -4,13 +4,14 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: util.c,v 1.29 2001/02/07 03:28:09 jwise Exp $
+ * $Id: util.c,v 1.30 2001/02/08 19:29:33 jwise Exp $
  */
 
 /* util.c -- various utility routines. */
 
 #include <assert.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <ctype.h>
 #include "empire.h"
 #include "extern.h"

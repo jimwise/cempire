@@ -5,7 +5,7 @@
  * and warranty information.
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: edit.c,v 1.19 1998/03/03 16:21:21 jim Exp $
+ * $Id: edit.c,v 1.20 1998/03/03 17:32:57 jim Exp $
  */
 
 /*
@@ -13,7 +13,6 @@ edit.c -- Routines to handle edit mode commands.
 */
 
 #include <assert.h>
-#include <curses.h>
 #include <ctype.h>
 #include <stdio.h>
 #include <string.h>
@@ -145,9 +144,7 @@ e_cursor (long *edit_cursor)
 	uchar e;
 	char *p;
 	
-	/* set up terminal */
-	crmode();
-	e = getch();
+	e = get_cq();
 
 	for (;;) {
 		p = strchr (dirchars, e);
@@ -155,10 +152,8 @@ e_cursor (long *edit_cursor)
 
 		if (!move_cursor (edit_cursor, dir_offset[(p-dirchars) / 2]))
 			emp_beep ();
-		e = getch ();
+		e = get_cq ();
 	}
-	nocrmode (); /* reset terminal */
-
 	e = toupper (e);
 
 	return e;

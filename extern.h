@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: extern.h,v 1.50 1998/03/03 15:09:44 jim Exp $
+ * $Id: extern.h,v 1.51 1998/03/03 17:32:58 jim Exp $
  */
 
 /*
@@ -199,6 +199,7 @@ void    empend (void);
 void	emp_beep (void);
 void	error (char *, ...);
 char    get_chx (void);
+char    get_cq (void);
 int     getint (char *);
 int     getyn (char *);
 int	get_range (char *, int, int);

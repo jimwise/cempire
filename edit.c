@@ -5,7 +5,7 @@
  * and warranty information.
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: edit.c,v 1.10 1998/02/27 01:39:18 jim Exp $
+ * $Id: edit.c,v 1.11 1998/02/27 01:46:50 jim Exp $
  */
 
 /*
@@ -162,8 +162,7 @@ e_cursor (long *edit_cursor)
 	}
 	nocrmode (); /* reset terminal */
 
-	if (islower (e))
-		e = toupper (e);
+	e = toupper (e);
 
 	return e;
 }

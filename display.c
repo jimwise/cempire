@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.38 1998/03/09 12:45:41 jim Exp $
+ * $Id: display.c,v 1.39 1998/03/09 13:08:36 jim Exp $
  */
 
 /*
@@ -227,14 +227,14 @@ print_sector (char whose, view_map_t vmap[], int sector)
 	/* print x-coordinates along bottom of screen */
 	for (c = ref_col; c < ref_col + display_cols && c < MAP_WIDTH; c++)
 		if (c % 10 == 0)
-			pos_str (lines-1, c-ref_col, "%d", c);
+			pos_str (lines-1, c-ref_col+1, "%d", c);
 
 	/* print y-coordinates along right of screen */
 	for (r = ref_row; r < ref_row + display_rows && r < MAP_HEIGHT; r++)
 		if (r % 2 == 0)
-			pos_str (r-ref_row+NUMTOPS, cols-NUMSIDES+1, "%2d", r);
+			pos_str (r-ref_row+NUMTOPS+1, cols-NUMSIDES, "%2d", r);
 		else
-			pos_str (r-ref_row+NUMTOPS, cols-NUMSIDES+1, "  ");
+			pos_str (r-ref_row+NUMTOPS+1, cols-NUMSIDES, "  ");
 	
 	/* print round number */
 	sprintf (jnkbuf, "Sector %d Round %ld", sector, date);

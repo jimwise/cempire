@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.29 1998/03/04 15:08:26 jim Exp $
+ * $Id: display.c,v 1.30 1998/03/06 21:22:53 jim Exp $
  */
 
 /*
@@ -55,10 +55,14 @@ static int change_ok = TRUE; /* true if new sector may be displayed */
 
 static WINDOW *mapwin;
 
+#define NUMBOTS		1
+#define MAPWIN_HEIGHT	(lines - NUMTOPS - NUMBOTS)
+#define MAPWIN_WIDTH	(cols - NUMSIDES)
+
 void
 map_init (void)
 {
-	mapwin = newwin(lines - NUMTOPS - 1, cols - NUMSIDES - 1, NUMTOPS + 2, 0);
+	mapwin = newwin(MAPWIN_HEIGHT, MAPWIN_WIDTH, NUMTOPS, 0);
 }
 
 /*
@@ -122,7 +126,7 @@ display_loc (int whose, view_map_t vmap[], long loc)
 	if (change_ok || whose != whose_map || !on_screen (loc))
 		print_sector (whose, vmap, loc_sector (loc));
 		
-	show_loc (vmap, loc);
+	show_loc(vmap, loc);
 }
 
 /*
@@ -132,8 +136,8 @@ Display a location iff the location is on the screen.
 void
 display_locx (int whose, view_map_t vmap[], long loc)
 {
-	if (whose == whose_map && on_screen (loc))
-		show_loc (vmap, loc);
+	if (whose == whose_map && on_screen(loc))
+		show_loc(vmap, loc);
 }
 
 /*
@@ -145,12 +149,13 @@ show_loc (view_map_t vmap[], long loc)
 {
 	int r, c;
 	
-	r = loc_row (loc);
-	c = loc_col (loc);
-	wmove(mapwin, r-ref_row, c-ref_col);
+	r = loc_row(loc);
+	c = loc_col(loc);
+
+	wmove(mapwin, r-ref_row+1, c-ref_col+1);
 	disp_square(&vmap[loc]);
 	save_cursor = loc; /* remember cursor location */
-	wmove(mapwin, r-ref_row, c-ref_col);
+	wmove(mapwin, r-ref_row+1, c-ref_col+1);
 	wrefresh(mapwin);
 }
 
@@ -183,12 +188,12 @@ print_sector (char whose, view_map_t vmap[], int sector)
 	save_sector = sector; /* remember last sector displayed */
 	change_ok = FALSE; /* we are displaying a new sector */
 
-	display_rows = lines - NUMTOPS - 4; /* num lines to display */
-	display_cols = cols - NUMSIDES - 1;
+	display_rows = MAPWIN_HEIGHT - 2; /* num lines to display */
+	display_cols = MAPWIN_WIDTH - 2;
 
 	/* compute row and column edges of sector */
-	first_row = sector_row (sector) * ROWS_PER_SECTOR;
-	first_col = sector_col (sector) * COLS_PER_SECTOR;
+	first_row = sector_row(sector) * ROWS_PER_SECTOR;
+	first_col = sector_col(sector) * COLS_PER_SECTOR;
 	last_row = first_row + ROWS_PER_SECTOR - 1;
 	last_col = first_col + COLS_PER_SECTOR - 1;
 
@@ -267,16 +272,19 @@ display_screen (view_map_t vmap[])
 	int r, c;
 	long t;
 
-	display_rows = lines - NUMTOPS - 4; /* num lines to display */
-	display_cols = cols - NUMSIDES - 1;
+	display_rows = MAPWIN_HEIGHT - 2; /* num lines to display */
+	display_cols = MAPWIN_WIDTH - 2;
 
-	for (r = ref_row; r < ref_row + display_rows && r < MAP_HEIGHT; r++)
-		for (c = ref_col; c < ref_col + display_cols && c < MAP_WIDTH; c++)
+	box(mapwin, 0, 0);
+
+	for (r = ref_row; (r < (ref_row + display_rows)) && (r < MAP_HEIGHT); r++)
+		for (c = ref_col; (c < (ref_col + display_cols)) && (c < MAP_WIDTH); c++)
 		{
 			t = row_col_loc (r, c);
-			wmove (mapwin, r-ref_row, c-ref_col);
+			wmove (mapwin, r-ref_row+1, c-ref_col+1);
 			disp_square(&vmap[t]);
 		}
+
 	wrefresh(mapwin);
 }
 
@@ -306,7 +314,7 @@ move_cursor (long *cursor, int offset)
 	       
 	r = loc_row (save_cursor);
 	c = loc_col (save_cursor);
-	wmove(mapwin, r-ref_row, c-ref_col);
+	wmove(mapwin, r-ref_row+1, c-ref_col+1);
 	wrefresh(mapwin);
        
 	return (TRUE);
@@ -321,14 +329,14 @@ on_screen (long loc)
 {
 	int new_r, new_c;
 	
-	new_r = loc_row (loc);
-	new_c = loc_col (loc);
+	new_r = loc_row(loc);
+	new_c = loc_col(loc);
 
-	if (new_r < ref_row /* past top of screen */
-	 || new_r - ref_row > lines - NUMTOPS - 5 /* past bot of screen? */
-	 || new_c < ref_col /* past left edge of screen? */
-	 || new_c - ref_col > cols - NUMSIDES) /* past right edge of screen? */
-	return (FALSE);
+	if ((new_r < ref_row)				/* past top of screen? */
+	 || ((new_r - ref_row) > (MAPWIN_HEIGHT - 3))	/* past bot of screen? */
+	 || (new_c < ref_col)				/* past left edge of screen? */
+	 || ((new_c - ref_col) > MAPWIN_WIDTH - 3))	/* past right edge of screen? */
+		return (FALSE);
 
 	return (TRUE);
 }

@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: data.c,v 1.12 2003/10/23 14:49:35 jwise Exp $
+ * $Id: data.c,v 1.13 2003/10/23 16:31:16 jwise Exp $
  */
 
 /*
@@ -248,6 +248,7 @@ int WATER_RATIO;	/* percentage of map that is water */
 int MIN_CITY_DIST;	/* cities must be at least this far apart */
 int save_interval;	/* turns between autosaves */
 int traditional = 0;	/* use `traditional' UI */
+int color = 1;		/* use color if available */
 
 real_map_t map[MAP_SIZE];	/* the way the world really looks */
 view_map_t comp_map[MAP_SIZE];	/* computer's view of the world */

@@ -1,7 +1,7 @@
 #
 #	Copyright (C) 1987, 1988 Chuck Simmons
 #
-# $Id: Makefile,v 1.45 2003/08/05 21:07:56 jwise Exp $
+# $Id: Makefile,v 1.46 2003/10/23 16:31:16 jwise Exp $
 #
 # See the file COPYING, distributed with empire, for restriction
 # and warranty information.
@@ -47,6 +47,10 @@ INSTALL=install
 #					to use the ncurses library.  Use this if
 #					cempire doesn't work with your system's
 #					native curses library
+#		-DUSE_COLOR		Turn this on if your curses library supports
+#					color.  This is true for ncurses and just about
+#					anything else still available.  Note that color
+#					can still be enabled/disabled from the command line.
 #		-D__EXTENSIONS__	you need this on Solaris 2.5.1, and probably earlier
 #					versions as well.  If you don't define this, you don't
 #					get a declaration of getopt(3), and curses.h also assumes
@@ -55,7 +59,7 @@ INSTALL=install
 #		-DUSE_ZLIB		define this to compress saved files on write and
 #					decompress them on reads.  Saves a lot of space.
 #
-DEFINES=-D__EXTENSIONS__ -DUSE_ZLIB
+DEFINES=-D__EXTENSIONS__ -DUSE_ZLIB -DUSE_COLOR
 
 #
 # 4.) Pick your library specifications

@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: main.c,v 1.18 2003/10/23 15:40:44 jwise Exp $
+ * $Id: main.c,v 1.19 2003/10/23 16:31:16 jwise Exp $
  */
 
 /*
@@ -28,7 +28,7 @@
 #include "empire.h"
 #include "extern.h"
 
-#define OPTFLAGS "w:s:d:S:tV"
+#define OPTFLAGS "w:s:d:S:tVC"
 
 int
 main (int argc, char *argv[])
@@ -73,6 +73,9 @@ main (int argc, char *argv[])
 		case 't':
 			traditional = 1;
 			break;
+		case 'C':
+			color = 0;
+			break;
 		case 'V':
 			printf("%s\n", VERSION_STRING);
 			exit(0);
@@ -85,7 +88,7 @@ main (int argc, char *argv[])
 
 	if (errflg || ((argc - optind) != 0))
 	{
-		fprintf(stderr, "empire: usage: empire [-w water] [-s smooth] [-d delay] [-S save_interval]\n");
+		fprintf(stderr, "empire: usage: empire [-w water] [-s smooth] [-d delay] [-S save_interval] [-V]\n");
 		exit (1);
 	}
 

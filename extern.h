@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: extern.h,v 1.78 2003/10/23 15:40:44 jwise Exp $
+ * $Id: extern.h,v 1.79 2003/10/23 16:31:16 jwise Exp $
  */
 
 /* extern.h -- define global non-constant storage.  */
@@ -15,6 +15,7 @@ extern int WATER_RATIO;		/* percentage of map that is water		*/
 extern int MIN_CITY_DIST;	/* cities must be at least this far apart	*/
 extern int save_interval;	/* turns between autosaves			*/
 extern int traditional;		/* use `traditional' movement keys instead of new style */
+extern int color;		/* use color if available			*/
 
 extern real_map_t map[MAP_SIZE];	/* the way the world really looks	*/
 extern view_map_t comp_map[MAP_SIZE];	/* computer's view of the world		*/

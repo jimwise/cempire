@@ -5,7 +5,7 @@
  * and warranty information.
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: edit.c,v 1.11 1998/02/27 01:46:50 jim Exp $
+ * $Id: edit.c,v 1.12 1998/02/27 02:43:54 jim Exp $
  */
 
 /*
@@ -155,7 +155,7 @@ e_cursor (long *edit_cursor)
 		if (!p) break;
 
 		if (!move_cursor (edit_cursor, dir_offset[(p-dirchars) / 2]))
-			beep ();
+			emp_beep ();
 		
 		refresh ();
 		e = getch ();

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: empire.c,v 1.4 1998/02/26 01:56:43 jim Exp $
+ * $Id: empire.c,v 1.5 1998/02/26 02:02:36 jim Exp $
  */
 
 /*
@@ -19,8 +19,19 @@ parser, and the simple commands.
 #include "empire.h"
 #include "extern.h"
 
+void	c_debug (char order);
+void	c_examine (void);
+void	c_give (void);
+void	c_map (void);
+void	c_movie (void);
+void	c_quit (void);
+void	c_sector (void);
+void	do_command (char);
+void	empire (void);
+
 void
-empire () {
+empire (void)
+{
 	char order;
 	int turn = 0;
 
@@ -60,8 +71,7 @@ Execute a command.
 */
 
 void
-do_command (orders)
-char orders;
+do_command (char orders)
 {
 	char e;
 	int ncycle;
@@ -179,7 +189,8 @@ it as the computers.
 */
 
 void
-c_give () {
+c_give (void)
+{
 	int unowned[NUM_CITY];
 	long i, count;
 
@@ -208,8 +219,7 @@ The order cannot be any legal command.
 */
 
 void
-c_debug (order)
-char order;
+c_debug (char order)
 {
 	char e;
 
@@ -244,7 +254,8 @@ The quit command.  Make sure the user really wants to quit.
 */
 
 void
-c_quit () {
+c_quit (void)
+{
 	if (getyn ("QUIT - Are you sure? ")) {
 	    empend ();
 	}
@@ -256,7 +267,8 @@ and print it.
 */
 
 void
-c_sector () {
+c_sector (void)
+{
 	int num;
 
 	num = get_range ("Sector number? ", 0, NUM_SECTORS-1);
@@ -271,7 +283,8 @@ out the map.
 */
 
 void
-c_map () {
+c_map (void)
+{
 	FILE *f;
 	int i, j;
 	char line[MAP_HEIGHT+2];
@@ -304,7 +317,8 @@ Allow user to examine the computer's map.
 */
 
 void
-c_examine () {
+c_examine (void)
+{
 	int num;
 
 	num = get_range ("Sector number? ", 0, NUM_SECTORS-1);
@@ -317,7 +331,8 @@ Print a "zoomed" version of the computer's map.
 */
 
 void
-c_movie () {
+c_movie (void)
+{
 	clear ();
 
 	for (;;) {

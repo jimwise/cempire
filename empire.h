@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: empire.h,v 1.15 1998/02/27 20:19:02 jim Exp $
+ * $Id: empire.h,v 1.16 1998/02/27 20:56:26 jim Exp $
  */
 
 /*
@@ -57,6 +57,23 @@ typedef enum
 #define COMP 2
 
 /* Piece types. */
+typedef enum
+{
+	ARMY=0,
+	FIGHTER,
+	PATROL,
+	DESTROYER,
+	SUBMARINE,
+	TRANSPORT,
+	CARRIER,
+	BATTLESHIP,
+	SATELLITE,
+	NOPIECE=255
+} piece_type_t;
+
+#define	NUM_OBJECTS	9
+
+/*
 #define ARMY 0
 #define FIGHTER 1
 #define PATROL 2
@@ -66,8 +83,9 @@ typedef enum
 #define CARRIER 6
 #define BATTLESHIP 7
 #define SATELLITE 8
-#define NUM_OBJECTS 9 /* number of defined objects */
-#define NOPIECE ((uchar)255) /* a 'null' piece */
+#define NUM_OBJECTS 9
+#define NOPIECE ((uchar)255)
+*/
 
 #define LIST_SIZE 5000 /* max number of pieces on board */
 
@@ -127,7 +145,7 @@ typedef struct piece_info {
 	link_t loc_link; /* linked list of pieces at a location */
 	link_t cargo_link; /* linked list of cargo pieces */
 	int owner; /* owner of piece */
-	int type; /* type of piece */
+	piece_type_t type; /* type of piece */
 	long loc; /* location of piece */
 	long func; /* programmed type of movement */
 	short hits; /* hits left */

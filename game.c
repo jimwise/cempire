@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: game.c,v 1.10 1998/02/27 02:56:52 jim Exp $
+ * $Id: game.c,v 1.11 1998/02/27 20:56:27 jim Exp $
  */
 
 /*
@@ -30,7 +30,7 @@ void	make_pair (void);
 void	mark_cont (long);
 void	place_cities (void);
 void	print_movie_cell (char *, int, int, int, int);
-void	read_embark (piece_info_t *, int);
+void	read_embark (piece_info_t *, piece_type_t);
 long	remove_land (long, long);
 long	regen_land (long);
 long    remove_land (long, long);
@@ -649,7 +649,7 @@ the ship has the same amount of cargo it previously had.
 */
 
 void
-read_embark (piece_info_t *list, int piece_type)
+read_embark (piece_info_t *list, piece_type_t piece_type)
 {
 	piece_info_t *ship;
 	piece_info_t *obj;

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: util.c,v 1.17 1998/02/27 02:51:19 jim Exp $
+ * $Id: util.c,v 1.18 1998/02/27 20:56:29 jim Exp $
  */
 
 /*
@@ -20,7 +20,7 @@ util.c -- various utility routines.
 #include "extern.h"
 
 void    check (void);
-void	check_cargo (piece_info_t *, int);
+void	check_cargo (piece_info_t *, piece_type_t);
 void	check_obj (piece_info_t **, int);
 void	check_obj_cargo (piece_info_t **);
 void	emp_panic (char *, int);
@@ -145,22 +145,24 @@ Check object lists.  We look for:
 void
 check_obj (piece_info_t **list, int owner)
 {
-	long i, j;
+	long j;
+	piece_type_t i;
 	piece_info_t *p;
 	
 	for (i = 0; i < NUM_OBJECTS; i++)
-	for (p = list[i]; p != NULL; p = p->piece_link.next) {
-		assert (p->owner == owner);
-		assert (p->type == i);
-		assert (p->hits > 0);
+		for (p = list[i]; p != NULL; p = p->piece_link.next)
+		{
+			assert (p->owner == owner);
+			assert (p->type == i);
+			assert (p->hits > 0);
 		
-		j = p - object;
-		assert (!in_obj[j]);
-		in_obj[j] = 1;
+			j = p - object;
+			assert (!in_obj[j]);
+			in_obj[j] = 1;
 	
-		if (p->piece_link.prev)
-			assert (p->piece_link.prev->piece_link.next == p);
-	}
+			if (p->piece_link.prev)
+				assert (p->piece_link.prev->piece_link.next == p);
+		}
 }
 
 /*
@@ -184,7 +186,7 @@ Check for:
 */
 
 void
-check_cargo (piece_info_t *list, int cargo_type)
+check_cargo (piece_info_t *list, piece_type_t cargo_type)
 {
 	piece_info_t *p, *q;
 	long j, count;

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: extern.h,v 1.30 1998/02/27 02:42:53 jim Exp $
+ * $Id: extern.h,v 1.31 1998/02/27 20:56:27 jim Exp $
  */
 
 /*
@@ -177,8 +177,8 @@ void	disembark (piece_info_t *);
 void	embark (piece_info_t *, piece_info_t *);
 city_info_t     *find_city (long);
 int	find_nearest_city ( long, int, long *);
-piece_info_t	*find_nfull (int, long);
-piece_info_t	*find_obj (int, long);
+piece_info_t	*find_nfull (piece_type_t, long);
+piece_info_t	*find_obj (piece_type_t, long);
 piece_info_t	*find_obj_at_loc (long);
 long	find_transport (int, long);
 int	get_piece_name (void);

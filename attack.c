@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: attack.c,v 1.8 1998/02/27 01:55:05 jim Exp $
+ * $Id: attack.c,v 1.9 1998/02/27 20:56:26 jim Exp $
  */
 
 /*
@@ -174,6 +174,9 @@ describe (piece_info_t *win_obj, piece_info_t *lose_obj, long loc)
 				break;
 			    case FIGHTER:
 				topmsg (3, "%d fighters fell overboard and were lost in the assault.", diff);
+				break;
+			    default:
+				panic();
 				break;
 			}
 		}

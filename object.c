@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: object.c,v 1.10 1998/02/27 00:33:38 jim Exp $
+ * $Id: object.c,v 1.11 1998/02/27 20:56:28 jim Exp $
  */
 
 /*
@@ -26,8 +26,8 @@ void    disembark (piece_info_t *);
 void    embark (piece_info_t *, piece_info_t *);
 city_info_t     *find_city (long);
 int     find_nearest_city ( long, int, long *);
-piece_info_t    *find_nfull (int, long);
-piece_info_t    *find_obj (int, long);
+piece_info_t    *find_nfull (piece_type_t, long);
+piece_info_t    *find_obj (piece_type_t, long);
 piece_info_t    *find_obj_at_loc (long);
 long    find_transport (int, long);
 int     get_piece_name (void);
@@ -118,12 +118,13 @@ list of objects at the given location for one of the given type.
 */
 
 piece_info_t *
-find_obj (int type, long loc)
+find_obj (piece_type_t type, long loc)
 {
 	piece_info_t *p;
 
 	for (p = map[loc].objp; p != NULL; p = p->loc_link.next)
-	if (p->type == type) return (p);
+		if (p->type == type)
+			return (p);
 
 	return (NULL);
 }
@@ -133,7 +134,7 @@ Find a non-full item of the appropriate type at the given location.
 */
 
 piece_info_t *
-find_nfull (int type, long loc)
+find_nfull (piece_type_t type, long loc)
 {
 	piece_info_t *p;
 
@@ -369,17 +370,22 @@ move_obj (piece_info_t *obj, long new_loc)
 		LINK (map[new_loc].objp, p, loc_link);
 	}
 	
-	switch (obj->type) { /* board new ship */
-	case FIGHTER:
-		if (map[obj->loc].cityp == NULL) { /* not in a city? */
+	switch (obj->type)
+	{
+	    case FIGHTER:
+		if (map[obj->loc].cityp == NULL)
+		{
+			/* not in a city? */
 			p = find_nfull (CARRIER, obj->loc);
 			if (p != NULL) embark (p, obj);
 		}
 		break;
-
-	case ARMY:
+	    case ARMY:
 		p = find_nfull (TRANSPORT, obj->loc);
 		if (p != NULL) embark (p, obj);
+		break;
+	    default:
+		panic();
 		break;
 	}
 
@@ -517,17 +523,19 @@ describe_obj (piece_info_t *obj)
 	
 	other[0] = 0;
 
-	switch (obj->type) { /* set other information */
-	case FIGHTER:
+	switch (obj->type)
+	{
+		/* set other information */
+	    case FIGHTER:
 		sprintf (other,"; range = %d",obj->range);
 		break;
-
-	case TRANSPORT:
+	    case TRANSPORT:
 		sprintf (other,"; armies = %d",obj->count);
 		break;
-
-	case CARRIER:
+	    case CARRIER:
 		sprintf (other,"; fighters = %d",obj->count);
+		break;
+	    default:
 		break;
 	}
 

@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: main.c,v 1.14 1998/08/09 00:41:21 jwise Exp $
+ * $Id: main.c,v 1.15 1999/01/12 22:17:53 jwise Exp $
  */
 
 /*
@@ -24,6 +24,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include "empire.h"
 #include "extern.h"
 

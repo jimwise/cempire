@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: game.c,v 1.12 1998/02/27 22:17:03 jim Exp $
+ * $Id: game.c,v 1.13 1998/02/27 23:47:01 jim Exp $
  */
 
 /*
@@ -730,7 +730,6 @@ the character that would appear on either the user's or the
 computer's screen.  This information is appended to 'empmovie.dat'.
 */
 
-extern char city_char[];
 static char mapbuf[MAP_SIZE];
 
 void

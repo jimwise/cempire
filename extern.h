@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: extern.h,v 1.32 1998/02/27 23:15:23 jim Exp $
+ * $Id: extern.h,v 1.33 1998/02/27 23:47:01 jim Exp $
  */
 
 /*
@@ -51,6 +51,7 @@ extern char tt_attack[];
 extern char army_attack[];
 extern char fighter_attack[];
 extern char ship_attack[];
+extern char city_char[];
 
 extern move_info_t tt_load;
 extern move_info_t tt_explore;

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: data.c,v 1.4 1998/02/27 22:17:01 jim Exp $
+ * $Id: data.c,v 1.5 1998/02/27 23:47:00 jim Exp $
  */
 
 /*
@@ -96,6 +96,9 @@ int move_order[NUM_OBJECTS] = {SATELLITE, TRANSPORT, CARRIER, BATTLESHIP, PATROL
 
 /* types of pieces, in declared order */
 char type_chars[] = "AFPDSTCBZ";
+
+/* types of cities */
+char city_char[] = {'*', 'O', 'X'};
 
 /* Lists of attackable objects if object is adjacent to moving piece. */
 

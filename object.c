@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: object.c,v 1.15 1998/02/27 23:30:20 jim Exp $
+ * $Id: object.c,v 1.16 1998/02/27 23:47:02 jim Exp $
  */
 
 /*
@@ -602,8 +602,6 @@ Update a location.  We set the date seen, the land type, object
 contents starting with armies, then fighters, then boats, and the
 city type.
 */
-
-char city_char[] = {'*', 'O', 'X'};
 
 void
 update (view_map_t vmap[], long loc)

@@ -1,5 +1,3 @@
-/* $Id: extern.h,v 1.1 1998/02/24 23:05:11 jim Exp $  - (c) Copyright 1987, 1988 Chuck Simmons */
-
 /*
  *    Copyright (C) 1987, 1988 Chuck Simmons
  * 

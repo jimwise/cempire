@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: attack.c,v 1.12 1998/03/01 01:55:40 jim Exp $
+ * $Id: attack.c,v 1.13 1998/03/02 17:55:44 jim Exp $
  */
 
 /*
@@ -186,6 +186,6 @@ describe (piece_info_t *win_obj, piece_info_t *lose_obj, long loc)
 			
 			topmsg (3, "Your %s at %d destroyed.", piece_attr[lose_obj->type].name, loc);
 		}
-		set_need_delay ();
+		delay ();
 	}
 }

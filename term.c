@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.29 1998/03/02 17:50:34 jim Exp $
+ * $Id: term.c,v 1.30 1998/03/02 17:55:45 jim Exp $
  */
 
 /*
@@ -60,7 +60,6 @@ void    pdebug (char *, ...);
 void    pos_str (int, int, char *, ...);
 void    prompt (char *, ...);
 void    redraw (void);
-void    set_need_delay (void);
 void	term_clear (void);
 void    term_end (void);
 void    term_init (void);
@@ -69,7 +68,6 @@ void    topmsg(int, char *, ...);
 void	vcomment (char *, va_list);
 void	vtopmsg(int, char *, va_list);
 
-static int need_delay;
 static WINDOW *statuswin, *infowin;
 
 void
@@ -193,12 +191,6 @@ huh (void)
 }
 
 void
-set_need_delay (void)
-{
-	need_delay = 1;
-}
-
-void
 comment (char *buf, ...)
 {
 	va_list ap;
@@ -213,11 +205,9 @@ comment (char *buf, ...)
 void
 vcomment (char *buf, va_list ap)
 {
-	if (need_delay) delay ();
 	topmsg (1, 0);
 	topmsg (2, 0);
 	vtopmsg (3, buf, ap);
-	need_delay = (buf != 0);
 }
 	
 /*
@@ -244,7 +234,6 @@ get_strq (char *buf, int sizep)
 	nocrmode ();
 	wrefresh(infowin);
 	getstr (buf);
-	need_delay = FALSE;
 	topini();
 	crmode ();
 }

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: math.c,v 1.4 1998/02/25 22:13:00 jim Exp $
+ * $Id: math.c,v 1.5 1998/02/25 22:15:00 jim Exp $
  */
 
 /*
@@ -24,6 +24,9 @@ Other routines include:
     dist (a, b) -- returns the straight-line distance between two locations.
 */
 
+#include <sys/types.h>
+#include <stdlib.h>
+#include <time.h>
 #include "empire.h"
 #include "extern.h"
 

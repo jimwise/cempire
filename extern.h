@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: extern.h,v 1.8 1998/02/25 01:47:47 jim Exp $
+ * $Id: extern.h,v 1.9 1998/02/25 02:02:21 jim Exp $
  */
 
 /*
@@ -140,11 +140,8 @@ int vmap_at_sea();
 int rmap_at_sea();
 
 void kill_display(); /* display routines */
-int cur_sector();
 long cur_cursor();
 void display_locx();
-void print_sector();
-void print_zoom();
 void print_pzoom();
 void print_xzoom();
 void display_score();
@@ -152,21 +149,15 @@ void display_score();
 void init_colors();
 #endif /* A_COLOR */
 
-void init_game(); /* game routines */
-void save_game();
-int restore_game();
+/* game routines */
 void save_movie_screen();
-void replay_movie();
 
-void get_str(); /* input routines */
+/* input routines */
 void get_strq();
-int getint();
 char get_c();
 char get_cq();
-int getyn();
 
-void rndini(); /* math routines */
-long irand();
+/* math routines */
 int dist();
 int isqrt();
 
@@ -185,14 +176,12 @@ void move_sat();
 int good_loc();
 void embark();
 void disembark();
-void scan();
 void scan_sat();
 
 /* terminal routines */
 void pdebug();
 void clreol();
 void topmsg();
-void comment();
 void extra();
 void set_need_delay();
 
@@ -202,12 +191,28 @@ void tupper();
 #endif
 
 /* display routines (display.c) */
+int	cur_sector (void);
 void	display_loc (int, view_map_t[], long);
 int	move_cursor (long *, int);
+void	print_sector (char, view_map_t[], int);
+void	print_zoom (view_map_t *);
 void    sector_change (void);
+
+/* game routines (game.c) */
+void	init_game (void);
+void	replay_movie (void);
+int	restore_game (void);
+void	save_game (void);
 
 /* input routines (input.c) */
 char	get_chx (void);
+void	get_str (char *, int);
+int	getint (char *);
+int	getyn (char *);
+
+/* math routines (math.c) */
+long irand(long);
+void rndini(void);
 
 /* object routines (object.c) */
 void describe_obj (piece_info_t *);
@@ -215,9 +220,11 @@ city_info_t     *find_city (long);
 piece_info_t	*find_obj (int, long);
 piece_info_t	*find_obj_at_loc (long);
 int	get_piece_name (void);
+void	scan (view_map_t[], long);
 void	set_prod (city_info_t *);
 
 /* terminal routines (term.c) */
+void	comment (char *, ...);
 void	error (char *, ...);
 int	get_range (char *, int, int);
 void	help (char **, int);

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: empire.h,v 1.22 1998/03/03 13:22:05 jim Exp $
+ * $Id: empire.h,v 1.23 1998/03/03 13:25:03 jim Exp $
  */
 
 /*
@@ -30,7 +30,6 @@ empire.h -- type and constant declarations
 
 typedef unsigned char uchar;
 
-#define debug(msg)	if (print_debug) info(msg)
 #define panic(why)	emp_panic(__FILE__, __LINE__, (why))
 
 /* directions one can move */

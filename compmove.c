@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: compmove.c,v 1.24 1998/03/03 13:15:12 jim Exp $
+ * $Id: compmove.c,v 1.25 1998/03/03 13:25:02 jim Exp $
  */
 
 /*
@@ -288,10 +288,10 @@ reset production if it is already correct.
 void
 comp_set_prod (city_info_t *cityp, piece_type_t type)
 {
-	if (cityp->prod == type) return;
+	if (cityp->prod == type)
+		return;
 	
-	pdebug ("Changing city prod at %d from %d to %d\n",
-		cityp->loc, cityp->prod, type);
+	debug("Changing city prod at %d from %d to %d\n", cityp->loc, cityp->prod, type);
 	
 	cityp->prod = type;
 	cityp->work = -(piece_attr[type].build_time / 5);
@@ -443,8 +443,9 @@ cpiece_move (piece_info_t *obj)
 		if (obj->type == FIGHTER && obj->hits > 0) {
 			if (comp_map[obj->loc].contents == 'X')
 				obj->moved = piece_attr[FIGHTER].speed;
-			else if (obj->range == 0) {
-				pdebug ("Fighter at %d crashed and burned\n", obj->loc);
+			else if (obj->range == 0)
+			{
+				debug("Fighter at %d crashed and burned\n", obj->loc);
 				kill_obj (obj, obj->loc); /* crash & burn */
 			}
 		}
@@ -1004,8 +1005,7 @@ move_objective (piece_info_t *obj, path_map_t pathmap[], long new_loc, char *adj
 	if (new_loc == obj->loc) {
 		obj->moved = piece_attr[obj->type].speed;
 		obj->range -= 1;
-		pdebug ("No destination found for %d at %d; func=%d\n",
-			obj->type, obj->loc, obj->func);
+		debug("No destination found for %d at %d; func=%d\n", obj->type, obj->loc, obj->func);
 		return;
 	}
 	old_loc = obj->loc; /* remember where we are */
@@ -1048,8 +1048,7 @@ move_objective (piece_info_t *obj, path_map_t pathmap[], long new_loc, char *adj
 		obj->moved = piece_attr[obj->type].speed;
 		
 		if (obj->type == ARMY && obj->ship) ;
-		else pdebug ("Cannot move %d at %d toward objective; func=%d\n",
-			     obj->type, obj->loc, obj->func);
+		else debug ("Cannot move %d at %d toward objective; func=%d\n", obj->type, obj->loc, obj->func);
 	}
 	else move_obj (obj, new_loc);
 	

@@ -1,7 +1,7 @@
 #
 #	Copyright (C) 1987, 1988 Chuck Simmons
 #
-# $Id: Makefile,v 1.26 1998/09/11 22:10:00 jwise Exp $
+# $Id: Makefile,v 1.27 1999/01/12 22:18:42 jwise Exp $
 #
 # See the file COPYING, distributed with empire, for restriction
 # and warranty information.
@@ -33,11 +33,13 @@ CC=gcc
 #					get a declaration of getopt(3), and curses.h also assumes
 #					you're on a BSD system (since L_ctermid doesn't get defined
 #					in stdio.h...)
+#		-DUSE_ZLIB		define this to compress saved files on write and
+#					decompress them on reads.  Saves a lot of space.
 #
-DEFINES=-DDEBUG -D__EXTENSIONS__ -DUSE_NCURSES
+DEFINES=-DDEBUG -D__EXTENSIONS__ -DUSE_NCURSES -DUSE_ZLIB
 
 #
-# 3.) Pick one of the following LIBS lines
+# 3.) Pick your library specifications
 #	for System V curses, or other non-termcap curses implementations, use:
 #		LIBS=-lcurses
 #
@@ -54,7 +56,13 @@ DEFINES=-DDEBUG -D__EXTENSIONS__ -DUSE_NCURSES
 #	wonderful package system.
 #		LIBS=-L/usr/pkg/lib -lncurses
 #
-LIBS=-L/usr/pkg/lib -lncurses
+#	if you defined USE_ZLIB above, you need to use the following. 
+#	Change /usr/local/lib to wherever you have the zlib library
+#	installed, or remove the -L/usr/local/lib if you are on a
+#	system which has zlib in its default library path.
+#		LIBS=-L/usr/local/lib -lz
+#
+LIBS=-L/usr/pkg/lib -lncurses -lz
 
 #
 # 4.) Pick your includes

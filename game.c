@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: game.c,v 1.38 1998/08/09 00:41:21 jwise Exp $
+ * $Id: game.c,v 1.39 1999/01/12 22:18:42 jwise Exp $
  */
 
 /* game.c -- Routines to initialize, save, and restore a game. */
@@ -13,6 +13,9 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <strings.h>
+#ifdef USE_ZLIB
+#include <zlib.h>
+#endif
 #include "empire.h"
 #include "extern.h"
 
@@ -35,9 +38,13 @@ void	save_game (void);
 void	save_movie_screen (void);
 int	select_cities (void);
 void	stat_display (char *, int);
+#ifndef USE_ZLIB
 int	xread (FILE *, char *, int);
 int	xwrite (FILE *, char *, int);
-
+#else
+int	xread (gzFile *, char *, int);
+int	xwrite (gzFile *, char *, int);
+#endif
 /*
  * Initialize a new game.  Here we generate a new random map, put cities
  * on the map, select cities for each opponent, and zero out the lists of
@@ -531,9 +538,17 @@ make_pair (void)
 void
 save_game (void)
 {
+#ifndef USE_ZLIB
 	FILE *f; /* file to save game in */
+#else
+	gzFile f; /* compressing file to save game in */
+#endif
 
-	f = fopen ("empsave.dat", "w"); /* open for output */
+#ifndef USE_ZLIB
+	f = fopen("empsave.dat", "w"); /* open for output */
+#else
+	f = gzopen("empsave.dat", "w"); /* open for compressing output */
+#endif
 	if (f == NULL) {
 		error ("Cannot save empsave.dat");
 		return;
@@ -555,7 +570,11 @@ save_game (void)
 	wval (user_score);
 	wval (comp_score);
 
-	fclose (f);
+#ifndef USE_ZLIB
+	fclose(f);
+#else
+	gzclose(f);
+#endif
 	info("Game saved.");
 }
 
@@ -570,14 +589,21 @@ save_game (void)
 int
 restore_game (void)
 {
-	
+#ifndef USE_ZLIB
 	FILE *f; /* file to save game in */
+#else
+	gzFile f; /* compressing file to save game in */
+#endif
 	long i;
 	piece_type_t j;
 	piece_info_t **list;
 	piece_info_t *obj;
 
-	f = fopen ("empsave.dat", "r"); /* open for input */
+#ifndef USE_ZLIB
+	f = fopen("empsave.dat", "r"); /* open for input */
+#else
+	f = gzopen("empsave.dat", "r"); /* open for decompressing input */
+#endif
 	if (f == NULL) {
 		error("Cannot open empsave.dat");
 		return (FALSE);
@@ -648,7 +674,11 @@ restore_game (void)
 	read_embark (comp_obj[TRANSPORT], ARMY);
 	read_embark (comp_obj[CARRIER], FIGHTER);
 	
-	fclose (f);
+#ifndef USE_ZLIB
+	fclose(f);
+#else
+	gzclose(f);
+#endif
 	kill_display (); /* what we had is no longer good */
 	info("Game restored from empsave.dat.");
 	return (TRUE);
@@ -689,6 +719,7 @@ inconsistent (void)
 	exit (1);
 }
 
+#ifndef USE_ZLIB
 /*
  * Write a buffer to a file.  If we cannot write everything, return FALSE.
  * Also, tell the user why the write did not work if it didn't.
@@ -711,6 +742,33 @@ xwrite (FILE *f, char *buf, int size)
 	return (TRUE);
 }
 
+#else
+/*
+ * Write a buffer to a file, compressing as we go.  If we cannot write
+ * everything, return FALSE.  Also, tell the user why the write did not
+ * work if it didn't.
+ */
+
+int
+xwrite (gzFile *f, char *buf, int size)
+{
+        int bytes;
+
+        bytes = gzwrite (f, buf, size);
+        if (bytes == 0) {
+                error ("Write to save file failed");
+                return (FALSE);
+        } 
+        if (bytes != size) {
+                error ("Cannot complete write to save file.\n");
+                return (FALSE);
+        }
+        return (TRUE);
+}
+
+#endif
+
+#ifndef USE_ZLIB
 /*
  * Read a buffer from a file.  If the read fails, we tell the user why
  * and return FALSE.
@@ -722,7 +780,7 @@ xread (FILE *f, char *buf, int size)
 	int bytes;
 
 	bytes = fread (buf, 1, size, f);
-	if (bytes == -1) {
+	if (bytes == 0) {
 		error ("Read from save file failed");
 		return (FALSE);
 	}
@@ -732,6 +790,30 @@ xread (FILE *f, char *buf, int size)
 	}
 	return (TRUE);
 }
+
+#else
+/*
+ * Read a buffer from a file, decompressing as we go.  If the read fails,
+ * we tell the user why and return FALSE.
+ */
+
+int
+xread (gzFile *f, char *buf, int size)
+{
+        int bytes;
+
+        bytes = gzread (f, buf, size);
+        if (bytes == -1) {
+                error ("Read from save file failed");
+                return (FALSE);
+        }
+        if (bytes != size) {
+                error ("Saved file is too short.\n");
+                return (FALSE);
+        }
+        return (TRUE);
+}
+#endif
 
 /*
  * Save a movie screen.  For each cell on the board, we write out

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: extern.h,v 1.22 1998/02/26 23:29:17 jim Exp $
+ * $Id: extern.h,v 1.23 1998/02/26 23:41:58 jim Exp $
  */
 
 /*
@@ -215,7 +215,6 @@ void	topini (void);
 void	topmsg(int, char *, ...);
 
 /* utility routines (util.c) */
-void    assert (char *, char *, int);
 void    check (void);
 void    clear_screen (void);
 void    delay (void);

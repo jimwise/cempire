@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: util.c,v 1.7 1998/02/26 23:29:18 jim Exp $
+ * $Id: util.c,v 1.8 1998/02/26 23:41:59 jim Exp $
  */
 
 /*
@@ -20,7 +20,6 @@ util.c -- various utility routines.
 #include "empire.h"
 #include "extern.h"
 
-void    assert (char *, char *, int);
 void    check (void);
 void	check_cargo (piece_info_t *, int);
 void	check_obj (piece_info_t **, int);
@@ -171,27 +170,6 @@ vaddprintf (char *str, va_list ap)
 	
 	vsprintf (junkbuf, str, ap);
 	addstr (junkbuf);
-}
-
-/*
-Report a bug.
-*/
-
-void
-assert (char *expression, char *file, int line)
-{
-	char buf[STRSIZE];
-	int a;
-
-	move (lines, 0);
-	close_disp ();
-
-	sprintf (buf, "assert failed: file %s line %d: %s",
-			file, line, expression);
-
-	a = 1; /* keep lint quiet */
-	a /= 0; /* force a core dump */
-	a = a; /* keep lint quiet */
 }
 
 /*

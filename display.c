@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.22 1998/03/03 15:09:42 jim Exp $
+ * $Id: display.c,v 1.23 1998/03/03 15:11:43 jim Exp $
  */
 
 /*
@@ -58,7 +58,7 @@ static WINDOW *mapwin;
 void
 map_init (void)
 {
-	mapwin = newwin(0, 0, LINES - NUMTOPS, 0);
+	mapwin = newwin(0, 0, LINES - NUMTOPS, COLS - NUMSIDES);
 }
 
 /*

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: map.c,v 1.19 1998/08/09 00:14:55 jwise Exp $
+ * $Id: map.c,v 1.20 1998/08/09 00:16:35 jwise Exp $
  */
 
 /*
@@ -25,7 +25,6 @@ int	best_adj (const path_map_t *, long, int);
 void	expand_perimeter (path_map_t *, const view_map_t *, const move_info_t *, perimeter_t *,
 		int, int, int, int, perimeter_t *, perimeter_t *);
 void	expand_prune (view_map_t *, path_map_t *, long, int, perimeter_t *, int *);
-int	map_cont_edge (const int *, long);
 int	objective_cost (const view_map_t *, const move_info_t *, long, int);
 int	rmap_at_sea (long);
 void	rmap_cont (int *, long, char);
@@ -245,21 +244,6 @@ rmap_cont_scan (int *cont_map)
 		}
 	}
 	return counts;
-}
-
-/* Return TRUE if a location is on the edge of a continent.  */
-
-int
-map_cont_edge (const int *cont_map, long loc)
-{
-	long i, j;
-
-	if (!cont_map[loc]) return FALSE; /* not on continent */
- 
-	FOR_ADJ (loc, j, i)
-		if (!cont_map[j]) return TRUE; /* edge of continent */
-
-	return FALSE;
 }
 
 /*

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: empire.c,v 1.18 1998/03/03 13:41:23 jim Exp $
+ * $Id: empire.c,v 1.19 1998/03/03 14:03:50 jim Exp $
  */
 
 /*
@@ -92,6 +92,7 @@ do_command (char orders)
 	
 	case 'D': /* display round number */
 		prompt("Round #%d", date);
+		delay();
 		break;
 
 	case 'E': /* examine enemy map */

@@ -2,7 +2,7 @@
 #	Copyright (C) 1987, 1988 Chuck Simmons
 #	Portions of this file Copyright (C) 1998 Jim Wise
 #
-# $Id: Makefile,v 1.10 1998/02/27 00:33:34 jim Exp $
+# $Id: Makefile,v 1.11 1998/08/04 15:58:43 jwise Exp $
 #
 # See the file COPYING, distributed with empire, for restriction
 # and warranty information.
@@ -17,7 +17,7 @@ V=1.1
 CC=gcc
 
 #DEBUG = -g -DDEBUG
-DEBUG = -Wall -W -Werror
+DEBUG = -Wall -W -Werror -pedantic
 
 # Use -p to profile the program.
 #PROFILE = -p -DPROFILE
@@ -25,14 +25,14 @@ PROFILE =
 
 # Define all necessary libraries.  'curses' is necessary.  'termcap'
 # is needed on BSD systems.
-#LIBS = -lncurses
-LIBS = -lcurses # -ltermcap
+LIBS = -L/usr/pkg/lib -lncurses
+#LIBS = -lcurses # -ltermcap
 
 # You shouldn't have to modify anything below this line.
 
 TARGET = empire
 
-CFLAGS = $(DEBUG) $(PROFILE)
+CFLAGS = $(DEBUG) $(PROFILE) -DUSE_NCURSES -I/usr/pkg/include
 
 FILES = \
 	attack.c \

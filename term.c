@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.61 1998/03/10 23:24:00 jim Exp $
+ * $Id: term.c,v 1.62 1998/08/04 15:58:43 jwise Exp $
  */
 
 /*
@@ -27,11 +27,16 @@ screen refreshed as the user has had time to read these lines.
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <curses.h>
 #include <ctype.h>
-
 #include "empire.h"
 #include "extern.h"
+
+#ifdef USE_NCURSES
+#include <ncurses.h>
+#else 
+#include <curses.h>
+#endif 
+#include <ctype.h>
 
 void	alert (void);
 void    error (char *, ...);

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.63 1998/08/04 15:24:00 jwise Exp $
+ * $Id: display.c,v 1.64 1998/08/04 15:58:43 jwise Exp $
  */
 
 /*
@@ -20,12 +20,17 @@ information:
 	point of view;
 */
 
-#include <curses.h>
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
 #include "empire.h"
 #include "extern.h"
+
+#ifdef USE_NCURSES
+#include <ncurses.h>
+#else
+#include <curses.h>
+#endif
 
 long    cur_cursor (void);
 int     cur_sector (void);
@@ -625,8 +630,8 @@ help (char **text, int nlines)
         mvwprintw(helpwin, text_lines + 2, 1, "  Piece   Yours Enemy Moves Hits Cost");
         mvwprintw(helpwin, text_lines + 2, 40, "  Piece   Yours Enemy Moves Hits Cost");
 	wattroff(helpwin, A_REVERSE);
-
-        for (j = FIRST_OBJECT; j < NUM_OBJECTS; j++)
+        
+	for (j = FIRST_OBJECT; j < NUM_OBJECTS; j++)
         {
                 if (j >= (NUM_OBJECTS+1)/2) {
                         r = j - (NUM_OBJECTS+1)/2;

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: extern.h,v 1.17 1998/02/26 00:36:18 jim Exp $
+ * $Id: extern.h,v 1.18 1998/02/26 00:53:04 jim Exp $
  */
 
 /*
@@ -117,41 +117,14 @@ void	comp_move (int);	/* compmove.c */
 void	user_move (void);	/* usermove.c */
 void	edit(long);		/* edit.c */
 
-#if 0
-/* map routines */
-void rmap_cont();
-scan_counts_t rmap_cont_scan();
-int map_cont_edge();
-int vmap_shore();
-int rmap_at_sea();
-
-/* display routines */
-long cur_cursor();
-#ifdef A_COLOR
-void init_colors();
-#endif /* A_COLOR */
-
-/* input routines */
-void get_strq();
-char get_c();
-char get_cq();
-
-/* object routines */
-void scan_sat();
-
-/* terminal routines */
-void clreol();
-
-/* from util.c but not used elsewhere */
-void close_disp();
-void tupper();
-#endif
-
 /* display routines (display.c) */
 int	cur_sector (void);
 void	display_loc (int, view_map_t[], long);
 void	display_locx (int, view_map_t[], long);
 void    display_score (void);
+#ifdef A_COLOR
+void	init_colors(void);
+#endif
 void	kill_display (void);
 int	move_cursor (long *, int);
 void	print_pzoom (char *, path_map_t *, view_map_t *);
@@ -244,5 +217,5 @@ void	addprintf (char *, va_list ap);
 void	assert (char *, char *, int);
 void	empend (void);
 void	ver (void);
-char	upper (char);
+char	upper (uchar);
 void	check (void);

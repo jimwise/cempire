@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: util.c,v 1.4 1998/02/25 22:26:53 jim Exp $
+ * $Id: util.c,v 1.5 1998/02/26 00:53:04 jim Exp $
  */
 
 /*
@@ -28,7 +28,7 @@ Shirley this is defined elsewhere?
 
 void
 tupper (str)
-char	*str;
+uchar	*str;
 {
 	while (*str) {
 		if (islower (*str)) *str = upper (*str);
@@ -42,7 +42,7 @@ Convert a character to uppercase (if it is lowercase)
 
 char
 upper (c)
-char c;
+uchar c;
 {
 	if (islower (c))
 		return toupper (c);
@@ -135,19 +135,20 @@ Position the cursor and output a string.
 */
 
 void
-/* VARARGS3 */
-pos_str (row, col, str, a, b, c, d, e, f, g, h)
-int row, col;
-char *str;
-int a, b, c, d, e, f, g, h;
+pos_str (int row, int col, char *str, ...)
 {
+	va_list ap;
+
+	va_start(ap, str);
+
 	(void) move (row, col);
-	addprintf (str, a, b, c, d, e, f, g, h);
+	addprintf (str, ap);
+
+	va_end(ap);
 }
 
 void
-/* VARARGS1 */
-addprintf (char *str, va_list ap);
+addprintf (char *str, va_list ap)
 {
 	char junkbuf[STRSIZE];
 	

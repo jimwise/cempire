@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.5 1998/02/25 01:02:45 jim Exp $
+ * $Id: display.c,v 1.6 1998/02/26 00:53:03 jim Exp $
  */
 
 /*
@@ -36,6 +36,9 @@ int	cur_sector (void);
 long	cur_cursor (void);
 void	display_loc (int, view_map_t[], long);
 void	display_locx (int, view_map_t[], long);
+#ifdef A_COLOR
+void init_colors(void);
+#endif
 void	show_loc (view_map_t[], long);
 void	print_sector (char, view_map_t[], int);
 void	disp_square(view_map_t *);
@@ -58,7 +61,7 @@ static int save_cursor; /* currently displayed cursor position */
 static int change_ok = TRUE; /* true if new sector may be displayed */
 
 #ifdef A_COLOR
-void init_colors()
+void init_colors(void)
 {
     start_color();
 

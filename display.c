@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.20 1998/03/03 14:41:40 jim Exp $
+ * $Id: display.c,v 1.21 1998/03/03 14:47:40 jim Exp $
  */
 
 /*
@@ -232,10 +232,6 @@ print_sector (char whose, view_map_t vmap[], int sector)
 
 /*
 Display the contents of a single map square.
-
-Fancy color hacks are done here. At the moment this is kind of bogus,
-because the color doesn't convey any extra information, it just looks
-pretty.
 */
 
 

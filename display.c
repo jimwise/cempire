@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.6 1998/02/26 00:53:03 jim Exp $
+ * $Id: display.c,v 1.7 1998/02/26 01:02:57 jim Exp $
  */
 
 /*
@@ -36,7 +36,7 @@ int	cur_sector (void);
 long	cur_cursor (void);
 void	display_loc (int, view_map_t[], long);
 void	display_locx (int, view_map_t[], long);
-#ifdef A_COLOR
+#ifdef USE_COLOR
 void init_colors(void);
 #endif
 void	show_loc (view_map_t[], long);
@@ -60,7 +60,7 @@ static int save_sector; /* the currently displayed sector */
 static int save_cursor; /* currently displayed cursor position */
 static int change_ok = TRUE; /* true if new sector may be displayed */
 
-#ifdef A_COLOR
+#ifdef USE_COLOR
 void init_colors(void)
 {
     start_color();
@@ -74,7 +74,7 @@ void init_colors(void)
     init_pair(COLOR_BLUE, COLOR_BLUE, COLOR_BLACK);
     init_pair(COLOR_YELLOW, COLOR_YELLOW, COLOR_BLACK);
 }
-#endif /* A_COLOR */
+#endif /* USE_COLOR */
 
 /*
 This routine is called when the current display has been
@@ -268,7 +268,7 @@ pretty.
 void
 disp_square(view_map_t *vp)
 {
-#ifdef A_COLOR
+#ifdef USE_COLOR
 	switch(vp->contents)
 	{
 	case '+':
@@ -293,12 +293,12 @@ disp_square(view_map_t *vp)
 		attron(COLOR_PAIR(COLOR_WHITE));
 		break;
 	}
-#endif /* A_COLOR */
+#endif /* USE_COLOR */
 	(void) addch ((chtype)vp->contents);
-#ifdef A_COLOR
+#ifdef USE_COLOR
 	attrset(0);
 	attron(COLOR_PAIR(COLOR_WHITE));
-#endif /* A_COLOR */
+#endif /* USE_COLOR */
 }
 
 

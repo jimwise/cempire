@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: util.c,v 1.5 1998/02/26 00:53:04 jim Exp $
+ * $Id: util.c,v 1.6 1998/02/26 01:02:58 jim Exp $
  */
 
 /*
@@ -71,9 +71,9 @@ ttinit()
 	(void) initscr();
 	(void) noecho();
 	(void) crmode();
-#ifdef A_COLOR
+#ifdef USE_COLOR
 	init_colors();
-#endif /* A_COLOR */
+#endif /* USE_COLOR */
 	lines = LINES;
 	cols = COLS;
 	if (lines > MAP_HEIGHT + NUMTOPS + 1)

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: empire.h,v 1.5 1998/02/25 01:47:46 jim Exp $
+ * $Id: empire.h,v 1.6 1998/02/26 01:02:57 jim Exp $
  */
 
 /*
@@ -33,6 +33,10 @@ empire.h -- type and constant declarations
 char *memset();
 char *memcpy();
 #define bzero(dst,len) memset(dst,0,len)
+#endif
+
+#ifdef A_COLOR
+#define USE_COLOR
 #endif
 
 typedef unsigned char uchar;

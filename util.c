@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: util.c,v 1.22 1998/03/06 22:40:30 jim Exp $
+ * $Id: util.c,v 1.23 1998/08/08 17:21:29 jwise Exp $
  */
 
 /*
@@ -20,10 +20,10 @@ util.c -- various utility routines.
 #include "extern.h"
 
 void    check (void);
-void	check_cargo (piece_info_t *, piece_type_t);
-void	check_obj (piece_info_t **, int);
-void	check_obj_cargo (piece_info_t **);
-void	emp_panic (char *, int, char *);
+void	check_cargo (const piece_info_t *, const piece_type_t);
+void	check_obj (const piece_info_t **, const int);
+void	check_obj_cargo (const piece_info_t **);
+void	emp_panic (const char *, const int, const char *);
 
 /*
 Here is a little routine to perform consistency checking on the
@@ -143,7 +143,7 @@ Check object lists.  We look for:
 */
 
 void
-check_obj (piece_info_t **list, int owner)
+check_obj (const piece_info_t **list, const int owner)
 {
 	long j;
 	piece_type_t i;
@@ -186,7 +186,7 @@ Check for:
 */
 
 void
-check_cargo (piece_info_t *list, piece_type_t cargo_type)
+check_cargo (const piece_info_t *list, const piece_type_t cargo_type)
 {
 	piece_info_t *p, *q;
 	long j, count;
@@ -219,7 +219,7 @@ lists are valid.
 */
 
 void
-check_obj_cargo (piece_info_t **list)
+check_obj_cargo (const piece_info_t **list)
 {
 	piece_info_t *p;
 	piece_type_t i;
@@ -235,7 +235,7 @@ check_obj_cargo (piece_info_t **list)
  */
 
 void
-emp_panic (char *file, int line, char *why)
+emp_panic (const char *file, const int line, const char *why)
 {
 	if (why == NULL)
 		fprintf(stderr, "empire panic (file %s, line %d)\n", file, line);

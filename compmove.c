@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: compmove.c,v 1.35 1998/03/11 02:52:51 jim Exp $
+ * $Id: compmove.c,v 1.36 1998/08/08 17:21:28 jwise Exp $
  */
 
 /*
@@ -37,7 +37,7 @@ void	cpiece_move (piece_info_t *);
 void	do_cities (void);
 void	do_pieces (void);
 void	fighter_move (piece_info_t *);
-long	find_attack (long, char *, char *);
+long	find_attack (const long, const char *, const char *);
 piece_info_t	*find_best_tt (piece_info_t *, long);
 int	lake (long);
 int	load_army (piece_info_t *);
@@ -46,7 +46,7 @@ void    make_tt_load_map (view_map_t *, view_map_t *);
 void    make_unload_map (view_map_t *, view_map_t *);
 void    move1 (piece_info_t *);
 long    move_away (view_map_t *, long, char *);
-void    move_objective (piece_info_t *, path_map_t[], long, char *);
+void    move_objective (piece_info_t *, path_map_t[], long, const char *);
 int     nearby_count (long);
 int     nearby_load (piece_info_t *, long);
 int     need_more (int *, int, int);
@@ -838,7 +838,7 @@ best of these.
 */
 
 long
-find_attack (long loc, char *obj_list, char *terrain)
+find_attack (const long loc, const char *obj_list, const char *terrain)
 {
 	long new_loc, best_loc;
 	int i, best_val;
@@ -960,7 +960,7 @@ void
 ship_move (piece_info_t *obj)
 {
 	long new_loc;
-	char *adj_list;
+	const char *adj_list;
 
 	if (obj->hits < piece_attr[obj->type].max_hits) { /* head to port */
 		if (comp_map[obj->loc].contents == 'X') { /* stay in port */
@@ -997,7 +997,7 @@ Move to an objective.
 */
 
 void
-move_objective (piece_info_t *obj, path_map_t pathmap[], long new_loc, char *adj_list)
+move_objective (piece_info_t *obj, path_map_t pathmap[], long new_loc, const char *adj_list)
 {
 	char *terrain;
 	char *attack_list;

@@ -2,7 +2,7 @@
 #	Copyright (C) 1987, 1988 Chuck Simmons
 #	Portions of this file Copyright (C) 1998 Jim Wise
 #
-# $Id: Makefile,v 1.11 1998/08/04 15:58:43 jwise Exp $
+# $Id: Makefile,v 1.12 1998/08/08 17:21:27 jwise Exp $
 #
 # See the file COPYING, distributed with empire, for restriction
 # and warranty information.
@@ -17,7 +17,10 @@ V=1.1
 CC=gcc
 
 #DEBUG = -g -DDEBUG
-DEBUG = -Wall -W -Werror -pedantic
+DEBUG = -ansi -Wall -W -Werror -pedantic -Wtraditional -Wshadow -Wpointer-arith -Wcast-qual \
+	-Wcast-align -Wwrite-strings -Wstrict-prototypes -Wmissing-prototypes \
+	-Wmissing-declarations -Wnested-externs -Winline
+# -Wid-clash-6 -Wredundant-decls  -Wconversion -Waggregate-return
 
 # Use -p to profile the program.
 #PROFILE = -p -DPROFILE

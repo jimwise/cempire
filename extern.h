@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: extern.h,v 1.63 1998/03/11 02:54:20 jim Exp $
+ * $Id: extern.h,v 1.64 1998/08/08 17:21:28 jwise Exp $
  */
 
 /*
@@ -197,20 +197,20 @@ void	set_prod (city_info_t *);
 
 /* terminal routines (term.c) */
 void	alert (void);
-void	error (char *, ...);
+void	error (const char *, ...);
 char    get_chx (void);
 char    get_cq (void);
 int	get_int (char *, int, int);
-int     getyn (char *);
-void    get_str (char *, int);
+int     getyn (const char *);
+void    get_str (char *, const int);
 void	huh (void);
-void	info (char *, ...);
+void	info (const char *, ...);
 void    redraw (void);
 void    term_clear (void);
 void	term_end (void);
 void    term_init (void);
-void	prompt (char *, ...);
+void	prompt (const char *, ...);
 
 /* utility routines (util.c) */
 void    check (void);
-void	emp_panic (char *file, int line, char *);
+void	emp_panic (const char *file, const int line, const char *);

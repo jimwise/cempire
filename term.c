@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.62 1998/08/04 15:58:43 jwise Exp $
+ * $Id: term.c,v 1.63 1998/08/08 17:21:29 jwise Exp $
  */
 
 /*
@@ -39,14 +39,14 @@ screen refreshed as the user has had time to read these lines.
 #include <ctype.h>
 
 void	alert (void);
-void    error (char *, ...);
-int	getyn (char *message);
+void    error (const char *, ...);
+int	getyn (const char *message);
 char	get_chx (void);
 char    get_cq (void);
-void	get_str (char *, int);
+void	get_str (char *, const int);
 void    huh (void);
-void	info (char *, ...);
-void    prompt (char *, ...);
+void	info (const char *, ...);
+void    prompt (const char *, ...);
 void    redraw (void);
 void	term_clear (void);
 void    term_end (void);
@@ -64,7 +64,7 @@ Print a prompt on the status line.
 */
 
 void
-prompt (char *buf, ...)
+prompt (const char *buf, ...)
 {
 	va_list ap;
 
@@ -79,7 +79,7 @@ prompt (char *buf, ...)
 }
 
 void
-info (char *fmt, ...)
+info (const char *fmt, ...)
 {
 	va_list ap;
 
@@ -100,7 +100,7 @@ Print an error message on the second message line.
 */
 
 void
-error (char *fmt, ...)
+error (const char *fmt, ...)
 {
 	va_list ap;
 
@@ -135,7 +135,7 @@ Get a string from the user, echoing characters all the while.
 */
 
 void
-get_str (char *buf, int sizep)
+get_str (char *buf, const int sizep)
 {
 	echo();
 	nocrmode();
@@ -210,7 +210,7 @@ a valid response.  We return TRUE iff the user replies 'y'.
 */
 
 int
-getyn (char *message)
+getyn (const char *message)
 {
 	char c;
 

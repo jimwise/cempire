@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: empire.c,v 1.17 1998/03/03 13:15:13 jim Exp $
+ * $Id: empire.c,v 1.18 1998/03/03 13:41:23 jim Exp $
  */
 
 /*
@@ -80,7 +80,7 @@ do_command (char orders)
 	switch (orders) {
 	case 'A': /* turn on auto move mode */
 		automove = TRUE;
-		error ("Now in Auto-Mode");
+		info("Entering Auto-Mode");
 		user_move ();
 		comp_move (1);
 		save_game ();
@@ -91,7 +91,7 @@ do_command (char orders)
 		break;
 	
 	case 'D': /* display round number */
-		error ("Round #%d", date);
+		prompt("Round #%d", date);
 		break;
 
 	case 'E': /* examine enemy map */

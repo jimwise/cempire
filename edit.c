@@ -5,7 +5,7 @@
  * and warranty information.
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: edit.c,v 1.17 1998/03/02 18:28:00 jim Exp $
+ * $Id: edit.c,v 1.18 1998/03/03 13:41:22 jim Exp $
  */
 
 /*
@@ -149,7 +149,6 @@ e_cursor (long *edit_cursor)
 	crmode();
 	refresh();
 	e = getch();
-	topini(); /* clear any error messages */
 
 	for (;;) {
 		p = strchr (dirchars, e);
@@ -552,8 +551,6 @@ e_city_info (long edit_cursor)
 	char func_buf[STRSIZE];
 	char temp_buf[STRSIZE];
 	char junk_buf2[STRSIZE];
-
-	error (0); /* clear line */
 
 	f = 0; /* no fighters counted yet */
 	for (obj = map[edit_cursor].objp; obj != NULL;

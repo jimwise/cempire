@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: map.c,v 1.22 1998/08/09 00:25:38 jwise Exp $
+ * $Id: map.c,v 1.23 1998/08/09 00:31:38 jwise Exp $
  */
 
 /*
@@ -1017,7 +1017,8 @@ rmap_shore (long loc)
 	long i, j;
 
 	FOR_ADJ_ON (loc, j, i)
-	if (map[j].contents == '.') return (TRUE);
+		if (map[j].contents == '.')
+			return (TRUE);
 
 	return (FALSE);
 }

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: game.c,v 1.36 1998/08/09 00:04:37 jwise Exp $
+ * $Id: game.c,v 1.37 1998/08/09 00:31:38 jwise Exp $
  */
 
 /* game.c -- Routines to initialize, save, and restore a game. */
@@ -478,7 +478,8 @@ mark_cont (long mapi)
 	{ /* a city? */
 		cont_tab[ncont].cityp[ncity] = map[mapi].cityp;
 		ncity++;
-		if (rmap_shore (mapi)) nshore++;
+		if (rmap_shore(mapi))
+			nshore++;
 	}
 
 	for (i = 0; i < 8; i++) /* look at surrounding squares */

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.55 1998/03/11 01:06:10 jim Exp $
+ * $Id: display.c,v 1.56 1998/03/11 01:20:54 jim Exp $
  */
 
 /*
@@ -364,18 +364,23 @@ print_zoom (view_map_t *vmap)
 	int row_inc, col_inc;
 	int r, c;
 
-	kill_display ();
-
 	row_inc = (MAP_HEIGHT + lines - NUMTOPS - 1) / (lines - NUMTOPS);
 	col_inc = (MAP_WIDTH + cols - 1) / (cols - 1);
 
-	for (r = 0; r < MAP_HEIGHT; r += row_inc)
-	for (c = 0; c < MAP_WIDTH; c += col_inc)
-	print_zoom_cell (vmap, r, c, row_inc, col_inc);
+	wclear(stdscr);
 
-	prompt("Round #%d", date);
-	
+	for (r = 0; r < MAP_HEIGHT; r += row_inc)
+		for (c = 0; c < MAP_WIDTH; c += col_inc)
+			print_zoom_cell (vmap, r, c, row_inc, col_inc);
+
 	wrefresh(stdscr);
+
+	prompt("Press any key to continue");
+	get_chx();
+	prompt("");
+
+	if (whose_map == USER)
+		print_sector_u(save_sector);
 }
 
 /*
@@ -390,13 +395,12 @@ print_zoom_cell (view_map_t *vmap, int row, int col, int row_inc, int col_inc)
 
 	cell = ' ';
 	for (r = row; r < row + row_inc; r++)
-	for (c = col; c < col + col_inc; c++)
-	if (strchr (zoom_list, vmap[row_col_loc(r,c)].contents)
-		< strchr (zoom_list, cell))
-	cell = vmap[row_col_loc(r,c)].contents;
+		for (c = col; c < col + col_inc; c++)
+			if (strchr(zoom_list, vmap[row_col_loc(r,c)].contents) < strchr(zoom_list, cell))
+				cell = vmap[row_col_loc(r,c)].contents;
 	
-	wmove (mapwin, row/row_inc, col/col_inc);
-	waddch (mapwin, (chtype)cell);
+	wmove (stdscr, row/row_inc, col/col_inc);
+	waddch (stdscr, (chtype)cell);
 }
 
 /*

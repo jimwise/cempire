@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: empire.c,v 1.30 1998/03/10 23:23:59 jim Exp $
+ * $Id: empire.c,v 1.31 1998/03/11 01:20:55 jim Exp $
  */
 
 /*
@@ -163,7 +163,6 @@ do_command (char orders)
 		break;
 	
 	case 'Z': /* print compressed map */
-		term_clear();
 		print_zoom(user_map);
 		redraw();
 		break;

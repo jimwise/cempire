@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.40 1998/03/09 13:12:17 jim Exp $
+ * $Id: display.c,v 1.41 1998/03/09 16:19:47 jim Exp $
  */
 
 /*
@@ -479,7 +479,7 @@ void
 print_movie_cell (char *mbuf, int row, int col, int row_inc, int col_inc)
 {
         int r, c;
-        char *cell = " ";
+        char cell[] = " ";
 
         for (r = row; r < row + row_inc; r++)
                 for (c = col; c < col + col_inc; c++)

@@ -2,7 +2,7 @@
 #	Copyright (C) 1987, 1988 Chuck Simmons
 #	Portions of this file Copyright (C) 1998 Jim Wise
 #
-# $Id: Makefile,v 1.16 1998/08/08 21:34:10 jwise Exp $
+# $Id: Makefile,v 1.17 1998/08/08 21:37:40 jwise Exp $
 #
 # See the file COPYING, distributed with empire, for restriction
 # and warranty information.
@@ -77,16 +77,19 @@ $(TARGET): $(OFILES)
 lint: $(FILES)
 	lint $(CPPFLAGS) -u $(FILES) $(LIBS)
 
+ARCHIVES = cempire-$(VERSION).tar cempire-$(VERSION).tar.gz cempire-$(VERSION).shar
+
 clean:
 	rm -f *.o $(TARGET)
 
-clobber: clean
-	rm -f empire.tar*
+clobber:	clean
+	rm -f $(ARCHIVES)
 
 SOURCES = READ.ME cempire.6 COPYING Makefile BUGS .cvsignore $(FILES) $(HEADERS)
 
 tar:	cempire-$(VERSION).tar
 tgz:	cempire-$(VERSION).tar.gz
+shar:	cempire-$(VERSION).shar
 
 cempire-$(VERSION).tar: $(SOURCES)
 	(cd ..;tar -cvf cempire-$(VERSION)/cempire-$(VERSION).tar `for X in $(SOURCES); do echo cempire-$(VERSION)/$$X; done`)

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: compmove.c,v 1.37 1998/08/08 18:05:28 jwise Exp $
+ * $Id: compmove.c,v 1.38 1998/08/08 18:08:36 jwise Exp $
  */
 
 /*
@@ -29,17 +29,17 @@ static view_map_t emap[MAP_SIZE]; /* pruned explore map */
 void	army_move (piece_info_t *);
 void	board_ship (piece_info_t *, path_map_t *, long);
 void	check_endgame (void);
-void	comp_move (const int);
-void	comp_prod (city_info_t *, const int);
-void	comp_set_needed (city_info_t *, int *, const int, const int);
-void	comp_set_prod (city_info_t *, const piece_type_t);
+void	comp_move (int);
+void	comp_prod (city_info_t *, int);
+void	comp_set_needed (city_info_t *, int *, int, int);
+void	comp_set_prod (city_info_t *, piece_type_t);
 void	cpiece_move (piece_info_t *);
 void	do_cities (void);
 void	do_pieces (void);
 void	fighter_move (piece_info_t *);
-long	find_attack (const long, const char *, const char *);
-piece_info_t	*find_best_tt (piece_info_t *, const long);
-int	lake (const long);
+long	find_attack (long, const char *, const char *);
+piece_info_t	*find_best_tt (piece_info_t *, long);
+int	lake (long);
 int	load_army (piece_info_t *);
 void	make_army_load_map (piece_info_t *, view_map_t *, view_map_t *);
 void    make_tt_load_map (view_map_t *, view_map_t *);
@@ -56,7 +56,7 @@ void    transport_move (piece_info_t *);
 void	unmark_explore_locs (view_map_t *);
 
 void
-comp_move (const int nmoves) 
+comp_move (int nmoves) 
 {
 	int i;
 	piece_type_t j;
@@ -155,7 +155,7 @@ The algorithm below contains three parts:
 */
 
 void
-comp_prod (city_info_t *cityp, const int is_lake)
+comp_prod (city_info_t *cityp, int is_lake)
 {
 	int city_count[NUM_OBJECTS]; /* # of cities producing each piece */
 	int cont_map[MAP_SIZE];
@@ -283,7 +283,7 @@ reset production if it is already correct.
 */
 
 void
-comp_set_prod (city_info_t *cityp, const piece_type_t type)
+comp_set_prod (city_info_t *cityp, piece_type_t type)
 {
 	if (cityp->prod == type)
 		return;
@@ -333,7 +333,7 @@ a flag telling us if armies are ok to produce.
 */
 
 void
-comp_set_needed (city_info_t *cityp, int *city_count, const int army_ok, const int is_lake)
+comp_set_needed (city_info_t *cityp, int *city_count, int army_ok, int is_lake)
 {
 	int best_prod;
 	piece_type_t prod;
@@ -371,7 +371,7 @@ have unexplored territory on the edges.
 */
 
 int
-lake (const long loc)
+lake (long loc)
 {
 	int cont_map[MAP_SIZE];
 	scan_counts_t counts;
@@ -764,7 +764,7 @@ one of the ships to become more full.
 */
 
 piece_info_t *
-find_best_tt (piece_info_t *best, const long loc)
+find_best_tt (piece_info_t *best, long loc)
 {
 	piece_info_t *p;
 
@@ -838,7 +838,7 @@ best of these.
 */
 
 long
-find_attack (const long loc, const char *obj_list, const char *terrain)
+find_attack (long loc, const char *obj_list, const char *terrain)
 {
 	long new_loc, best_loc;
 	int i, best_val;

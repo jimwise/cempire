@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: extern.h,v 1.65 1998/08/08 18:05:29 jwise Exp $
+ * $Id: extern.h,v 1.66 1998/08/08 18:08:37 jwise Exp $
  */
 
 /*
@@ -111,8 +111,8 @@ extern int comp_score;
 #define panic(why)      emp_panic(__FILE__, __LINE__, (why))
 
 /* global routines */
-void	attack (piece_info_t *, const long);	/* attack.c */
-void	comp_move (const int);	/* compmove.c */
+void	attack (piece_info_t *, long);	/* attack.c */
+void	comp_move (int);	/* compmove.c */
 void    edit(long);             /* edit.c */
 void    empire (void);          /* empire.c */
 void	user_move (void);	/* usermove.c */
@@ -202,7 +202,7 @@ char    get_chx (void);
 char    get_cq (void);
 int	get_int (char *, int, int);
 int     getyn (const char *);
-void    get_str (char *, const int);
+void    get_str (char *, int);
 void	huh (void);
 void	info (const char *, ...);
 void    redraw (void);
@@ -213,4 +213,4 @@ void	prompt (const char *, ...);
 
 /* utility routines (util.c) */
 void    check (void);
-void	emp_panic (const char *file, const int line, const char *);
+void	emp_panic (const char *file, int line, const char *);

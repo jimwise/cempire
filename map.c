@@ -6,15 +6,15 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: map.c,v 1.18 1998/08/08 23:41:00 jwise Exp $
+ * $Id: map.c,v 1.19 1998/08/09 00:14:55 jwise Exp $
  */
 
 /*
-map.c
-
-This file contains routines for playing around with view_maps,
-real_maps, path_maps, and cont_maps.
-*/
+ * map.c
+ * 
+ * This file contains routines for playing around with view_maps,
+ * real_maps, path_maps, and cont_maps.
+ */
 
 #include <strings.h>
 #include "empire.h"
@@ -25,7 +25,7 @@ int	best_adj (const path_map_t *, long, int);
 void	expand_perimeter (path_map_t *, const view_map_t *, const move_info_t *, perimeter_t *,
 		int, int, int, int, perimeter_t *, perimeter_t *);
 void	expand_prune (view_map_t *, path_map_t *, long, int, perimeter_t *, int *);
-int	map_cont_edge (int *, long);
+int	map_cont_edge (const int *, long);
 int	objective_cost (const view_map_t *, const move_info_t *, long, int);
 int	rmap_at_sea (long);
 void	rmap_cont (int *, long, char);
@@ -68,12 +68,12 @@ static int best_cost; /* cost and location of best objective */
 static long best_loc;
 
 /*
-Map out a continent.  We are given a location on the continent.
-We mark each square that is part of the continent and unexplored
-territory adjacent to the continent.  By adjusting the value of
-'bad_terrain', this routine can map either continents of land,
-or lakes.
-*/
+ * Map out a continent.  We are given a location on the continent.
+ * We mark each square that is part of the continent and unexplored
+ * territory adjacent to the continent.  By adjusting the value of
+ * 'bad_terrain', this routine can map either continents of land,
+ * or lakes.
+ */
 
 void
 vmap_cont (int *cont_map, const view_map_t *vmap, long loc, char bad_terrain)
@@ -83,10 +83,10 @@ vmap_cont (int *cont_map, const view_map_t *vmap, long loc, char bad_terrain)
 }
 
 /*
-Mark all squares of a continent and the squares that are adjacent
-to the continent which are on the board.  Our passed location is
-known to be either on the continent or adjacent to the continent.
-*/
+ * Mark all squares of a continent and the squares that are adjacent
+ * to the continent which are on the board.  Our passed location is
+ * known to be either on the continent or adjacent to the continent.
+ */
 
 void
 vmap_mark_up_cont (int *cont_map, const view_map_t *vmap, long loc, char bad_terrain)
@@ -129,12 +129,11 @@ vmap_mark_up_cont (int *cont_map, const view_map_t *vmap, long loc, char bad_ter
 }
 
 /*
-Map out a continent.  We are given a location on the continent.
-We mark each square that is part of the continent.
-By adjusting the value of
-'bad_terrain', this routine can map either continents of land,
-or lakes.
-*/
+ * Map out a continent.  We are given a location on the continent.
+ * We mark each square that is part of the continent.  By adjusting
+ * the value of 'bad_terrain', this routine can map either continents
+ * of land, or lakes.
+ */
 
 void
 rmap_cont (int *cont_map, long loc, char bad_terrain)
@@ -144,12 +143,12 @@ rmap_cont (int *cont_map, long loc, char bad_terrain)
 }
 
 /*
-Mark all squares of a continent and the squares that are adjacent
-to the continent which are on the board.  Our passed location is
-known to be either on the continent or adjacent to the continent.
-
-Someday this should be tweaked to use perimeter lists.
-*/
+ * Mark all squares of a continent and the squares that are adjacent
+ * to the continent which are on the board.  Our passed location is
+ * known to be either on the continent or adjacent to the continent.
+ * 
+ * Someday this should be tweaked to use perimeter lists.
+ */
 
 void
 rmap_mark_up_cont (int *cont_map, long loc, char bad_terrain)
@@ -157,9 +156,9 @@ rmap_mark_up_cont (int *cont_map, long loc, char bad_terrain)
 	int i;
 	long new_loc;
 	
-	if (!map[loc].on_board) return; /* off board */
-	if (cont_map[loc]) return; /* already marked */
-	if (map[loc].contents == bad_terrain) return; /* off continent */
+	if (!map[loc].on_board) return;			/* off board		*/
+	if (cont_map[loc]) return;			/* already marked	*/
+	if (map[loc].contents == bad_terrain) return;	/* off continent	*/
 	
 	cont_map[loc] = 1; /* on continent */
 
@@ -168,10 +167,10 @@ rmap_mark_up_cont (int *cont_map, long loc, char bad_terrain)
 }
 
 /*
-Scan a continent recording items of interest on the continent.
-
-This could be done as we mark up the continent.
-*/
+ * Scan a continent recording items of interest on the continent.
+ * 
+ * This could be done as we mark up the continent.
+ */
 
 #define COUNT(c,item) case c: item += 1; break
 
@@ -184,7 +183,8 @@ vmap_cont_scan (int *cont_map, const view_map_t *vmap)
 	bzero(&counts, sizeof(scan_counts_t));
 	
 	for (i = 0; i < MAP_SIZE; i++) {
-		if (cont_map[i]) { /* cell on continent? */
+		if (cont_map[i])
+		{ /* cell on continent? */
 			counts.size += 1;
 			
 			switch (vmap[i].contents) {
@@ -225,9 +225,9 @@ vmap_cont_scan (int *cont_map, const view_map_t *vmap)
 }
 
 /*
-Scan a real map as above.  Only the 'size' and 'unowned_cities'
-fields are valid.
-*/
+ * Scan a real map as above.  Only the 'size' and 'unowned_cities'
+ * fields are valid.
+ */
 
 scan_counts_t
 rmap_cont_scan (int *cont_map)
@@ -247,12 +247,10 @@ rmap_cont_scan (int *cont_map)
 	return counts;
 }
 
-/*
-Return TRUE if a location is on the edge of a continent.
-*/
+/* Return TRUE if a location is on the edge of a continent.  */
 
 int
-map_cont_edge (int *cont_map, long loc)
+map_cont_edge (const int *cont_map, long loc)
 {
 	long i, j;
 

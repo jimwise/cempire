@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: main.c,v 1.12 1998/08/09 00:04:37 jwise Exp $
+ * $Id: main.c,v 1.13 1998/08/09 00:14:55 jwise Exp $
  */
 
 /*
@@ -43,9 +43,7 @@ main (int argc, char *argv[])
 	sflg = 5;
 	Sflg = 10;
 
-	/*
-	 * extract command line options
-	 */
+	/* extract command line options */
 
 	while ((c = getopt (argc, argv, OPTFLAGS)) != EOF) {
 		switch (c) {
@@ -73,7 +71,7 @@ main (int argc, char *argv[])
 				exit (1);
 			}
 			break;
-		case '?': /* illegal option? */
+		case '?': /* illegal option */
 			errflg++;
 			break;
 		}
@@ -90,9 +88,9 @@ main (int argc, char *argv[])
 	save_interval = Sflg;
 
 	/* compute min distance between cities */
-	land = MAP_SIZE * (100 - WATER_RATIO) / 100; /* available land */
-	land /= NUM_CITY; /* land per city */
-	MIN_CITY_DIST = isqrt(land); /* distance between cities */
+	land = MAP_SIZE * (100 - WATER_RATIO) / 100;	/* available land		*/
+	land /= NUM_CITY;				/* land per city		*/
+	MIN_CITY_DIST = isqrt(land);			/* distance between cities	*/
 
 	empire(); /* call main routine */
 	return (0);

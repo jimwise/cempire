@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: util.c,v 1.30 2001/02/08 19:29:33 jwise Exp $
+ * $Id: util.c,v 1.31 2001/02/08 19:52:12 jwise Exp $
  */
 
 /* util.c -- various utility routines. */
@@ -232,6 +232,8 @@ check_obj_cargo (piece_info_t **list)
 void
 emp_panic (const char *file, const int line, const char *why)
 {
+	term_end();
+
 	if (why == NULL)
 		fprintf(stderr, "empire panic (file %s, line %d)\n", file, line);
 	else

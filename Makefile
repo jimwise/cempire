@@ -1,7 +1,7 @@
 #
 #	Copyright (C) 1987, 1988 Chuck Simmons
 #
-# $Id: Makefile,v 1.32 2001/02/06 23:39:30 jwise Exp $
+# $Id: Makefile,v 1.33 2001/02/07 01:45:31 jwise Exp $
 #
 # See the file COPYING, distributed with empire, for restriction
 # and warranty information.
@@ -84,11 +84,12 @@ INCLUDES=
 # Don't try to use this if you are using another compiler.  If cempire
 # isn't happy this way on your system, please let me know...
 #
-WARNS=-ansi -pedantic -Werror -Wall -W -pedantic -Wtraditional -Wshadow  \
-	-Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings \
+WARNS=-ansi -pedantic-errors -Werror -Wall -W -pedantic -Wtraditional \
+	-Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings \
 	-Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations \
-	-Wnested-externs -Winline -Wno-uninitialized -Wreturn-type \
-	-Wswitch
+	-Wnested-externs -Winline -Wundef -Wbad-function-cast -Wsign-compare
+
+# -Wconversion -Wredundant-decls -Waggregate-return
 
 #
 # If you want to debug cempire, you can turn on debugging here.  If you
@@ -141,14 +142,16 @@ lint: $(FILES)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f *.o $(TARGET)
+	rm -f *.o $(TARGET) cempire-$(VERSION).tar cempire-$(VERSION).tar.gz cempire-$(VERSION).shar cempire-$(VERSION).tar.gz.asc
 
 clobber:	clean
 	rm -f $(ARCHIVES)
 
+dist:	pgp
 tar:	cempire-$(VERSION).tar
 tgz:	cempire-$(VERSION).tar.gz
 shar:	cempire-$(VERSION).shar
+pgp:	cempire-$(VERSION).tar.gz.asc
 
 cempire-$(VERSION).tar: $(SOURCES)
 	(cd ..; \
@@ -160,5 +163,8 @@ cempire-$(VERSION).tar.gz: cempire-$(VERSION).tar
 
 cempire-$(VERSION).shar: $(SOURCES)
 	shar $(SOURCES) >cempire.shar
+
+cempire-$(VERSION).tar.gz.asc: cempire-$(VERSION).tar.gz
+	gpg -bat cempire-$(VERSION).tar.gz
 
 $(OFILES): extern.h empire.h

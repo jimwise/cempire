@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: term.c,v 1.69 2001/02/06 23:39:31 jwise Exp $
+ * $Id: term.c,v 1.70 2001/02/07 01:45:31 jwise Exp $
  */
 
 /*
@@ -125,8 +125,10 @@ huh (void)
 
 void
 #if defined(USE_NCURSES) || !defined(__GNUC__)
+/* ARGSUSED */
 get_str (char *buf, const int sizep)
 #else
+/* ARGSUSED */
 get_str (char *buf, const int sizep  __attribute__((__unused__)))
 #endif
 {

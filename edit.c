@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: edit.c,v 1.36 2001/10/23 04:44:11 jwise Exp $
+ * $Id: edit.c,v 1.37 2001/11/12 15:43:07 jwise Exp $
  */
 
 /* edit.c -- Routines to handle edit mode commands. */
@@ -523,11 +523,11 @@ e_city_info (long edit_cursor)
 	for (i = FIRST_OBJECT; i < NUM_OBJECTS; i++)
 	{
 		if (cityp->func[i] < 0)
-			snprintf (temp_buf, STRSIZE, "%c:%s; ", piece_attr[i].sname, func_name[FUNCI(cityp->func[i])]);
+			snprintf(temp_buf, STRSIZE, "%c:%s; ", piece_attr[i].sname, func_name[FUNCI(cityp->func[i])]);
 		else
-			snprintf (temp_buf, STRSIZE, "%c: %d;", piece_attr[i].sname, cityp->func[i]);
+			snprintf(temp_buf, STRSIZE, "%c: %d;", piece_attr[i].sname, cityp->func[i]);
 		
-		strncat (func_buf, temp_buf, STRSIZE);
+		strncat(func_buf, temp_buf, STRSIZE);
 	}
 
 	snprintf (junk_buf2, STRSIZE, "City at location %ld will complete %s on round %ld",

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.50 1998/03/09 20:48:50 jim Exp $
+ * $Id: display.c,v 1.51 1998/03/09 21:20:26 jim Exp $
  */
 
 /*
@@ -529,10 +529,6 @@ help (char **text, int nlines)
 	if (helpwin == NULL)
 		panic("no help window");
 
-	scrollok(helpwin, TRUE);
-	wscrl(helpwin, help_height);
-	scrollok(helpwin, FALSE);
-
 	wattron(helpwin, A_REVERSE);
         mvwprintw(helpwin, 1, 1, text[0]); /* mode */
         mvwprintw(helpwin, 1, 40, "See empire(6) for more information.");
@@ -572,18 +568,17 @@ help (char **text, int nlines)
         }
 
 	box(helpwin, 0, 0);
-	wmove(helpwin, 0, 2);
-	wprintw(helpwin, "(%d,%d)", help_height, help_width);
         wrefresh(helpwin);
 
 	prompt("Press any key to continue");
 	get_chx();
 	prompt("");
 
-	scrollok(helpwin, TRUE);
-	wscrl(helpwin, -help_height);
-
+	wclear(helpwin);
 	wrefresh(helpwin);
 
 	delwin(helpwin);
+
+	if (whose_map == USER)
+		print_sector_u(save_sector);
 }

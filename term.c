@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.51 1998/03/04 13:58:01 jim Exp $
+ * $Id: term.c,v 1.52 1998/03/04 14:25:58 jim Exp $
  */
 
 /*
@@ -34,7 +34,7 @@ screen refreshed as the user has had time to read these lines.
 #include "extern.h"
 
 void    delay (void);
-void	emp_beep (void);
+void	alert (void);
 void    error (char *, ...);
 int	getyn (char *message);
 char	get_chx (void);
@@ -372,8 +372,7 @@ term_init (void)
 }
 
 void
-emp_beep (void)
+alert (void)
 {
 	beep();
-	flash();
 }

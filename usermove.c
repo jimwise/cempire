@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: usermove.c,v 1.19 1998/03/03 13:51:06 jim Exp $
+ * $Id: usermove.c,v 1.20 1998/03/04 14:25:59 jim Exp $
  */
 
 /*
@@ -586,7 +586,7 @@ ask_user (piece_info_t *obj)
 	case 'P': user_redraw (); break;
 	case '?': describe_obj (obj); break;
 
-	default: emp_beep ();
+	default: alert();
 	}
     }
 }
@@ -635,7 +635,7 @@ void
 user_fill (piece_info_t *obj)
 {
 	if (obj->type != TRANSPORT && obj->type != CARRIER)
-		emp_beep ();
+		alert();
 	else obj->func = FILL;
 }
 
@@ -672,7 +672,7 @@ user_set_dir (piece_info_t *obj)
 	case 'X': obj->func = MOVE_S ; break;
 	case 'Z': obj->func = MOVE_SW; break;
 	case 'A': obj->func = MOVE_W ; break;
-	default: emp_beep (); break;
+	default: alert(); break;
 	}
 }
 
@@ -714,7 +714,7 @@ void
 user_land (piece_info_t *obj)
 {
 	if (obj->type != FIGHTER)
-		emp_beep ();
+		alert();
 	else
 		obj->func = LAND;
 }
@@ -736,7 +736,7 @@ Set an army's function to WFTRANSPORT.
 void
 user_transport (piece_info_t *obj)
 {
-	if (obj->type != ARMY) emp_beep ();
+	if (obj->type != ARMY) alert();
 	else obj->func = WFTRANSPORT;
 }
 
@@ -747,7 +747,7 @@ Set an army's function to ARMYATTACK.
 void
 user_armyattack (piece_info_t *obj)
 {
-	if (obj->type != ARMY) emp_beep ();
+	if (obj->type != ARMY) alert ();
 	else obj->func = ARMYATTACK;
 }
 
@@ -758,7 +758,7 @@ Set a ship's function to REPAIR.
 void
 user_repair (piece_info_t *obj)
 {
-	if (obj->type == ARMY || obj->type == FIGHTER) emp_beep ();
+	if (obj->type == ARMY || obj->type == FIGHTER) alert ();
 	else obj->func = REPAIR;
 }
 
@@ -775,13 +775,13 @@ user_set_city_func (piece_info_t *obj)
 
 	cityp = find_city (obj->loc);
 	if (!cityp || cityp->owner != USER) {
-		emp_beep ();
+		alert ();
 		return;
 	}
 
 	type = get_piece_name();
 	if (type == NOPIECE) {
-		emp_beep ();
+		alert ();
 		return;
 	}
 	
@@ -810,7 +810,7 @@ user_set_city_func (piece_info_t *obj)
 		e_city_attack (cityp, type);
 		break;
 	default: /* bad command? */
-		emp_beep ();
+		alert ();
 		break;
 	}
 }
@@ -825,7 +825,7 @@ user_build (piece_info_t *obj)
 	city_info_t *cityp;
 
 	if (user_map[obj->loc].contents != 'O') { /* no user city here? */
-		emp_beep ();
+		alert ();
 		return;
 	}
 	cityp = find_city (obj->loc);

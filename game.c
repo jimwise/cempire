@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: game.c,v 1.5 1998/02/25 23:26:05 jim Exp $
+ * $Id: game.c,v 1.6 1998/02/26 21:36:05 jim Exp $
  */
 
 /*
@@ -24,10 +24,25 @@ game.c -- Routines to initialize, save, and restore a game.
 #include "empire.h"
 #include "extern.h"
 
+void	find_cont (void);
 int	find_next (long *);
 int	good_cont (long);
+void	inconsistent (void);
+void	init_game (void);
+void	make_map (void);
+void	make_pair (void);
 void	mark_cont (long);
+void	place_cities (void);
+void	print_movie_cell (char *, int, int, int, int);
+void	read_embark (piece_info_t *, int);
 long	remove_land (long, long);
+long	regen_land (long);
+long    remove_land (long, long);
+void	replay_movie (void);
+int	restore_game (void);
+void	save_game (void);
+void	save_movie_screen (void);
+int	select_cities (void);
 void	stat_display (char *, int);
 int	xread (FILE *, char *, int);
 int	xwrite (FILE *, char *, int);
@@ -38,9 +53,9 @@ on the map, select cities for each opponent, and zero out the lists of
 pieces on the board.
 */
 
-void init_game () {
-	void make_map(), place_cities();
-
+void
+init_game (void)
+{
 	long i;
 
 	kill_display (); /* nothing on screen */
@@ -103,7 +118,9 @@ at program start up.
 static int height[2][MAP_SIZE];
 static int height_count[MAX_HEIGHT+1];
 
-void make_map () {
+void
+make_map (void)
+{
 	int from, to, k;
 	long i, j, sum, loc;
 
@@ -174,9 +191,9 @@ for a city, we remove land cells which are too close to the city.
 /* avoid compiler problems with large automatic arrays */
 static long land[MAP_SIZE];
 
-void place_cities () {
-	long regen_land();
-
+void
+place_cities (void)
+{
 	long placed, i, loc;
 	long num_land;
 
@@ -210,8 +227,8 @@ put all land in the list, decrement the min_city_dist, and then
 remove any land which is too close to a city.
 */
 
-long regen_land (placed)
-long placed;
+long
+regen_land (long placed)
 {
 	long num_land;
 	long i;
@@ -237,8 +254,8 @@ long placed;
 Remove land that is too close to a city.
 */
 
-long remove_land (loc, num_land)
-long loc, num_land;
+long
+remove_land (long loc, long num_land)
 {
 	long new, i;
 
@@ -302,9 +319,9 @@ static cont_t cont_tab[MAX_CONT]; /* list of good continenets */
 static int rank_tab[MAX_CONT]; /* indices to cont_tab in order of rank */
 static pair_t pair_tab[MAX_CONT*MAX_CONT]; /* ranked pairs of continents */
 
-int select_cities () {
-	void find_cont(), make_pair();
-
+int
+select_cities (void)
+{
 	long compi, useri;
 	city_info_t *compp, *userp;
 	int comp_cont, user_cont;
@@ -352,7 +369,9 @@ Find all continents with 2 cities or more, one of which must be a shore
 city.  We rank the continents.
 */
 
-void find_cont () {
+void
+find_cont (void)
+{
 	long i;
 	long mapi;
 
@@ -370,8 +389,8 @@ Find the next continent and insert it in the rank table.
 If there are no more continents, we return false.
 */
 
-int find_next (mapi)
-long *mapi;
+int
+find_next (long *mapi)
 {
 	long i, val;
 
@@ -406,8 +425,8 @@ continent and return true.  Otherwise we return false.
 
 static long ncity, nland, nshore;
 
-int good_cont (mapi)
-long mapi;
+int
+good_cont (long mapi)
 {
 	long val;
 
@@ -442,8 +461,7 @@ cities for the continent.  We then examine each surrounding cell.
 */
 
 void
-mark_cont (mapi)
-long mapi;
+mark_cont (long mapi)
 {
 	int i;
 
@@ -470,7 +488,9 @@ win with.  Our ranking is simply based on the difference in value
 between the user's continent and the computer's continent.
 */
 
-void make_pair () {
+void
+make_pair (void)
+{
 	int i, j, k, npair;
 	long val;
 
@@ -505,7 +525,9 @@ tell the user why.
 #define wbuf(buf) if (!xwrite (f, (char *)buf, sizeof (buf))) return
 #define wval(val) if (!xwrite (f, (char *)&val, sizeof (val))) return
 
-void save_game () {
+void
+save_game (void)
+{
 	FILE *f; /* file to save game in */
 
 	f = fopen ("empsave.dat", "w"); /* open for output */
@@ -542,8 +564,9 @@ We return TRUE if we succeed, otherwise FALSE.
 #define rbuf(buf) if (!xread (f, (char *)buf, sizeof(buf))) return (FALSE);
 #define rval(val) if (!xread (f, (char *)&val, sizeof(val))) return (FALSE);
 
-int restore_game () {
-	void read_embark();
+int
+restore_game (void)
+{
 	
 	FILE *f; /* file to save game in */
 	long i;
@@ -629,12 +652,9 @@ We then loop through the pieces at the ship's location until
 the ship has the same amount of cargo it previously had.
 */
 
-void read_embark (list, piece_type)
-piece_info_t *list;
-int piece_type;
+void
+read_embark (piece_info_t *list, int piece_type)
 {
-	void inconsistent();
-
 	piece_info_t *ship;
 	piece_info_t *obj;
 	int count;
@@ -654,8 +674,10 @@ int piece_type;
 	}
 }
 
-void inconsistent () {
-	(void) printf ("empsave.dat is inconsistent.  Please remove it.\n");
+void
+inconsistent (void)
+{
+	printf ("empsave.dat is inconsistent.  Please remove it.\n");
 	exit (1);
 }
 
@@ -664,10 +686,8 @@ Write a buffer to a file.  If we cannot write everything, return FALSE.
 Also, tell the user why the write did not work if it didn't.
 */
 
-int xwrite (f, buf, size)
-FILE *f;
-char *buf;
-int size;
+int
+xwrite (FILE *f, char *buf, int size)
 {
 	int bytes;
  
@@ -688,10 +708,8 @@ Read a buffer from a file.  If the read fails, we tell the user why
 and return FALSE.
 */
 
-int xread (f, buf, size)
-FILE *f;
-char *buf;
-int size;
+int
+xread (FILE *f, char *buf, int size)
 {
 	int bytes;
 
@@ -717,7 +735,7 @@ extern char city_char[];
 static char mapbuf[MAP_SIZE];
 
 void
-save_movie_screen ()
+save_movie_screen (void)
 {
 	FILE *f; /* file to save game in */
 	long i;
@@ -750,15 +768,12 @@ print it using a zoomed display.
 */
 
 void
-replay_movie ()
+replay_movie (void)
 {
-	void print_movie_cell();
-
 	FILE *f; /* file to save game in */
 	int row_inc, col_inc;
 	int r, c;
 	int round;
-
 	
 	f = fopen ("empmovie.dat", "r"); /* open for input */
 	if (f == NULL) {
@@ -801,9 +816,7 @@ The "xxxxx" field is the cumulative cost of building the hardware.
 static char *pieces = "OAFPDSTCBZXafpdstcbz";
 
 void
-stat_display (mbuf, round)
-char *mbuf;
-int round;
+stat_display (char *mbuf, int round)
 {
 	long i;
 	int counts[2*NUM_OBJECTS+2];
@@ -841,10 +854,7 @@ Print a single cell in condensed format.
 extern char zoom_list[];
 
 void
-print_movie_cell (mbuf, row, col, row_inc, col_inc)
-char *mbuf;
-int row, col;
-int row_inc, col_inc;
+print_movie_cell (char *mbuf, int row, int col, int row_inc, int col_inc)
 {
 	int r, c;
 	char cell;

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: compmove.c,v 1.16 1998/02/27 02:37:02 jim Exp $
+ * $Id: compmove.c,v 1.17 1998/02/27 02:50:40 jim Exp $
  */
 
 /*
@@ -76,7 +76,9 @@ comp_move (int nmoves)
 		do_cities (); /* handle city production */
 		do_pieces (); /* move pieces */
 		
-		if (save_movie) save_movie_screen ();
+		if (save_movie)
+			save_movie_screen ();
+
 		check_endgame (); /* see if game is over */
 
 		topini ();

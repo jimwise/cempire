@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: empire.c,v 1.7 1998/02/27 01:44:23 jim Exp $
+ * $Id: empire.c,v 1.8 1998/02/27 02:50:41 jim Exp $
  */
 
 /*
@@ -15,7 +15,6 @@ parser, and the simple commands.
 */
 
 #include <stdio.h>
-#include <curses.h>
 #include "empire.h"
 #include "extern.h"
 
@@ -41,7 +40,7 @@ empire (void)
 	clear_screen (); /* nothing on screen */
 	pos_str (7, 0, VERSION_STRING);
 	pos_str (8, 0, "Detailed directions are in EMPIRE.DOC\n");
-	refresh ();
+	redraw ();
 
 	if (!restore_game ()) /* try to restore previous game */
 		init_game (); /* otherwise init a new game */
@@ -57,7 +56,7 @@ empire (void)
 	    }
 	    else {
 		prompt (0); /* blank top line */
-		refresh ();
+		redraw ();
 	        prompt ("Your orders? ");
 	        order = get_chx (); /* get a command */
 		do_command (order);
@@ -157,13 +156,13 @@ do_command (char orders)
 		break;
 	
 	case 'Z': /* print compressed map */
-		clear();
+		clear_screen();
 		print_zoom (user_map);
-		refresh();
+		redraw();
 		break;
 
 	case '\014': /* redraw the screen */
-		redraw ();
+		redraw();
 		break;
 
 	case '+': /* change debug state */
@@ -332,7 +331,7 @@ Print a "zoomed" version of the computer's map.
 void
 c_movie (void)
 {
-	clear ();
+	clear_screen();
 
 	for (;;) {
 		comp_move (1);

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: data.c,v 1.8 1998/08/08 21:59:03 jwise Exp $
+ * $Id: data.c,v 1.9 1998/08/08 23:21:34 jwise Exp $
  */
 
 /*
@@ -190,7 +190,7 @@ const char *help_cmd[] = {
 	"Zoom:     display compressed map",
 	"<ctrl-L>: redraw screen"
 };
-int cmd_lines = 19;
+const int cmd_lines = 19;
 
 const char *help_user[] = {
 	"USER MODE",

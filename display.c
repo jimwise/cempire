@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.67 1998/08/08 22:07:34 jwise Exp $
+ * $Id: display.c,v 1.68 1998/08/08 23:21:35 jwise Exp $
  */
 
 /*
@@ -43,12 +43,12 @@ void    help (const char **, int);
 void	kill_display (void);
 int     move_cursor (long *, int);
 int     on_screen (long);
-void	print_movie_screen(char *);
+void	print_movie_screen(const char *);
 void    print_sector (char, view_map_t[], int);
-void    print_pzoom (const char *, path_map_t *, view_map_t *);
-void    print_pzoom_cell (path_map_t *, view_map_t *, int, int, int, int);
-void    print_zoom (view_map_t *);
-void    print_zoom_cell (view_map_t *, int, int, int, int);
+void    print_pzoom (const char *, const path_map_t *, const view_map_t *);
+void    print_pzoom_cell (const path_map_t *, const view_map_t *, int, int, int, int);
+void    print_zoom (const view_map_t *);
+void    print_zoom_cell (const view_map_t *, int, int, int, int);
 void	sector_change (void);
 void	show_loc (view_map_t[], long);
 
@@ -343,7 +343,7 @@ on_screen (long loc)
 char zoom_list[] = "XO*tcbsdpfaTCBSDPFAzZ+. ";
 
 void
-print_zoom (view_map_t *vmap)
+print_zoom (const view_map_t *vmap)
 {
 	int row_inc, col_inc;
 	int r, c;
@@ -400,7 +400,7 @@ print_zoom (view_map_t *vmap)
 /* Print a single cell in condensed format. */
 
 void
-print_zoom_cell (view_map_t *vmap, int row, int col, int row_inc, int col_inc)
+print_zoom_cell (const view_map_t *vmap, int row, int col, int row_inc, int col_inc)
 {
 	int r, c;
 	char cell;
@@ -418,7 +418,7 @@ print_zoom_cell (view_map_t *vmap, int row, int col, int row_inc, int col_inc)
 /* Print a condensed version of a pathmap. */
 
 void
-print_pzoom (const char *s, path_map_t *pmap, view_map_t *vmap)
+print_pzoom (const char *s, const path_map_t *pmap, const view_map_t *vmap)
 {
 	int row_inc, col_inc;
 	int r, c;
@@ -482,7 +482,7 @@ print_pzoom (const char *s, path_map_t *pmap, view_map_t *vmap)
  */
 
 void
-print_pzoom_cell (path_map_t *pmap, view_map_t *vmap, int row, int col, int row_inc, int col_inc)
+print_pzoom_cell (const path_map_t *pmap, const view_map_t *vmap, int row, int col, int row_inc, int col_inc)
 {
 	int r, c;
 	int sum, d;
@@ -543,7 +543,7 @@ display_score (void)
  */
 
 void
-print_movie_screen(char *mapbuf)
+print_movie_screen(const char *mapbuf)
 {
 	int row_inc, col_inc;
 	int r, c, i, j;

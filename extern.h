@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: extern.h,v 1.70 1998/08/08 22:56:29 jwise Exp $
+ * $Id: extern.h,v 1.71 1998/08/08 23:21:35 jwise Exp $
  */
 
 /* extern.h -- define global non-constant storage.  */
@@ -124,10 +124,10 @@ void    display_score (void);
 void    help (const char **, int);
 void	kill_display (void);
 int	move_cursor (long *, int);
-void    print_movie_screen(char *);
-void	print_pzoom (const char *, path_map_t *, view_map_t *);
+void    print_movie_screen (const char *);
+void	print_pzoom (const char *, const path_map_t *, const view_map_t *);
 void	print_sector (char, view_map_t[], int);
-void	print_zoom (view_map_t *);
+void	print_zoom (const view_map_t *);
 void    sector_change (void);
 
 /* edit routines (edit.c) */
@@ -147,18 +147,18 @@ void	save_game (void);
 void	save_movie_screen (void);
 int	select_cities (void);
 
-/* map routines (map.c)*/
+/* map routines (map.c) */
 int	rmap_shore (long);
-int	vmap_at_sea (view_map_t *, long);
+int	vmap_at_sea (const view_map_t *, long);
 void	vmap_cont (int *, view_map_t *, long, char);
 scan_counts_t	vmap_cont_scan (int *, view_map_t *);
-long	vmap_find_aobj (path_map_t[], view_map_t *, long, move_info_t *);
+long	vmap_find_aobj (path_map_t[], const view_map_t *, long, const move_info_t *);
 long	vmap_find_dest (path_map_t[], view_map_t[], long, long, int, int);
-long	vmap_find_dir (path_map_t[], view_map_t *, long, const char *, const char *);
-long	vmap_find_lobj (path_map_t[], view_map_t *, long, move_info_t *);
-long	vmap_find_lwobj (path_map_t[], view_map_t *, long, move_info_t *, int);
-long	vmap_find_wobj (path_map_t[], view_map_t *, long, move_info_t *);
-long	vmap_find_wlobj (path_map_t[], view_map_t *, long, move_info_t *);
+long	vmap_find_dir (path_map_t[], const view_map_t *, long, const char *, const char *);
+long	vmap_find_lobj (path_map_t[], const view_map_t *, long, const move_info_t *);
+long	vmap_find_lwobj (path_map_t[], const view_map_t *, long, const move_info_t *, int);
+long	vmap_find_wobj (path_map_t[], const view_map_t *, long, const move_info_t *);
+long	vmap_find_wlobj (path_map_t[], const view_map_t *, long, const move_info_t *);
 void	vmap_mark_adjacent (path_map_t[], long);
 void	vmap_mark_near_path (path_map_t[], long);
 void	vmap_mark_path (path_map_t *, view_map_t *, long);

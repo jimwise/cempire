@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: extern.h,v 1.20 1998/02/26 22:29:00 jim Exp $
+ * $Id: extern.h,v 1.21 1998/02/26 23:16:23 jim Exp $
  */
 
 /*
@@ -132,6 +132,15 @@ void	print_sector (char, view_map_t[], int);
 void	print_xzoom (view_map_t *);
 void	print_zoom (view_map_t *);
 void    sector_change (void);
+
+/* edit routines (edit.c) */
+void    e_city_attack (city_info_t *, int);
+void	e_city_explore (city_info_t *, int);
+void    e_city_fill (city_info_t *, int);
+void    e_city_random (city_info_t *, int);
+void    e_city_repair (city_info_t *, int);
+void    e_city_stasis (city_info_t *, int);
+void    e_city_wake (city_info_t *, int);
 
 /* game routines (game.c) */
 void	init_game (void);

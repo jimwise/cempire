@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.7 1998/02/25 22:40:27 jim Exp $
+ * $Id: term.c,v 1.8 1998/02/25 23:37:49 jim Exp $
  */
 
 /*
@@ -47,9 +47,7 @@ static int need_delay;
 
 void
 /* VARARGS1 */
-pdebug (s, a, b, c, d, e, f, g, h)
-char *s;
-int a, b, c, d, e, f, g, h;
+pdebug (char *s, ...)
 {
 	if (!print_debug) return;
 	comment (s, a, b, c, d, e, f, g, h);
@@ -77,15 +75,7 @@ topmsg(int linep, char *buf, ...)
 
 	va_start(ap, buf);
 
-	if ((linep < 1) || (linep > NUMTOPS))
-		linep = 1;
-
-	move (linep - 1, 0);
-	
-	if (buf != NULL && strlen (buf) > 0)
-		addprintf (buf, ap);
-	
-	clrtoeol();
+	vtopmsg(linep, buf, ap);
 
 	va_end(ap);
 }
@@ -187,13 +177,19 @@ comment (char *buf, ...)
 
 	va_start(ap, buf);
 
+	vcomment(buf, ap);
+
+	va_end(ap);
+}
+
+void
+vcomment (char *buf, va_list ap)
+{
 	if (need_delay) delay ();
 	topmsg (1, 0);
 	topmsg (2, 0);
 	vtopmsg (3, buf, ap);
 	need_delay = (buf != 0);
-
-	va_end(ap);
 }
 	
 /*

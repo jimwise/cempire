@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: game.c,v 1.15 1998/02/28 00:32:17 jim Exp $
+ * $Id: game.c,v 1.16 1998/02/28 00:39:01 jim Exp $
  */
 
 /*
@@ -527,7 +527,7 @@ save_game (void)
 
 	f = fopen ("empsave.dat", "w"); /* open for output */
 	if (f == NULL) {
-		perror ("Cannot save empsave.dat");
+		error ("Cannot save empsave.dat");
 		return;
 	}
 	wbuf (map);
@@ -689,11 +689,11 @@ xwrite (FILE *f, char *buf, int size)
  
 	bytes = fwrite (buf, 1, size, f);
 	if (bytes == -1) {
-		perror ("Write to save file failed");
+		error ("Write to save file failed");
 		return (FALSE);
 	}
 	if (bytes != size) {
-		perror ("Cannot complete write to save file.\n");
+		error ("Cannot complete write to save file.\n");
 		return (FALSE);
 	}
 	return (TRUE);
@@ -711,11 +711,11 @@ xread (FILE *f, char *buf, int size)
 
 	bytes = fread (buf, 1, size, f);
 	if (bytes == -1) {
-		perror ("Read from save file failed");
+		error ("Read from save file failed");
 		return (FALSE);
 	}
 	if (bytes != size) {
-		perror ("Saved file is too short.\n");
+		error ("Saved file is too short.\n");
 		return (FALSE);
 	}
 	return (TRUE);
@@ -738,7 +738,7 @@ save_movie_screen (void)
 
 	f = fopen ("empmovie.dat", "a"); /* open for append */
 	if (f == NULL) {
-		perror ("Cannot open empmovie.dat");
+		error ("Cannot open empmovie.dat");
 		return;
 	}
 
@@ -772,7 +772,7 @@ replay_movie (void)
 	
 	f = fopen ("empmovie.dat", "r"); /* open for input */
 	if (f == NULL) {
-		perror ("Cannot open empmovie.dat");
+		error ("Cannot open empmovie.dat");
 		return;
 	}
 	round = 0;

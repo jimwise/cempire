@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: map.c,v 1.20 1998/08/09 00:16:35 jwise Exp $
+ * $Id: map.c,v 1.21 1998/08/09 00:19:34 jwise Exp $
  */
 
 /*
@@ -27,7 +27,6 @@ void	expand_perimeter (path_map_t *, const view_map_t *, const move_info_t *, pe
 void	expand_prune (view_map_t *, path_map_t *, long, int, perimeter_t *, int *);
 int	objective_cost (const view_map_t *, const move_info_t *, long, int);
 int	rmap_at_sea (long);
-void	rmap_cont (int *, long, char);
 scan_counts_t	rmap_cont_scan (int *cont_map);
 void	rmap_mark_up_cont ( int *, long, char);
 int     rmap_shore (long);
@@ -74,7 +73,7 @@ static long best_loc;
  * or lakes.
  */
 
-void
+
 vmap_cont (int *cont_map, const view_map_t *vmap, long loc, char bad_terrain)
 {
 	bzero(cont_map, MAP_SIZE * sizeof(int));
@@ -125,20 +124,6 @@ vmap_mark_up_cont (int *cont_map, const view_map_t *vmap, long loc, char bad_ter
 		}
 		SWAP (from, to);
 	}
-}
-
-/*
- * Map out a continent.  We are given a location on the continent.
- * We mark each square that is part of the continent.  By adjusting
- * the value of 'bad_terrain', this routine can map either continents
- * of land, or lakes.
- */
-
-void
-rmap_cont (int *cont_map, long loc, char bad_terrain)
-{
-	bzero(cont_map, MAP_SIZE * sizeof(int));
-	rmap_mark_up_cont (cont_map, loc, bad_terrain);
 }
 
 /*

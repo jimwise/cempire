@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: usermove.c,v 1.24 1998/03/10 23:36:00 jim Exp $
+ * $Id: usermove.c,v 1.25 1998/03/10 23:37:38 jim Exp $
  */
 
 /*
@@ -1025,16 +1025,6 @@ user_cancel_auto (void)
 		automove = FALSE;
 		info("Auto mode cancelled.");
 	}
-}
-
-/*
-Redraw the screen.
-*/
-
-void
-user_redraw (void)
-{
-	redraw ();
 }
 
 /*

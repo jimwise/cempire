@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: math.c,v 1.14 1998/08/09 00:41:22 jwise Exp $
+ * $Id: math.c,v 1.15 2001/02/07 03:19:02 jwise Exp $
  */
 
 /*
@@ -49,12 +49,9 @@ rand_long (long high)
 }
 
 /*
- * Return the distance between two locations.  This is simply
- * the max of the absolute differnce between the x and y coordinates.
+ * Return the distance between two locations.
  */
 
-#define MIN(a,b) ((a)<(b) ? (a) : (b))
-#define MAX(a,b) ((a)>(b) ? (a) : (b))
 #define ABS(a) ((a) < 0 ? -(a) : (a))
 
 long
@@ -67,7 +64,7 @@ dist (long a, long b)
 	bx = loc_row (b);
 	by = loc_col (b);
 
-	return (MAX (ABS (ax-bx), ABS (ay-by)));
+	return (isqrt(ABS (ax-bx) * (ABS (ax-bx)) + ( ABS (ay-by) * ABS (ay-by))));
 }
 
 /*

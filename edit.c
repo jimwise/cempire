@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: edit.c,v 1.30 1998/08/09 00:41:19 jwise Exp $
+ * $Id: edit.c,v 1.31 1998/09/11 22:10:01 jwise Exp $
  */
 
 /* edit.c -- Routines to handle edit mode commands. */
@@ -138,7 +138,7 @@ e_cursor (long *edit_cursor)
 	
 	while (1)
 	{
-		e = toupper(get_cq());
+		e = toupper(get_chx());
 		p = strchr(dirchars, e);
 		if (!p)
 			break;

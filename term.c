@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: term.c,v 1.67 1998/08/09 01:25:55 jwise Exp $
+ * $Id: term.c,v 1.68 1998/09/11 22:10:02 jwise Exp $
  */
 
 /*
@@ -40,7 +40,6 @@ void	alert (void);
 void    error (const char *, ...);
 int	getyn (const char *message);
 char	get_chx (void);
-char    get_cq (void);
 void	get_str (char *, const int);
 void    huh (void);
 void	info (const char *, ...);
@@ -139,9 +138,11 @@ get_str (char *buf, const int sizep)
 char
 get_chx (void)
 {
-	uchar c;
+        char c;
 
-	c = get_cq ();
+	crmode();
+        c = wgetch(statuswin);
+        nocrmode();
 
 	return (toupper(c));
 }
@@ -175,19 +176,6 @@ get_int (const char *message, int low, int high)
 		else
 			error ("Please enter an integer in the range %d..%d.", low, high);
 	}
-}
-
-/* Input a character quietly. */
-
-char
-get_cq (void)
-{
-	char c;
-
-	crmode();
-	c = wgetch(statuswin);
-	nocrmode();
-	return(c);
 }
 
 /*

@@ -1,7 +1,7 @@
 #
 #	Copyright (C) 1987, 1988 Chuck Simmons
 #
-# $Id: Makefile,v 1.25 1998/09/11 21:29:10 jwise Exp $
+# $Id: Makefile,v 1.26 1998/09/11 22:10:00 jwise Exp $
 #
 # See the file COPYING, distributed with empire, for restriction
 # and warranty information.
@@ -34,7 +34,7 @@ CC=gcc
 #					you're on a BSD system (since L_ctermid doesn't get defined
 #					in stdio.h...)
 #
-DEFINES=-DDEBUG -D__EXTENSIONS__
+DEFINES=-DDEBUG -D__EXTENSIONS__ -DUSE_NCURSES
 
 #
 # 3.) Pick one of the following LIBS lines
@@ -54,7 +54,7 @@ DEFINES=-DDEBUG -D__EXTENSIONS__
 #	wonderful package system.
 #		LIBS=-L/usr/pkg/lib -lncurses
 #
-LIBS=-lcurses
+LIBS=-L/usr/pkg/lib -lncurses
 
 #
 # 4.) Pick your includes
@@ -70,7 +70,7 @@ LIBS=-lcurses
 #	use this if you have ncurses installed under NetBSD's package system.
 #		INCLUDES=-I/usr/pkg/include
 #
-INCLUDES=
+INCLUDES=-I/usr/pkg/include
 
 #
 # The following turns on _extremely_ pedantic error checking for gcc or egcs.

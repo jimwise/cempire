@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: usermove.c,v 1.25 1998/03/10 23:37:38 jim Exp $
+ * $Id: usermove.c,v 1.26 1998/08/08 19:48:40 jwise Exp $
  */
 
 /*
@@ -21,7 +21,7 @@ usermove.c -- Let the user move her troops.
 
 void	ask_user (piece_info_t *);
 int	awake (piece_info_t *);
-void	fatal (piece_info_t *, long, char *, char *);
+void	fatal (piece_info_t *, long, const char *, const char *);
 void	move_armyattack (piece_info_t *);
 void	move_armyload (piece_info_t *);
 void	move_army_to_city (piece_info_t *, long);
@@ -267,7 +267,7 @@ move_explore (piece_info_t *obj)
 {
 	path_map_t path_map[MAP_SIZE];
 	long loc;
-	char *terrain;
+	const char *terrain;
 
 	switch (obj->type) {
 	case ARMY:
@@ -506,7 +506,7 @@ move_to_dest (piece_info_t *obj, long dest)
 {
 	path_map_t path_map[MAP_SIZE];
 	int fterrain;
-	char *mterrain;
+	const char *mterrain;
 	long new_loc;
 	
 	switch (obj->type) {
@@ -1073,7 +1073,7 @@ print out the response and kill the object.
 */
 
 void
-fatal (piece_info_t *obj, long loc, char *message, char *response)
+fatal (piece_info_t *obj, long loc, const char *message, const char *response)
 {
 	if (getyn (message)) {
 		info(response);

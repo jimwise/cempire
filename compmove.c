@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: compmove.c,v 1.38 1998/08/08 18:08:36 jwise Exp $
+ * $Id: compmove.c,v 1.39 1998/08/08 19:48:39 jwise Exp $
  */
 
 /*
@@ -60,7 +60,7 @@ comp_move (int nmoves)
 {
 	int i;
 	piece_type_t j;
-	piece_info_t *obj;
+	const piece_info_t *obj;
 
 	/* Update our view of the world. */
 	

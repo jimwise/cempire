@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: object.c,v 1.20 1998/08/08 19:27:04 jwise Exp $
+ * $Id: object.c,v 1.21 1998/08/08 19:48:40 jwise Exp $
  */
 
 /*
@@ -429,7 +429,7 @@ move_sat1 (piece_info_t *obj)
 
 	if (!map[new_loc].on_board)
 	{
-		switch ((int) obj->func)
+		switch (obj->func)
 		{
 		    case MOVE_NE:
 			obj->func = bounce (obj->loc, MOVE_NW, MOVE_SE, MOVE_SW);

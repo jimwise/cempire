@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.22 1998/03/02 15:03:41 jim Exp $
+ * $Id: term.c,v 1.23 1998/03/02 15:09:28 jim Exp $
  */
 
 /*
@@ -547,7 +547,7 @@ term_init (void)
 	if (cols > MAP_WIDTH + NUMSIDES)
 		cols = MAP_WIDTH + NUMSIDES;
 	
-	topwin = newwin(NUMTOPS, cols, 0, 0);
+	topwin = newwin(NUMTOPS, cols-12, 0, 0);
 }
 
 /*

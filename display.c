@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.16 1998/03/02 15:03:40 jim Exp $
+ * $Id: display.c,v 1.17 1998/03/02 15:09:26 jim Exp $
  */
 
 /*
@@ -399,7 +399,7 @@ print_zoom (view_map_t *vmap)
 	for (c = 0; c < MAP_WIDTH; c += col_inc)
 	print_zoom_cell (vmap, r, c, row_inc, col_inc);
 
-	pos_str (0, 0, "Round #%d", date);
+	topmsg(0, "Round #%d", date);
 	
 	redraw ();
 }

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: usermove.c,v 1.21 1998/03/06 22:40:30 jim Exp $
+ * $Id: usermove.c,v 1.22 1998/03/10 22:03:51 jim Exp $
  */
 
 /*
@@ -851,7 +851,6 @@ user_dir (piece_info_t *obj, direction_t dir)
 	}
 	if (!map[loc].on_board) {
 		error ("You cannot move to the edge of the world.");
-		delay ();
 		return;
 	}
 	switch (obj->type) {

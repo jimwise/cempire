@@ -1,7 +1,7 @@
 #
 #	Copyright (C) 1987, 1988 Chuck Simmons
 #
-# $Id: Makefile,v 1.31 2001/01/13 03:09:23 jwise Exp $
+# $Id: Makefile,v 1.32 2001/02/06 23:39:30 jwise Exp $
 #
 # See the file COPYING, distributed with empire, for restriction
 # and warranty information.
@@ -84,10 +84,11 @@ INCLUDES=
 # Don't try to use this if you are using another compiler.  If cempire
 # isn't happy this way on your system, please let me know...
 #
-WARNS=-ansi -Wall -W -pedantic -Wtraditional -Wshadow \
+WARNS=-ansi -pedantic -Werror -Wall -W -pedantic -Wtraditional -Wshadow  \
 	-Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings \
 	-Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations \
-	-Wnested-externs -Winline
+	-Wnested-externs -Winline -Wno-uninitialized -Wreturn-type \
+	-Wswitch
 
 #
 # If you want to debug cempire, you can turn on debugging here.  If you

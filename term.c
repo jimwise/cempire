@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: term.c,v 1.68 1998/09/11 22:10:02 jwise Exp $
+ * $Id: term.c,v 1.69 2001/02/06 23:39:31 jwise Exp $
  */
 
 /*
@@ -124,11 +124,19 @@ huh (void)
 /* Get a string from the user, echoing characters all the while. */
 
 void
+#if defined(USE_NCURSES) || !defined(__GNUC__)
 get_str (char *buf, const int sizep)
+#else
+get_str (char *buf, const int sizep  __attribute__((__unused__)))
+#endif
 {
 	echo();
 	nocrmode();
+#ifdef USE_NCURSES
 	wgetnstr(statuswin, buf, sizep);
+#else
+	wgetstr(statuswin, buf);
+#endif
 	crmode();
 	noecho();
 }

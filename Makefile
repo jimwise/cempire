@@ -1,7 +1,7 @@
 #
 #	Copyright (C) 1987, 1988 Chuck Simmons
 #
-# $Id: Makefile,v 1.37 2001/02/08 19:16:56 jwise Exp $
+# $Id: Makefile,v 1.38 2001/02/08 19:32:34 jwise Exp $
 #
 # See the file COPYING, distributed with empire, for restriction
 # and warranty information.
@@ -134,13 +134,14 @@ TARGET = cempire
 
 CPPFLAGS= $(DEFINES) $(INCLUDES)
 CFLAGS= $(CPPFLAGS) $(COPTS) $(DEBUG) $(WARNS)
-LINTFLAGS = -Habnruxz -w
+LINTFLAGS = -Habcnrsuxz -w
 
-# -aa -c -e -h 
-# -s -- strict ANSI C
+# Code noted by the following lint checks has been checked for errors
+# -aa -e -h 
+
+# The following flags in the above make lint less strict:
 # -n -- do not check against standard library
 # -u do not complain about funcs used but not defined
-# -w treat warnings as errors
 # -z do not complain about use of pointer to undefined struct
 
 FILES= attack.c compmove.c data.c display.c edit.c empire.c game.c main.c \

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.47 1998/03/04 13:31:15 jim Exp $
+ * $Id: term.c,v 1.48 1998/03/04 13:37:22 jim Exp $
  */
 
 /*
@@ -140,20 +140,10 @@ void
 get_str (char *buf, int sizep)
 {
 	echo();
-	get_strq(buf, sizep);
+	nocrmode();
+	wgetnstr(statuswin, buf, sizep);
+	crmode();
 	noecho();
-}
-
-/*
-Get a string from the user, ignoring the current echo mode.
-*/
-
-void
-get_strq (char *buf, int sizep)
-{
-	nocrmode ();
-	wgetnstr (statuswin, buf, sizep);
-	crmode ();
 }
 
 /*

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.23 1998/03/02 15:09:28 jim Exp $
+ * $Id: term.c,v 1.24 1998/03/02 15:18:03 jim Exp $
  */
 
 /*
@@ -69,7 +69,6 @@ void    term_end (void);
 void    term_init (void);
 void    topini (void);
 void    topmsg(int, char *, ...);
-void    vaddprintf (char *, va_list);
 void	vcomment (char *, va_list);
 void	vtopmsg(int, char *, va_list);
 
@@ -139,7 +138,7 @@ vtopmsg (int linep, char *buf, va_list ap)
         wmove(topwin, linep - 1, 0);
 
         if (buf != NULL && strlen (buf) > 0)
-                vaddprintf (buf, ap);
+                vwprintw(topwin, buf, ap);
 
         wclrtoeol(topwin);
 }
@@ -512,19 +511,10 @@ pos_str (int row, int col, char *str, ...)
 
 	va_start(ap, str);
 
-	wmove(topwin, row, col);
-	vaddprintf (str, ap);
+	wmove(stdscr, row, col);
+	vwprintw(stdscr, str, ap);
 
 	va_end(ap);
-}
-
-void
-vaddprintf (char *str, va_list ap)
-{
-	char junkbuf[STRSIZE];
-
-	vsprintf (junkbuf, str, ap);
-	waddstr(topwin, junkbuf);
 }
 
 /*

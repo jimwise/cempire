@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.33 1998/03/03 12:34:55 jim Exp $
+ * $Id: term.c,v 1.34 1998/03/03 13:16:41 jim Exp $
  */
 
 /*
@@ -33,7 +33,6 @@ screen refreshed as the user has had time to read these lines.
 #include "empire.h"
 #include "extern.h"
 
-void    comment (char *, ...);
 void    delay (void);
 void	empend (void);
 void	emp_beep (void);
@@ -188,18 +187,6 @@ void
 huh (void)
 {
 	error ("Type H for Help.");
-}
-
-void
-comment (char *buf, ...)
-{
-	va_list ap;
-
-	va_start(ap, buf);
-
-	vcomment(buf, ap);
-
-	va_end(ap);
 }
 
 void

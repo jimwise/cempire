@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: extern.h,v 1.43 1998/03/03 12:25:08 jim Exp $
+ * $Id: extern.h,v 1.44 1998/03/03 13:16:41 jim Exp $
  */
 
 /*
@@ -199,7 +199,6 @@ void	set_prod (city_info_t *);
 void    delay (void);
 void    empend (void);
 void	emp_beep (void);
-void	comment (char *, ...);
 void	error (char *, ...);
 void	extra (char *, ...);
 char    get_chx (void);

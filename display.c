@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.34 1998/03/06 23:49:04 jim Exp $
+ * $Id: display.c,v 1.35 1998/03/07 00:07:09 jim Exp $
  */
 
 /*
@@ -325,11 +325,11 @@ on_screen (long loc)
 	new_r = loc_row (loc);
 	new_c = loc_col (loc);
 
-	if (new_r < ref_row /* past top of screen */
-	 || new_r - ref_row > MAPWIN_HEIGHT-1 /* past bot of screen? */
-	 || new_c < ref_col /* past left edge of screen? */
-	 || new_c - ref_col > MAPWIN_WIDTH-1) /* past right edge of screen? */
-	return (FALSE);
+	if (new_r < ref_row					/* past top of screen */
+		    || new_r > (ref_row + MAPWIN_HEIGHT - 1)	/* past bot of screen? */
+		    || new_c < ref_col				/* past left edge of screen? */
+		    || new_c > (ref_col + MAPWIN_WIDTH - 1))	/* past right edge of screen? */
+		return (FALSE);
 
 	return (TRUE);
 }

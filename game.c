@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: game.c,v 1.25 1998/03/06 22:40:28 jim Exp $
+ * $Id: game.c,v 1.26 1998/03/09 14:51:26 jim Exp $
  */
 
 /*
@@ -817,13 +817,16 @@ stat_display (char *mbuf, int round)
 	int counts[2*NUM_OBJECTS+2];
 	int user_cost, comp_cost;
 	char *p;
+	char buf1[STRSIZE], buf2[STRSIZE];
 	
 	bzero(counts, sizeof(counts));
 	
-	for (i = 0; i < MAP_SIZE; i++) {
+	for (i = 0; i < MAP_SIZE; i++)
+	{
 		p = strchr (pieces, mbuf[i]);
 		if (p) counts[p-pieces] += 1;
 	}
+
 	user_cost = 0;
 	for (i = 1; i <= NUM_OBJECTS; i++)
 		user_cost += counts[i] * piece_attr[i-1].build_time;
@@ -832,12 +835,18 @@ stat_display (char *mbuf, int round)
 	for (i = NUM_OBJECTS+2; i <= 2*NUM_OBJECTS+1; i++)
 		comp_cost += counts[i] * piece_attr[i-NUM_OBJECTS-2].build_time;
 		
-	for (i = 0; i < NUM_OBJECTS+1; i++) {
-		pos_str (1, (int) i * 6, "%2d %c  ", counts[i], pieces[i]);
-		pos_str (2,(int) i * 6, "%2d %c  ", counts[i+NUM_OBJECTS+1], pieces[i+NUM_OBJECTS+1]);
+	for (i = FIRST_OBJECT; i < NUM_OBJECTS+1; i++)
+	{
+		sprintf(buf1 + (i*6), "%2d %c  ", counts[i], pieces[i]);
+		sprintf(buf2 + (i*6),  "%2d %c  ", counts[i+NUM_OBJECTS+1], pieces[i+NUM_OBJECTS+1]);
 	}
 
-	pos_str (1, (int) i * 6, "%5d", user_cost);
-	pos_str (2, (int) i * 6, "%5d", comp_cost);
+	sprintf(buf1 + (i*6), "%5d", user_cost);
+	sprintf(buf2 + (i*6), "%5d", comp_cost);
+
+	info(buf1);
+	info(buf2);
+	info("");
+
 	prompt("Round %3d", (round + 1) / 2);
 }

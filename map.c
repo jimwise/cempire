@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: map.c,v 1.12 1998/02/27 23:30:20 jim Exp $
+ * $Id: map.c,v 1.13 1998/03/11 02:13:59 jim Exp $
  */
 
 /*
@@ -734,7 +734,8 @@ vmap_prune_explore_locs (view_map_t *vmap)
 		}
 	}
 				
-	if (print_vmap == 'I') print_xzoom (vmap);
+	if (print_vmap == 'I')
+		print_zoom(vmap);
 		
 	for (;;) { /* do high probability predictions */
 		if (from->len + explored == MAP_SIZE) return;
@@ -765,7 +766,8 @@ vmap_prune_explore_locs (view_map_t *vmap)
 		SWAP (from, to);
 	}
 	
-	if (print_vmap == 'I') print_xzoom (vmap);
+	if (print_vmap == 'I')
+		print_zoom(vmap);
 		
 	/* one pass for medium probability predictions */
 	if (from->len + explored == MAP_SIZE) return;
@@ -784,13 +786,15 @@ vmap_prune_explore_locs (view_map_t *vmap)
 	}
 	SWAP (from, to);
 
-	if (print_vmap == 'I') print_xzoom (vmap);
+	if (print_vmap == 'I')
+		print_zoom(vmap);
 		
 	/* multiple low probability passes */
 	for (;;) {
 		/* return if very little left to explore */
 		if (from->len + explored >= MAP_SIZE - MAP_HEIGHT) {
-			if (print_vmap == 'I') print_xzoom (vmap);
+			if (print_vmap == 'I')
+				print_zoom(vmap);
 			return;
 		}
 		to->len = 0;
@@ -815,7 +819,8 @@ vmap_prune_explore_locs (view_map_t *vmap)
 		if (copied == from->len) break; /* nothing expanded */
 		SWAP (from, to);
 	}
-	if (print_vmap == 'I') print_xzoom (vmap);
+	if (print_vmap == 'I')
+		print_zoom(vmap);
 }
 
 /*

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: compmove.c,v 1.31 1998/03/10 23:23:58 jim Exp $
+ * $Id: compmove.c,v 1.32 1998/03/11 02:13:58 jim Exp $
  */
 
 /*
@@ -622,7 +622,8 @@ make_army_load_map (piece_info_t *obj, view_map_t *xmap, view_map_t *vmap)
 			xmap[city[i].loc].contents = 'x'; /* city needs armies */
 	}
 	
-	if (print_vmap == 'A') print_xzoom (xmap);
+	if (print_vmap == 'A')
+		print_zoom(xmap);
 }
 
 /* Return true if an army is considered near a location for loading. */
@@ -662,7 +663,8 @@ make_tt_load_map (view_map_t *xmap, view_map_t *vmap)
 	if (p->func == 1) /* loading army? */
 	xmap[p->loc].contents = '$';
 	
-	if (print_vmap == 'L') print_xzoom (xmap);
+	if (print_vmap == 'L')
+		print_zoom(xmap);
 }
 	
 /*
@@ -736,7 +738,8 @@ make_unload_map (view_map_t *xmap, view_map_t *vmap)
 			
 		else xmap[i].contents = '0';
 	}
-	if (print_vmap == 'U') print_xzoom (xmap);
+	if (print_vmap == 'U')
+		print_zoom(xmap);
 }
 
 /*
@@ -895,7 +898,8 @@ transport_move (piece_info_t *obj)
 		if (new_loc == obj->loc) { /* nothing to load? */
 			memcpy (amap, comp_map, MAP_SIZE * sizeof (view_map_t));
 			unmark_explore_locs (amap);
-			if (print_vmap == 'S') print_xzoom (amap);
+			if (print_vmap == 'S')
+				print_zoom(amap);
 			new_loc = vmap_find_wobj (path_map, amap, obj->loc, &tt_explore);
 		}
 		
@@ -977,7 +981,8 @@ ship_move (piece_info_t *obj)
 		/* look for an objective */
 		memcpy (amap, comp_map, MAP_SIZE * sizeof (view_map_t));
 		unmark_explore_locs (amap);
-		if (print_vmap == 'S') print_xzoom (amap);
+		if (print_vmap == 'S')
+			print_zoom (amap);
 		
 		new_loc = vmap_find_wobj (path_map, amap, obj->loc,
 					       &ship_fight);

@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: util.c,v 1.26 1998/08/09 01:25:55 jwise Exp $
+ * $Id: util.c,v 1.27 1999/09/29 01:19:50 jwise Exp $
  */
 
 /* util.c -- various utility routines. */
@@ -15,7 +15,7 @@
 #include "empire.h"
 #include "extern.h"
 
-void    check (void);
+void	check (void);
 void	check_cargo (const piece_info_t *, const piece_type_t);
 void	check_obj (piece_info_t **, const int);
 void	check_obj_cargo (piece_info_t **);

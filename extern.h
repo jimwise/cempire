@@ -6,86 +6,84 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: extern.h,v 1.69 1998/08/08 21:06:04 jwise Exp $
+ * $Id: extern.h,v 1.70 1998/08/08 22:56:29 jwise Exp $
  */
 
-/*
-extern.h -- define global non-constant storage.
-*/
+/* extern.h -- define global non-constant storage.  */
 
 /* user-supplied parameters */
-extern int SMOOTH;        /* number of times to smooth map */
-extern int WATER_RATIO;   /* percentage of map that is water */
-extern int MIN_CITY_DIST; /* cities must be at least this far apart */
-extern int delay_time;
-extern int save_interval; /* turns between autosaves */
+extern int SMOOTH;		/* number of times to smooth map		*/
+extern int WATER_RATIO;		/* percentage of map that is water		*/
+extern int MIN_CITY_DIST;	/* cities must be at least this far apart	*/
+extern int delay_time;		/* time to napms() for in error()		*/
+extern int save_interval;	/* turns between autosaves			*/
 
-extern real_map_t map[MAP_SIZE]; /* the way the world really looks */
-extern view_map_t comp_map[MAP_SIZE]; /* computer's view of the world */
-extern view_map_t user_map[MAP_SIZE]; /* user's view of the world */
+extern real_map_t map[MAP_SIZE];	/* the way the world really looks	*/
+extern view_map_t comp_map[MAP_SIZE];	/* computer's view of the world		*/
+extern view_map_t user_map[MAP_SIZE];	/* user's view of the world		*/
 
-extern city_info_t city[NUM_CITY]; /* city information */
+extern city_info_t city[NUM_CITY];	/* city information			*/
 
 /*
-There is one array to hold all allocated objects no matter who
-owns them.  Objects are allocated from the array and placed on
-a list corresponding to the type of object and its owner.
-*/
+ * There is one array to hold all allocated objects no matter who
+ * owns them.  Objects are allocated from the array and placed on
+ * a list corresponding to the type of object and its owner.
+ */
 
-extern piece_info_t *free_list; /* index to free items in object list */
-extern piece_info_t *user_obj[NUM_OBJECTS]; /* indices to user lists */
-extern piece_info_t *comp_obj[NUM_OBJECTS]; /* indices to computer lists */
-extern piece_info_t object[LIST_SIZE]; /* object list */
+extern piece_info_t *free_list;			/* index to free items in object list	*/
+extern piece_info_t *user_obj[NUM_OBJECTS];	/* indices to user lists		*/
+extern piece_info_t *comp_obj[NUM_OBJECTS];	/* indices to computer lists		*/
+extern piece_info_t object[LIST_SIZE];		/* object list				*/
 
 /* Display information. */
-extern int lines; /* lines on screen */
-extern int cols; /* columns on screen */
+extern int lines;	/* lines on screen	*/
+extern int cols;	/* columns on screen	*/
 
 /* constant data */
-extern piece_attr_t piece_attr[];
-extern int dir_offset[];
+extern const piece_attr_t piece_attr[];
+extern const int dir_offset[];
 extern const char *func_name[];
-extern int move_order[];
-extern char type_chars[];
-extern char tt_attack[];
-extern char army_attack[];
-extern char fighter_attack[];
-extern char ship_attack[];
-extern char city_char[];
+extern const int move_order[];
+extern const char type_chars[];
+extern const char tt_attack[];
+extern const char army_attack[];
+extern const char fighter_attack[];
+extern const char ship_attack[];
+extern const char city_char[];
 
-extern move_info_t tt_load;
-extern move_info_t tt_explore;
-extern move_info_t tt_unload;
-extern move_info_t army_fight;
-extern move_info_t army_load;
-extern move_info_t fighter_fight;
-extern move_info_t ship_fight;
-extern move_info_t ship_repair;
-extern move_info_t user_army;
-extern move_info_t user_army_attack;
-extern move_info_t user_fighter;
-extern move_info_t user_ship;
-extern move_info_t user_ship_repair;
+extern const move_info_t tt_load;
+extern const move_info_t tt_explore;
+extern const move_info_t tt_unload;
+extern const move_info_t army_fight;
+extern const move_info_t army_load;
+extern const move_info_t fighter_fight;
+extern const move_info_t ship_fight;
+extern const move_info_t ship_repair;
+extern const move_info_t user_army;
+extern const move_info_t user_army_attack;
+extern const move_info_t user_fighter;
+extern const move_info_t user_ship;
+extern const move_info_t user_ship_repair;
 
 extern const char *help_cmd[];
 extern const char *help_edit[];
 extern const char *help_user[];
-extern int cmd_lines;
-extern int edit_lines;
-extern int user_lines;
+extern const int cmd_lines;
+extern const int edit_lines;
+extern const int user_lines;
 
 /* miscellaneous */
-extern long date; /* number of game turns played */
-extern char automove; /* TRUE iff user is in automove mode */
-extern char resigned; /* TRUE iff computer resigned */
-extern char debug; /* TRUE iff in debugging mode */
-extern char print_debug; /* TRUE iff we print debugging stuff */
-extern char print_vmap; /* TRUE iff we print view maps */
-extern char trace_pmap; /* TRUE if we are tracing pmaps */
-extern int win; /* set when game is over */
-extern char jnkbuf[STRSIZE]; /* general purpose temporary buffer */
-extern char save_movie; /* TRUE iff we should save movie screens */
-extern int user_score; /* "score" for user and computer */
+extern long date;		/* number of game turns played		*/
+extern char automove;		/* TRUE iff user is in automove mode	*/
+extern char resigned;		/* TRUE iff computer resigned		*/
+extern char debug;		/* TRUE iff in debugging mode		*/
+extern char print_debug;	/* TRUE iff we print debugging stuff	*/
+extern char print_vmap;		/* TRUE iff we print view maps		*/
+extern char trace_pmap;		/* TRUE if we are tracing pmaps		*/
+extern int win;			/* set when game is over		*/
+extern char jnkbuf[STRSIZE];	/* general purpose temporary buffer	*/
+extern char save_movie;		/* TRUE iff we are saving movie screens	*/
+extern int user_score;		/* "score" for user and computer	*/
 extern int comp_score;
 
 /* Screen updating macros */
@@ -111,11 +109,11 @@ extern int comp_score;
 #define panic(why)      emp_panic(__FILE__, __LINE__, (why))
 
 /* global routines */
-void	attack (piece_info_t *, long);	/* attack.c */
-void	comp_move (int);	/* compmove.c */
-void    edit(long);             /* edit.c */
-void    empire (void);          /* empire.c */
-void	user_move (void);	/* usermove.c */
+void	attack (piece_info_t *, long);	/* attack.c	*/
+void	comp_move (int);		/* compmove.c	*/
+void    edit(long);            		/* edit.c	*/
+void    empire (void);          	/* empire.c	*/
+void	user_move (void);		/* usermove.c	*/
 
 /* display routines (display.c) */
 void	map_init (void);

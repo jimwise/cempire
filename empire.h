@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: empire.h,v 1.28 1998/08/08 19:27:03 jwise Exp $
+ * $Id: empire.h,v 1.29 1998/08/08 22:56:29 jwise Exp $
  */
 
 /*
@@ -22,10 +22,10 @@
 #define NULL 0
 #endif
 
-#define NUMTOPS 4 /* number of lines at top of screen for messages */
+#define NUMTOPS 4	/* number of lines at top of screen for messages */
 #define NUMINFO (NUMTOPS - 1)
-#define NUMSIDES 6 /* number of lines at side of screen */
-#define STRSIZE 80 /* number of characters in a string */
+#define NUMSIDES 6	/* number of lines at side of screen */
+#define STRSIZE 80	/* number of characters in a string */
 
 /* Information we maintain about cities. */
 
@@ -34,7 +34,7 @@
 #define USER 1
 #define COMP 2
 
-#define LIST_SIZE 5000 /* max number of pieces on board */
+#define LIST_SIZE 5000	/* max number of pieces on board */
 
 #define INFINITY 1000000 /* a large number */
 
@@ -46,8 +46,8 @@
 
 /* Define useful constants for accessing sectors. */
 
-#define SECTOR_ROWS 5 /* number of vertical sectors */
-#define SECTOR_COLS 2 /* number of horizontal sectors */
+#define SECTOR_ROWS 5		/* number of vertical sectors */
+#define SECTOR_COLS 2		/* number of horizontal sectors */
 #define NUM_SECTORS (SECTOR_ROWS * SECTOR_COLS) /* total sectors */
 #define ROWS_PER_SECTOR ((MAP_HEIGHT+SECTOR_ROWS-1)/SECTOR_ROWS)
 #define COLS_PER_SECTOR ((MAP_WIDTH+SECTOR_COLS-1)/SECTOR_COLS)
@@ -91,100 +91,98 @@ typedef enum
 #define	NUM_OBJECTS	9
 
 /*
-Types of programmed movement.  Use negative numbers for special
-functions, use positive numbers to move toward a specific location.
-*/
+ * Types of programmed movement.  Use negative numbers for special
+ * functions, use positive numbers to move toward a specific location.
+ */
 enum
 {
-        NOFUNC=-1,      /* no programmed function */
-        RANDOM=-2,      /* move randomly */
-        SENTRY=-3,      /* sleep */
-        FILL=-4,        /* fill transport */
-        LAND=-5,        /* land fighter at city */
-        EXPLORE=-6,     /* piece explores nearby */
-        ARMYLOAD=-7,    /* army moves toward and boards a transport */
-        ARMYATTACK=-8,  /* army looks for city to attack */
-        TTLOAD=-9,      /* transport moves toward loading armies */
-        REPAIR=-10,     /* ship moves toward port */
-        WFTRANSPORT=-11,/* army boards a transport */
-        MOVE_N=-12,     /* move north */
-        MOVE_NE=-13,    /* move northeast */
-        MOVE_E=-14,     /* move east */
-        MOVE_SE=-15,    /* move southeast */
-        MOVE_S=-16,     /* move south */
-        MOVE_SW=-17,    /* move southwest */
-        MOVE_W=-18,     /* move west */
-        MOVE_NW=-19     /* move northwest */
+        NOFUNC=-1,      /* no programmed function			*/
+        RANDOM=-2,      /* move randomly				*/
+        SENTRY=-3,      /* sleep					*/
+        FILL=-4,        /* fill transport				*/
+        LAND=-5,        /* land fighter at city				*/
+        EXPLORE=-6,     /* piece explores nearby			*/
+        ARMYLOAD=-7,    /* army moves toward and boards a transport	*/
+        ARMYATTACK=-8,  /* army looks for city to attack		*/
+        TTLOAD=-9,      /* transport moves toward loading armies	*/
+        REPAIR=-10,     /* ship moves toward port			*/
+        WFTRANSPORT=-11,/* army boards a transport			*/
+        MOVE_N=-12,     /* move north					*/
+        MOVE_NE=-13,    /* move northeast				*/
+        MOVE_E=-14,     /* move east					*/
+        MOVE_SE=-15,    /* move southeast				*/
+        MOVE_S=-16,     /* move south					*/
+        MOVE_SW=-17,    /* move southwest				*/
+        MOVE_W=-18,     /* move west					*/
+        MOVE_NW=-19     /* move northwest				*/
 };
 typedef int    function_t;
 
 typedef struct
 {
-	long		loc; /* location of city */
-	uchar		owner; /* UNOWNED, USER, COMP */
-	function_t	func[NUM_OBJECTS]; /* function for each object */
-	long		work; /* units of work performed */
-	piece_type_t	prod; /* item being produced */
+	long		loc;			/* location of city		*/
+	uchar		owner;			/* UNOWNED, USER, COMP		*/
+	function_t	func[NUM_OBJECTS];	/* function for each object	*/
+	long		work;			/* units of work performed	*/
+	piece_type_t	prod;			/* item being produced		*/
 } city_info_t;
 
-/*
-Information we maintain about each piece.
-*/
+/* Information we maintain about each piece. */
 
 typedef struct
 {
 	/* ptrs for doubly linked list */
-	struct piece_info *next; /* pointer to next in list */
-	struct piece_info *prev; /* pointer to prev in list */
+	struct piece_info *next;	/* pointer to next in list */
+	struct piece_info *prev;	/* pointer to prev in list */
 } link_t;
 
 typedef struct piece_info
 {
-	link_t		piece_link; /* linked list of pieces of this type */
-	link_t		loc_link; /* linked list of pieces at a location */
-	link_t		cargo_link; /* linked list of cargo pieces */
-	int		owner; /* owner of piece */
-	piece_type_t	type; /* type of piece */
-	long		loc; /* location of piece */
-	function_t	func; /* programmed type of movement */
-	short		hits; /* hits left */
-	int		moved; /* moves made */
-	struct piece_info	*ship; /* pointer to containing ship */
-	struct piece_info	*cargo; /* pointer to cargo list */
-	short		count; /* count of items on board */
-	short		range; /* current range (if applicable) */
+	link_t		piece_link;	/* linked list of pieces of this type	*/
+	link_t		loc_link;	/* linked list of pieces at a location	*/
+	link_t		cargo_link;	/* linked list of cargo pieces		*/
+	int		owner;		/* owner of piece			*/
+	piece_type_t	type;		/* type of piece			*/
+	long		loc;		/* location of piece			*/
+	function_t	func;		/* programmed type of movement		*/
+	short		hits;		/* hits left				*/
+	int		moved;		/* moves made				*/
+	struct piece_info *ship;	/* pointer to containing ship		*/
+	struct piece_info *cargo;	/* pointer to cargo list		*/
+	short		count;		/* count of items on board		*/
+	short		range;		/* current range (if applicable)	*/
 } piece_info_t;
 
 /*
-We maintain attributes for each piece.  Attributes are currently constant,
-but the way has been paved to allow user's to change attributes at the
-beginning of a game.
-*/
+ * We maintain attributes for each piece.  Attributes are currently constant,
+ * but the way has been paved to allow user's to change attributes at the
+ * beginning of a game.
+ */
 
 typedef struct
 {
-        char sname; /* eg 'C' */
-        char name[20]; /* eg "aircraft carrier" */
-        char nickname[20]; /* eg "carrier" */
-        char article[20]; /* eg "an aircraft carrier" */
-        char plural[20]; /* eg "aircraft carriers" */
-        char terrain[4]; /* terrain piece can pass over eg "." */
-        uchar build_time; /* time needed to build unit */
-        uchar strength; /* attack strength */
-        uchar max_hits; /* number of hits when completely repaired */
-        uchar speed; /* number of squares moved per turn */
-        uchar capacity; /* max objects that can be held */
-        long range; /* range of piece */
+        char sname;		/* eg 'C'					*/
+        char name[20];		/* eg "aircraft carrier"			*/
+        char nickname[20];	/* eg "carrier"					*/
+        char article[20];	/* eg "an aircraft carrier"			*/
+        char plural[20];	/* eg "aircraft carriers"			*/
+        char terrain[4];	/* terrain piece can pass over eg "."		*/
+        uchar build_time;	/* time needed to build unit			*/
+        uchar strength;		/* attack strength				*/
+        uchar max_hits;		/* number of hits when completely repaired	*/
+        uchar speed;		/* number of squares moved per turn		*/
+        uchar capacity;		/* max objects that can be held			*/
+        long range;		/* range of piece				*/
 } piece_attr_t;
 
 /*
-There are 3 maps.  'map' describes the world as it actually
-exists; it tells whether each map cell is land, water or a city;
-it tells whether or not a square is on the board.
-
-'user_map' describes the user's view of the world.  'comp_map' describes
-the computer's view of the world.
-*/
+ * There are 3 maps.  'map' describes the world as it actually
+ * exists; it tells whether each map cell is land, water or a city;
+ * it tells whether or not a square is on the board.
+ * 
+ * 'user_map' describes the user's view of the world.  'comp_map' describes
+ * the computer's view of the world.
+ */
 
 #define MAP_WIDTH 100
 #define MAP_HEIGHT 60
@@ -193,61 +191,59 @@ the computer's view of the world.
 typedef struct
 {
         /* a cell of the actual map */
-        char contents; /* '+', '.', or '*' */
-        uchar on_board; /* TRUE iff on the board */
-        city_info_t *cityp; /* ptr to city at this location */
-        piece_info_t *objp; /* list of objects at this location */
+        char contents;		/* '+', '.', or '*'			*/
+        uchar on_board;		/* TRUE iff on the board		*/
+        city_info_t *cityp;	/* ptr to city at this location		*/
+        piece_info_t *objp;	/* list of objects at this location	*/
 } real_map_t;
 
 typedef struct
 {
         /* a cell of one player's world view */
-        uchar contents; /* '+', '.', '*', 'A', 'a', etc */
-        long seen; /* date when last updated */
+        uchar contents;		/* '+', '.', '*', 'A', 'a', etc	*/
+        long seen;		/* date when last updated	*/
 } view_map_t;
 
 /* Define information we maintain for a pathmap. */
 
 typedef struct
 {
-        int cost; /* total cost to get here */
-        int inc_cost; /* incremental cost to get here */
-        char terrain; /* T_LAND, T_WATER, T_UNKNOWN, T_PATH */
+        int cost;	/* total cost to get here		*/
+        int inc_cost;	/* incremental cost to get here		*/
+        char terrain;	/* T_LAND, T_WATER, T_UNKNOWN, T_PATH	*/
 } path_map_t;
 
 /* A record for counts we obtain when scanning a continent. */
 
 typedef struct {
-        int user_cities; /* number of user cities on continent */
+        int user_cities;		/* number of user cities on continent	*/
         int user_objects[NUM_OBJECTS];
         int comp_cities;
         int comp_objects[NUM_OBJECTS];
-        int size; /* size of continent in cells */
-        int unowned_cities; /* number of unowned cities */
-        int unexplored; /* unexplored territory */
+        int size;			/* size of continent in cells		*/
+        int unowned_cities;		/* number of unowned cities		*/
+        int unexplored;			/* unexplored territory			*/
 } scan_counts_t;
 
 /* Information we need for finding a path for moving a piece. */
 
 typedef struct {
-        char city_owner; /* char that represents home city */
-        const char *objectives; /* list of objectives */
-        int weights[11]; /* weight of each objective */
+        char city_owner;		/* char that represents home city	*/
+        const char *objectives;		/* list of objectives			*/
+        int weights[11];		/* weight of each objective		*/
 } move_info_t;
 
-/* special weights */
-#define W_TT_BUILD -1 /* special cost for city building a tt */
+/* special cost for city building a tt */
+#define W_TT_BUILD -1
 
 /* List of cells in the perimeter of our searching for a path. */
 
 typedef struct {
-        long len; /* number of items in list */
-        long list[MAP_SIZE]; /* list of locations */
+        long len;		/* number of items in list	*/
+        long list[MAP_SIZE];	/* list of locations		*/
 } perimeter_t;
 
-/*
- * function macros related to above structures
- */
+/* function macros related to above structures */
 
 /* Index to list of function names. */
 #define FUNCI(x) (-(x)-1)
@@ -255,9 +251,7 @@ typedef struct {
 /* Macro to convert a movement function into a direction. */
 #define MOVE_DIR(a) (-(a)+MOVE_N)
 
-/*
-Macros to link and unlink an object from a doubly linked list.
-*/
+/* Macros to link and unlink an object from a doubly linked list. */
 
 #define LINK(head,obj,list) \
 { \

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.59 1998/03/10 22:20:02 jim Exp $
+ * $Id: term.c,v 1.60 1998/03/10 22:22:34 jim Exp $
  */
 
 /*
@@ -33,7 +33,6 @@ screen refreshed as the user has had time to read these lines.
 #include "empire.h"
 #include "extern.h"
 
-void    delay (void);
 void	alert (void);
 void    error (char *, ...);
 int	getyn (char *message);
@@ -247,19 +246,6 @@ redraw (void)
 	clearok (curscr, TRUE);
 	wrefresh(stdscr);
 }
-
-/*
-Wait a little bit to give user a chance to see a message.  We refresh
-the screen and pause for a few milliseconds.
-*/
-
-void
-delay (void)
-{
-	wrefresh(infowin);
-	napms (delay_time); /* pause a bit */
-}
-
 
 /*
 Clean up the display.  This routine gets called as we leave the game.

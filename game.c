@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: game.c,v 1.17 1998/02/28 01:01:44 jim Exp $
+ * $Id: game.c,v 1.18 1998/03/01 01:55:41 jim Exp $
  */
 
 /*
@@ -121,7 +121,7 @@ make_map (void)
 	long i, j, sum, loc;
 
 	for (i = 0; i < MAP_SIZE; i++) /* fill map with random sand */
-		height[0][i] = irand (MAX_HEIGHT);
+		height[0][i] = rand_long (MAX_HEIGHT);
 
 	from = 0;
 	to = 1;
@@ -198,7 +198,7 @@ place_cities (void)
 	placed = 0; /* nothing placed yet */
 	while (placed < NUM_CITY) {
 		while (num_land == 0) num_land = regen_land (placed);
-		i = irand (num_land-1); /* select random piece of land */
+		i = rand_long (num_land-1); /* select random piece of land */
 		loc = land[i];
 		
 		city[placed].loc = loc;
@@ -335,11 +335,11 @@ select_cities (void)
 	comp_cont = pair_tab[pair].comp_cont;
 	user_cont = pair_tab[pair].user_cont;
 
-	compi = irand ((long)cont_tab[comp_cont].ncity);
+	compi = rand_long ((long)cont_tab[comp_cont].ncity);
 	compp = cont_tab[comp_cont].cityp[compi];
 
 	do { /* select different user city */
-		useri = irand ((long)cont_tab[user_cont].ncity);
+		useri = rand_long ((long)cont_tab[user_cont].ncity);
 		userp = cont_tab[user_cont].cityp[useri];
 	} while (userp == compp);
 

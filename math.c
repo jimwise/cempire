@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: math.c,v 1.11 1998/03/01 01:48:27 jim Exp $
+ * $Id: math.c,v 1.12 1998/03/01 01:55:42 jim Exp $
  */
 
 /*
@@ -16,7 +16,7 @@ This file contains routines used to create random integers.  The
 initialization routine 'rand_init' should be called at program startup.
 The flavors of random integers that can be generated are:
 
-    irand(n) -- returns a random integer in the range 0..n-1
+    rand_long (n) -- returns a random integer in the range 0..n-1
 
 Other routines include:
 
@@ -31,7 +31,7 @@ Other routines include:
 #include "extern.h"
 
 long	dist (long, long);
-long	irand (long);
+long	rand_long (long);
 int	isqrt (int);
 void	rand_init (void);
 
@@ -42,7 +42,7 @@ rand_init (void)
 }
 
 long
-irand (long high)
+rand_long (long high)
 {
 	if (high < 2)
 		return 0;

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: object.c,v 1.16 1998/02/27 23:47:02 jim Exp $
+ * $Id: object.c,v 1.17 1998/03/01 01:55:43 jim Exp $
  */
 
 /*
@@ -331,7 +331,7 @@ produce (city_info_t *cityp)
 	new->range = piece_attr[cityp->prod].range;
 	
 	if (new->type == SATELLITE) { /* set random move direction */
-		new->func = sat_dir[irand (4)];
+		new->func = sat_dir[rand_long (4)];
 	}
 }
 

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: extern.h,v 1.36 1998/03/01 01:35:39 jim Exp $
+ * $Id: extern.h,v 1.37 1998/03/01 01:55:41 jim Exp $
  */
 
 /*
@@ -169,7 +169,7 @@ void	vmap_prune_explore_locs (view_map_t *);
 
 /* math routines (math.c) */
 long	dist (long, long);
-long	irand (long);
+long	rand_long (long);
 int	isqrt (int);
 void	rand_init (void);
 

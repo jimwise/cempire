@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: empire.c,v 1.12 1998/03/01 01:35:38 jim Exp $
+ * $Id: empire.c,v 1.13 1998/03/01 01:55:40 jim Exp $
  */
 
 /*
@@ -207,7 +207,7 @@ c_give (void)
 		error ("There are no unowned cities.");
 		return;
 	}
-	i = irand (count);
+	i = rand_long (count);
 	i = unowned[i]; /* get city index */
 	city[i].owner = COMP;
 	city[i].prod = NOPIECE;

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: attack.c,v 1.11 1998/02/27 23:30:18 jim Exp $
+ * $Id: attack.c,v 1.12 1998/03/01 01:55:40 jim Exp $
  */
 
 /*
@@ -58,7 +58,7 @@ attack_city (piece_info_t *att_obj, long loc)
 	att_owner = att_obj->owner;
 	city_owner = cityp->owner;
 
-	if (irand (2) == 0) { /* attack fails? */
+	if (rand_long (2) == 0) { /* attack fails? */
 		if (att_owner == USER)
 			comment ("The scum defending the city crushed your attacking blitzkrieger.");
 		else if (city_owner == USER)
@@ -105,7 +105,7 @@ attack_obj (piece_info_t *att_obj, long loc)
 
 	while (att_obj->hits > 0 && def_obj->hits > 0)
 	{
-		if (irand (2) == 0) /* defender hits? */
+		if (rand_long (2) == 0) /* defender hits? */
 		     att_obj->hits -= piece_attr[def_obj->type].strength;
 		else
 			def_obj->hits -= piece_attr[att_obj->type].strength;

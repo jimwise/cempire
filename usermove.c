@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: usermove.c,v 1.15 1998/02/27 23:30:21 jim Exp $
+ * $Id: usermove.c,v 1.16 1998/03/01 01:55:43 jim Exp $
  */
 
 /*
@@ -256,7 +256,7 @@ move_random (piece_info_t *obj)
 		}
 	}
 	if (nloc == 0) return; /* no legal move */
-	i = irand ((long)nloc-1); /* choose random direction */
+	i = rand_long ((long)nloc-1); /* choose random direction */
 	move_obj (obj, loc_list[i]); /* move the piece */
 }
 

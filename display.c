@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.39 1998/03/09 13:08:36 jim Exp $
+ * $Id: display.c,v 1.40 1998/03/09 13:12:17 jim Exp $
  */
 
 /*
@@ -53,7 +53,7 @@ static int save_sector; /* the currently displayed sector */
 static int save_cursor; /* currently displayed cursor position */
 static int change_ok = TRUE; /* true if new sector may be displayed */
 
-#define NUMBOTS		2
+#define NUMBOTS		1
 #define MAPWIN_HEIGHT	(lines - NUMTOPS - NUMBOTS)
 #define	MAPWIN_WIDTH	(cols - NUMSIDES)
 

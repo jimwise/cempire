@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.54 1998/03/09 17:22:01 jim Exp $
+ * $Id: term.c,v 1.55 1998/03/09 17:23:13 jim Exp $
  */
 
 /*
@@ -43,7 +43,6 @@ void	get_str (char *, int);
 void    help (char **, int);
 void    huh (void);
 void	info (char *, ...);
-void    pos_str (int, int, char *, ...);
 void    prompt (char *, ...);
 void    redraw (void);
 void	term_clear (void);
@@ -276,24 +275,6 @@ term_end (void)
 	wclrtoeol (stdscr);
 	wrefresh(stdscr);
 	endwin ();
-}
-
-/*
-Position the cursor and output a string.
-*/
-
-void
-pos_str (int row, int col, char *str, ...)
-{
-	va_list ap;
-
-	va_start(ap, str);
-
-	wmove(stdscr, row, col);
-	vwprintw(stdscr, str, ap);
-	wrefresh(stdscr);
-
-	va_end(ap);
 }
 
 /*

@@ -1,7 +1,7 @@
 #
 #	Copyright (C) 1987, 1988 Chuck Simmons
 #
-# $Id: Makefile,v 1.42 2003/03/13 19:52:26 jwise Exp $
+# $Id: Makefile,v 1.43 2003/03/13 19:57:14 jwise Exp $
 #
 # See the file COPYING, distributed with empire, for restriction
 # and warranty information.
@@ -209,5 +209,3 @@ depend:
 
 # DO NOT DELETE THIS LINE -- mkdep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
-
-# IF YOU PUT ANYTHING HERE IT WILL GO AWAY

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: usermove.c,v 1.18 1998/03/03 13:15:15 jim Exp $
+ * $Id: usermove.c,v 1.19 1998/03/03 13:51:06 jim Exp $
  */
 
 /*
@@ -168,7 +168,6 @@ piece_move (piece_info_t *obj)
 
 		if (awake (obj) || need_input){ /* need user input? */
 			ask_user (obj);
-			topini (); /* clear info lines */
 			display_loc_u (obj->loc); /* let user see result */
 			redraw ();
 			need_input = FALSE; /* we got it */

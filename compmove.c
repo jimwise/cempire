@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: compmove.c,v 1.26 1998/03/03 13:28:47 jim Exp $
+ * $Id: compmove.c,v 1.27 1998/03/03 13:51:05 jim Exp $
  */
 
 /*
@@ -84,7 +84,6 @@ comp_move (int nmoves)
 
 		check_endgame (); /* see if game is over */
 
-		topini ();
 		redraw ();
 	}
 }

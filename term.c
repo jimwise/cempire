@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.14 1998/02/27 01:39:19 jim Exp $
+ * $Id: term.c,v 1.15 1998/02/27 02:42:53 jim Exp $
  */
 
 /*
@@ -46,6 +46,7 @@ void    clreol (int, int);
 void    comment (char *, ...);
 void    delay (void);
 void	empend (void);
+void	emp_beep (void);
 void    error (char *, ...);
 void    extra (char *, ...);
 int	getint (char *message);
@@ -541,3 +542,9 @@ empend (void)
         exit (0);
 }
 
+void
+emp_beep (void)
+{
+	beep();
+	flash();
+}

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: usermove.c,v 1.9 1998/02/27 00:18:53 jim Exp $
+ * $Id: usermove.c,v 1.10 1998/02/27 02:42:54 jim Exp $
  */
 
 /*
@@ -14,8 +14,8 @@ usermove.c -- Let the user move her troops.
 */
 
 #include <assert.h>
-#include <curses.h>
 #include <ctype.h>
+#include <stdio.h>
 #include "empire.h"
 #include "extern.h"
 
@@ -121,7 +121,7 @@ user_move (void)
 		}
 		if (cur_sector () == sec) { /* is sector displayed? */
 			print_sector_u (sec); /* make screen up-to-date */
-			refresh (); /* show it to the user */
+			redraw (); /* show it to the user */
 		}
 	}
 	if (save_movie) save_movie_screen ();
@@ -163,7 +163,7 @@ piece_move (piece_info_t *obj)
 			ask_user (obj);
 			topini (); /* clear info lines */
 			display_loc_u (obj->loc); /* let user see result */
-			refresh ();
+			redraw ();
 			need_input = FALSE; /* we got it */
 		}
 		
@@ -581,7 +581,7 @@ ask_user (piece_info_t *obj)
 	case 'P': user_redraw (); break;
 	case '?': describe_obj (obj); break;
 
-	default: beep ();
+	default: emp_beep ();
 	}
     }
 }
@@ -630,7 +630,7 @@ void
 user_fill (piece_info_t *obj)
 {
 	if (obj->type != TRANSPORT && obj->type != CARRIER)
-		beep ();
+		emp_beep ();
 	else obj->func = FILL;
 }
 
@@ -668,7 +668,7 @@ user_set_dir (piece_info_t *obj)
 	case 'X': obj->func = MOVE_S ; break;
 	case 'Z': obj->func = MOVE_SW; break;
 	case 'A': obj->func = MOVE_W ; break;
-	default: beep (); break;
+	default: emp_beep (); break;
 	}
 }
 
@@ -709,8 +709,10 @@ Set a fighter's function to land at the nearest city.
 void
 user_land (piece_info_t *obj)
 {
-	if (obj->type != FIGHTER) beep ();
-	else obj->func = LAND;
+	if (obj->type != FIGHTER)
+		emp_beep ();
+	else
+		obj->func = LAND;
 }
 
 /*
@@ -730,7 +732,7 @@ Set an army's function to WFTRANSPORT.
 void
 user_transport (piece_info_t *obj)
 {
-	if (obj->type != ARMY) beep ();
+	if (obj->type != ARMY) emp_beep ();
 	else obj->func = WFTRANSPORT;
 }
 
@@ -741,7 +743,7 @@ Set an army's function to ARMYATTACK.
 void
 user_armyattack (piece_info_t *obj)
 {
-	if (obj->type != ARMY) beep ();
+	if (obj->type != ARMY) emp_beep ();
 	else obj->func = ARMYATTACK;
 }
 
@@ -752,7 +754,7 @@ Set a ship's function to REPAIR.
 void
 user_repair (piece_info_t *obj)
 {
-	if (obj->type == ARMY || obj->type == FIGHTER) beep ();
+	if (obj->type == ARMY || obj->type == FIGHTER) emp_beep ();
 	else obj->func = REPAIR;
 }
 
@@ -769,13 +771,13 @@ user_set_city_func (piece_info_t *obj)
 
 	cityp = find_city (obj->loc);
 	if (!cityp || cityp->owner != USER) {
-		beep ();
+		emp_beep ();
 		return;
 	}
 
 	type = get_piece_name();
 	if (type == NOPIECE) {
-		beep ();
+		emp_beep ();
 		return;
 	}
 	
@@ -804,7 +806,7 @@ user_set_city_func (piece_info_t *obj)
 		e_city_attack (cityp, type);
 		break;
 	default: /* bad command? */
-		beep ();
+		emp_beep ();
 		break;
 	}
 }
@@ -819,7 +821,7 @@ user_build (piece_info_t *obj)
 	city_info_t *cityp;
 
 	if (user_map[obj->loc].contents != 'O') { /* no user city here? */
-		beep ();
+		emp_beep ();
 		return;
 	}
 	cityp = find_city (obj->loc);

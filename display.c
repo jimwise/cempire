@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.45 1998/03/09 17:26:49 jim Exp $
+ * $Id: display.c,v 1.46 1998/03/09 17:59:02 jim Exp $
  */
 
 /*
@@ -510,36 +510,43 @@ help (char **text, int nlines)
 {
         int i, r, c;
         piece_type_t j;
-        int text_lines;
+        int text_lines, start_col, start_row;
 
         text_lines = (nlines + 1) / 2; /* lines of text */
 
-        term_clear();
+        wclear(mapwin);
 
-        mvwprintw(mapwin, 1, 1, text[0]); /* mode */
-        mvwprintw(mapwin, 1, 41, "See empire(6) for more information.");
+	start_row = (MAPWIN_HEIGHT - 3 - (nlines / 2) - 2 -  ((NUM_OBJECTS + 1)/2))  / 2;
+	start_col = (MAPWIN_WIDTH - 2 - 80) / 2;
+
+	wattron(mapwin, A_REVERSE);
+        mvwprintw(mapwin, start_row, start_col, text[0]); /* mode */
+        mvwprintw(mapwin, start_row, start_col + 40, "See empire(6) for more information.");
+	wattroff(mapwin, A_REVERSE);
 
         for (i = 1; i < nlines; i++)
         {
                 if (i > text_lines)
-                        mvwprintw(mapwin, i - text_lines + 1, 41, text[i]);
+                        mvwprintw(mapwin, start_row + i - text_lines + 1, start_col + 40, text[i]);
                 else
-                        mvwprintw(mapwin, i + 1, 1, text[i]);
+                        mvwprintw(mapwin, start_row + i + 1, start_col, text[i]);
         }
 
-        mvwprintw(mapwin, text_lines + 2,  1, "--Piece---Yours-Enemy-Moves-Hits-Cost");
-        mvwprintw(mapwin, text_lines + 2, 41, "--Piece---Yours-Enemy-Moves-Hits-Cost");
+	wattron(mapwin, A_REVERSE);
+        mvwprintw(mapwin, start_row + text_lines + 3, start_col, "  Piece   Yours Enemy Moves Hits Cost");
+        mvwprintw(mapwin, start_row + text_lines + 3, start_col + 40, "  Piece   Yours Enemy Moves Hits Cost");
+	wattroff(mapwin, A_REVERSE);
 
         for (j = FIRST_OBJECT; j < NUM_OBJECTS; j++)
         {
                 if (j >= (NUM_OBJECTS+1)/2) {
-                        r = j - (NUM_OBJECTS+1)/2;
-                        c = 41;
+                        r = start_row + 1 +  j - (NUM_OBJECTS+1)/2;
+                        c = start_col + 40;
                 }
                 else
                 {
-                        r = j;
-                        c = 1;
+                        r = start_row + j + 1;
+                        c = start_col;
                 }
                 mvwprintw(mapwin, r + text_lines + 3, c, "%-12s%c     %c%6d%5d%6d",
                         piece_attr[j].nickname,
@@ -549,6 +556,6 @@ help (char **text, int nlines)
                         piece_attr[j].max_hits,
                         piece_attr[j].build_time);
         }
-	
+	box(mapwin, 0, 0);
         wrefresh(mapwin);
 }

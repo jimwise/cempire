@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: empire.c,v 1.23 1998/03/04 13:27:17 jim Exp $
+ * $Id: empire.c,v 1.24 1998/03/04 13:41:23 jim Exp $
  */
 
 /*
@@ -341,12 +341,10 @@ c_movie (void)
 {
 	term_clear();
 
-	for (;;) {
+	while (1)
+	{
 		comp_move (1);
 		print_zoom (comp_map);
 		save_game ();
-#ifdef PROFILE
-		if (date == 125) empend();
-#endif
 	}
 }

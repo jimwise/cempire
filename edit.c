@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: edit.c,v 1.37 2001/11/12 15:43:07 jwise Exp $
+ * $Id: edit.c,v 1.38 2003/10/22 22:19:18 jwise Exp $
  */
 
 /* edit.c -- Routines to handle edit mode commands. */
@@ -70,7 +70,7 @@ edit (long edit_cursor)
 		case 'G': /* explore */
 			e_explore (edit_cursor);
 			break;
-		case 'H': /* help */
+		case '?': /* help */
 			help (help_edit, edit_lines);
 			break;
 		case 'I': /* directional stasis */
@@ -113,7 +113,7 @@ edit (long edit_cursor)
 		case 'Y': /* set army func to attack */
 			e_attack (edit_cursor);
 			break;
-		case '?': /* request info */
+		case '=': /* request info */
 			e_info (edit_cursor);
 			break;
 		case '\014': /* control-L */

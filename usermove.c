@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: usermove.c,v 1.34 2001/02/08 21:19:51 jwise Exp $
+ * $Id: usermove.c,v 1.35 2003/10/22 22:19:18 jwise Exp $
  */
 
 /* usermove.c -- Let the user move her troops. */
@@ -569,12 +569,12 @@ ask_user (piece_info_t *obj)
 	case 'Y': user_armyattack (obj); return;
 
 	case 'B': user_build (obj); break;
-	case 'H': help (help_user, user_lines);; break;
+	case '?': help (help_user, user_lines);; break;
 	case 'K': user_wake (obj); break;
 	case 'O': user_cancel_auto (); break;
 	case '\014':
 	case 'P': redraw (); break;
-	case '?': describe_obj (obj); break;
+	case '=': describe_obj (obj); break;
 
 	default: alert();
 	}

@@ -1,7 +1,7 @@
 #
 #	Copyright (C) 1987, 1988 Chuck Simmons
 #
-# $Id: Makefile,v 1.43 2003/03/13 19:57:14 jwise Exp $
+# $Id: Makefile,v 1.44 2003/03/13 21:12:39 jwise Exp $
 #
 # See the file COPYING, distributed with empire, for restriction
 # and warranty information.
@@ -147,31 +147,28 @@ LINTFLAGS = -Habcnrsuxz -w
 MAKEDEPEND	= mkdep
 DEPENDFLAGS	=
 
-FILES= attack.c compmove.c data.c display.c edit.c empire.c game.c main.c \
+SRCS= attack.c compmove.c data.c display.c edit.c empire.c game.c main.c \
 	map.c math.c object.c term.c usermove.c util.c
 
 HEADERS= empire.h extern.h
 
-OFILES= attack.o compmove.o data.o display.o edit.o empire.o game.o main.o \
+OBJS= attack.o compmove.o data.o display.o edit.o empire.o game.o main.o \
 	map.o math.o object.o term.o usermove.o util.o
 
 MISCFILES= READ.ME COPYING BUGS Makefile cempire.6 .cvsignore
 
-SOURCES= $(MISCFILES) $(FILES) $(HEADERS)
+SOURCES= $(MISCFILES) $(SRCS) $(HEADERS)
 
 ARCHIVES= cempire-$(VERSION).tar cempire-$(VERSION).tar.gz \
 	cempire-$(VERSION).shar
 
 all: $(TARGET)
 
-$(TARGET): $(OFILES)
-	$(CC) -o $(TARGET) $(OFILES) $(LIBS)
+$(TARGET): $(OBJS)
+	$(CC) -o $(TARGET) $(OBJS) $(LIBS)
 
-lint: $(FILES)
-	lint $(LINTFLAGS) $(CPPFLAGS) $(FILES) $(LIBS)
-
-.c.o:
-	$(CC) $(CFLAGS) -c $< -o $@
+lint: $(SRCS)
+	lint $(LINTFLAGS) $(CPPFLAGS) $(SRCS) $(LIBS)
 
 clean:
 	rm -f *.o $(TARGET) cempire-$(VERSION).tar cempire-$(VERSION).tar.gz cempire-$(VERSION).shar cempire-$(VERSION).tar.gz.asc
@@ -205,7 +202,7 @@ cempire-$(VERSION).tar.gz.asc: cempire-$(VERSION).tar.gz
 	gpg -bat cempire-$(VERSION).tar.gz
 
 depend:
-	$(MAKEDEPEND) $(DEPENDFLAGS) $(CFLAGS) $(FILES)
+	$(MAKEDEPEND) $(DEPENDFLAGS) $(CFLAGS) $(SRCS)
 
 # DO NOT DELETE THIS LINE -- mkdep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.

@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: display.c,v 1.71 1998/09/11 18:29:46 jwise Exp $
+ * $Id: display.c,v 1.72 1998/09/11 21:29:11 jwise Exp $
  */
 
 /*
@@ -298,11 +298,13 @@ move_cursor (long *cursor, int offset)
 	r = loc_row (save_cursor);
 	c = loc_col (save_cursor);
 
+#ifdef USE_NCURSES
 	/*
-	 * Why is this redraw necessary?  It only seems to be with
-	 * ncurses, BTW
+	 * Under ncurses (only) we need to redraw here, or we get weird errors, but
+	 * only when moving the cursor to the right...
 	 */
 	redraw();
+#endif
 	wmove(mapwin, r-ref_row+1, c-ref_col+1);
 	wrefresh(mapwin);
 

@@ -1,7 +1,7 @@
 #
 #	Copyright (C) 1987, 1988 Chuck Simmons
 #
-# $Id: Makefile,v 1.24 1998/09/11 20:23:06 jwise Exp $
+# $Id: Makefile,v 1.25 1998/09/11 21:29:10 jwise Exp $
 #
 # See the file COPYING, distributed with empire, for restriction
 # and warranty information.
@@ -23,13 +23,18 @@ CC=gcc
 #
 # 2.) Pick your preprocessor defines
 #	choose from the following options:
-#		-DDEBUG		turn on consistency checking
-#		-DUSE_NCURSES	you need to turn this on if you want
-#				to use the ncurses library.  Use this if
-#				cempire doesn't work with your system's
-#				native curses library
+#		-DDEBUG			turn on consistency checking
+#		-DUSE_NCURSES		you need to turn this on if you want
+#					to use the ncurses library.  Use this if
+#					cempire doesn't work with your system's
+#					native curses library
+#		-D__EXTENSIONS__	you need this on Solaris 2.5.1, and probably earlier
+#					versions as well.  If you don't define this, you don't
+#					get a declaration of getopt(3), and curses.h also assumes
+#					you're on a BSD system (since L_ctermid doesn't get defined
+#					in stdio.h...)
 #
-DEFINES=-DDEBUG
+DEFINES=-DDEBUG -D__EXTENSIONS__
 
 #
 # 3.) Pick one of the following LIBS lines
@@ -72,7 +77,7 @@ INCLUDES=
 # Don't try to use this if you are using another compiler.  If cempire
 # won't build this way on your system, please let me know...
 #
-WARNS=-ansi -Wall -W -Werror -pedantic -Wtraditional -Wshadow \
+WARNS=-ansi -Wall -W -pedantic -Wtraditional -Wshadow \
 	-Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings \
 	-Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations \
 	-Wnested-externs -Winline

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: compmove.c,v 1.25 1998/03/03 13:25:02 jim Exp $
+ * $Id: compmove.c,v 1.26 1998/03/03 13:28:47 jim Exp $
  */
 
 /*
@@ -290,8 +290,9 @@ comp_set_prod (city_info_t *cityp, piece_type_t type)
 {
 	if (cityp->prod == type)
 		return;
-	
-	debug("Changing city prod at %d from %d to %d\n", cityp->loc, cityp->prod, type);
+
+	if (print_debug)
+		info("Changing city prod at %d from %d to %d\n", cityp->loc, cityp->prod, type);
 	
 	cityp->prod = type;
 	cityp->work = -(piece_attr[type].build_time / 5);
@@ -445,7 +446,8 @@ cpiece_move (piece_info_t *obj)
 				obj->moved = piece_attr[FIGHTER].speed;
 			else if (obj->range == 0)
 			{
-				debug("Fighter at %d crashed and burned\n", obj->loc);
+				if (print_debug)
+					info("Fighter at %d crashed and burned\n", obj->loc);
 				kill_obj (obj, obj->loc); /* crash & burn */
 			}
 		}
@@ -1005,7 +1007,10 @@ move_objective (piece_info_t *obj, path_map_t pathmap[], long new_loc, char *adj
 	if (new_loc == obj->loc) {
 		obj->moved = piece_attr[obj->type].speed;
 		obj->range -= 1;
-		debug("No destination found for %d at %d; func=%d\n", obj->type, obj->loc, obj->func);
+
+		if (print_debug)
+			info("No destination found for %d at %d; func=%d\n", obj->type, obj->loc, obj->func);
+
 		return;
 	}
 	old_loc = obj->loc; /* remember where we are */
@@ -1047,8 +1052,9 @@ move_objective (piece_info_t *obj, path_map_t pathmap[], long new_loc, char *adj
 	if (new_loc == obj->loc) {
 		obj->moved = piece_attr[obj->type].speed;
 		
-		if (obj->type == ARMY && obj->ship) ;
-		else debug ("Cannot move %d at %d toward objective; func=%d\n", obj->type, obj->loc, obj->func);
+		if (!(obj->type == ARMY && obj->ship))
+			if (print_debug)
+				info("Cannot move %d at %d toward objective; func=%d\n", obj->type, obj->loc, obj->func);
 	}
 	else move_obj (obj, new_loc);
 	

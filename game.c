@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: game.c,v 1.41 2001/02/07 03:19:55 jwise Exp $
+ * $Id: game.c,v 1.42 2001/02/08 19:24:26 jwise Exp $
  */
 
 /* game.c -- Routines to initialize, save, and restore a game. */
@@ -39,11 +39,11 @@ static long    remove_land (long, long);
 static int	select_cities (void);
 static void	stat_display (char *, int);
 #ifndef USE_ZLIB
-static int	xread (FILE *, char *, int);
-static int	xwrite (FILE *, char *, int);
+static int	xread (FILE *, void *, int);
+static int	xwrite (FILE *, void *, int);
 #else
-static int	xread (gzFile *, char *, int);
-static int	xwrite (gzFile *, char *, int);
+static int	xread (gzFile *, void *, int);
+static int	xwrite (gzFile *, void *, int);
 #endif
 /*
  * Initialize a new game.  Here we generate a new random map, put cities
@@ -532,8 +532,8 @@ make_pair (void)
  */
 
 /* macro to save typing; write an array, return if it fails */
-#define wbuf(buf) if (!xwrite (f, (char *)buf, sizeof (buf))) return
-#define wval(val) if (!xwrite (f, (char *)&val, sizeof (val))) return
+#define wbuf(buf) if (!xwrite (f, (void *)buf, sizeof (buf))) return
+#define wval(val) if (!xwrite (f, (void *)&val, sizeof (val))) return
 
 void
 save_game (void)
@@ -583,8 +583,8 @@ save_game (void)
  * We return TRUE if we succeed, otherwise FALSE.
  */
 
-#define rbuf(buf) if (!xread (f, (char *)buf, sizeof(buf))) return (FALSE);
-#define rval(val) if (!xread (f, (char *)&val, sizeof(val))) return (FALSE);
+#define rbuf(buf) if (!xread (f, (void *)buf, sizeof(buf))) return (FALSE);
+#define rval(val) if (!xread (f, (void *)&val, sizeof(val))) return (FALSE);
 
 int
 restore_game (void)
@@ -726,7 +726,7 @@ inconsistent (void)
  */
 
 static int
-xwrite (FILE *f, char *buf, int size)
+xwrite (FILE *f, void *buf, int size)
 {
 	int bytes;
  
@@ -750,7 +750,7 @@ xwrite (FILE *f, char *buf, int size)
  */
 
 static int
-xwrite (gzFile *f, char *buf, int size)
+xwrite (gzFile *f, void *buf, int size)
 {
         int bytes;
 
@@ -775,7 +775,7 @@ xwrite (gzFile *f, char *buf, int size)
  */
 
 static int
-xread (FILE *f, char *buf, int size)
+xread (FILE *f, void *buf, int size)
 {
 	int bytes;
 
@@ -798,7 +798,7 @@ xread (FILE *f, char *buf, int size)
  */
 
 static int
-xread (gzFile *f, char *buf, int size)
+xread (gzFile *f, void *buf, int size)
 {
         int bytes;
 

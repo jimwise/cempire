@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: empire.c,v 1.38 2001/02/08 19:29:33 jwise Exp $
+ * $Id: empire.c,v 1.39 2002/11/11 06:22:44 jwise Exp $
  */
 
 /*
@@ -40,8 +40,8 @@ empire (void)
 	term_clear(); /* nothing on screen */
 	info(VERSION_STRING);
 
-	if (!restore_game ()) /* try to restore previous game */
-		init_game (); /* otherwise init a new game */
+	if (!restore_game()) /* try to restore previous game */
+		init_game(); /* otherwise init a new game */
 
 	/* Command loop starts here. */
 
@@ -51,16 +51,16 @@ empire (void)
 		if (automove)
 		{
 			/* don't ask for cmd in auto mode */
-			user_move ();
-			comp_move (1);
+			user_move();
+			comp_move(1);
 			if (++turn % save_interval == 0)
-				save_game ();
+				save_game();
 	    	}
 	   	else
 		{
-	        	prompt ("Your orders? ");
-	        	order = get_chx (); /* get a command */
-			do_command (order);
+	        	prompt("Your orders? ");
+	        	order = get_chx(); /* get a command */
+			do_command(order);
 		}
 	}
 }
@@ -77,13 +77,13 @@ do_command (char orders)
 	case 'A': /* turn on auto move mode */
 		automove = TRUE;
 		info("Entering Auto-Mode");
-		user_move ();
-		comp_move (1);
-		save_game ();
+		user_move();
+		comp_move(1);
+		save_game();
 		break;
 
 	case 'C': /* give a city to the computer */
-		c_give ();
+		c_give();
 		break;
 	
 	case 'D': /* display round number */
@@ -91,56 +91,58 @@ do_command (char orders)
 		break;
 
 	case 'E': /* examine enemy map */
-		if (resigned) c_examine ();
-		else huh (); /* illegal command */
+		if (resigned)
+			c_examine();
+		else
+			huh(); /* illegal command */
 		break;
 
 	case 'F': /* print map to file */
-		c_map ();
+		c_map();
 		break;
 
 	case 'G': /* give one free enemy move */
-		comp_move (1);
+		comp_move(1);
 		break;
 
 	case 'H': /* help */
-		help (help_cmd, cmd_lines);
+		help(help_cmd, cmd_lines);
 		break;
 
 	case 'J': /* edit mode */
 		ncycle = cur_sector ();
 		if (ncycle == -1) ncycle = 0;
-		edit (sector_loc (ncycle));
+		edit(sector_loc(ncycle));
 		break;
 
 	case 'M': /* move */
-		user_move ();
-		comp_move (1);
-		save_game ();
+		user_move();
+		comp_move(1);
+		save_game();
 		break;
 
 	case 'N': /* give enemy free moves */
 		ncycle = get_int("Number of free enemy moves: ", 1, 1000);
-		comp_move (ncycle);
-		save_game ();
+		comp_move(ncycle);
+		save_game();
 		break;
 
 	case 'P': /* print a sector */
-		c_sector ();
+		c_sector();
 		break;
 
 	case '\026': /* some interrupt */
 	case 'Q': /* quit */
-		c_quit ();
+		c_quit();
 		break;
 
 	case 'R': /* restore game */
 		term_clear();
-		e = restore_game ();
+		e = restore_game();
 		break;
 
 	case 'S': /* save game */
-		save_game ();
+		save_game();
 		break;
 	
 	case 'T': /* trace: toggle save_movie flag */
@@ -155,7 +157,7 @@ do_command (char orders)
 		if (resigned || debug)
 			replay_movie();
 		else
-			error ("You cannot watch movie until computer resigns.");
+			error("You cannot watch movie until computer resigns.");
 		break;
 	
 	case 'Z': /* print compressed map */
@@ -169,17 +171,21 @@ do_command (char orders)
 
 	case '+': /* change debug state */
 		e = get_chx();
-		if ( e  ==  '+' ) debug = TRUE;
-		else if ( e  ==  '-' ) debug = FALSE;
-		else huh ();
+		if ( e  ==  '+' )
+			debug = TRUE;
+		else if ( e  ==  '-' )
+			debug = FALSE;
+		else
+			huh();
 		break;
 
 	default:
-		if (debug) c_debug (orders); /* debug */
-		else huh (); /* illegal command */
+		if (debug)
+			c_debug(orders); /* debug */
+		else
+			huh(); /* illegal command */
 		break;
 	}
-	e = e; /* keep lint quiet */
 }
 
 /*

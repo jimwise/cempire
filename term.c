@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.35 1998/03/03 13:29:54 jim Exp $
+ * $Id: term.c,v 1.36 1998/03/03 13:33:22 jim Exp $
  */
 
 /*
@@ -37,7 +37,6 @@ void    delay (void);
 void	empend (void);
 void	emp_beep (void);
 void    error (char *, ...);
-void    extra (char *, ...);
 int	getint (char *message);
 int	getyn (char *message);
 char	get_chx (void);
@@ -143,22 +142,6 @@ error (char *buf, ...)
 	va_start(ap, buf);
 
 	vtopmsg (2, buf, ap);
-
-	va_end(ap);
-}
-
-/*
-Print out extra information.
-*/
-
-void
-extra (char *buf, ...)
-{
-	va_list ap;
-
-	va_start(ap, buf);
-
-	vtopmsg (3, buf, ap);
 
 	va_end(ap);
 }

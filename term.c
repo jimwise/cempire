@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.30 1998/03/02 17:55:45 jim Exp $
+ * $Id: term.c,v 1.31 1998/03/02 18:13:29 jim Exp $
  */
 
 /*
@@ -24,11 +24,6 @@ Whenever input is received, the top three lines are cleared and the
 screen refreshed as the user has had time to read these lines.  We
 also clear the 'need_delay' flag, saying that the user has read the
 information on the screen.
-
-When information is to be displayed, if the 'need_delay' flag is set,
-we refresh the screen and pause momentarily to give the user a chance
-to read the lines.  The new information is then displayed, and the
-'need_delay' flag is set.
 */
 
 #include <stdarg.h>
@@ -56,6 +51,7 @@ void	get_str (char *, int);
 void    get_strq (char *, int);
 void    help (char **, int);
 void    huh (void);
+void	info (char *, ...);
 void    pdebug (char *, ...);
 void    pos_str (int, int, char *, ...);
 void    prompt (char *, ...);
@@ -146,6 +142,22 @@ prompt (char *buf, ...)
 	wrefresh(statuswin);
 
 	va_end(ap);
+}
+
+void
+info (char *fmt, ...)
+{
+	va_list ap;
+
+	va_start(ap, fmt);
+
+	scrollok(infowin, TRUE);
+	scroll(infowin);
+	wmove(infowin, NUMINFO, 0);
+	vwprintw(infowin, fmt, ap);
+	scrollok(infowin, FALSE);
+
+	va_end(fmt);
 }
 
 /*

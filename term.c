@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.56 1998/03/09 17:26:50 jim Exp $
+ * $Id: term.c,v 1.57 1998/03/09 18:51:36 jim Exp $
  */
 
 /*
@@ -81,7 +81,6 @@ info (char *fmt, ...)
 
 	va_start(ap, fmt);
 
-	idlok(infowin, TRUE);
 	scrollok(infowin, TRUE);
 	scroll(infowin);
 	wmove(infowin, NUMINFO-1, 0);

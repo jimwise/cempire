@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: attack.c,v 1.18 1998/03/10 22:03:49 jim Exp $
+ * $Id: attack.c,v 1.19 1998/08/08 17:26:39 jwise Exp $
  */
 
 /*
@@ -31,14 +31,14 @@ if any.
 #include "empire.h"
 #include "extern.h"
 
-void	attack (piece_info_t *, long);
-void	attack_city (piece_info_t *, long);
-void	attack_obj (piece_info_t *, long);
+void	attack (piece_info_t *, const long);
+void	attack_city (piece_info_t *, const long);
+void	attack_obj (piece_info_t *, const long);
 void	describe (piece_info_t *, piece_info_t *, long);
 void	survive (piece_info_t *, long);
 
 void
-attack (piece_info_t *att_obj, long loc)
+attack (piece_info_t *att_obj, const long loc)
 {
 	if (map[loc].contents == '*') /* attacking a city? */
 		attack_city (att_obj, loc);
@@ -47,7 +47,7 @@ attack (piece_info_t *att_obj, long loc)
 }
 
 void
-attack_city (piece_info_t *att_obj, long loc)
+attack_city (piece_info_t *att_obj, const long loc)
 {
 	city_info_t *cityp;
 	int att_owner, city_owner;
@@ -93,7 +93,7 @@ First we have to figure out what is being attacked.
 */
 
 void
-attack_obj (piece_info_t *att_obj, long loc)
+attack_obj (piece_info_t *att_obj, const long loc)
 {
 	piece_info_t *def_obj; /* defender */
 	int owner;
@@ -140,7 +140,7 @@ location.
 */
 
 void
-survive (piece_info_t *obj, long loc)
+survive (piece_info_t *obj, const long loc)
 {
 	while (obj_capacity (obj) < obj->count)
 		kill_obj (obj->cargo, loc);

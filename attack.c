@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: attack.c,v 1.23 2001/01/13 03:09:23 jwise Exp $
+ * $Id: attack.c,v 1.24 2001/02/08 19:20:22 jwise Exp $
  */
 
 /*
@@ -48,7 +48,7 @@ static void
 attack_city (piece_info_t *att_obj, long loc)
 {
 	city_info_t *cityp;
-	int att_owner, city_owner;
+	uchar att_owner, city_owner;
 
 	cityp = find_city (loc);
 	assert (cityp);

@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: empire.h,v 1.32 2001/02/08 19:16:56 jwise Exp $
+ * $Id: empire.h,v 1.33 2001/02/08 19:20:22 jwise Exp $
  */
 
 /*
@@ -139,7 +139,7 @@ typedef struct piece_info
 	link_t		piece_link;	/* linked list of pieces of this type	*/
 	link_t		loc_link;	/* linked list of pieces at a location	*/
 	link_t		cargo_link;	/* linked list of cargo pieces		*/
-	int		owner;		/* owner of piece			*/
+	uchar		owner;		/* owner of piece			*/
 	piece_type_t	type;		/* type of piece			*/
 	long		loc;		/* location of piece			*/
 	function_t	func;		/* programmed type of movement		*/
@@ -226,7 +226,7 @@ typedef struct {
 /* Information we need for finding a path for moving a piece. */
 
 typedef struct {
-        char city_owner;		/* char that represents home city	*/
+        uchar city_owner;		/* char that represents home city	*/
         const char *objectives;		/* list of objectives			*/
         int weights[11];		/* weight of each objective		*/
 } move_info_t;

@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: game.c,v 1.39 1999/01/12 22:18:42 jwise Exp $
+ * $Id: game.c,v 1.40 1999/01/12 23:27:21 jwise Exp $
  */
 
 /* game.c -- Routines to initialize, save, and restore a game. */
@@ -826,11 +826,19 @@ static char mapbuf[MAP_SIZE];
 void
 save_movie_screen (void)
 {
-	FILE *f; /* file to save game in */
+#ifndef USE_ZLIB
+	FILE *f; /* file to save movie in */
+#else
+	gzFile f; /* compressing file to save movie in */
+#endif
 	long i;
 	piece_info_t *p;
 
-	f = fopen ("empmovie.dat", "a"); /* open for append */
+#ifndef USE_ZLIB
+	f = fopen("empmovie.dat", "a"); /* open for append */
+#else
+	f =gzopen("empmovie.dat", "a"); /* open for append */
+#endif
 	if (f == NULL)
 	{
 		error ("Cannot open empmovie.dat");
@@ -854,7 +862,11 @@ save_movie_screen (void)
 		}
 	}
 	wbuf (mapbuf);
-	fclose (f);
+#ifndef USE_ZLIB
+	fclose(f);
+#else
+	gzclose(f);
+#endif
 }
 
 /*
@@ -865,10 +877,18 @@ save_movie_screen (void)
 void
 replay_movie (void)
 {
-	FILE *f; /* file to save game in */
+#ifndef USE_ZLIB
+	FILE *f; /* file to read movie from */
+#else
+	gzFile f; /* compressing file to read movie from */
+#endif
 	int round;
 	
-	f = fopen ("empmovie.dat", "r"); /* open for input */
+#ifndef USE_ZLIB
+	f = fopen("empmovie.dat", "r"); /* open for input */
+#else
+	f = gzopen("empmovie.dat", "r");
+#endif
 	if (f == NULL)
 	{
 		error ("Cannot open empmovie.dat");
@@ -880,7 +900,7 @@ replay_movie (void)
 
 	while (1)
 	{
-		if (fread ((char *)mapbuf, 1, sizeof (mapbuf), f) != sizeof (mapbuf))
+		if (!xread (f, mapbuf, sizeof(mapbuf)))
 			break;
 
 		round += 1;
@@ -890,7 +910,11 @@ replay_movie (void)
 		print_movie_screen(mapbuf);
 	}
 
-	fclose (f);
+#ifndef USE_ZLIB
+	fclose(f);
+#else
+	gzclose(f);
+#endif
 }
 
 /*

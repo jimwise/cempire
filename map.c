@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: map.c,v 1.5 1998/02/26 22:08:16 jim Exp $
+ * $Id: map.c,v 1.6 1998/02/27 00:08:47 jim Exp $
  */
 
 /*
@@ -635,7 +635,7 @@ objective_cost (view_map_t *vmap, move_info_t *move_info, long loc, int base_cos
 		return w;
 
 	default:
-		ABORT;
+		panic();
 		/* NOTREACHED */
 		return w;
 	}
@@ -661,7 +661,7 @@ terrain_type (path_map_t *pmap, view_map_t *vmap, move_info_t *move_info, long f
 			return T_WATER;
 		else return T_UNKNOWN; /* cannot cross */
 	}
-	ABORT;
+	panic();
 	/*NOTREACHED*/
 	return T_UNKNOWN;
 }

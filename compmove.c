@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: compmove.c,v 1.11 1998/02/26 23:47:37 jim Exp $
+ * $Id: compmove.c,v 1.12 1998/02/27 00:08:45 jim Exp $
  */
 
 /*
@@ -526,9 +526,12 @@ army_move (piece_info_t *obj)
 		}
 		return;
 	}
-	if (obj->ship) {
-		if (obj->ship->func == 0) {
-			if (!load_army (obj)) ABORT; /* load army on best ship */
+	if (obj->ship)
+	{
+		if (obj->ship->func == 0)
+		{
+			if (!load_army (obj)) /* load army on best ship */
+				panic();
 			return; /* armies stay on a loading ship */
 		}
 		make_unload_map (amap, comp_map);
@@ -552,7 +555,7 @@ army_move (piece_info_t *obj)
 			cross_cost = 14; /* low cost for exploring */
 			break;
 		default:
-			ABORT;
+			panic();
 		}
 		cross_cost = path_map[new_loc].cost * 2 - cross_cost;
 	}

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: usermove.c,v 1.7 1998/02/26 23:47:40 jim Exp $
+ * $Id: usermove.c,v 1.8 1998/02/27 00:08:48 jim Exp $
  */
 
 /*
@@ -328,7 +328,7 @@ move_armyload (piece_info_t *obj)
 	piece_info_t *p;
 	int i;
 
-	ABORT;
+	panic();	/* why? */
 	
 	/* look for an adjacent transport */
 	loc = find_transport (USER, obj->loc);
@@ -376,7 +376,7 @@ move_armyattack (piece_info_t *obj)
 void
 move_ttload (piece_info_t *obj)
 {
-	ABORT;
+	panic();
 	obj = obj;
 }
 

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: main.c,v 1.10 1998/02/28 01:06:51 jim Exp $
+ * $Id: main.c,v 1.11 1998/03/01 01:27:02 jim Exp $
  */
 
 /*
@@ -65,7 +65,7 @@ main (int argc, char *argv[])
 			sflg = atoi (optarg);
 			if (sflg < 0)
 			{
-        		        fprintf (stderr, "empire: -s argument must be greater than or equal to zero.\n");
+        		        fprintf(stderr, "empire: -s argument must be greater than or equal to zero.\n");
 				exit (1);
 			}
 			break;
@@ -73,7 +73,7 @@ main (int argc, char *argv[])
 			dflg = atoi (optarg);
 			if (dflg < 0 || dflg > 30000)
 			{
-				fprintf (stderr, "empire: -d argument must be in the range 0..30000.\n");
+				fprintf(stderr, "empire: -d argument must be in the range 0..30000.\n");
 				exit (1);
 			}
 			break;
@@ -81,7 +81,7 @@ main (int argc, char *argv[])
 			Sflg = atoi (optarg);
 			if (Sflg < 1)
 			{
-				fprintf (stderr, "empire: -S argument must be greater than or equal to zero.\n");
+				fprintf(stderr, "empire: -S argument must be greater than or equal to zero.\n");
 				exit (1);
 			}
 			break;
@@ -93,7 +93,7 @@ main (int argc, char *argv[])
 
 	if (errflg || ((argc - optind) != 0))
 	{
-		fprintf (stderr, "empire: usage: empire [-w water] [-s smooth] [-d delay] [-S save_interval]\n");
+		fprintf(stderr, "empire: usage: empire [-w water] [-s smooth] [-d delay] [-S save_interval]\n");
 		exit (1);
 	}
 
@@ -105,8 +105,8 @@ main (int argc, char *argv[])
 	/* compute min distance between cities */
 	land = MAP_SIZE * (100 - WATER_RATIO) / 100; /* available land */
 	land /= NUM_CITY; /* land per city */
-	MIN_CITY_DIST = isqrt (land); /* distance between cities */
+	MIN_CITY_DIST = isqrt(land); /* distance between cities */
 
-	empire (); /* call main routine */
+	empire(); /* call main routine */
 	return (0);
 }

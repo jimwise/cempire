@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.16 1998/02/27 22:17:04 jim Exp $
+ * $Id: term.c,v 1.17 1998/03/01 01:27:03 jim Exp $
  */
 
 /*
@@ -67,7 +67,7 @@ void    redraw (void);
 void    set_need_delay (void);
 void    topini (void);
 void    topmsg(int, char *, ...);
-void    ttinit (void);
+void    term_init (void);
 void    vaddprintf (char *, va_list);
 void	vcomment (char *, va_list);
 void	vtopmsg(int, char *, va_list);
@@ -518,7 +518,7 @@ Initialize the terminal.
 */
 
 void
-ttinit (void)
+term_init (void)
 {
 	initscr();
 	noecho();

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: empire.c,v 1.21 1998/03/03 15:09:43 jim Exp $
+ * $Id: empire.c,v 1.22 1998/03/04 12:49:59 jim Exp $
  */
 
 /*
@@ -126,7 +126,7 @@ do_command (char orders)
 		break;
 
 	case 'N': /* give enemy free moves */
-		ncycle = getint ("Number of free enemy moves: ");
+		ncycle = get_range("Number of free enemy moves: ", 1, 1000);
 		comp_move (ncycle);
 		save_game ();
 		break;

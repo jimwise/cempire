@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.44 1998/03/03 14:41:43 jim Exp $
+ * $Id: term.c,v 1.45 1998/03/04 12:50:00 jim Exp $
  */
 
 /*
@@ -289,10 +289,12 @@ help (char **text, int nlines)
 	pos_str (NUMTOPS, 1, text[0]); /* mode */
 	pos_str (NUMTOPS, 41, "See empire.doc for more information.");
 
-	for (i = 1; i < nlines; i++) {
+	for (i = 1; i < nlines; i++)
+	{
 		if (i > text_lines)
 			pos_str (i - text_lines + NUMTOPS + 1, 41, text[i]);
-		else pos_str (i + NUMTOPS + 1, 1, text[i]);
+		else
+			pos_str (i + NUMTOPS + 1, 1, text[i]);
 	}
 
 	pos_str (text_lines + NUMTOPS + 2,  1, "--Piece---Yours-Enemy-Moves-Hits-Cost");

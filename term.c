@@ -1,5 +1,3 @@
-/* %W% %G% %U% - (c) Copyright 1987, 1988 Chuck Simmons */
-
 /*
  *    Copyright (C) 1987, 1988 Chuck Simmons
  * 

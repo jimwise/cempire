@@ -1,7 +1,7 @@
 #
 #	Copyright (C) 1987, 1988 Chuck Simmons
 #
-# $Id: Makefile,v 1.33 2001/02/07 01:45:31 jwise Exp $
+# $Id: Makefile,v 1.34 2001/02/07 03:19:41 jwise Exp $
 #
 # See the file COPYING, distributed with empire, for restriction
 # and warranty information.
@@ -89,6 +89,7 @@ WARNS=-ansi -pedantic-errors -Werror -Wall -W -pedantic -Wtraditional \
 	-Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations \
 	-Wnested-externs -Winline -Wundef -Wbad-function-cast -Wsign-compare
 
+# The following warnings warn about acceptable code in this software
 # -Wconversion -Wredundant-decls -Waggregate-return
 
 #

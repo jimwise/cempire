@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: map.c,v 1.9 1998/02/27 20:15:59 jim Exp $
+ * $Id: map.c,v 1.10 1998/02/27 20:19:02 jim Exp $
  */
 
 /*
@@ -990,7 +990,7 @@ path toward the city.
 center of the best path.
 */
 
-static enum direction order[] = {NORTHWEST, NORTHEAST, SOUTHWEST, SOUTHEAST, 
+static direction_t order[] = {NORTHWEST, NORTHEAST, SOUTHWEST, SOUTHEAST, 
 					WEST, EAST, NORTH, SOUTH};
 
 long

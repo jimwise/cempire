@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: empire.h,v 1.14 1998/02/27 20:15:58 jim Exp $
+ * $Id: empire.h,v 1.15 1998/02/27 20:19:02 jim Exp $
  */
 
 /*
@@ -33,7 +33,7 @@ typedef unsigned char uchar;
 #define panic()	emp_panic(__FILE__, __LINE__)
 
 /* directions one can move */
-enum direction
+typedef enum
 {
 	NORTH=0,
 	NORTHEAST,
@@ -43,7 +43,7 @@ enum direction
 	SOUTHWEST,
 	WEST,
 	NORTHWEST
-};
+} direction_t;
 
 #define NUMTOPS 3 /* number of lines at top of screen for messages */
 #define NUMSIDES 6 /* number of lines at side of screen */

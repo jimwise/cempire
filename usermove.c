@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: usermove.c,v 1.29 1998/08/09 01:25:55 jwise Exp $
+ * $Id: usermove.c,v 1.30 1998/09/11 16:51:11 jwise Exp $
  */
 
 /* usermove.c -- Let the user move her troops. */
@@ -635,8 +635,6 @@ void
 user_help (void)
 {
 	help (help_user, user_lines);
-	prompt ("Press any key to continue: ");
-	get_chx ();
 }
 
 /* Set an object's function to move in a certain direction. */

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: map.c,v 1.21 1998/08/09 00:19:34 jwise Exp $
+ * $Id: map.c,v 1.22 1998/08/09 00:25:38 jwise Exp $
  */
 
 /*
@@ -26,9 +26,6 @@ void	expand_perimeter (path_map_t *, const view_map_t *, const move_info_t *, pe
 		int, int, int, int, perimeter_t *, perimeter_t *);
 void	expand_prune (view_map_t *, path_map_t *, long, int, perimeter_t *, int *);
 int	objective_cost (const view_map_t *, const move_info_t *, long, int);
-int	rmap_at_sea (long);
-scan_counts_t	rmap_cont_scan (int *cont_map);
-void	rmap_mark_up_cont ( int *, long, char);
 int     rmap_shore (long);
 void	start_perimeter (path_map_t *, perimeter_t *, long, int);
 int	terrain_type (const path_map_t *, const view_map_t *, const move_info_t *, long, long);
@@ -73,7 +70,7 @@ static long best_loc;
  * or lakes.
  */
 
-
+void
 vmap_cont (int *cont_map, const view_map_t *vmap, long loc, char bad_terrain)
 {
 	bzero(cont_map, MAP_SIZE * sizeof(int));
@@ -124,30 +121,6 @@ vmap_mark_up_cont (int *cont_map, const view_map_t *vmap, long loc, char bad_ter
 		}
 		SWAP (from, to);
 	}
-}
-
-/*
- * Mark all squares of a continent and the squares that are adjacent
- * to the continent which are on the board.  Our passed location is
- * known to be either on the continent or adjacent to the continent.
- * 
- * Someday this should be tweaked to use perimeter lists.
- */
-
-void
-rmap_mark_up_cont (int *cont_map, long loc, char bad_terrain)
-{
-	int i;
-	long new_loc;
-	
-	if (!map[loc].on_board) return;			/* off board		*/
-	if (cont_map[loc]) return;			/* already marked	*/
-	if (map[loc].contents == bad_terrain) return;	/* off continent	*/
-	
-	cont_map[loc] = 1; /* on continent */
-
-	FOR_ADJ (loc, new_loc, i)
-		rmap_mark_up_cont (cont_map, new_loc, bad_terrain);
 }
 
 /*
@@ -203,29 +176,6 @@ vmap_cont_scan (int *cont_map, const view_map_t *vmap)
 					}
 				}
 			}
-		}
-	}
-	return counts;
-}
-
-/*
- * Scan a real map as above.  Only the 'size' and 'unowned_cities'
- * fields are valid.
- */
-
-scan_counts_t
-rmap_cont_scan (int *cont_map)
-{
-	scan_counts_t counts;
-	long i;
-
-	bzero(&counts, sizeof(scan_counts_t));
-	
-	for (i = 0; i < MAP_SIZE; i++) {
-		if (cont_map[i]) { /* cell on continent? */
-			counts.size += 1;
-			if (map[i].contents == '*')
-				counts.unowned_cities += 1;
 		}
 	}
 	return counts;
@@ -1100,15 +1050,3 @@ vmap_at_sea (const view_map_t *vmap, long loc)
 
 	return (TRUE);
 }
-
-int
-rmap_at_sea (long loc)
-{
-	long i, j;
-
-	FOR_ADJ_ON (loc, j, i) {
-		if (map[j].contents != '.') return (FALSE);
-	}
-	return (TRUE);
-}
-

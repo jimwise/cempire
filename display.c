@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: display.c,v 1.74 2001/02/08 19:29:32 jwise Exp $
+ * $Id: display.c,v 1.75 2001/02/08 21:27:59 jwise Exp $
  */
 
 /*
@@ -232,7 +232,7 @@ print_sector (char whose, view_map_t vmap[], int sector)
 		}
 	
 	/* print round number */
-	sprintf (jnkbuf, "Sector %d Round %ld", sector, date);
+	snprintf (jnkbuf, STRSIZE, "Sector %d Round %ld", sector, date);
 	for (r = 0; jnkbuf[r] != '\0'; r++)
 	{
 		if (r+NUMTOPS + 2 >= MAP_HEIGHT)
@@ -374,7 +374,7 @@ print_zoom (const view_map_t *vmap)
                 }
 
 	/* print round number */
-	sprintf (jnkbuf, "Zoomed Map Round %ld", date);
+	snprintf (jnkbuf, STRSIZE, "Zoomed Map Round %ld", date);
 	for (r = 0; jnkbuf[r] != '\0'; r++)
 	{
 		if (r+NUMTOPS + 2 >= MAP_HEIGHT)
@@ -449,7 +449,7 @@ print_pzoom (const char *s, const path_map_t *pmap, const view_map_t *vmap)
                 }
 
         /* print round number */
-        sprintf (jnkbuf, "Debugging Map Round %ld", date);
+        snprintf (jnkbuf, STRSIZE, "Debugging Map Round %ld", date);
         for (r = 0; jnkbuf[r] != '\0'; r++)
         {
                 if (r+NUMTOPS + 2 >= MAP_HEIGHT)

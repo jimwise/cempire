@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: game.c,v 1.43 2001/02/08 19:29:33 jwise Exp $
+ * $Id: game.c,v 1.44 2001/02/08 21:27:59 jwise Exp $
  */
 
 /* game.c -- Routines to initialize, save, and restore a game. */
@@ -342,7 +342,7 @@ select_cities (void)
 
 	make_pair (); /* create list of ranked pairs */
 
-	sprintf(jnkbuf, "Choose a difficulty level where 0 is easy and %d is hard: ", ncont*ncont-1);
+	snprintf(jnkbuf, STRSIZE, "Choose a difficulty level where 0 is easy and %d is hard: ", ncont*ncont-1);
 	pair = get_int(jnkbuf, 0, ncont*ncont-1);
 
 	comp_cont = pair_tab[pair].comp_cont;
@@ -959,12 +959,12 @@ stat_display (char *mbuf, int round)
 		
 	for (i = FIRST_OBJECT; i < NUM_OBJECTS+1; i++)
 	{
-		sprintf(buf1 + (i*6), "%2d %c  ", counts[i], pieces[i]);
-		sprintf(buf2 + (i*6),  "%2d %c  ", counts[i+NUM_OBJECTS+1], pieces[i+NUM_OBJECTS+1]);
+		snprintf(buf1 + (i*6), STRSIZE - (i*6), "%2d %c  ", counts[i], pieces[i]);
+		snprintf(buf2 + (i*6), STRSIZE - (i*6), "%2d %c  ", counts[i+NUM_OBJECTS+1], pieces[i+NUM_OBJECTS+1]);
 	}
 
-	sprintf(buf1 + (i*6), "%5d", user_cost);
-	sprintf(buf2 + (i*6), "%5d", comp_cost);
+	snprintf(buf1 + (i*6), STRSIZE - (i*6), "%5d", user_cost);
+	snprintf(buf2 + (i*6), STRSIZE - (i*6), "%5d", comp_cost);
 
 	info(buf1);
 	info(buf2);

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.51 1998/03/09 21:20:26 jim Exp $
+ * $Id: display.c,v 1.52 1998/03/10 22:51:21 jim Exp $
  */
 
 /*
@@ -309,8 +309,6 @@ move_cursor (long *cursor, int offset)
  
 	t = *cursor + offset; /* proposed location */
 
-	if (!map[t].on_board)
-		return (FALSE); /* trying to move off map */
 	if (!on_screen (t))
 		return (FALSE); /* loc is off screen */
 	

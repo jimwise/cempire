@@ -5,7 +5,7 @@
  * and warranty information.
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: edit.c,v 1.16 1998/03/02 17:48:10 jim Exp $
+ * $Id: edit.c,v 1.17 1998/03/02 18:28:00 jim Exp $
  */
 
 /*
@@ -593,9 +593,9 @@ e_city_info (long edit_cursor)
 		piece_attr[cityp->prod].article,
 		date + piece_attr[cityp->prod].build_time - cityp->work);
 
-	topmsg(1, junk_buf2);
-	topmsg(2, jnkbuf);
-	topmsg(3, func_buf);
+	info(junk_buf2);
+	info(jnkbuf);
+	info(func_buf);
 }
 
 /*

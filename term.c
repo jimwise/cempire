@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.31 1998/03/02 18:13:29 jim Exp $
+ * $Id: term.c,v 1.32 1998/03/02 18:28:01 jim Exp $
  */
 
 /*
@@ -21,9 +21,7 @@ The other type of output is informational output.  The user must
 be given time to read informational output.
 
 Whenever input is received, the top three lines are cleared and the
-screen refreshed as the user has had time to read these lines.  We
-also clear the 'need_delay' flag, saying that the user has read the
-information on the screen.
+screen refreshed as the user has had time to read these lines.
 */
 
 #include <stdarg.h>
@@ -151,10 +149,12 @@ info (char *fmt, ...)
 
 	va_start(ap, fmt);
 
+	idlok(infowin, TRUE);
 	scrollok(infowin, TRUE);
 	scroll(infowin);
-	wmove(infowin, NUMINFO, 0);
+	wmove(infowin, NUMINFO-1, 0);
 	vwprintw(infowin, fmt, ap);
+	wrefresh(infowin);
 	scrollok(infowin, FALSE);
 
 	va_end(fmt);

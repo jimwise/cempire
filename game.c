@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: game.c,v 1.13 1998/02/27 23:47:01 jim Exp $
+ * $Id: game.c,v 1.14 1998/02/28 00:01:03 jim Exp $
  */
 
 /*
@@ -29,7 +29,6 @@ void	make_map (void);
 void	make_pair (void);
 void	mark_cont (long);
 void	place_cities (void);
-void	print_movie_cell (char *, int, int, int, int);
 void	read_embark (piece_info_t *, piece_type_t);
 long	remove_land (long, long);
 long	regen_land (long);
@@ -843,24 +842,4 @@ stat_display (char *mbuf, int round)
 	pos_str (1, (int) i * 6, "%5d", user_cost);
 	pos_str (2, (int) i * 6, "%5d", comp_cost);
 	pos_str (0, 0, "Round %3d", (round + 1) / 2);
-}
-
-/*
-Print a single cell in condensed format.
-*/
-
-extern char zoom_list[];
-
-void
-print_movie_cell (char *mbuf, int row, int col, int row_inc, int col_inc)
-{
-	int r, c;
-	char *cell = " ";
-
-	for (r = row; r < row + row_inc; r++)
-		for (c = col; c < col + col_inc; c++)
-			if (strchr(zoom_list, mbuf[row_col_loc(r,c)]) < strchr(zoom_list, *cell))
-				*cell = mbuf[row_col_loc(r,c)];
-	
-	pos_str(row/row_inc + NUMTOPS, col/col_inc, cell);
 }

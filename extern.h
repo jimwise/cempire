@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: extern.h,v 1.33 1998/02/27 23:47:01 jim Exp $
+ * $Id: extern.h,v 1.34 1998/02/28 00:01:03 jim Exp $
  */
 
 /*
@@ -125,6 +125,7 @@ void	init_colors(void);
 #endif /* USE_COLOR */
 void	kill_display (void);
 int	move_cursor (long *, int);
+void    print_movie_cell (char *, int, int, int, int);
 void	print_pzoom (char *, path_map_t *, view_map_t *);
 void	print_sector (char, view_map_t[], int);
 void	print_xzoom (view_map_t *);

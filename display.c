@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.12 1998/02/27 02:58:38 jim Exp $
+ * $Id: display.c,v 1.13 1998/02/28 00:01:02 jim Exp $
  */
 
 /*
@@ -39,6 +39,7 @@ void	init_colors (void);
 void	kill_display (void);
 int     move_cursor (long *, int);
 int     on_screen (long);
+void    print_movie_cell (char *, int, int, int, int);
 void    print_sector (char, view_map_t[], int);
 void    print_pzoom (char *, path_map_t *, view_map_t *);
 void    print_pzoom_cell (path_map_t *, view_map_t *, int, int, int, int);
@@ -501,4 +502,22 @@ display_score (void)
 {
 	pos_str (0, cols-12, " User  Comp");
 	pos_str (1, cols-12, "%5d %5d", user_score, comp_score);
+}
+
+/*
+Print a single cell in condensed format.
+*/
+
+void
+print_movie_cell (char *mbuf, int row, int col, int row_inc, int col_inc)
+{
+        int r, c;
+        char *cell = " ";
+
+        for (r = row; r < row + row_inc; r++)
+                for (c = col; c < col + col_inc; c++)
+                        if (strchr(zoom_list, mbuf[row_col_loc(r,c)]) < strchr(zoom_list, *cell))
+                                *cell = mbuf[row_col_loc(r,c)];
+
+        pos_str(row/row_inc + NUMTOPS, col/col_inc, cell);
 }

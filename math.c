@@ -6,22 +6,22 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: math.c,v 1.12 1998/03/01 01:55:42 jim Exp $
+ * $Id: math.c,v 1.13 1998/08/09 00:38:55 jwise Exp $
  */
 
 /*
-math.c -- various mathematical routines.
-
-This file contains routines used to create random integers.  The
-initialization routine 'rand_init' should be called at program startup.
-The flavors of random integers that can be generated are:
-
-    rand_long (n) -- returns a random integer in the range 0..n-1
-
-Other routines include:
-
-    dist (a, b) -- returns the straight-line distance between two locations.
-*/
+ * math.c -- various mathematical routines.
+ * 
+ * This file contains routines used to create random integers.  The
+ * initialization routine 'rand_init' should be called at program startup.
+ * The flavors of random integers that can be generated are:
+ * 
+ *     rand_long (n) -- returns a random integer in the range 0..n-1
+ * 
+ * Other routines include:
+ * 
+ *     dist (a, b) -- returns the straight-line distance between two locations.
+ */
 
 #include <assert.h>
 #include <sys/types.h>
@@ -51,9 +51,9 @@ rand_long (long high)
 }
 
 /*
-Return the distance between two locations.  This is simply
-the max of the absolute differnce between the x and y coordinates.
-*/
+ * Return the distance between two locations.  This is simply
+ * the max of the absolute differnce between the x and y coordinates.
+ */
 
 #define MIN(a,b) ((a)<(b) ? (a) : (b))
 #define MAX(a,b) ((a)>(b) ? (a) : (b))
@@ -73,9 +73,9 @@ dist (long a, long b)
 }
 
 /*
-Find the square root of an integer.  We actually return the floor
-of the square root using Newton's method.
-*/
+ * Find the square root of an integer.  We actually return the floor
+ * of the square root using Newton's method.
+ */
 
 int
 isqrt (int n)

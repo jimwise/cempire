@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: map.c,v 1.23 1998/08/09 00:31:38 jwise Exp $
+ * $Id: map.c,v 1.24 1998/08/09 00:38:55 jwise Exp $
  */
 
 /*
@@ -182,34 +182,34 @@ vmap_cont_scan (int *cont_map, const view_map_t *vmap)
 }
 
 /*
-Find the nearest objective for a piece.  This routine actually does
-some real work.  This code represents my fourth rewrite of the
-algorithm.  This algorithm is central to the strategy used by the
-computer.
-
-Given a view_map, we create a path_map.  On the path_map, we record
-the distance from a location to the nearest objective.  We are
-given information about what the interesting objectives are, and
-how interesting each objective is.
-
-We use a breadth first search to find the nearest objective.
-We maintain something called a "perimeter list".  This list
-initially contains a list of squares that we can reach in 'n' moves.
-On each pass through our loop, we add all squares that are adjacent
-to the perimeter list and which lie outside the perimeter to our
-list.  (The loop is only slightly more complicated for armies and
-transports.)
-
-When our perimeter list becomes empty, or when the distance to
-the current perimeter is at least as large as the weighted distance
-to the best objective, we return the location of the best objective
-found.
-
-The 'cost' field in a path_map must be INFINITY if the cell lies
-outside of the current perimeter.  The cost for cells that lie
-on or within the current perimeter doesn't matter, except that
-the information must be consistent with the needs of 'vmap_mark_path'.
-*/
+ * Find the nearest objective for a piece.  This routine actually does
+ * some real work.  This code represents my fourth rewrite of the
+ * algorithm.  This algorithm is central to the strategy used by the
+ * computer.
+ * 
+ * Given a view_map, we create a path_map.  On the path_map, we record
+ * the distance from a location to the nearest objective.  We are
+ * given information about what the interesting objectives are, and
+ * how interesting each objective is.
+ * 
+ * We use a breadth first search to find the nearest objective.
+ * We maintain something called a "perimeter list".  This list
+ * initially contains a list of squares that we can reach in 'n' moves.
+ * On each pass through our loop, we add all squares that are adjacent
+ * to the perimeter list and which lie outside the perimeter to our
+ * list.  (The loop is only slightly more complicated for armies and
+ * transports.)
+ * 
+ * When our perimeter list becomes empty, or when the distance to
+ * the current perimeter is at least as large as the weighted distance
+ * to the best objective, we return the location of the best objective
+ * found.
+ * 
+ * The 'cost' field in a path_map must be INFINITY if the cell lies
+ * outside of the current perimeter.  The cost for cells that lie
+ * on or within the current perimeter doesn't matter, except that
+ * the information must be consistent with the needs of 'vmap_mark_path'.
+ */
 
 /* Find an objective over a single type of terrain. */
 
@@ -268,16 +268,16 @@ vmap_find_lobj (path_map_t path_map[], const view_map_t *vmap, long loc, const m
 }
 
 /*
-Find an objective moving from land to water.
-This is mildly complicated.  It costs 2 to move on land
-and one to move on water.  To handle this, we expand our current
-perimeter by one cell, where land can be expanded to either
-land or water, and water is only expanded to water.  Then
-we expand any water one more cell.
-
-We have different objectives depending on whether the objective
-is being approached from the land or the water.
-*/
+ * Find an objective moving from land to water.
+ * This is mildly complicated.  It costs 2 to move on land
+ * and one to move on water.  To handle this, we expand our current
+ * perimeter by one cell, where land can be expanded to either
+ * land or water, and water is only expanded to water.  Then
+ * we expand any water one more cell.
+ * 
+ * We have different objectives depending on whether the objective
+ * is being approached from the land or the water.
+ */
 
 long
 vmap_find_lwobj (path_map_t path_map[], const view_map_t *vmap, long loc, const move_info_t *move_info, int beat_cost)
@@ -324,10 +324,7 @@ vmap_find_lwobj (path_map_t path_map[], const view_map_t *vmap, long loc, const 
 	}
 }
 
-/*
-Return the cost to reach the adjacent cell of the correct type
-with the lowest cost.
-*/
+/* Return the cost to reach the adjacent cell of the correct type with the lowest cost. */
 
 int
 best_adj (const path_map_t *pmap, long loc, int type)
@@ -346,15 +343,15 @@ best_adj (const path_map_t *pmap, long loc, int type)
 }
 
 /*
-Find an objective moving from water to land.
-Here, we expand water to either land or water.
-We expand land only to land.
-
-We cheat ever so slightly, but this cheating accurately reflects
-the mechanics of moving.  The first time we expand water we can
-expand to land or water (army moving off tt or tt moving on water),
-but the second time, we only expand water (tt taking its second move).
-*/
+ * Find an objective moving from water to land.
+ * Here, we expand water to either land or water.
+ * We expand land only to land.
+ * 
+ * We cheat ever so slightly, but this cheating accurately reflects
+ * the mechanics of moving.  The first time we expand water we can
+ * expand to land or water (army moving off tt or tt moving on water),
+ * but the second time, we only expand water (tt taking its second move).
+ */
 
 long
 vmap_find_wlobj (path_map_t path_map[], const view_map_t *vmap, long loc, const move_info_t *move_info)
@@ -401,12 +398,12 @@ vmap_find_wlobj (path_map_t path_map[], const view_map_t *vmap, long loc, const 
 }
 
 /*
-Initialize the perimeter searching.
-
-This routine was taking a significant amount of the program time (10%)
-doing the initialization of the path map.  We now use an external
-constant and 'memcpy'.
-*/
+ * Initialize the perimeter searching.
+ * 
+ * This routine was taking a significant amount of the program time (10%)
+ * doing the initialization of the path map.  We now use an external
+ * constant and 'memcpy'.
+ */
 
 static path_map_t pmap_init[MAP_SIZE];
 static int init_done = 0;
@@ -439,28 +436,28 @@ start_perimeter (path_map_t *pmap, perimeter_t *perim, long loc, int terrain)
 }
 
 /*
-Expand the perimeter.
-
-Note that 'waterp' and 'landp' may be the same.
-
-For each cell of the current perimeter, we examine each
-cell adjacent to that cell which lies outside of the current
-perimeter.  If the adjacent cell is an objective, we update
-best_cost and best_loc.  If the adjacent cell is of the correct
-type, we turn place the adjacent cell in either the new water perimeter
-or the new land perimeter.
-
-We set the cost to reach the current perimeter.
-
-	pmap == path map to update
-	move_info == objectives and weights
-	curp == perimeter to expand
-	type == type of terrain to expand
-	cur_cost == cost to reach cells on perimeter
-	inc_wcost == cost to enter new water cells
-	inc_lcost == cost to enter new land cells
-	waterp == pointer to new water perimeter
-	landp == pointer to new land perimeter
+ * Expand the perimeter.
+ * 
+ * Note that 'waterp' and 'landp' may be the same.
+ * 
+ * For each cell of the current perimeter, we examine each
+ * cell adjacent to that cell which lies outside of the current
+ * perimeter.  If the adjacent cell is an objective, we update
+ * best_cost and best_loc.  If the adjacent cell is of the correct
+ * type, we turn place the adjacent cell in either the new water perimeter
+ * or the new land perimeter.
+ * 
+ * We set the cost to reach the current perimeter.
+ * 
+ * 	pmap == path map to update
+ * 	move_info == objectives and weights
+ * 	curp == perimeter to expand
+ * 	type == type of terrain to expand
+ * 	cur_cost == cost to reach cells on perimeter
+ * 	inc_wcost == cost to enter new water cells
+ * 	inc_lcost == cost to enter new land cells
+ * 	waterp == pointer to new water perimeter
+ * 	landp == pointer to new land perimeter
 */
 
 void
@@ -555,9 +552,7 @@ objective_cost (const view_map_t *vmap, const move_info_t *move_info, long loc, 
 	}
 }
 
-/*
-Return the type of terrain at a vmap location.
-*/
+/* Return the type of terrain at a vmap location. */
 
 int
 terrain_type (const path_map_t *pmap, const view_map_t *vmap, const move_info_t *move_info, long from_loc, long to_loc)
@@ -589,34 +584,34 @@ terrain_type (const path_map_t *pmap, const view_map_t *vmap, const move_info_t 
 }
 
 /*
-Prune unexplored territory.  We take a view map and we modify it
-so that unexplored territory that is adjacent to a lot of land
-or a lot of water is marked as being either that land or water.
-So basically, we are making a predicition about what we expect
-for land and water.  We iterate this algorithm until either
-the next iteration would remove all unexplored territory, or
-there is nothing more about which we can make an assumption.
-
-First, we use a pathmap to save the number of adjacent land
-and water cells for each unexplored cell.  Cells which have
-adjacent explored territory are placed in a perimeter list.
-We also count the number of cells that are not unexplored.
-
-We now take this perimeter list and make high-probability
-predictions.
-
-Then we round things off by making one pass of medium
-probability predictions.
-
-Then we make multiple passes extending our predictions.
-
-We stop if at any point all remaining unexplored cells are
-in a perimeter list, or if no predictions were made during
-one of the final passes.
-
-Unlike other algorithms, here we deal with "off board" locations.
-So be careful.
-*/
+ * Prune unexplored territory.  We take a view map and we modify it
+ * so that unexplored territory that is adjacent to a lot of land
+ * or a lot of water is marked as being either that land or water.
+ * So basically, we are making a predicition about what we expect
+ * for land and water.  We iterate this algorithm until either
+ * the next iteration would remove all unexplored territory, or
+ * there is nothing more about which we can make an assumption.
+ * 
+ * First, we use a pathmap to save the number of adjacent land
+ * and water cells for each unexplored cell.  Cells which have
+ * adjacent explored territory are placed in a perimeter list.
+ * We also count the number of cells that are not unexplored.
+ * 
+ * We now take this perimeter list and make high-probability
+ * predictions.
+ * 
+ * Then we round things off by making one pass of medium
+ * probability predictions.
+ * 
+ * Then we make multiple passes extending our predictions.
+ * 
+ * We stop if at any point all remaining unexplored cells are
+ * in a perimeter list, or if no predictions were made during
+ * one of the final passes.
+ * 
+ * Unlike other algorithms, here we deal with "off board" locations.
+ * So be careful.
+ */
 
 void
 vmap_prune_explore_locs (view_map_t *vmap)
@@ -742,13 +737,13 @@ vmap_prune_explore_locs (view_map_t *vmap)
 }
 
 /*
-Expand an unexplored cell.  We increment the land or water count
-of each neighbor.  Any neighbor that acquires a non-zero count
-is added to the 'to' perimiter list.  The count of explored
-territory is incremented.
-
-Careful:  'loc' may be "off board".
-*/
+ * Expand an unexplored cell.  We increment the land or water count
+ * of each neighbor.  Any neighbor that acquires a non-zero count
+ * is added to the 'to' perimiter list.  The count of explored
+ * territory is incremented.
+ * 
+ * Careful:  'loc' may be "off board".
+ */
 
 void
 expand_prune (view_map_t *vmap, path_map_t *pmap, long loc, int type, perimeter_t *to, int *explored)
@@ -774,13 +769,13 @@ expand_prune (view_map_t *vmap, path_map_t *pmap, long loc, int type, perimeter_
 }
 	
 /*
-Find the shortest path from the current location to the
-destination which passes over valid terrain.  We return
-the destination if a path exists.  Otherwise we return the
-origin.
-
-This is similar to 'find_objective' except that we know our destination.
-*/
+ * Find the shortest path from the current location to the
+ * destination which passes over valid terrain.  We return
+ * the destination if a path exists.  Otherwise we return the
+ * origin.
+ * 
+ * This is similar to 'find_objective' except that we know our destination.
+ */
 
 long
 vmap_find_dest (path_map_t path_map[], view_map_t vmap[], long cur_loc, long dest_loc, int owner, int terrain)
@@ -821,19 +816,19 @@ vmap_find_dest (path_map_t path_map[], view_map_t vmap[], long cur_loc, long des
 }
 
 /*
-Starting with the destination, we recursively back track toward the source
-marking all cells which are on a shortest path between the start and the
-destination.  To do this, we know the distance from the destination to
-the start.  The destination is on a path.  We then find the cells adjacent
-to the destination and nearest to the source and place them on the path.
-
-If we know square P is on the path, then S is on the path if S is
-adjacent to P, the cost to reach S is less than the cost to reach P,
-and the cost to move from S to P is the difference in cost between
-S and P.
-
-Someday, this routine should probably use perimeter lists as well.
-*/
+ * Starting with the destination, we recursively back track toward the source
+ * marking all cells which are on a shortest path between the start and the
+ * destination.  To do this, we know the distance from the destination to
+ * the start.  The destination is on a path.  We then find the cells adjacent
+ * to the destination and nearest to the source and place them on the path.
+ * 
+ * If we know square P is on the path, then S is on the path if S is
+ * adjacent to P, the cost to reach S is less than the cost to reach P,
+ * and the cost to move from S to P is the difference in cost between
+ * S and P.
+ * 
+ * Someday, this routine should probably use perimeter lists as well.
+ */
 
 void
 vmap_mark_path (path_map_t *path_map, const view_map_t *vmap, long dest)
@@ -854,10 +849,10 @@ vmap_mark_path (path_map_t *path_map, const view_map_t *vmap, long dest)
 }
 
 /*
-Create a marked path map.  We mark those squares adjacent to the
-starting location which are on the board.  'find_dir' must be
-invoked to decide which squares are actually valid.
-*/
+ * Create a marked path map.  We mark those squares adjacent to the
+ * starting location which are on the board.  'find_dir' must be
+ * invoked to decide which squares are actually valid.
+ */
 
 void
 vmap_mark_adjacent (path_map_t path_map[], long loc)
@@ -870,10 +865,10 @@ vmap_mark_adjacent (path_map_t path_map[], long loc)
 }
 
 /*
-Modify a marked path map.  We mark those squares adjacent to the
-starting location which are on the board and which are adjacent
-to a location on the existing shortest path.
-*/
+ * Modify a marked path map.  We mark those squares adjacent to the
+ * starting location which are on the board and which are adjacent
+ * to a location on the existing shortest path.
+ */
 
 void
 vmap_mark_near_path (path_map_t path_map[], long loc)
@@ -897,30 +892,30 @@ vmap_mark_near_path (path_map_t path_map[], long loc)
 }
 
 /*
-Look at each neighbor of 'loc'.  Select the first marked cell which
-is on a short path to the desired destination, and which holds a valid
-terrain.  Note that while this terrain is matched against a 'vmap',
-it differs slightly from terrains used above.  This terrain is the
-terrain to which we can move immediately, and does not include terrain
-for which we would have to wait for another piece to move off of.
-
-We prefer diagonal moves, and we try to have as many squares
-as possible containing something in 'adj_char'.
-
-For tie-breaking, we prefer moving to cells that are adjacent to
-as many other squares on the path.  This should have a few benefits:
-
-1)  Fighters are less likely to be blocked from reaching a city
-because they stay in the center of the path and increase the number
-of options for subsequent moves.
-
-2)  Transports will approach a city so that as many armies
-as possible can hop off the tt on one turn to take a valid
-path toward the city.
-
-3)  User pieces will move more intuitively by staying in the
-center of the best path.
-*/
+ * Look at each neighbor of 'loc'.  Select the first marked cell which
+ * is on a short path to the desired destination, and which holds a valid
+ * terrain.  Note that while this terrain is matched against a 'vmap',
+ * it differs slightly from terrains used above.  This terrain is the
+ * terrain to which we can move immediately, and does not include terrain
+ * for which we would have to wait for another piece to move off of.
+ * 
+ * We prefer diagonal moves, and we try to have as many squares
+ * as possible containing something in 'adj_char'.
+ * 
+ * For tie-breaking, we prefer moving to cells that are adjacent to
+ * as many other squares on the path.  This should have a few benefits:
+ * 
+ * 1)  Fighters are less likely to be blocked from reaching a city
+ * because they stay in the center of the path and increase the number
+ * of options for subsequent moves.
+ * 
+ * 2)  Transports will approach a city so that as many armies
+ * as possible can hop off the tt on one turn to take a valid
+ * path toward the city.
+ * 
+ * 3)  User pieces will move more intuitively by staying in the
+ * center of the best path.
+ */
 
 static direction_t order[] = {NORTHWEST, NORTHEAST, SOUTHWEST, SOUTHEAST, 
 					WEST, EAST, NORTH, SOUTH};
@@ -963,10 +958,10 @@ vmap_find_dir (path_map_t path_map[], const view_map_t *vmap, long loc, const ch
 }
 	
 /*
-Count the number of adjacent squares of interest.
-Squares are weighted so that the first in the list
-is the most interesting.
-*/
+ * Count the number of adjacent squares of interest.
+ * Squares are weighted so that the first in the list
+ * is the most interesting.
+ */
 
 int
 vmap_count_adjacent (const view_map_t *vmap, long loc, const char *adj_char)
@@ -987,9 +982,7 @@ vmap_count_adjacent (const view_map_t *vmap, long loc, const char *adj_char)
 	return (count);
 }
 
-/*
-Count the number of adjacent cells that are on the path.
-*/
+/* Count the number of adjacent cells that are on the path. */
 
 int
 vmap_count_path (path_map_t *pmap, long loc)
@@ -1007,9 +1000,9 @@ vmap_count_path (path_map_t *pmap, long loc)
 }
 
 /*
-See if a location is on the shore.  We return true if a surrounding
-cell contains water and is on the board.
-*/
+ * See if a location is on the shore.  We return true if a surrounding
+ * cell contains water and is on the board.
+ */
 
 int
 rmap_shore (long loc)
@@ -1036,9 +1029,9 @@ vmap_shore (view_map_t *vmap, long loc)
 }
 
 /*
-Return true if a location is surrounded by ocean.  Off board locations
-which cannot be moved to are treated as ocean.
-*/
+ * Return true if a location is surrounded by ocean.  Off board locations
+ * which cannot be moved to are treated as ocean.
+ */
 
 int
 vmap_at_sea (const view_map_t *vmap, long loc)

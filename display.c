@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.25 1998/03/03 16:21:20 jim Exp $
+ * $Id: display.c,v 1.26 1998/03/04 13:43:18 jim Exp $
  */
 
 /*
@@ -339,10 +339,6 @@ void
 print_xzoom (view_map_t *vmap)
 {
 	print_zoom (vmap);
-#if 0
-	prompt ("Hit a key: ");
-	get_chx (); /* wait for user */
-#endif
 }
 
 /*

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: extern.h,v 1.19 1998/02/26 01:02:58 jim Exp $
+ * $Id: extern.h,v 1.20 1998/02/26 22:29:00 jim Exp $
  */
 
 /*
@@ -141,12 +141,6 @@ void	save_game (void);
 void	save_movie_screen (void);
 int	select_cities (void);
 
-/* input routines (input.c) */
-char	get_chx (void);
-void	get_str (char *, int);
-int	getint (char *);
-int	getyn (char *);
-
 /* map routines (map.c)*/
 int	rmap_shore (long);
 int	vmap_at_sea (view_map_t *, long);
@@ -197,7 +191,11 @@ void	set_prod (city_info_t *);
 void	comment (char *, ...);
 void	error (char *, ...);
 void	extra (char *, ...);
+char    get_chx (void);
+int     getint (char *);
+int     getyn (char *);
 int	get_range (char *, int, int);
+void    get_str (char *, int);
 void	help (char **, int);
 void	huh (void);
 void	info (char *, char *, char *);

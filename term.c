@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.8 1998/02/25 23:37:49 jim Exp $
+ * $Id: term.c,v 1.9 1998/02/25 23:44:28 jim Exp $
  */
 
 /*
@@ -41,16 +41,24 @@ to read the lines.  The new information is then displayed, and the
 
 char	get_cq (void);
 void	get_strq (char *, int);
+void	vcomment (char *, va_list);
 void	vtopmsg(int, char *, va_list);
 
 static int need_delay;
 
 void
-/* VARARGS1 */
 pdebug (char *s, ...)
 {
-	if (!print_debug) return;
-	comment (s, a, b, c, d, e, f, g, h);
+	va_list ap;
+
+	va_start(ap, s);
+
+	if (!print_debug)
+		return;
+
+	vcomment (s, ap);
+
+	va_end(ap);
 }
 
 /*
@@ -130,12 +138,15 @@ Print out extra information.
 */
 
 void
-/* VARARGS1 */
-extra (buf, a, b, c, d, e, f, g, h)
-char *buf;
-int a, b, c, d, e, f, g, h;
+extra (char *buf, ...)
 {
-	topmsg (3, buf, a, b, c, d, e, f, g, h);
+	va_list ap;
+
+	va_start(ap, buf);
+
+	vtopmsg (3, buf, ap);
+
+	va_end(ap);
 }
 
 /*

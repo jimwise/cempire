@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.36 1998/03/03 13:33:22 jim Exp $
+ * $Id: term.c,v 1.37 1998/03/03 13:46:49 jim Exp $
  */
 
 /*
@@ -135,15 +135,24 @@ Print an error message on the second message line.
 */
 
 void
-error (char *buf, ...)
+error (char *fmt, ...)
 {
 	va_list ap;
 
-	va_start(ap, buf);
+	va_start(ap, fmt);
 
-	vtopmsg (2, buf, ap);
+	idlok(statuswin, TRUE);
+	scrollok(statuswin, TRUE);
+	wscrl(statuswin, 1);
+	wmove(statuswin, 0, 0);
+	vwprintw(statuswin, fmt, ap);
+	wrefresh(statuswin);
+	beep();
+	delay();
+	wscrl(statuswin, -1);
+	scrollok(statuswin, FALSE);
 
-	va_end(ap);
+	va_end(fmt);
 }
 
 /*

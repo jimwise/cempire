@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.60 1998/03/11 17:39:10 jim Exp $
+ * $Id: display.c,v 1.61 1998/03/11 17:43:27 jim Exp $
  */
 
 /*
@@ -390,7 +390,7 @@ print_zoom (view_map_t *vmap)
                 }
 
 	/* print round number */
-	sprintf (jnkbuf, "Zoomed Map, Round %ld", date);
+	sprintf (jnkbuf, "Zoomed Map Round %ld", date);
 	for (r = 0; jnkbuf[r] != '\0'; r++)
 	{
 		if (r+NUMTOPS + 2 >= MAP_HEIGHT)
@@ -450,6 +450,38 @@ print_pzoom (char *s, path_map_t *pmap, view_map_t *vmap)
 
 	box(mapwin, 0, 0);
 	wrefresh(mapwin);
+
+        /* print x-coordinates along bottom of screen */
+        wmove(stdscr, lines-1, 0);
+        wclrtoeol(stdscr);
+        for (c = 0; c < MAP_WIDTH; c+=col_inc)
+                if ((c/col_inc)%10  == 0)
+                {
+                        wmove(stdscr, lines-1, c/col_inc+1);
+                        wprintw(stdscr, "%d", c);
+                }
+
+        /* print y-coordinates along right of screen */
+        for (r = 0; r/row_inc < MAPWIN_HEIGHT; r+=row_inc)
+                if (((r/row_inc)%10 == 0) && r < MAP_HEIGHT)
+                        mvwprintw(stdscr, r/row_inc+NUMTOPS+1, cols-NUMSIDES, "%2d", r);
+                else
+                {
+                        wmove(stdscr, r/row_inc+NUMTOPS+1, cols-NUMSIDES);
+                        wclrtoeol(stdscr);
+                }
+
+        /* print round number */
+        sprintf (jnkbuf, "Debugging Map Round %ld", date);
+        for (r = 0; jnkbuf[r] != '\0'; r++)
+        {
+                if (r+NUMTOPS + 2 >= MAP_HEIGHT)
+                        break;
+
+                mvwaddch(stdscr, r+NUMTOPS + 2, cols-NUMSIDES+4, jnkbuf[r]);
+        }
+
+        wrefresh(stdscr);
 
 	prompt(s);
 	get_chx();

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.57 1998/03/11 01:31:08 jim Exp $
+ * $Id: display.c,v 1.58 1998/03/11 02:14:39 jim Exp $
  */
 
 /*
@@ -41,7 +41,6 @@ void	print_movie_screen(char *);
 void    print_sector (char, view_map_t[], int);
 void    print_pzoom (char *, path_map_t *, view_map_t *);
 void    print_pzoom_cell (path_map_t *, view_map_t *, int, int, int, int);
-void    print_xzoom (view_map_t *);
 void    print_zoom (view_map_t *);
 void    print_zoom_cell (view_map_t *, int, int, int, int);
 void	sector_change (void);
@@ -342,14 +341,6 @@ on_screen (long loc)
 		return (FALSE);
 
 	return (TRUE);
-}
-
-/* Print a view map for debugging. */
-
-void
-print_xzoom (view_map_t *vmap)
-{
-	print_zoom (vmap);
 }
 
 /*

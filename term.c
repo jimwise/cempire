@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.27 1998/03/02 16:28:15 jim Exp $
+ * $Id: term.c,v 1.28 1998/03/02 17:46:50 jim Exp $
  */
 
 /*
@@ -40,7 +40,6 @@ to read the lines.  The new information is then displayed, and the
 #include "empire.h"
 #include "extern.h"
 
-void    clreol (int, int);
 void    comment (char *, ...);
 void    delay (void);
 void	empend (void);
@@ -128,6 +127,8 @@ vtopmsg (int linep, char *buf, va_list ap)
                 vwprintw(infowin, buf, ap);
 
         wclrtoeol(infowin);
+
+	wrefresh(infowin);
 }
 
 /*
@@ -430,17 +431,6 @@ help (char **text, int nlines)
 }
 
 /*
-Clear the end of a specified line starting at the specified column.
-*/
-
-void
-clreol(int linep, int colp)
-{
-	wmove(infowin, linep, colp);
-	wclrtoeol(infowin);
-}
-
-/*
 Clear the screen.  We must also kill information maintained about the
 display.
 */
@@ -503,6 +493,7 @@ pos_str (int row, int col, char *str, ...)
 
 	wmove(stdscr, row, col);
 	vwprintw(stdscr, str, ap);
+	wrefresh(stdscr);
 
 	va_end(ap);
 }

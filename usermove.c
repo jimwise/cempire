@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: usermove.c,v 1.17 1998/03/03 12:31:11 jim Exp $
+ * $Id: usermove.c,v 1.18 1998/03/03 13:15:15 jim Exp $
  */
 
 /*
@@ -86,13 +86,14 @@ user_move (void)
 		scan (user_map, city[i].loc);
 		prod = city[i].prod;
 
-		if (prod == NOPIECE) { /* need production? */
+		if (prod == NOPIECE)
+		{
+			/* need production? */
 			set_prod (&(city[i])); /* ask user what to produce */
 		}
-		else if (city[i].work++ >= (long)piece_attr[prod].build_time) {
-			comment ("City at %d has completed %s.",
-				city[i].loc, piece_attr[prod].article);
-
+		else if (city[i].work++ >= (long)piece_attr[prod].build_time)
+		{
+			info("City at %d has completed %s.", city[i].loc, piece_attr[prod].article);
 			produce (&city[i]);
 			/* produce should set object.moved to 0 */
 		}
@@ -213,11 +214,10 @@ piece_move (piece_info_t *obj)
 				obj->range = piece_attr[FIGHTER].range;
 				obj->moved = speed;
 				obj->func = NOFUNC;
-				comment ("Landing confirmed.");
+				info("Landing confirmed.");
 			}
 			else if (obj->range == 0) {
-				comment ("Fighter at %d crashed and burned.",
-					obj->loc);
+				info("Fighter at %d crashed and burned.", obj->loc);
 				kill_obj (obj, obj->loc);
 			}
 		}
@@ -889,17 +889,17 @@ user_dir_army (piece_info_t *obj, long loc)
 		return;
 
 		if (user_map[obj->loc].contents == 'T')
-			comment ("Your army jumped into the briny and drowned.");
+			info("Your army jumped into the briny and drowned.");
 
 		else if (user_map[loc].contents == '.')
-			comment ("Your army marched dutifully into the sea and drowned.");
+			info("Your army marched dutifully into the sea and drowned.");
 
 		else { /* attack something at sea */
 			enemy_killed = islower (user_map[loc].contents);
 			attack (obj, loc);
 	
 			if (obj->hits > 0) /* ship won? */
-			comment ("Your army regretfully drowns after its successful assault.");
+			info("Your army regretfully drowns after its successful assault.");
 		}
 		if (obj->hits > 0) {
 			kill_obj (obj, loc);
@@ -971,16 +971,14 @@ user_dir_ship (piece_info_t *obj, long loc)
 		return;
 
 		if (user_map[loc].contents == '+')
-			comment ("Your %s broke up on shore.",
-				 piece_attr[obj->type].name);
+			info("Your %s broke up on shore.", piece_attr[obj->type].name);
 
 		else { /* attack something on shore */
 			enemy_killed = islower (user_map[loc].contents);
 			attack (obj, loc);
 
 			if (obj->hits > 0) /* ship won? */
-				comment ("Your %s breaks up after its successful assault.",
-					 piece_attr[obj->type].name);
+				info("Your %s breaks up after its successful assault.", piece_attr[obj->type].name);
 		}
 		if (obj->hits > 0) {
 			kill_obj (obj, loc);
@@ -1027,10 +1025,10 @@ void
 user_cancel_auto (void)
 {
 	if (!automove)
-		comment ("Not in auto mode!");
+		error("Not in auto mode!");
 	else {
 		automove = FALSE;
-		comment ("Auto mode cancelled.");
+		info("Auto mode cancelled.");
 	}
 }
 
@@ -1093,7 +1091,7 @@ void
 fatal (piece_info_t *obj, long loc, char *message, char *response)
 {
 	if (getyn (message)) {
-		comment (response);
+		info(response);
 		kill_obj (obj, loc);
 	}
 }

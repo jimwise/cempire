@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: empire.c,v 1.16 1998/03/02 16:06:35 jim Exp $
+ * $Id: empire.c,v 1.17 1998/03/03 13:15:13 jim Exp $
  */
 
 /*
@@ -38,7 +38,7 @@ empire (void)
 	rand_init(); /* init random number generator */
 
 	term_clear(); /* nothing on screen */
-	comment(VERSION_STRING);
+	info(VERSION_STRING);
 	redraw ();
 
 	if (!restore_game ()) /* try to restore previous game */
@@ -149,8 +149,10 @@ do_command (char orders)
 	
 	case 'T': /* trace: toggle save_movie flag */
 		save_movie = !save_movie;
-		if (save_movie) comment ("Saving movie screens to 'empmovie.dat'.");
-		else comment ("No longer saving movie screens.");
+		if (save_movie)
+			info("Saving movie screens to 'empmovie.dat'.");
+		else
+			info("No longer saving movie screens.");
 		break;
 
 	case 'W': /* watch movie */

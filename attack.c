@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: attack.c,v 1.14 1998/03/03 12:25:06 jim Exp $
+ * $Id: attack.c,v 1.15 1998/03/03 13:15:11 jim Exp $
  */
 
 /*
@@ -60,9 +60,9 @@ attack_city (piece_info_t *att_obj, long loc)
 
 	if (rand_long (2) == 0) { /* attack fails? */
 		if (att_owner == USER)
-			comment ("The scum defending the city crushed your attacking blitzkrieger.");
+			info("The scum defending the city crushed your attacking blitzkrieger.");
 		else if (city_owner == USER)
-			comment ("Your city at %d is under attack.", cityp->loc);
+			info("Your city at %d is under attack.", cityp->loc);
 		
 		kill_obj (att_obj, loc);
 	}
@@ -79,7 +79,7 @@ attack_city (piece_info_t *att_obj, long loc)
 			set_prod (cityp);
 		}
 		else if (city_owner == USER)
-			comment ("City at %d has been lost to the enemy!", cityp->loc);
+			info("City at %d has been lost to the enemy!", cityp->loc);
 	}
 	/* let city owner see all results */
 	if (city_owner != UNOWNED)

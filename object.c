@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: object.c,v 1.17 1998/03/01 01:55:43 jim Exp $
+ * $Id: object.c,v 1.18 1998/03/03 13:15:14 jim Exp $
  */
 
 /*
@@ -467,8 +467,7 @@ move_sat (piece_info_t *obj)
 		move_sat1 (obj);
 		if (obj->range == 0) {
 			if (obj->owner == USER)
-				comment ("Satellite at %d crashed and burned.",
-					 obj->loc);
+				info("Satellite at %d crashed and burned.", obj->loc);
 			kill_obj (obj, obj->loc);
 		}
 	}

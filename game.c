@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: game.c,v 1.22 1998/03/03 12:25:09 jim Exp $
+ * $Id: game.c,v 1.23 1998/03/03 13:15:13 jim Exp $
  */
 
 /*
@@ -343,7 +343,7 @@ select_cities (void)
 		userp = cont_tab[user_cont].cityp[useri];
 	} while (userp == compp);
 
-	comment ("Your city is at %d.", userp->loc);
+	info("Your city is at %d.", userp->loc);
 	delay (); /* let user see output before we set_prod */
 
 	/* update city and map */

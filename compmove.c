@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: compmove.c,v 1.23 1998/03/03 12:30:45 jim Exp $
+ * $Id: compmove.c,v 1.24 1998/03/03 13:15:12 jim Exp $
  */
 
 /*
@@ -71,7 +71,7 @@ comp_move (int nmoves)
 	for (i = 1; i <= nmoves; i++)
 	{
 		/* for each move we get... */
-		comment ("Thinking...");
+		prompt("Thinking...");
 
 		memcpy (emap, comp_map, MAP_SIZE * sizeof (view_map_t));
 		vmap_prune_explore_locs (emap);

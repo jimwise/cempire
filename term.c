@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.38 1998/03/03 13:47:40 jim Exp $
+ * $Id: term.c,v 1.39 1998/03/03 13:48:59 jim Exp $
  */
 
 /*
@@ -55,7 +55,6 @@ void	term_clear (void);
 void    term_end (void);
 void    term_init (void);
 void    topini (void);
-void	vcomment (char *, va_list);
 
 static WINDOW *statuswin, *infowin;
 
@@ -144,13 +143,6 @@ huh (void)
 	error ("Type H for Help.");
 }
 
-void
-vcomment (char *buf, va_list ap)
-{
-	topini();
-	vtopmsg(3, buf, ap);
-}
-	
 /*
 Get a string from the user, echoing characters all the while.
 */

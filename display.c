@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.61 1998/03/11 17:43:27 jim Exp $
+ * $Id: display.c,v 1.62 1998/03/11 17:54:10 jim Exp $
  */
 
 /*
@@ -229,10 +229,7 @@ print_sector (char whose, view_map_t vmap[], int sector)
 	wclrtoeol(stdscr);
 	for (c = ref_col; c < ref_col + display_cols && c < MAP_WIDTH; c++)
 		if (c % 10 == 0)
-		{
-			wmove(stdscr, lines-1, c-ref_col+1);
-			wprintw(stdscr, "%d", c);
-		}
+			mvwprintw(stdscr, lines-1, c-ref_col+1, "%d", c);
 
 	/* print y-coordinates along right of screen */
 	for (r = ref_row; r < ref_row + display_rows && r < MAP_HEIGHT; r++)
@@ -374,10 +371,7 @@ print_zoom (view_map_t *vmap)
 	wclrtoeol(stdscr);
         for (c = 0; c < MAP_WIDTH; c+=col_inc)
                 if ((c/col_inc)%10  == 0)
-                {
-                        wmove(stdscr, lines-1, c/col_inc+1);
-                        wprintw(stdscr, "%d", c);
-                }
+                        mvwprintw(stdscr, lines-1, c/col_inc+1, "%d", c);
 
         /* print y-coordinates along right of screen */
         for (r = 0; r/row_inc < MAPWIN_HEIGHT; r+=row_inc)
@@ -456,10 +450,7 @@ print_pzoom (char *s, path_map_t *pmap, view_map_t *vmap)
         wclrtoeol(stdscr);
         for (c = 0; c < MAP_WIDTH; c+=col_inc)
                 if ((c/col_inc)%10  == 0)
-                {
-                        wmove(stdscr, lines-1, c/col_inc+1);
-                        wprintw(stdscr, "%d", c);
-                }
+                        mvwprintw(stdscr, lines-1, c/col_inc+1, "%d", c);
 
         /* print y-coordinates along right of screen */
         for (r = 0; r/row_inc < MAPWIN_HEIGHT; r+=row_inc)

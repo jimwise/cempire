@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: term.c,v 1.73 2003/08/05 21:09:56 jwise Exp $
+ * $Id: term.c,v 1.74 2003/10/22 22:16:43 jwise Exp $
  */
 
 /*
@@ -119,7 +119,7 @@ error (const char *fmt, ...)
 void
 huh (void)
 {
-	error ("Type H for Help.");
+	error ("Type ? for Help.");
 }
 
 /* Get a string from the user, echoing characters all the while. */

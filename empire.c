@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: empire.c,v 1.39 2002/11/11 06:22:44 jwise Exp $
+ * $Id: empire.c,v 1.40 2003/10/22 22:16:43 jwise Exp $
  */
 
 /*
@@ -105,7 +105,7 @@ do_command (char orders)
 		comp_move(1);
 		break;
 
-	case 'H': /* help */
+	case '?': /* help */
 		help(help_cmd, cmd_lines);
 		break;
 

@@ -1,7 +1,7 @@
 #
 #	Copyright (C) 1987, 1988 Chuck Simmons
 #
-# $Id: Makefile,v 1.36 2001/02/07 03:47:01 jwise Exp $
+# $Id: Makefile,v 1.37 2001/02/08 19:16:56 jwise Exp $
 #
 # See the file COPYING, distributed with empire, for restriction
 # and warranty information.
@@ -134,7 +134,14 @@ TARGET = cempire
 
 CPPFLAGS= $(DEFINES) $(INCLUDES)
 CFLAGS= $(CPPFLAGS) $(COPTS) $(DEBUG) $(WARNS)
-LINTFLAGS = -brxHu
+LINTFLAGS = -Habnruxz -w
+
+# -aa -c -e -h 
+# -s -- strict ANSI C
+# -n -- do not check against standard library
+# -u do not complain about funcs used but not defined
+# -w treat warnings as errors
+# -z do not complain about use of pointer to undefined struct
 
 FILES= attack.c compmove.c data.c display.c edit.c empire.c game.c main.c \
 	map.c math.c object.c term.c usermove.c util.c

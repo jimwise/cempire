@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: empire.h,v 1.31 2001/01/13 03:09:23 jwise Exp $
+ * $Id: empire.h,v 1.32 2001/02/08 19:16:56 jwise Exp $
  */
 
 /*
@@ -143,12 +143,12 @@ typedef struct piece_info
 	piece_type_t	type;		/* type of piece			*/
 	long		loc;		/* location of piece			*/
 	function_t	func;		/* programmed type of movement		*/
-	short		hits;		/* hits left				*/
+	int		hits;		/* hits left				*/
 	int		moved;		/* moves made				*/
 	struct piece_info *ship;	/* pointer to containing ship		*/
 	struct piece_info *cargo;	/* pointer to cargo list		*/
-	short		count;		/* count of items on board		*/
-	short		range;		/* current range (if applicable)	*/
+	int		count;		/* count of items on board		*/
+	int		range;		/* current range (if applicable)	*/
 } piece_info_t;
 
 /*

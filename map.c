@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: map.c,v 1.15 1998/08/08 19:17:06 jwise Exp $
+ * $Id: map.c,v 1.16 1998/08/08 19:27:04 jwise Exp $
  */
 
 /*
@@ -37,7 +37,7 @@ int	terrain_type (path_map_t *, view_map_t *, move_info_t *, long, long);
 int     vmap_at_sea (view_map_t *, long);
 void	vmap_cont (int *, view_map_t *, long, char);
 scan_counts_t	vmap_cont_scan (int *, view_map_t *);
-int	vmap_count_adjacent (view_map_t *, long, char *);
+int	vmap_count_adjacent (view_map_t *, long, const char *);
 int	vmap_count_path (path_map_t *, long);
 long    vmap_find_aobj (path_map_t[], view_map_t *, long, move_info_t *);
 long    vmap_find_dest (path_map_t[], view_map_t[], long, long, int, int);
@@ -1052,7 +1052,7 @@ is the most interesting.
 */
 
 int
-vmap_count_adjacent (view_map_t *vmap, long loc, char *adj_char)
+vmap_count_adjacent (view_map_t *vmap, long loc, const char *adj_char)
 {
 	int i, count;
 	long new_loc;

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: empire.h,v 1.27 1998/08/08 18:25:46 jwise Exp $
+ * $Id: empire.h,v 1.28 1998/08/08 19:27:03 jwise Exp $
  */
 
 /*
@@ -116,7 +116,7 @@ enum
         MOVE_W=-18,     /* move west */
         MOVE_NW=-19     /* move northwest */
 };
-typedef long    function_t;
+typedef int    function_t;
 
 typedef struct
 {

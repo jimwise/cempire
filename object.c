@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: object.c,v 1.19 1998/03/06 22:40:28 jim Exp $
+ * $Id: object.c,v 1.20 1998/08/08 19:27:04 jwise Exp $
  */
 
 /*
@@ -429,7 +429,7 @@ move_sat1 (piece_info_t *obj)
 
 	if (!map[new_loc].on_board)
 	{
-		switch (obj->func)
+		switch ((int) obj->func)
 		{
 		    case MOVE_NE:
 			obj->func = bounce (obj->loc, MOVE_NW, MOVE_SE, MOVE_SW);
@@ -519,7 +519,7 @@ describe_obj (piece_info_t *obj)
 	char func[STRSIZE];
 	char other[STRSIZE];
 
-	if (obj->func >= 0) sprintf (func, "%ld", obj->func);
+	if (obj->func >= 0) sprintf (func, "%d", obj->func);
 	else sprintf (func, func_name[FUNCI(obj->func)]);
 	
 	other[0] = 0;

@@ -5,7 +5,7 @@
  * and warranty information.
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: edit.c,v 1.27 1998/03/10 22:33:59 jim Exp $
+ * $Id: edit.c,v 1.28 1998/08/08 19:27:03 jwise Exp $
  */
 
 /*
@@ -566,7 +566,7 @@ e_city_info (long edit_cursor)
 		if (cityp->func[i] < 0)
 			sprintf (temp_buf, "%c:%s; ", piece_attr[i].sname, func_name[FUNCI(cityp->func[i])]);
 		else
-			sprintf (temp_buf, "%c: %ld;", piece_attr[i].sname, cityp->func[i]);
+			sprintf (temp_buf, "%c: %d;", piece_attr[i].sname, cityp->func[i]);
 		
 		strcat (func_buf, temp_buf);
 	}

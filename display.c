@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.64 1998/08/04 15:58:43 jwise Exp $
+ * $Id: display.c,v 1.65 1998/08/08 19:27:02 jwise Exp $
  */
 
 /*
@@ -45,7 +45,7 @@ int     move_cursor (long *, int);
 int     on_screen (long);
 void	print_movie_screen(char *);
 void    print_sector (char, view_map_t[], int);
-void    print_pzoom (char *, path_map_t *, view_map_t *);
+void    print_pzoom (const char *, path_map_t *, view_map_t *);
 void    print_pzoom_cell (path_map_t *, view_map_t *, int, int, int, int);
 void    print_zoom (view_map_t *);
 void    print_zoom_cell (view_map_t *, int, int, int, int);
@@ -434,7 +434,7 @@ Print a condensed version of a pathmap.
 */
 
 void
-print_pzoom (char *s, path_map_t *pmap, view_map_t *vmap)
+print_pzoom (const char *s, path_map_t *pmap, view_map_t *vmap)
 {
 	int row_inc, col_inc;
 	int r, c;

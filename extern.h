@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: extern.h,v 1.67 1998/08/08 19:11:55 jwise Exp $
+ * $Id: extern.h,v 1.68 1998/08/08 19:27:03 jwise Exp $
  */
 
 /*
@@ -127,7 +127,7 @@ void    help (char **, int);
 void	kill_display (void);
 int	move_cursor (long *, int);
 void    print_movie_screen(char *);
-void	print_pzoom (char *, path_map_t *, view_map_t *);
+void	print_pzoom (const char *, path_map_t *, view_map_t *);
 void	print_sector (char, view_map_t[], int);
 void	print_zoom (view_map_t *);
 void    sector_change (void);

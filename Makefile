@@ -2,7 +2,7 @@
 #	Copyright (C) 1987, 1988 Chuck Simmons
 #	Portions of this file Copyright (C) 1998 Jim Wise
 #
-# $Id: Makefile,v 1.4 1998/02/24 23:47:56 jim Exp $
+# $Id: Makefile,v 1.5 1998/02/24 23:52:30 jim Exp $
 #
 # See the file COPYING, distributed with empire, for restriction
 # and warranty information.
@@ -77,9 +77,6 @@ all: empire
 empire: $(OFILES)
 	$(CC) $(PROFILE) -o empire $(OFILES) $(LIBS)
 
-TAGS: $(HEADERS) $(FILES)
-	etags $(HEADERS) $(FILES)
-
 lint: $(FILES)
 	lint -u -D$(SYS) $(FILES) -lcurses
 
@@ -89,12 +86,12 @@ clean:
 clobber: clean
 	rm -f empire empire.tar*
 
-SOURCES = READ.ME empire.6 COPYING Makefile BUGS $(FILES) $(HEADERS) MANIFEST empire.lsm empire.spec
+SOURCES = READ.ME empire.6 COPYING Makefile BUGS $(FILES) $(HEADERS)
 
 empire.tar: $(SOURCES)
 	(cd ..; tar -cvf empire-$(V)/empire.tar `echo $(SOURCES) | sed "/\(^\| \)/s// empire-$(V)\//g"`)
 empire.tar.gz: empire.tar
-	gzip -f empire.tar
+	gzip -9 -f empire.tar
 
 empire.shar: $(SOURCES)
 	shar $(SOURCES) >empire.shar

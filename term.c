@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.6 1998/02/25 22:34:56 jim Exp $
+ * $Id: term.c,v 1.7 1998/02/25 22:40:27 jim Exp $
  */
 
 /*
@@ -41,6 +41,7 @@ to read the lines.  The new information is then displayed, and the
 
 char	get_cq (void);
 void	get_strq (char *, int);
+void	vtopmsg(int, char *, va_list);
 
 static int need_delay;
 
@@ -107,10 +108,15 @@ Print a prompt on the first message line.
 */
 
 void
-/* VARARGS1 */
 prompt (char *buf, ...)
 {
-	topmsg (1, buf, a, b, c, d, e, f, g, h);
+	va_list ap;
+
+	va_start(ap, buf);
+
+	vtopmsg (1, buf, ap);
+
+	va_end(ap);
 }
 
 /*
@@ -118,12 +124,15 @@ Print an error message on the second message line.
 */
 
 void
-/* VARARGS1 */
-error (buf, a, b, c, d, e, f, g, h)
-char *buf;
-int a, b, c, d, e, f, g, h;
+error (char *buf, ...)
 {
-	topmsg (2, buf, a, b, c, d, e, f, g, h);
+	va_list ap;
+
+	va_start(ap, buf);
+
+	vtopmsg (2, buf, ap);
+
+	va_end(ap);
 }
 
 /*
@@ -172,16 +181,19 @@ set_need_delay () {
 }
 
 void
-/* VARARGS1 */
-comment (buf, a, b, c, d, e, f, g, h)
-char *buf;
-int a, b, c, d, e, f, g, h;
+comment (char *buf, ...)
 {
+	va_list ap;
+
+	va_start(ap, buf);
+
 	if (need_delay) delay ();
 	topmsg (1, 0);
 	topmsg (2, 0);
-	topmsg (3, buf, a, b, c, d, e, f, g, h);
+	vtopmsg (3, buf, ap);
 	need_delay = (buf != 0);
+
+	va_end(ap);
 }
 	
 /*

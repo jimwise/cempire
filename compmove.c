@@ -29,12 +29,35 @@ For each move the user wants us to make, we do the following:
 
 static view_map_t emap[MAP_SIZE]; /* pruned explore map */
 
+void	comp_move (int);
+void	do_cities (void);
+void	comp_prod (city_info_t *, int);
+void	comp_set_prod (city_info_t *, int);
+int	overproduced (city_info_t *, int);
+int	need_more (int *, int, int);
+void	comp_set_needed (city_info_t *, int *, int, int);
+int	lake (long);
+void	cpiece_move (piece_info_t *);
+void	move1 (piece_info_t *);
+void	army_move (piece_info_t *)
+void	unmark_explore_locs (view_map_t *);
+void	make_army_load_map (piece_info_t *, view_map_t *, view_map_t *);
+int	nearby_load (piece_info_t *, loc);
+int	nearby_count (long);
+void	make_tt_load_map (view_map_t *, view_map_t *);
+void	make_unload_map (view_map_t *, view_map_t *);
+void	board_ship (piece_info_t *, path_map_t *);
+piece_info_t *find_best_tt (piece_info_t *, long);
+int	load_army (piece_info_t *);
+long	move_away (view_map_t *, long char *);
+long	find_attack (long, char *, char *);
+
+
 int load_army();
-	void move_objective();
+void move_objective();
 
 void
-comp_move (nmoves) 
-int nmoves;
+comp_move (int nmoves) 
 {
 	void do_cities(), do_pieces(), check_endgame();
 
@@ -80,7 +103,8 @@ build carriers, as we don't have a good strategy for moving these.
 */
 
 void
-do_cities () {
+do_cities (void)
+{
 	void comp_prod();
 	
 	int i;

@@ -19,8 +19,10 @@ SYS = SYSV
 
 # Use -g to compile the program for debugging.
 
-DEBUG = -g -DDEBUG
-#DEBUG = -O
+CC=gcc
+
+#DEBUG = -g -DDEBUG
+DEBUG = -Wall -W -Werror
 
 # Use -p to profile the program.
 #PROFILE = -p -DPROFILE
@@ -28,8 +30,8 @@ PROFILE =
 
 # Define all necessary libraries.  'curses' is necessary.  'termcap'
 # is needed on BSD systems.
-LIBS = -lncurses
-#LIBS = -lcurses -ltermcap
+#LIBS = -lncurses
+LIBS = -lcurses # -ltermcap
 
 # You shouldn't have to modify anything below this line.
 

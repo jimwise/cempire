@@ -28,23 +28,23 @@ if any.
 #include "empire.h"
 #include "extern.h"
 
+void	attack (piece_info_t *, long);
+void	attack_city (piece_info_t *, long);
+void	attack_obj (piece_info_t *, long);
+void    survive (piece_info_t *, long);
+void	describe (piece_info_t *, piece_info_t *, long);
+
 void
-attack (att_obj, loc)
-piece_info_t *att_obj;
-long loc;
+attack (piece_info_t *att_obj, long loc)
 {
-	void attack_city();
-	void attack_obj();
-	
 	if (map[loc].contents == '*') /* attacking a city? */
 		attack_city (att_obj, loc);
-	else attack_obj (att_obj, loc); /* attacking a piece */
+	else
+		attack_obj (att_obj, loc); /* attacking a piece */
 }
 
 void
-attack_city (att_obj, loc)
-piece_info_t *att_obj;
-long loc;
+attack_city (piece_info_t *att_obj, long loc)
 {
 	city_info_t *cityp;
 	int att_owner, city_owner;
@@ -92,12 +92,8 @@ First we have to figure out what is being attacked.
 */
 
 void
-attack_obj (att_obj, loc)
-piece_info_t *att_obj;
-long loc;
+attack_obj (piece_info_t *att_obj, long loc)
 {
-	void describe(), survive();
-	
 	piece_info_t *def_obj; /* defender */
 	int owner;
 
@@ -136,9 +132,7 @@ location.
 */
 
 void
-survive (obj, loc)
-piece_info_t *obj;
-long loc;
+survive (piece_info_t *obj, long loc)
 {
 	while (obj_capacity (obj) < obj->count)
 		kill_obj (obj->cargo, loc);
@@ -147,9 +141,7 @@ long loc;
 }
 
 void
-describe (win_obj, lose_obj, loc)
-piece_info_t *win_obj, *lose_obj;
-long loc;
+describe (piece_info_t *win_obj, piece_info_t *lose_obj, long loc)
 {
 	char buf[STRSIZE];
 	char buf2[STRSIZE];

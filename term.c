@@ -4,23 +4,23 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: term.c,v 1.66 1998/08/09 00:41:22 jwise Exp $
+ * $Id: term.c,v 1.67 1998/08/09 01:25:55 jwise Exp $
  */
 
 /*
-term.c -- this file contains various routines used to control the
-user communications area of the terminal.  This area consists of
-the top 3 lines of the terminal where messages are displayed to the
-user and input is acquired from the user.
-
-There are two types of output in this area.  One type is interactive
-output.  This consists of a prompt line and an error message line.
-The other type of output is informational output.  The user must
-be given time to read informational output.
-
-Whenever input is received, the top three lines are cleared and the
-screen refreshed as the user has had time to read these lines.
-*/
+ * term.c -- this file contains various routines used to control the
+ * user communications area of the terminal.  This area consists of
+ * the top 3 lines of the terminal where messages are displayed to the
+ * user and input is acquired from the user.
+ * 
+ * There are two types of output in this area.  One type is interactive
+ * output.  This consists of a prompt line and an error message line.
+ * The other type of output is informational output.  The user must
+ * be given time to read informational output.
+ * 
+ * Whenever input is received, the top three lines are cleared and the
+ * screen refreshed as the user has had time to read these lines.
+ */
 
 #include <stdarg.h>
 #include <stdio.h>
@@ -53,13 +53,11 @@ void    term_init (void);
 static WINDOW *statuswin, *infowin;
 
 /*
-Here are routines that handle printing to the top few lines of the
-screen.
-*/
+ * Here are routines that handle printing to the top few lines of the
+ * screen.
+ */
 
-/*
-Print a prompt on the status line.
-*/
+/* Print a prompt on the status line. */
 
 void
 prompt (const char *buf, ...)
@@ -93,9 +91,7 @@ info (const char *fmt, ...)
 	va_end(fmt);
 }
 
-/*
-Print an error message on the second message line.
-*/
+/* Print an error message on the second message line. */
 
 void
 error (const char *fmt, ...)
@@ -118,9 +114,7 @@ error (const char *fmt, ...)
 	va_end(fmt);
 }
 
-/*
-Print out a generic error message.
-*/
+/* Print out a generic error message. */
 
 void
 huh (void)
@@ -128,9 +122,7 @@ huh (void)
 	error ("Type H for Help.");
 }
 
-/*
-Get a string from the user, echoing characters all the while.
-*/
+/* Get a string from the user, echoing characters all the while. */
 
 void
 get_str (char *buf, const int sizep)
@@ -142,9 +134,7 @@ get_str (char *buf, const int sizep)
 	noecho();
 }
 
-/*
-Get a character from the user and convert it to uppercase.
-*/
+/* Get a character from the user and convert it to uppercase. */
 
 char
 get_chx (void)
@@ -187,9 +177,7 @@ get_int (const char *message, int low, int high)
 	}
 }
 
-/*
-Input a character quietly.
-*/
+/* Input a character quietly. */
 
 char
 get_cq (void)
@@ -203,9 +191,9 @@ get_cq (void)
 }
 
 /*
-Input a yes or no response from the user.  We loop until we get
-a valid response.  We return TRUE iff the user replies 'y'.
-*/
+ * Input a yes or no response from the user.  We loop until we get
+ * a valid response.  We return TRUE iff the user replies 'y'.
+ */
 
 int
 getyn (const char *message)
@@ -227,9 +215,9 @@ getyn (const char *message)
 }
 
 /*
-Clear the screen.  We must also kill information maintained about the
-display.
-*/
+ * Clear the screen.  We must also kill information maintained about the
+ * display.
+ */
 
 void
 term_clear (void)
@@ -239,9 +227,7 @@ term_clear (void)
 	kill_display ();
 }
 
-/*
-Redraw the screen.
-*/
+/* Redraw the screen. */
 
 void
 redraw (void)
@@ -249,9 +235,7 @@ redraw (void)
 	wrefresh(stdscr);
 }
 
-/*
-Clean up the display.  This routine gets called as we leave the game.
-*/
+/* Clean up the display.  This routine gets called as we leave the game. */
 
 void
 term_end (void)
@@ -262,9 +246,7 @@ term_end (void)
 	endwin ();
 }
 
-/*
-Initialize the terminal.
-*/
+/* Initialize the terminal. */
 
 void
 term_init (void)

@@ -4,12 +4,10 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: object.c,v 1.23 1998/08/09 00:41:22 jwise Exp $
+ * $Id: object.c,v 1.24 1998/08/09 01:25:54 jwise Exp $
  */
 
-/*
-object.c -- routines for manipulating objects.
-*/
+/* object.c -- routines for manipulating objects. */
 
 #include <assert.h>
 #include <ctype.h>
@@ -45,10 +43,10 @@ void    set_prod (city_info_t *);
 void	update (view_map_t[], long);
 
 /*
-Find the nearest city to a location.  Return the location
-of the city and the estimated cost to reach the city.
-Distances are computed as straight-line distances.
-*/
+ * Find the nearest city to a location.  Return the location
+ * of the city and the estimated cost to reach the city.
+ * Distances are computed as straight-line distances.
+ */
 
 int
 find_nearest_city (long loc, int owner, long *city_loc)
@@ -71,9 +69,7 @@ find_nearest_city (long loc, int owner, long *city_loc)
 	return best_dist;
 }
 
-/*
-Given the location of a city, return the index of that city.
-*/
+/* Given the location of a city, return the index of that city. */
 
 city_info_t *
 find_city (long loc)
@@ -82,13 +78,13 @@ find_city (long loc)
 }
 
 /*
-Return the number of moves an object gets to make.  This amount
-is based on the damage the object has suffered and the number of
-moves it normally gets to make.  The object always gets to make
-at least one move, assuming it is not dead.  Damaged objects move
-at a fraction of their normal speed.  An object which has lost
-half of its hits moves at half-speed, for example.
-*/
+ * Return the number of moves an object gets to make.  This amount
+ * is based on the damage the object has suffered and the number of
+ * moves it normally gets to make.  The object always gets to make
+ * at least one move, assuming it is not dead.  Damaged objects move
+ * at a fraction of their normal speed.  An object which has lost
+ * half of its hits moves at half-speed, for example.
+ */
 
 int
 obj_moves (const piece_info_t *obj)
@@ -98,9 +94,7 @@ obj_moves (const piece_info_t *obj)
 	       / piece_attr[obj->type].max_hits;
 }
 
-/*
-Figure out the capacity for an object.
-*/
+/* Figure out the capacity for an object. */
 
 int
 obj_capacity (const piece_info_t *obj)
@@ -111,9 +105,9 @@ obj_capacity (const piece_info_t *obj)
 }
 
 /*
-Search for an object of a given type at a location.  We scan the
-list of objects at the given location for one of the given type.
-*/
+ * Search for an object of a given type at a location.  We scan the
+ * list of objects at the given location for one of the given type.
+ */
 
 piece_info_t *
 find_obj (piece_type_t type, long loc)
@@ -127,9 +121,7 @@ find_obj (piece_type_t type, long loc)
 	return (NULL);
 }
 
-/*
-Find a non-full item of the appropriate type at the given location.
-*/
+/* Find a non-full item of the appropriate type at the given location. */
 
 piece_info_t *
 find_nfull (piece_type_t type, long loc)
@@ -144,9 +136,9 @@ find_nfull (piece_type_t type, long loc)
 }
 
 /*
-Look around a location for an unfull transport.  Return the location
-of the transport if there is one.
-*/
+ * Look around a location for an unfull transport.  Return the location
+ * of the transport if there is one.
+ */
 
 long
 find_transport (int owner, long loc)
@@ -164,9 +156,9 @@ find_transport (int owner, long loc)
 }
 
 /*
-Search a list of objects at a location for any kind of object.
-We prefer transports and carriers to other objects.
-*/
+ * Search a list of objects at a location for any kind of object.
+ * We prefer transports and carriers to other objects.
+ */
 
 piece_info_t *
 find_obj_at_loc (long loc)
@@ -183,9 +175,7 @@ find_obj_at_loc (long loc)
 	return (best);
 }
 
-/*
-If an object is on a ship, remove it from that ship.
-*/
+/* If an object is on a ship, remove it from that ship. */
 
 void
 disembark (piece_info_t *obj)
@@ -197,9 +187,7 @@ disembark (piece_info_t *obj)
 	}
 }
 
-/*
-Move an object onto a ship.
-*/
+/* Move an object onto a ship. */
 
 void
 embark (piece_info_t *ship, piece_info_t *obj)
@@ -210,9 +198,9 @@ embark (piece_info_t *ship, piece_info_t *obj)
 }
 
 /*
-Kill an object.  We scan around the piece and free it.  If there is
-anything in the object, it is killed as well.
-*/
+ * Kill an object.  We scan around the piece and free it.  If there is
+ * anything in the object, it is killed as well.
+ */
 
 void
 kill_obj (piece_info_t *obj, long loc)
@@ -245,9 +233,9 @@ kill_one (piece_info_t **list, piece_info_t *obj)
 }
 
 /*
-Kill a city.  We kill off all objects in the city and set its type
-to unowned.  We scan around the city's location.
-*/
+ * Kill a city.  We kill off all objects in the city and set its type
+ * to unowned.  We scan around the city's location.
+ */
 
 void
 kill_city (city_info_t *cityp)
@@ -293,9 +281,7 @@ kill_city (city_info_t *cityp)
 	}
 }
 
-/*
-Produce an item for a city.
-*/
+/* Produce an item for a city. */
 
 static int sat_dir[4] = {MOVE_NW, MOVE_SW, MOVE_NE, MOVE_SE};
 
@@ -334,12 +320,12 @@ produce (city_info_t *cityp)
 }
 
 /*
-Move an object to a location.  We mark the object moved, we move
-the object to the new square, and we scan around the object.
-We also do lots of little maintenance like updating the range
-of an object, keeping track of the number of pieces on a boat, 
-etc.
-*/
+ * Move an object to a location.  We mark the object moved, we move
+ * the object to the new square, and we scan around the object.
+ * We also do lots of little maintenance like updating the range
+ * of an object, keeping track of the number of pieces on a boat, 
+ * etc.
+ */
 
 void
 move_obj (piece_info_t *obj, long new_loc)
@@ -392,11 +378,11 @@ move_obj (piece_info_t *obj, long new_loc)
 }
 
 /*
-Move a satellite.  It moves according to the preset direction.
-Satellites bounce off the edge of the board.
-
-We start off with some preliminary routines.
-*/
+ * Move a satellite.  It moves according to the preset direction.
+ * Satellites bounce off the edge of the board.
+ * 
+ * We start off with some preliminary routines.
+ */
 
 /* Return next direction for a sattellite to travel. */
 
@@ -452,9 +438,9 @@ move_sat1 (piece_info_t *obj)
 }
 
 /*
-Now move the satellite all of its squares.
-Satellite burns iff it's range reaches zero.
-*/
+ * Now move the satellite all of its squares.
+ * Satellite burns iff it's range reaches zero.
+ */
 		
 void
 move_sat (piece_info_t *obj)
@@ -472,12 +458,12 @@ move_sat (piece_info_t *obj)
 }
 
 /*
-Return true if a piece can move to a specified location.
-We are passed the object and the location.  The location
-must be on the board, and the player's view map must have an appropriate
-terrain type for the location.  Boats may move into port, armies may
-move onto transports, and fighters may move onto cities or carriers.
-*/
+ * Return true if a piece can move to a specified location.
+ * We are passed the object and the location.  The location
+ * must be on the board, and the player's view map must have an appropriate
+ * terrain type for the location.  Boats may move into port, armies may
+ * move onto transports, and fighters may move onto cities or carriers.
+ */
 
 int
 good_loc (const piece_info_t *obj, long loc)
@@ -548,13 +534,13 @@ describe_obj (const piece_info_t *obj)
 }
 
 /*
-Scan around a location to update a player's view of the world.  For each
-surrounding cell, we remember the date the cell was examined, and the
-contents of the cell.  Notice how we carefully update the cell to first
-reflect land, water, or city, then army or fighter, then boat, and finally
-city owner.  This guarantees that the object we want to display will appear
-on top.
-*/
+ * Scan around a location to update a player's view of the world.  For each
+ * surrounding cell, we remember the date the cell was examined, and the
+ * contents of the cell.  Notice how we carefully update the cell to first
+ * reflect land, water, or city, then army or fighter, then boat, and finally
+ * city owner.  This guarantees that the object we want to display will appear
+ * on top.
+ */
 
 void
 scan (view_map_t vmap[], long loc)
@@ -574,9 +560,7 @@ scan (view_map_t vmap[], long loc)
 	update (vmap, loc); /* update current location as well */
 }
 
-/*
-Scan a portion of the board for a satellite.
-*/
+/* Scan a portion of the board for a satellite. */
 
 void
 scan_sat (view_map_t *vmap, long loc)
@@ -595,10 +579,10 @@ scan_sat (view_map_t *vmap, long loc)
 }
 
 /*
-Update a location.  We set the date seen, the land type, object
-contents starting with armies, then fighters, then boats, and the
-city type.
-*/
+ * Update a location.  We set the date seen, the land type, object
+ * contents starting with armies, then fighters, then boats, and the
+ * city type.
+ */
 
 void
 update (view_map_t vmap[], long loc)
@@ -626,10 +610,10 @@ update (view_map_t vmap[], long loc)
 }
 
 /*
-Set the production for a city.  We make sure the city is displayed
-on the screen, and we ask the user for the new production.  We keep
-asking until we get a valid answer.
-*/
+ * Set the production for a city.  We make sure the city is displayed
+ * on the screen, and we ask the user for the new production.  We keep
+ * asking until we get a valid answer.
+ */
 
 void
 set_prod (city_info_t *cityp)

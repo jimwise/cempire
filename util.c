@@ -4,12 +4,10 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: util.c,v 1.25 1998/08/09 00:41:23 jwise Exp $
+ * $Id: util.c,v 1.26 1998/08/09 01:25:55 jwise Exp $
  */
 
-/*
-util.c -- various utility routines.
-*/
+/* util.c -- various utility routines. */
 
 #include <assert.h>
 #include <stdio.h>
@@ -24,33 +22,33 @@ void	check_obj_cargo (piece_info_t **);
 void	emp_panic (const char *, const int, const char *);
 
 /*
-Here is a little routine to perform consistency checking on the
-database.  I'm finding that my database is becoming inconsistent,
-and I've no idea why.  Possibly this will help.
+ * Here is a little routine to perform consistency checking on the
+ * database.  I'm finding that my database is becoming inconsistent,
+ * and I've no idea why.  Possibly this will help.
+ * 
+ * We perform the following functions:
+ * 
+ * 1)  Make sure no list contains loops.
+ * 
+ * 2)  Make sure every object is in either the free list with 0 hits,
+ * or it is in the correct object list and a location list with non-zero hits,
+ * and an appropriate owner.
+ * 
+ * 3)  Make sure every city is on the map.
+ * 
+ * 4)  Make sure every object is in the correct location and that
+ * objects on the map have non-zero hits.
+ * 
+ * 5)  Make sure every object in a cargo list has a ship pointer.
+ * 
+ * 6)  Make sure every object with a ship pointer is in that ship's
+ * cargo list.
+ */
 
-We perform the following functions:
-
-1)  Make sure no list contains loops.
-
-2)  Make sure every object is in either the free list with 0 hits,
-or it is in the correct object list and a location list with non-zero hits,
-and an appropriate owner.
-
-3)  Make sure every city is on the map.
-
-4)  Make sure every object is in the correct location and that
-objects on the map have non-zero hits.
-
-5)  Make sure every object in a cargo list has a ship pointer.
-
-6)  Make sure every object with a ship pointer is in that ship's
-cargo list.
-*/
-
-static int in_free[LIST_SIZE]; /* TRUE if object in free list */
-static int in_obj[LIST_SIZE]; /* TRUE if object in obj list */
-static int in_loc[LIST_SIZE]; /* TRUE if object in a loc list */
-static int in_cargo[LIST_SIZE]; /* TRUE if object in a cargo list */
+static int in_free[LIST_SIZE];	/* TRUE if object in free list		*/
+static int in_obj[LIST_SIZE];	/* TRUE if object in obj list		*/
+static int in_loc[LIST_SIZE];	/* TRUE if object in a loc list		*/
+static int in_cargo[LIST_SIZE];	/* TRUE if object in a cargo list	*/
 
 void
 check (void)
@@ -129,16 +127,16 @@ check (void)
 }
 
 /*
-Check object lists.  We look for:
-
-1)  Loops and bad prev pointers.
-
-2)  Dead objects.
-
-3)  Invalid types.
-
-4)  Invalid owners.
-*/
+ * Check object lists.  We look for:
+ * 
+ * 1)  Loops and bad prev pointers.
+ * 
+ * 2)  Dead objects.
+ * 
+ * 3)  Invalid types.
+ * 
+ * 4)  Invalid owners.
+ */
 
 void
 check_obj (piece_info_t **list, const int owner)
@@ -164,24 +162,24 @@ check_obj (piece_info_t **list, const int owner)
 }
 
 /*
-Check cargo lists.  We assume object lists are valid.
-as we will place bits in the 'in_cargo' array that are used by
-'check_obj'.
-
-Check for:
-
-1)  Number of items in list is same as cargo count.
-
-2)  Type of cargo is correct.
-
-3)  Location of cargo matches location of ship.
-
-4)  Ship pointer of cargo points to correct ship.
-
-5)  There are no loops in cargo list and prev ptrs are correct.
-
-6)  All cargo is alive.
-*/
+ * Check cargo lists.  We assume object lists are valid.
+ * as we will place bits in the 'in_cargo' array that are used by
+ * 'check_obj'.
+ * 
+ * Check for:
+ * 
+ * 1)  Number of items in list is same as cargo count.
+ * 
+ * 2)  Type of cargo is correct.
+ * 
+ * 3)  Location of cargo matches location of ship.
+ * 
+ * 4)  Ship pointer of cargo points to correct ship.
+ * 
+ * 5)  There are no loops in cargo list and prev ptrs are correct.
+ * 
+ * 6)  All cargo is alive.
+ */
 
 void
 check_cargo (const piece_info_t *list, const piece_type_t cargo_type)
@@ -211,10 +209,10 @@ check_cargo (const piece_info_t *list, const piece_type_t cargo_type)
 }
 
 /*
-Scan through object lists making sure every object with a ship
-pointer appears in a cargo list.  We assume object and cargo
-lists are valid.
-*/
+ * Scan through object lists making sure every object with a ship
+ * pointer appears in a cargo list.  We assume object and cargo
+ * lists are valid.
+ */
 
 void
 check_obj_cargo (piece_info_t **list)
@@ -228,9 +226,7 @@ check_obj_cargo (piece_info_t **list)
 				assert(in_cargo[p-object]);
 }
 
-/*
- * Print a message and then exit.
- */
+/* Print a message and then exit. */
 
 void
 emp_panic (const char *file, const int line, const char *why)

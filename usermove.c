@@ -4,12 +4,10 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: usermove.c,v 1.28 1998/08/09 00:41:23 jwise Exp $
+ * $Id: usermove.c,v 1.29 1998/08/09 01:25:55 jwise Exp $
  */
 
-/*
-usermove.c -- Let the user move her troops.
-*/
+/* usermove.c -- Let the user move her troops. */
 
 #include <assert.h>
 #include <ctype.h>
@@ -63,12 +61,14 @@ user_move (void)
 	piece_info_t *obj, *next_obj;
 	int prod;
 
-	/* First we loop through objects to update the user's view
-	of the world and perform any other necessary processing.
-	We would like to have the world view up to date before
-	asking the user any questions.  This means that we should
-	also scan through all cities before possibly asking the
-	user what to produce in each city. */
+	/*
+	 * First we loop through objects to update the user's view
+	 * of the world and perform any other necessary processing.
+	 * We would like to have the world view up to date before
+	 * asking the user any questions.  This means that we should
+	 * also scan through all cities before possibly asking the
+	 * user what to produce in each city.
+	 */
 
 	for (n = FIRST_OBJECT; n < NUM_OBJECTS; n++)
 		for (obj = user_obj[n]; obj != NULL; obj = obj->piece_link.next)
@@ -131,11 +131,11 @@ user_move (void)
 }
 
 /*
-Move a piece.  We loop until all the moves of a piece are made.  Within
-the loop, we first awaken the piece if it is adjacent to an enemy piece.
-Then we attempt to handle any preprogrammed function for the piece.  If
-the piece has not moved after this, we ask the user what to do.
-*/
+ * Move a piece.  We loop until all the moves of a piece are made.  Within
+ * the loop, we first awaken the piece if it is adjacent to an enemy piece.
+ * Then we attempt to handle any preprogrammed function for the piece.  If
+ * the piece has not moved after this, we ask the user what to do.
+ */
 
 void
 piece_move (piece_info_t *obj)
@@ -197,9 +197,11 @@ piece_move (piece_info_t *obj)
 
 		if (obj->moved == saved_moves) need_input = TRUE;
 		
-		/* handle fighters specially.  If in a city or carrier, turn
-		is over and reset range to max.  Otherwise, if
-		range = 0, fighter crashes and burns and turn is over. */
+		/*
+		 * handle fighters specially.  If in a city or carrier, turn
+		 * is over and reset range to max.  Otherwise, if
+		 * range = 0, fighter crashes and burns and turn is over.
+		 */
 
 		if (obj->type == FIGHTER && obj->hits > 0) {
 			if ((user_map[obj->loc].contents == 'O'
@@ -228,10 +230,10 @@ piece_move (piece_info_t *obj)
 }
 
 /*
-Move a piece at random.  We create a list of empty squares to which
-the piece can move.  If there are none, we do nothing, otherwise we 
-move the piece to a random adjacent square.
-*/
+ * Move a piece at random.  We create a list of empty squares to which
+ * the piece can move.  If there are none, we do nothing, otherwise we 
+ * move the piece to a random adjacent square.
+ */
 
 void
 move_random (piece_info_t *obj)
@@ -255,10 +257,10 @@ move_random (piece_info_t *obj)
 }
 
 /*
-Have a piece explore.  We look for the nearest unexplored territory
-which the piece can reach and have to piece move toward the
-territory.
-*/
+ * Have a piece explore.  We look for the nearest unexplored territory
+ * which the piece can reach and have to piece move toward the
+ * territory.
+ */
 
 void
 move_explore (piece_info_t *obj)
@@ -293,10 +295,10 @@ move_explore (piece_info_t *obj)
 }
 
 /*
-Move an army onto a transport when it arrives.  We scan around the
-army to find a non-full transport.  If one is present, we move the
-army to the transport and waken the army.
-*/
+ * Move an army onto a transport when it arrives.  We scan around the
+ * army to find a non-full transport.  If one is present, we move the
+ * army to the transport and waken the army.
+ */
 
 void
 move_transport (piece_info_t *obj)
@@ -314,10 +316,10 @@ move_transport (piece_info_t *obj)
 }
 
 /*
-Move an army toward the nearest loading transport.
-If there is an adjacent transport, move the army onto
-the transport, and awaken the army.
-*/
+ * Move an army toward the nearest loading transport.
+ * If there is an adjacent transport, move the army onto
+ * the transport, and awaken the army.
+ */
 
 static view_map_t amap[MAP_SIZE];
 
@@ -336,8 +338,7 @@ move_armyload (piece_info_t *obj)
 	if (loc != obj->loc) {
 		move_obj (obj, loc);
 		obj->func = NOFUNC;
-	}
-	else { /* look for nearest non-full transport */
+	} else { /* look for nearest non-full transport */
 		memcpy (amap, user_map, sizeof (view_map_t) * MAP_SIZE);
 
 		/* mark loading transports or cities building transports */
@@ -351,9 +352,7 @@ move_armyload (piece_info_t *obj)
 	}
 }
 		
-/*
-Move an army toward an attackable city or enemy army.
-*/
+/* Move an army toward an attackable city or enemy army. */
 
 void
 move_armyattack (piece_info_t *obj)
@@ -380,9 +379,7 @@ move_ttload (piece_info_t *obj)
 	obj = obj;
 }
 
-/*
-Move a ship toward port.  If the ship is healthy, wake it up.
-*/
+/* Move a ship toward port.  If the ship is healthy, wake it up. */
 
 void
 move_repair (piece_info_t *obj)
@@ -414,10 +411,10 @@ move_repair (piece_info_t *obj)
 }
 
 /*
-Here we have a transport or carrier waiting to be filled.  If the
-object is not full, we set the move count to its maximum value.
-Otherwise we awaken the object.
-*/
+ * Here we have a transport or carrier waiting to be filled.  If the
+ * object is not full, we set the move count to its maximum value.
+ * Otherwise we awaken the object.
+ */
 
 void
 move_fill (piece_info_t *obj)
@@ -428,11 +425,11 @@ move_fill (piece_info_t *obj)
 }
 
 /*
-Here we have a piece that wants to land at the nearest carrier or
-owned city.  We scan through the lists of cities and carriers looking
-for the closest one.  We then move toward that item's location.
-The nearest landing field must be within the object's range.
-*/
+ * Here we have a piece that wants to land at the nearest carrier or
+ * owned city.  We scan through the lists of cities and carriers looking
+ * for the closest one.  We then move toward that item's location.
+ * The nearest landing field must be within the object's range.
+ */
 
 void
 move_land (piece_info_t *obj)
@@ -459,10 +456,10 @@ move_land (piece_info_t *obj)
 }
 
 /*
-Move a piece in the specified direction if possible.
-If the object is a fighter which has travelled for half its range,
-we wake it up.
-*/
+ * Move a piece in the specified direction if possible.
+ * If the object is a fighter which has travelled for half its range,
+ * we wake it up.
+ */
 
 void
 move_dir (piece_info_t *obj)
@@ -478,11 +475,11 @@ move_dir (piece_info_t *obj)
 }
 
 /*
-Move a piece toward a specified destination if possible.  For each
-direction, we see if moving in that direction would bring us closer
-to our destination, and if there is nothing in the way.  If so, we
-move in the first direction we find.
-*/
+ * Move a piece toward a specified destination if possible.  For each
+ * direction, we see if moving in that direction would bring us closer
+ * to our destination, and if there is nothing in the way.  If so, we
+ * move in the first direction we find.
+ */
 
 void
 move_path (piece_info_t *obj)
@@ -493,11 +490,11 @@ move_path (piece_info_t *obj)
 }
 
 /*
-Move a piece toward a specific destination.  We first map out
-the paths to the destination, if we can't get there, we return.
-Then we mark the paths to the destination.  Then we choose a
-move.
-*/
+ * Move a piece toward a specific destination.  We first map out
+ * the paths to the destination, if we can't get there, we return.
+ * Then we mark the paths to the destination.  Then we choose a
+ * move.
+ */
 
 void
 move_to_dest (piece_info_t *obj, long dest)
@@ -533,9 +530,7 @@ move_to_dest (piece_info_t *obj, long dest)
 	move_obj (obj, new_loc); /* everything looks good */
 }
 
-/*
-Ask the user to move her piece.
-*/
+/* Ask the user to move her piece. */
 
 void
 ask_user (piece_info_t *obj)
@@ -587,11 +582,11 @@ ask_user (piece_info_t *obj)
 }
 
 /*
-Here, if the passed object is on a city, we assign
-the city's function to the object.  However, we then awaken the
-object if necessary because the user only changed the city
-function, and did not tell us what to do with the object.
-*/
+ * Here, if the passed object is on a city, we assign
+ * the city's function to the object.  However, we then awaken the
+ * object if necessary because the user only changed the city
+ * function, and did not tell us what to do with the object.
+ */
 
 void
 reset_func (piece_info_t *obj)
@@ -608,10 +603,10 @@ reset_func (piece_info_t *obj)
 }
 
 /*
-Increment the number of moves a piece has used.  If the piece
-is an army and the army is in a city, move the army to
-the city.
-*/
+ * Increment the number of moves a piece has used.  If the piece
+ * is an army and the army is in a city, move the army to
+ * the city.
+ */
 
 void
 user_skip (piece_info_t *obj)
@@ -622,9 +617,9 @@ user_skip (piece_info_t *obj)
 }
 
 /*
-Put an object in FILL mode.  The object must be either a transport
-or carrier.  If not, we beep at the user.
-*/
+ * Put an object in FILL mode.  The object must be either a transport
+ * or carrier.  If not, we beep at the user.
+ */
 
 void
 user_fill (piece_info_t *obj)
@@ -634,9 +629,7 @@ user_fill (piece_info_t *obj)
 	else obj->func = FILL;
 }
 
-/*
-Print out help information.
-*/
+/* Print out help information. */
 
 void
 user_help (void)
@@ -646,9 +639,7 @@ user_help (void)
 	get_chx ();
 }
 
-/*
-Set an object's function to move in a certain direction.
-*/
+/* Set an object's function to move in a certain direction. */
 
 void
 user_set_dir (piece_info_t *obj)
@@ -669,9 +660,7 @@ user_set_dir (piece_info_t *obj)
 	}
 }
 
-/*
-Wake up the current piece.
-*/
+/* Wake up the current piece. */
 
 void
 user_wake (piece_info_t *obj)
@@ -679,9 +668,7 @@ user_wake (piece_info_t *obj)
 	obj->func = NOFUNC;
 }
 
-/*
-Set the piece's func to random.  
-*/
+/* Set the piece's func to random. */
 
 void
 user_random (piece_info_t *obj)
@@ -689,9 +676,7 @@ user_random (piece_info_t *obj)
 	obj->func = RANDOM;
 }
 
-/*
-Set a piece's function to sentry.
-*/
+/* Set a piece's function to sentry. */
 
 void
 user_sentry (piece_info_t *obj)
@@ -699,9 +684,7 @@ user_sentry (piece_info_t *obj)
 	obj->func = SENTRY;
 }
 
-/*
-Set a fighter's function to land at the nearest city.
-*/
+/* Set a fighter's function to land at the nearest city. */
 
 void
 user_land (piece_info_t *obj)
@@ -712,9 +695,7 @@ user_land (piece_info_t *obj)
 		obj->func = LAND;
 }
 
-/*
-Set the piece's func to explore.
-*/
+/* Set the piece's func to explore. */
 
 void
 user_explore (piece_info_t *obj)
@@ -722,9 +703,7 @@ user_explore (piece_info_t *obj)
 	obj->func = EXPLORE;
 }
 
-/*
-Set an army's function to WFTRANSPORT.
-*/
+/* Set an army's function to WFTRANSPORT. */
 
 void
 user_transport (piece_info_t *obj)
@@ -733,9 +712,7 @@ user_transport (piece_info_t *obj)
 	else obj->func = WFTRANSPORT;
 }
 
-/*
-Set an army's function to ARMYATTACK.
-*/
+/* Set an army's function to ARMYATTACK. */
 
 void
 user_armyattack (piece_info_t *obj)
@@ -744,9 +721,7 @@ user_armyattack (piece_info_t *obj)
 	else obj->func = ARMYATTACK;
 }
 
-/*
-Set a ship's function to REPAIR.
-*/
+/* Set a ship's function to REPAIR. */
 
 void
 user_repair (piece_info_t *obj)
@@ -755,9 +730,7 @@ user_repair (piece_info_t *obj)
 	else obj->func = REPAIR;
 }
 
-/*
-Set a city's function.
-*/
+/* Set a city's function. */
 
 void
 user_set_city_func (piece_info_t *obj)
@@ -808,9 +781,7 @@ user_set_city_func (piece_info_t *obj)
 	}
 }
 
-/*
-Change a city's production.
-*/
+/* Change a city's production. */
 
 void
 user_build (piece_info_t *obj)
@@ -827,9 +798,9 @@ user_build (piece_info_t *obj)
 }
 
 /*
-Move a piece in the direction specified by the user.
-This routine handles attacking objects.
-*/
+ * Move a piece in the direction specified by the user.
+ * This routine handles attacking objects.
+ */
 
 void
 user_dir (piece_info_t *obj, direction_t dir)
@@ -854,10 +825,10 @@ user_dir (piece_info_t *obj, direction_t dir)
 }
 
 /*
-We have an army that wants to attack something or move onto some
-unreasonable terrain.  We check for errors, question the user if
-necessary, and attack if necessary.
-*/
+ * We have an army that wants to attack something or move onto some
+ * unreasonable terrain.  We check for errors, question the user if
+ * necessary, and attack if necessary.
+ */
 
 void
 user_dir_army (piece_info_t *obj, long loc)
@@ -911,9 +882,9 @@ user_dir_army (piece_info_t *obj, long loc)
 }
 
 /*
-Here we have a fighter wanting to attack something.  There are only
-three cases:  attacking a city, attacking ourself, attacking the enemy.
-*/
+ * Here we have a fighter wanting to attack something.  There are only
+ * three cases:  attacking a city, attacking ourself, attacking the enemy.
+ */
 
 void
 user_dir_fighter (piece_info_t *obj, long loc)
@@ -935,10 +906,10 @@ user_dir_fighter (piece_info_t *obj, long loc)
 }
 
 /*
-Here we have a ship attacking something, or trying to move on
-shore.  Our cases are: moving ashore (and subcases), attacking
-a city, attacking self, attacking enemy.
-*/
+ * Here we have a ship attacking something, or trying to move on
+ * shore.  Our cases are: moving ashore (and subcases), attacking
+ * a city, attacking self, attacking enemy.
+ */
 	
 void
 user_dir_ship (piece_info_t *obj, long loc)
@@ -989,10 +960,10 @@ user_dir_ship (piece_info_t *obj, long loc)
 }
 
 /*
-Here a user wants to move an army to a city.  If the city contains
-a non-full transport, we make the move.  Otherwise we ask the user
-if she really wants to attack the city.
-*/
+ * Here a user wants to move an army to a city.  If the city contains
+ * a non-full transport, we make the move.  Otherwise we ask the user
+ * if she really wants to attack the city.
+ */
 
 void
 move_army_to_city (piece_info_t *obj, long city_loc)
@@ -1008,9 +979,7 @@ move_army_to_city (piece_info_t *obj, long city_loc)
 	"Your rebel army was liquidated.");
 }
 
-/*
-Cancel automove mode.
-*/
+/* Cancel automove mode. */
 
 void
 user_cancel_auto (void)
@@ -1024,13 +993,13 @@ user_cancel_auto (void)
 }
 
 /*
-Awaken an object if it needs to be.  Normally, objects are awakened
-when they are next to an enemy object or an unowned city.  Armies
-on troop transports are not awakened if they are surrounded by sea.
-We return true if the object is now awake.  Objects are never
-completely awoken here if their function is a destination.  But we
-will return TRUE if we want the user to have control.
-*/
+ * Awaken an object if it needs to be.  Normally, objects are awakened
+ * when they are next to an enemy object or an unowned city.  Armies
+ * on troop transports are not awakened if they are surrounded by sea.
+ * We return true if the object is now awake.  Objects are never
+ * completely awoken here if their function is a destination.  But we
+ * will return TRUE if we want the user to have control.
+ */
 
 int
 awake (piece_info_t *obj)
@@ -1064,9 +1033,9 @@ awake (piece_info_t *obj)
 }
 
 /*
-Question the user about a fatal move.  If the user responds 'y',
-print out the response and kill the object.
-*/
+ * Question the user about a fatal move.  If the user responds 'y',
+ * print out the response and kill the object.
+ */
 
 void
 fatal (piece_info_t *obj, long loc, const char *message, const char *response)

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.36 1998/03/07 00:22:05 jim Exp $
+ * $Id: display.c,v 1.37 1998/03/07 00:24:37 jim Exp $
  */
 
 /*
@@ -271,8 +271,8 @@ display_screen (view_map_t vmap[])
 	display_rows = MAPWIN_HEIGHT; /* num lines to display */
 	display_cols = MAPWIN_WIDTH;
 
-	for (r = ref_row; r < ref_row + display_rows && r < MAP_HEIGHT; r++)
-		for (c = ref_col; c < ref_col + display_cols && c < MAP_WIDTH; c++)
+	for (r = ref_row; r < ref_row + display_rows && r < MAP_HEIGHT - 1; r++)
+		for (c = ref_col; c < ref_col + display_cols && c < MAP_WIDTH - 1; c++)
 		{
 			t = row_col_loc (r, c);
 			wmove (mapwin, r-ref_row, c-ref_col);

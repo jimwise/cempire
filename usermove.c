@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: usermove.c,v 1.16 1998/03/01 01:55:43 jim Exp $
+ * $Id: usermove.c,v 1.17 1998/03/03 12:31:11 jim Exp $
  */
 
 /*
@@ -652,7 +652,6 @@ user_help (void)
 	help (help_user, user_lines);
 	prompt ("Press any key to continue: ");
 	c = get_chx ();
-	c = c; /* keep lint happy */
 }
 
 /*

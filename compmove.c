@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: compmove.c,v 1.43 2001/02/07 03:19:54 jwise Exp $
+ * $Id: compmove.c,v 1.44 2001/02/08 19:16:03 jwise Exp $
  */
 
 /*
@@ -428,7 +428,8 @@ cpiece_move (piece_info_t *obj)
 
 	if (obj->type == FIGHTER) { /* init fighter range */
 		cityp = find_city (obj->loc);
-		if (cityp != NULL) obj->range = piece_attr[FIGHTER].range;
+		if (cityp != NULL)
+			obj->range = piece_attr[FIGHTER].range;
 	}
 	
 	while (obj->moved < obj_moves (obj)) {

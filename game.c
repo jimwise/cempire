@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: game.c,v 1.20 1998/03/02 15:09:27 jim Exp $
+ * $Id: game.c,v 1.21 1998/03/02 18:45:13 jim Exp $
  */
 
 /*
@@ -548,7 +548,7 @@ save_game (void)
 	wval (comp_score);
 
 	fclose (f);
-	topmsg (3, "Game saved.");
+	info("Game saved.");
 }
 
 /*
@@ -638,7 +638,7 @@ restore_game (void)
 	
 	fclose (f);
 	kill_display (); /* what we had is no longer good */
-	topmsg (3, "Game restored from empsave.dat.");
+	info("Game restored from empsave.dat.");
 	return (TRUE);
 }
 	

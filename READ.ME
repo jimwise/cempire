@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: READ.ME,v 1.4 1998/08/09 00:41:17 jwise Exp $
+ * $Id: READ.ME,v 1.5 2005/03/05 21:25:46 jwise Exp $
  */
 
 C Empire Sources
@@ -20,28 +20,33 @@ History
 	December 1986.  Because this game ran on VMS machines for so
         long, a previous version is known as VMS Empire.
 
-	In early 1987 I reverse engineered the program and wrote a
-	version completely written in C.  In doing this, I used lots
-	of structures and defined constants, and I attempted to make
-	the code flexible and easy to modify.  The algorithms used
-	in this C version are completely new, the names of the commands
-	have been changed to be more mnemonic, and new commands have
-	been implemented.  Only the format of the display is the same.
-        I suspect that many of my changes are slower and less
-        intelligently implemented than the originals.  Also, I have
-	not implemented some of the original functionality.
-	However, my hope is that the commented C sources I have written
-	will prove far easier to modify and enhance than the original
-        FORTRAN sources.  If you make changes for the better, by
-        all means send Ed James and I a copy.
+	In early 1987 Chuck Simmons reverse engineered the program and wrote
+	a version completely written in C.  In doing this, I used lots of
+	structures and defined constants, and I attempted to make the code
+	flexible and easy to modify.  The algorithms used in this C version
+	are completely new, the names of the commands have been changed to
+	be more mnemonic, and new commands have been implemented.  Only the
+	format of the display is the same.  I suspect that many of my
+	changes are slower and less intelligently implemented than the
+	originals.  Also, I have not implemented some of the original
+	functionality.  However, my hope is that the commented C sources I
+	have written will prove far easier to modify and enhance than the
+	original FORTRAN sources.  If you make changes for the better, by
+	all means send Ed James and I a copy.
 
-	The basic game has been heavily modified.  I've changed the
-	types of objects built, modified the parameters on others,
-	and added lots of new kinds of movement functions.  Read
-	the man page for a complete description.
+	Sometime thereafter, Eric S. Raymond took over work on C-Empire, adding 
+	color support and some modernizations.  In 1998, the torch passwd to
+	Jim Wise, who has brought the code up to modern C standards, ported
+	it to not assume the presence of the GNU ncurses library, and
+	otherwise maintained the code against bit-rot.
 
-	The file 'bugs' contains lots of ideas for enhancements,
-	and describes the bugs I haven't been able to find.
+	The basic game has been heavily modified since 1979 -- the types of
+	objects built have changed, as have the parameters on others, and
+	lots of new kinds of movement functions have been added.  Read the
+	man page for a complete description.
+
+	The file 'bugs' contains lots of ideas for enhancements, and
+	describes the bugs I haven't been able to find.
 
 Organization
 

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.5 1998/02/25 22:26:53 jim Exp $
+ * $Id: term.c,v 1.6 1998/02/25 22:34:56 jim Exp $
  */
 
 /*
@@ -70,16 +70,36 @@ Write a message to one of the top lines.
 */
 
 void
-topmsg(linep, buf, ...)
+topmsg(int linep, char *buf, ...)
 {
-	if (linep < 1 || linep > NUMTOPS)
+	va_list ap;
+
+	va_start(ap, buf);
+
+	if ((linep < 1) || (linep > NUMTOPS))
 		linep = 1;
-	(void) move (linep - 1, 0);
+
+	move (linep - 1, 0);
 	
 	if (buf != NULL && strlen (buf) > 0)
-		addprintf (buf, a, b, c, d, e, f, g, h);
+		addprintf (buf, ap);
 	
-	(void) clrtoeol ();
+	clrtoeol();
+
+	va_end(ap);
+}
+
+void vtopmsg(int linep, char *buf, va_list ap)
+{
+        if ((linep < 1) || (linep > NUMTOPS))
+                linep = 1;
+
+        move (linep - 1, 0);
+
+        if (buf != NULL && strlen (buf) > 0)
+                addprintf (buf, ap);
+
+        clrtoeol ();
 }
 
 /*
@@ -88,9 +108,7 @@ Print a prompt on the first message line.
 
 void
 /* VARARGS1 */
-prompt (buf, a, b, c, d, e, f, g, h)
-char *buf;
-int a, b, c, d, e, f, g, h;
+prompt (char *buf, ...)
 {
 	topmsg (1, buf, a, b, c, d, e, f, g, h);
 }

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: attack.c,v 1.7 1998/02/26 23:47:36 jim Exp $
+ * $Id: attack.c,v 1.8 1998/02/27 01:55:05 jim Exp $
  */
 
 /*
@@ -61,11 +61,9 @@ attack_city (piece_info_t *att_obj, long loc)
 	if (irand (2) == 0) { /* attack fails? */
 		if (att_owner == USER)
 			comment ("The scum defending the city crushed your attacking blitzkrieger.");
-
-		else if (city_owner == USER) {
-			comment ("Your city at %d is under attack.",
-				cityp->loc);
-		}
+		else if (city_owner == USER)
+			comment ("Your city at %d is under attack.", cityp->loc);
+		
 		kill_obj (att_obj, loc);
 	}
 	else { /* attack succeeded */
@@ -73,20 +71,19 @@ attack_city (piece_info_t *att_obj, long loc)
 		cityp->owner = att_owner;
 		kill_obj (att_obj, loc);
 
-		if (att_owner == USER) {
-			error ("City at %d has been subjugated!",
-				cityp->loc);
+		if (att_owner == USER)
+		{
+			error ("City at %d has been subjugated!", cityp->loc);
 
 			extra ("Your army has been dispersed to enforce control.");
 			set_prod (cityp);
 		}
-		else if (city_owner == USER) {
-			comment ("City at %d has been lost to the enemy!",
-				cityp->loc);
-		}
+		else if (city_owner == USER)
+			comment ("City at %d has been lost to the enemy!", cityp->loc);
 	}
 	/* let city owner see all results */
-	if (city_owner != UNOWNED) scan (MAP(city_owner), loc);
+	if (city_owner != UNOWNED)
+		scan (MAP(city_owner), loc);
 }
 
 /*
@@ -103,21 +100,28 @@ attack_obj (piece_info_t *att_obj, long loc)
 	def_obj = find_obj_at_loc (loc);
 	assert (def_obj != NULL); /* can't find object to attack? */
 	
-	if (def_obj->type == SATELLITE) return; /* can't attack a satellite */
+	if (def_obj->type == SATELLITE)
+		return; /* can't attack a satellite */
 
-	while (att_obj->hits > 0 && def_obj->hits > 0) {
+	while (att_obj->hits > 0 && def_obj->hits > 0)
+	{
 		if (irand (2) == 0) /* defender hits? */
 		     att_obj->hits -= piece_attr[def_obj->type].strength;
-		else def_obj->hits -= piece_attr[att_obj->type].strength;
+		else
+			def_obj->hits -= piece_attr[att_obj->type].strength;
 	}
 
-	if (att_obj->hits > 0) { /* attacker won? */
+	if (att_obj->hits > 0)
+	{
+		/* attacker won */
 		describe (att_obj, def_obj, loc);
 		owner = def_obj->owner;
 		kill_obj (def_obj, loc); /* kill loser */
 		survive (att_obj, loc); /* move attacker */
 	}
-	else { /* defender won */
+	else
+	{
+		/* defender won */
 		describe (def_obj, att_obj, loc);
 		owner = att_obj->owner;
 		kill_obj (att_obj, loc);
@@ -153,38 +157,31 @@ describe (piece_info_t *win_obj, piece_info_t *lose_obj, long loc)
 	*buf = '\0';
 	*buf2 = '\0';
 	
-	if (win_obj->owner != lose_obj->owner) {
-		if (win_obj->owner == USER) {
+	if (win_obj->owner != lose_obj->owner)
+	{
+		if (win_obj->owner == USER)
+		{
 			user_score += piece_attr[lose_obj->type].build_time;
 			
-			topmsg (1, "Enemy %s at %d destroyed.",
-				piece_attr[lose_obj->type].name,
-				loc);
-				
-			topmsg (2, "Your %s has %d hits left.",
-			       piece_attr[win_obj->type].name,
-			       win_obj->hits);
+			topmsg (1, "Enemy %s at %d destroyed.", piece_attr[lose_obj->type].name, loc);
+			topmsg (2, "Your %s has %d hits left.", piece_attr[win_obj->type].name, win_obj->hits);
 				
 			diff = win_obj->count - obj_capacity (win_obj);
-			if (diff > 0) switch (win_obj->cargo->type) {
-			case ARMY:
-			     topmsg (3,
-				     "%d armies fell overboard and drowned in the assault.",
-				     diff);
-			     break;
-			case FIGHTER:
-			     topmsg (3,
-				     "%d fighters fell overboard and were lost in the assault.",
-				     diff);
-			     break;
+			if (diff > 0) switch (win_obj->cargo->type)
+			{
+		 	    case ARMY:
+				topmsg (3, "%d armies fell overboard and drowned in the assault.", diff);
+				break;
+			    case FIGHTER:
+				topmsg (3, "%d fighters fell overboard and were lost in the assault.", diff);
+				break;
 			}
 		}
-		else {
+		else
+		{
 			comp_score += piece_attr[lose_obj->type].build_time;
 			
-			topmsg (3, "Your %s at %d destroyed.",
-				piece_attr[lose_obj->type].name,
-				loc);
+			topmsg (3, "Your %s at %d destroyed.", piece_attr[lose_obj->type].name, loc);
 		}
 		set_need_delay ();
 	}

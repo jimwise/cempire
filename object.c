@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: object.c,v 1.5 1998/02/25 23:24:02 jim Exp $
+ * $Id: object.c,v 1.6 1998/02/26 22:20:23 jim Exp $
  */
 
 /*
@@ -24,7 +24,32 @@ object.c -- routines for manipulating objects.
 #include "empire.h"
 #include "extern.h"
 
+long	bounce (long, long, long, long);
+void    describe_obj (piece_info_t *);
+void    disembark (piece_info_t *);
+void    embark (piece_info_t *, piece_info_t *);
+city_info_t     *find_city (long);
+int     find_nearest_city ( long, int, long *);
+piece_info_t    *find_nfull (int, long);
+piece_info_t    *find_obj (int, long);
+piece_info_t    *find_obj_at_loc (long);
+long    find_transport (int, long);
+int     get_piece_name (void);
+int     good_loc (piece_info_t *, long);
+void    kill_city (city_info_t *);
+void    kill_obj (piece_info_t *, long);
+void	kill_one (piece_info_t **, piece_info_t *);
+void    move_obj (piece_info_t *, long);
+void    move_sat (piece_info_t *);
+void	move_sat1 (piece_info_t *obj);
+int     obj_capacity (piece_info_t *);
+int     obj_moves (piece_info_t *);
+void    produce (city_info_t *);
+void    scan (view_map_t[], long);
 void	scan_sat (view_map_t *, long);
+void    set_prod (city_info_t *);
+void	update (view_map_t[], long);
+
 /*
 Find the nearest city to a location.  Return the location
 of the city and the estimated cost to reach the city.
@@ -32,10 +57,7 @@ Distances are computed as straight-line distances.
 */
 
 int
-find_nearest_city (loc, owner, city_loc)
-long loc;
-int owner;
-long *city_loc;
+find_nearest_city (long loc, int owner, long *city_loc)
 {
 	long best_dist, best_loc;
 	long new_dist, i;
@@ -59,8 +81,8 @@ long *city_loc;
 Given the location of a city, return the index of that city.
 */
 
-city_info_t *find_city (loc)
-long loc;
+city_info_t *
+find_city (long loc)
 {
 	return (map[loc].cityp);
 }
@@ -74,8 +96,8 @@ at a fraction of their normal speed.  An object which has lost
 half of its hits moves at half-speed, for example.
 */
 
-int obj_moves (obj)
-piece_info_t *obj;
+int
+obj_moves (piece_info_t *obj)
 {
 	return (piece_attr[obj->type].speed * obj->hits
 	       + piece_attr[obj->type].max_hits - 1) /* round up */
@@ -86,8 +108,8 @@ piece_info_t *obj;
 Figure out the capacity for an object.
 */
 
-int obj_capacity (obj)
-piece_info_t *obj;
+int
+obj_capacity (piece_info_t *obj)
 {
 	return (piece_attr[obj->type].capacity * obj->hits
 	       + piece_attr[obj->type].max_hits - 1) /* round up */
@@ -99,9 +121,8 @@ Search for an object of a given type at a location.  We scan the
 list of objects at the given location for one of the given type.
 */
 
-piece_info_t *find_obj (type, loc)
-int type;
-long loc;
+piece_info_t *
+find_obj (int type, long loc)
 {
 	piece_info_t *p;
 
@@ -115,9 +136,8 @@ long loc;
 Find a non-full item of the appropriate type at the given location.
 */
 
-piece_info_t *find_nfull (type, loc)
-int type;
-long loc;
+piece_info_t *
+find_nfull (int type, long loc)
 {
 	piece_info_t *p;
 
@@ -134,9 +154,7 @@ of the transport if there is one.
 */
 
 long
-find_transport (owner, loc)
-int owner;
-long loc;
+find_transport (int owner, long loc)
 {
 	int i;
 	long new_loc;
@@ -156,8 +174,7 @@ We prefer transports and carriers to other objects.
 */
 
 piece_info_t *
-find_obj_at_loc (loc)
-long loc;
+find_obj_at_loc (long loc)
 {
 	piece_info_t *p, *best;
 	
@@ -175,8 +192,8 @@ long loc;
 If an object is on a ship, remove it from that ship.
 */
 
-void disembark (obj)
-piece_info_t *obj;
+void
+disembark (piece_info_t *obj)
 {
 	if (obj->ship) {
 		UNLINK (obj->ship->cargo, obj, cargo_link);
@@ -189,8 +206,8 @@ piece_info_t *obj;
 Move an object onto a ship.
 */
 
-void embark (ship, obj)
-piece_info_t *ship, *obj;
+void
+embark (piece_info_t *ship, piece_info_t *obj)
 {
 	obj->ship = ship;
 	LINK (ship->cargo, obj, cargo_link);
@@ -202,12 +219,9 @@ Kill an object.  We scan around the piece and free it.  If there is
 anything in the object, it is killed as well.
 */
 
-void kill_obj (obj, loc)
-piece_info_t *obj;
-long loc;
+void
+kill_obj (piece_info_t *obj, long loc)
 {
-	void kill_one();
-
 	piece_info_t **list;
 	view_map_t *vmap;
 	
@@ -223,9 +237,8 @@ long loc;
 
 /* kill an object without scanning */
 
-void kill_one (list, obj)
-piece_info_t **list;
-piece_info_t *obj;
+void
+kill_one (piece_info_t **list, piece_info_t *obj)
 {
 	UNLINK (list[obj->type], obj, piece_link); /* unlink obj from all lists */
 	UNLINK (map[obj->loc].objp, obj, loc_link);
@@ -241,8 +254,8 @@ Kill a city.  We kill off all objects in the city and set its type
 to unowned.  We scan around the city's location.
 */
 
-void kill_city (cityp)
-city_info_t *cityp;
+void
+kill_city (city_info_t *cityp)
 {
 	view_map_t *vmap;
 	piece_info_t *p;
@@ -292,8 +305,7 @@ Produce an item for a city.
 static int sat_dir[4] = {MOVE_NW, MOVE_SW, MOVE_NE, MOVE_SE};
 
 void
-produce (cityp)
-city_info_t *cityp;
+produce (city_info_t *cityp)
 {
 	piece_info_t **list;
 	piece_info_t *new;
@@ -334,9 +346,8 @@ of an object, keeping track of the number of pieces on a boat,
 etc.
 */
 
-void move_obj (obj, new_loc)
-piece_info_t *obj;
-long new_loc;
+void
+move_obj (piece_info_t *obj, long new_loc)
 {
 	view_map_t *vmap;
 	long old_loc;
@@ -390,9 +401,8 @@ We start off with some preliminary routines.
 
 /* Return next direction for a sattellite to travel. */
 
-static long
-bounce (loc, dir1, dir2, dir3)
-long loc, dir1, dir2, dir3;
+long
+bounce (long loc, long dir1, long dir2, long dir3)
 {
 	int new_loc;
 
@@ -408,8 +418,7 @@ long loc, dir1, dir2, dir3;
 /* Move a satellite one square. */
 
 void
-move_sat1 (obj)
-piece_info_t *obj;
+move_sat1 (piece_info_t *obj)
 {
 	int dir;
 	long new_loc;
@@ -445,8 +454,7 @@ Satellite burns iff it's range reaches zero.
 */
 		
 void
-move_sat (obj)
-piece_info_t *obj;
+move_sat (piece_info_t *obj)
 {
 	obj->moved = 0;
 	
@@ -469,9 +477,8 @@ terrain type for the location.  Boats may move into port, armies may
 move onto transports, and fighters may move onto cities or carriers.
 */
 
-int good_loc (obj, loc)
-piece_info_t *obj;
-long loc;
+int
+good_loc (piece_info_t *obj, long loc)
 {
 	view_map_t *vmap;
 	piece_info_t *p;
@@ -502,8 +509,8 @@ long loc;
 	return (FALSE);
 }
 
-void describe_obj (obj)
-piece_info_t *obj;
+void
+describe_obj (piece_info_t *obj)
 {
 	char func[STRSIZE];
 	char other[STRSIZE];
@@ -546,12 +553,8 @@ on top.
 */
 
 void
-scan (vmap, loc)
-view_map_t vmap[];
-long loc;
+scan (view_map_t vmap[], long loc)
 {
-	void update(), check();
-
 	int i;
 	long xloc;
 
@@ -572,9 +575,7 @@ Scan a portion of the board for a satellite.
 */
 
 void
-scan_sat (vmap, loc)
-view_map_t *vmap;
-long loc;
+scan_sat (view_map_t *vmap, long loc)
 {
 	int i;
 	long xloc;
@@ -598,9 +599,7 @@ city type.
 char city_char[] = {'*', 'O', 'X'};
 
 void
-update (vmap, loc)
-view_map_t vmap[];
-long loc;
+update (view_map_t vmap[], long loc)
 {
 	piece_info_t *p;
 
@@ -631,8 +630,7 @@ asking until we get a valid answer.
 */
 
 void
-set_prod (cityp)
-city_info_t *cityp;
+set_prod (city_info_t *cityp)
 {
 	int i;
 
@@ -659,7 +657,7 @@ city_info_t *cityp;
 /* Get the name of a type of object. */
 
 int
-get_piece_name ()
+get_piece_name (void)
 {
 	char c;
 	int i;

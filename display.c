@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.21 1998/03/03 14:47:40 jim Exp $
+ * $Id: display.c,v 1.22 1998/03/03 15:09:42 jim Exp $
  */
 
 /*
@@ -52,6 +52,14 @@ static int ref_col;
 static int save_sector; /* the currently displayed sector */
 static int save_cursor; /* currently displayed cursor position */
 static int change_ok = TRUE; /* true if new sector may be displayed */
+
+static WINDOW *mapwin;
+
+void
+map_init (void)
+{
+	mapwin = newwin(0, 0, LINES - NUMTOPS, 0);
+}
 
 /*
 This routine is called when the current display has been

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: extern.h,v 1.49 1998/03/03 14:41:42 jim Exp $
+ * $Id: extern.h,v 1.50 1998/03/03 15:09:44 jim Exp $
  */
 
 /*
@@ -116,6 +116,7 @@ void    empire (void);          /* empire.c */
 void	user_move (void);	/* usermove.c */
 
 /* display routines (display.c) */
+void	map_init (void);
 int	cur_sector (void);
 void	display_loc (int, view_map_t[], long);
 void	display_locx (int, view_map_t[], long);

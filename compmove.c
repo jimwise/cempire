@@ -106,8 +106,6 @@ build carriers, as we don't have a good strategy for moving these.
 void
 do_cities (void)
 {
-	void comp_prod();
-	
 	int i;
 	int is_lake;
 
@@ -161,8 +159,6 @@ The algorithm below contains three parts:
 void
 comp_prod (city_info_t *cityp, int is_lake)
 {
-	void comp_set_prod(), comp_set_needed();
-	
 	int city_count[NUM_OBJECTS]; /* # of cities producing each piece */
 	int cont_map[MAP_SIZE];
 	int total_cities;
@@ -394,8 +390,6 @@ static path_map_t path_map[MAP_SIZE];
 void
 do_pieces (void)
 { /* move pieces */
-	void cpiece_move();
-
 	int i;
 	piece_info_t *obj, *next_obj;
 
@@ -417,8 +411,6 @@ objective.
 void
 cpiece_move (piece_info_t *obj)
 {
-	void move1();
-
 	int changed_loc;
 	int max_hits;
 	long saved_loc;
@@ -468,8 +460,6 @@ Move a piece one square.
 void
 move1 (piece_info_t *obj)
 {
-	void army_move(), transport_move(), fighter_move(), ship_move();
-
 	switch (obj->type) {
 	case ARMY: army_move (obj); break;
 	case TRANSPORT: transport_move (obj); break;
@@ -510,11 +500,6 @@ destination.  (If there is no destination, sit around and wait.)
 void
 army_move (piece_info_t *obj)
 {
-	long move_away();
-	long find_attack();
-	void make_army_load_map(), make_unload_map(), make_tt_load_map();
-	void board_ship();
-	
 	long new_loc;
 	path_map_t path_map2[MAP_SIZE];
 	long new_loc2;
@@ -877,8 +862,6 @@ Transports become 'loading' when empty, and 'unloading' when full.
 void
 transport_move (piece_info_t *obj)
 {
-	void tt_do_move();
-
 	long new_loc;
 
 	/* empty transports can attack */
@@ -1109,7 +1092,6 @@ and armies as the user, then the computer will give up.
 void
 check_endgame (void)
 { /* see if game is over */
-
 	int nuser_city, ncomp_city;
 	int nuser_army, ncomp_army;
 	piece_info_t *p;

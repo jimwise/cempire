@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: extern.h,v 1.11 1998/02/25 22:11:42 jim Exp $
+ * $Id: extern.h,v 1.12 1998/02/25 22:13:00 jim Exp $
  */
 
 /*
@@ -209,7 +209,7 @@ int	rmap_shore (long);
 void	vmap_mark_up_cont (int *, view_map_t *, long, char);
 
 /* math routines (math.c) */
-int	dist (long, long);
+long	dist (long, long);
 long	irand(long);
 int	isqrt(int);
 void	rndini(void);

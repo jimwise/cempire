@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: math.c,v 1.3 1998/02/24 23:48:04 jim Exp $
+ * $Id: math.c,v 1.4 1998/02/25 22:13:00 jim Exp $
  */
 
 /*
@@ -59,6 +59,7 @@ the max of the absolute differnce between the x and y coordinates.
 #define MAX(a,b) ((a)>(b) ? (a) : (b))
 #define ABS(a) ((a) < 0 ? -(a) : (a))
 
+long
 dist (a, b)
 long a, b;
 {

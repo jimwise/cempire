@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.41 1998/03/03 13:57:48 jim Exp $
+ * $Id: term.c,v 1.42 1998/03/03 14:08:56 jim Exp $
  */
 
 /*
@@ -153,11 +153,8 @@ Get a string from the user, ignoring the current echo mode.
 void
 get_strq (char *buf, int sizep)
 {
-	sizep = sizep; /* size of buf, currently unused */
-
 	nocrmode ();
-	wrefresh(infowin);
-	getstr (buf);
+	wgetnstr (statuswin, buf, sizep);
 	crmode ();
 }
 
@@ -227,11 +224,10 @@ get_cq (void)
 {
 	char c;
 
-	crmode ();
-	wrefresh(infowin);
-	c = getch ();
-	nocrmode ();
-	return (c);
+	crmode();
+	c = wgetch(statuswin);
+	nocrmode();
+	return(c);
 }
 
 /*

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: empire.c,v 1.3 1998/02/24 23:48:00 jim Exp $
+ * $Id: empire.c,v 1.4 1998/02/26 01:56:43 jim Exp $
  */
 
 /*
@@ -19,13 +19,8 @@ parser, and the simple commands.
 #include "empire.h"
 #include "extern.h"
 
-void c_examine(), c_movie();
-
 void
 empire () {
-	void do_command();
-	void print_zoom();
-
 	char order;
 	int turn = 0;
 
@@ -68,9 +63,6 @@ void
 do_command (orders)
 char orders;
 {
-	void c_debug(), c_quit(), c_sector(), c_map();
-	void c_give();
-
 	char e;
 	int ncycle;
 
@@ -326,7 +318,8 @@ Print a "zoomed" version of the computer's map.
 
 void
 c_movie () {
-	(void) clear ();
+	clear ();
+
 	for (;;) {
 		comp_move (1);
 		print_zoom (comp_map);

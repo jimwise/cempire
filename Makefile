@@ -1,12 +1,12 @@
 #
 #	Copyright (C) 1987, 1988 Chuck Simmons
 #
-# $Id: Makefile,v 1.20 1998/08/24 02:13:42 jwise Exp $
+# $Id: Makefile,v 1.21 1998/09/11 18:29:46 jwise Exp $
 #
 # See the file COPYING, distributed with empire, for restriction
 # and warranty information.
 
-VERSION=1.5
+VERSION=1.2
 
 # Use -g to compile the program for debugging.
 

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.8 1998/02/26 01:08:41 jim Exp $
+ * $Id: display.c,v 1.9 1998/02/26 02:16:23 jim Exp $
  */
 
 /*
@@ -30,28 +30,27 @@ information:
 #include "empire.h"
 #include "extern.h"
 
-void	kill_display (void);
-void	sector_change (void);
-int	cur_sector (void);
-long	cur_cursor (void);
-void	display_loc (int, view_map_t[], long);
-void	display_locx (int, view_map_t[], long);
+long    cur_cursor (void);
+int     cur_sector (void);
+void    display_loc (int, view_map_t[], long);
+void    display_locx (int, view_map_t[], long);
+void    display_score (void);
+void    display_screen (view_map_t[]);
+void    disp_square(view_map_t *);
 #ifdef USE_COLOR
-void init_colors(void);
+void	init_colors(void);
 #endif
+void	kill_display (void);
+int     move_cursor (long *, int);
+int     on_screen (long);
+void    print_sector (char, view_map_t[], int);
+void    print_pzoom (char *, path_map_t *, view_map_t *);
+void    print_pzoom_cell (path_map_t *, view_map_t *, int, int, int, int);
+void    print_xzoom (view_map_t *);
+void    print_zoom (view_map_t *);
+void    print_zoom_cell (view_map_t *, int, int, int, int);
+void	sector_change (void);
 void	show_loc (view_map_t[], long);
-void	print_sector (char, view_map_t[], int);
-void	disp_square(view_map_t *);
-void	display_screen (view_map_t[]);
-int	move_cursor (long *, int);
-int	on_screen (long);
-void	print_xzoom (view_map_t *);
-void	print_zoom (view_map_t *);
-void	print_zoom_cell (view_map_t *, int, int, int, int);
-void	print_pzoom (char *, path_map_t *, view_map_t *);
-void	print_pzoom_cell (path_map_t *, view_map_t *, int, int, int, int);
-void	display_score (void);
-
 
 static int whose_map = UNOWNED; /* user's or computer's point of view */
 static int ref_row; /* map loc displayed in upper-left corner */

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: compmove.c,v 1.8 1998/02/25 22:49:57 jim Exp $
+ * $Id: compmove.c,v 1.9 1998/02/26 02:16:21 jim Exp $
  */
 
 /*
@@ -31,35 +31,34 @@ For each move the user wants us to make, we do the following:
 
 static view_map_t emap[MAP_SIZE]; /* pruned explore map */
 
+void    army_move (piece_info_t *);
+void    board_ship (piece_info_t *, path_map_t *, long);
+void    check_endgame (void);
 void	comp_move (int);
-void	do_cities (void);
-void	comp_prod (city_info_t *, int);
+void    comp_prod (city_info_t *, int);
+void    comp_set_needed (city_info_t *, int *, int, int);
 void	comp_set_prod (city_info_t *, int);
+void    cpiece_move (piece_info_t *);
+void    do_cities (void);
+void    do_pieces (void);
+void    fighter_move (piece_info_t *);
+long    find_attack (long, char *, char *);
+piece_info_t	*find_best_tt (piece_info_t *, long);
+int     lake (long);
+int     load_army (piece_info_t *);
+void    make_army_load_map (piece_info_t *, view_map_t *, view_map_t *);
+void    make_tt_load_map (view_map_t *, view_map_t *);
+void    make_unload_map (view_map_t *, view_map_t *);
+void    move1 (piece_info_t *);
+long    move_away (view_map_t *, long, char *);
+void    move_objective (piece_info_t *, path_map_t[], long, char *);
+int     nearby_count (long);
+int     nearby_load (piece_info_t *, long);
+int     need_more (int *, int, int);
 int	overproduced (city_info_t *, int *);
-int	need_more (int *, int, int);
-void	comp_set_needed (city_info_t *, int *, int, int);
-int	lake (long);
-void	do_pieces (void);
-void	cpiece_move (piece_info_t *);
-void	move1 (piece_info_t *);
-void	army_move (piece_info_t *);
+void    ship_move (piece_info_t *);
+void    transport_move (piece_info_t *);
 void	unmark_explore_locs (view_map_t *);
-void	make_army_load_map (piece_info_t *, view_map_t *, view_map_t *);
-int	nearby_load (piece_info_t *, long);
-int	nearby_count (long);
-void	make_tt_load_map (view_map_t *, view_map_t *);
-void	make_unload_map (view_map_t *, view_map_t *);
-void	board_ship (piece_info_t *, path_map_t *, long);
-piece_info_t *find_best_tt (piece_info_t *, long);
-int	load_army (piece_info_t *);
-long	move_away (view_map_t *, long, char *);
-long	find_attack (long, char *, char *);
-void	transport_move (piece_info_t *);
-void	fighter_move (piece_info_t *);
-void	ship_move (piece_info_t *);
-void	move_objective (piece_info_t *, path_map_t[], long, char *);
-void	check_endgame (void);
-
 
 void
 comp_move (int nmoves) 

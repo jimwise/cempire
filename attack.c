@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: attack.c,v 1.4 1998/02/24 23:47:57 jim Exp $
+ * $Id: attack.c,v 1.5 1998/02/26 02:16:21 jim Exp $
  */
 
 /*
@@ -33,8 +33,8 @@ if any.
 void	attack (piece_info_t *, long);
 void	attack_city (piece_info_t *, long);
 void	attack_obj (piece_info_t *, long);
+void    describe (piece_info_t *, piece_info_t *, long);
 void    survive (piece_info_t *, long);
-void	describe (piece_info_t *, piece_info_t *, long);
 
 void
 attack (piece_info_t *att_obj, long loc)

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: extern.h,v 1.23 1998/02/26 23:41:58 jim Exp $
+ * $Id: extern.h,v 1.24 1998/02/26 23:55:08 jim Exp $
  */
 
 /*
@@ -219,6 +219,7 @@ void    check (void);
 void    clear_screen (void);
 void    delay (void);
 void    empend (void);
+void	panic (char *s);
 void    pos_str (int, int, char *, ...);
 void    redraw (void);
 void    ttinit (void);

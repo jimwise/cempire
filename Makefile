@@ -1,7 +1,7 @@
 #
 #	Copyright (C) 1987, 1988 Chuck Simmons
 #
-# $Id: Makefile,v 1.19 1998/08/09 01:54:36 jwise Exp $
+# $Id: Makefile,v 1.20 1998/08/24 02:13:42 jwise Exp $
 #
 # See the file COPYING, distributed with empire, for restriction
 # and warranty information.
@@ -15,8 +15,7 @@ CC=gcc
 #DEBUG = -g -DDEBUG
 DEBUG = -ansi -Wall -W -Werror -pedantic -Wtraditional -Wshadow -Wpointer-arith -Wcast-qual \
 	-Wcast-align -Wwrite-strings -Wstrict-prototypes -Wmissing-prototypes \
-	-Wmissing-declarations -Wnested-externs -Winline
-# -Wid-clash-6 -Wredundant-decls  -Wconversion -Waggregate-return
+	-Wmissing-declarations -Wnested-externs -Winline 
 
 # Use -p to profile the program.
 #PROFILE = -p -DPROFILE
@@ -31,9 +30,9 @@ LIBS = -L/usr/pkg/lib -lncurses
 
 TARGET = cempire
 
-CPPFLAGS = -DUSE_NCURSES -I/usr/pkg/include
+CPPFLAGS = -DDEBUG -DUSE_NCURSES -I/usr/pkg/include
 CFLAGS = $(DEBUG) $(PROFILE)
-LINTFLAGS = -brxH
+LINTFLAGS = -brxHu
 
 FILES = \
 	attack.c \

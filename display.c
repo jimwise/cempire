@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: display.c,v 1.69 1998/08/09 00:41:19 jwise Exp $
+ * $Id: display.c,v 1.70 1998/08/24 02:13:43 jwise Exp $
  */
 
 /*
@@ -30,7 +30,6 @@
 #include <curses.h>
 #endif
 
-long    cur_cursor (void);
 int     cur_sector (void);
 void    display_loc (int, view_map_t[], long);
 void    display_locx (int, view_map_t[], long);
@@ -100,19 +99,6 @@ int cur_sector (void)
 		return (-1);
 
 	return (save_sector);
-}
-
-/*
- * Return the current position of the cursor.  If the user's map
- * is not on the screen, we return -1.
- */
-
-long cur_cursor (void)
-{
-	if (whose_map != USER)
-		return (-1);
-
-	return (save_cursor);
 }
 
 /*

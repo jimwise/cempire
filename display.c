@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.58 1998/03/11 02:14:39 jim Exp $
+ * $Id: display.c,v 1.59 1998/03/11 17:08:14 jim Exp $
  */
 
 /*
@@ -355,16 +355,17 @@ print_zoom (view_map_t *vmap)
 	int row_inc, col_inc;
 	int r, c;
 
-	row_inc = (MAP_HEIGHT + lines - NUMTOPS - 1) / (lines - NUMTOPS);
-	col_inc = (MAP_WIDTH + cols - 1) / (cols - 1);
+	row_inc = (MAP_HEIGHT + MAPWIN_HEIGHT - 2) / (MAPWIN_HEIGHT - 2);
+	col_inc = (MAP_WIDTH + MAPWIN_WIDTH - 2) / (MAPWIN_WIDTH - 2);
 
-	wclear(stdscr);
+	wclear(mapwin);
 
 	for (r = 0; r < MAP_HEIGHT; r += row_inc)
 		for (c = 0; c < MAP_WIDTH; c += col_inc)
 			print_zoom_cell (vmap, r, c, row_inc, col_inc);
 
-	wrefresh(stdscr);
+	box(mapwin, 0, 0);
+	wrefresh(mapwin);
 
 	prompt("Press any key to continue");
 	get_chx();
@@ -390,8 +391,8 @@ print_zoom_cell (view_map_t *vmap, int row, int col, int row_inc, int col_inc)
 			if (strchr(zoom_list, vmap[row_col_loc(r,c)].contents) < strchr(zoom_list, cell))
 				cell = vmap[row_col_loc(r,c)].contents;
 	
-	wmove (stdscr, row/row_inc, col/col_inc);
-	waddch (stdscr, (chtype)cell);
+	wmove (mapwin, row/row_inc + 1, col/col_inc + 1);
+	waddch (mapwin, (chtype)cell);
 }
 
 /*
@@ -404,18 +405,19 @@ print_pzoom (char *s, path_map_t *pmap, view_map_t *vmap)
 	int row_inc, col_inc;
 	int r, c;
 
-	wclear(stdscr);
+	wclear(mapwin);
 
-	row_inc = (MAP_HEIGHT + lines - NUMTOPS - 1) / (lines - NUMTOPS);
-	col_inc = (MAP_WIDTH + cols - 1) / (cols - 1);
+        row_inc = (MAP_HEIGHT + MAPWIN_HEIGHT - 2) / (MAPWIN_HEIGHT - 2);
+	col_inc = (MAP_WIDTH + MAPWIN_WIDTH - 2) / (MAPWIN_WIDTH - 2);
 
 	for (r = 0; r < MAP_HEIGHT; r += row_inc)
 		for (c = 0; c < MAP_WIDTH; c += col_inc)
 			print_pzoom_cell(pmap, vmap, r, c, row_inc, col_inc);
 
-	wrefresh(stdscr);
-	prompt(s);
+	box(mapwin, 0, 0);
+	wrefresh(mapwin);
 
+	prompt(s);
 	get_chx();
 	prompt("");
 
@@ -473,8 +475,8 @@ print_pzoom_cell (path_map_t *pmap, view_map_t *vmap, int row, int col, int row_
 		print_zoom_cell (vmap, row, col, row_inc, col_inc);
 	else
 	{
-		wmove (stdscr, row/row_inc, col/col_inc);
-		waddch (stdscr, cell);
+		wmove (mapwin, row/row_inc + 1, col/col_inc + 1);
+		waddch (mapwin, cell);
 	}
 }
 

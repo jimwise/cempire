@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: empire.h,v 1.17 1998/02/27 22:17:03 jim Exp $
+ * $Id: empire.h,v 1.18 1998/02/27 23:15:22 jim Exp $
  */
 
 /*
@@ -30,7 +30,7 @@ empire.h -- type and constant declarations
 
 typedef unsigned char uchar;
 
-#define panic()	emp_panic(__FILE__, __LINE__)
+#define panic(why)	emp_panic(__FILE__, __LINE__, (why))
 
 /* directions one can move */
 typedef enum

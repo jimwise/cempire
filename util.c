@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: util.c,v 1.19 1998/02/27 22:17:06 jim Exp $
+ * $Id: util.c,v 1.20 1998/02/27 23:15:25 jim Exp $
  */
 
 /*
@@ -23,7 +23,7 @@ void    check (void);
 void	check_cargo (piece_info_t *, piece_type_t);
 void	check_obj (piece_info_t **, int);
 void	check_obj_cargo (piece_info_t **);
-void	emp_panic (char *, int);
+void	emp_panic (char *, int, char *);
 
 /*
 Here is a little routine to perform consistency checking on the
@@ -235,9 +235,12 @@ check_obj_cargo (piece_info_t **list)
  */
 
 void
-emp_panic (char *file, int line)
+emp_panic (char *file, int line, char *why)
 {
-	printf("empire panic: file %s, line %d\n", file, line);
+	if (why == NULL)
+		printf("empire panic (file %s, line %d)\n", file, line);
+	else
+		printf("empire panic (file %s, line %d): %s\n", file, line, why);
 	
 	abort();
 }

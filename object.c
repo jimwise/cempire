@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: object.c,v 1.13 1998/02/27 23:08:55 jim Exp $
+ * $Id: object.c,v 1.14 1998/02/27 23:15:24 jim Exp $
  */
 
 /*
@@ -442,7 +442,7 @@ move_sat1 (piece_info_t *obj)
 			obj->func = bounce (obj->loc, MOVE_SE, MOVE_NW, MOVE_NE);
 			break;
 		default:
-			panic();
+			panic(NULL);
 		}
 		dir = MOVE_DIR(obj->func);
 		new_loc = obj->loc + dir_offset[dir];

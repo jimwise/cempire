@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: extern.h,v 1.31 1998/02/27 20:56:27 jim Exp $
+ * $Id: extern.h,v 1.32 1998/02/27 23:15:23 jim Exp $
  */
 
 /*
@@ -220,4 +220,4 @@ void	topmsg(int, char *, ...);
 
 /* utility routines (util.c) */
 void    check (void);
-void	emp_panic (char *file, int line);
+void	emp_panic (char *file, int line, char *);

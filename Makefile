@@ -2,7 +2,7 @@
 #	Copyright (C) 1987, 1988 Chuck Simmons
 #	Portions of this file Copyright (C) 1998 Jim Wise
 #
-# $Id: Makefile,v 1.14 1998/08/08 21:06:03 jwise Exp $
+# $Id: Makefile,v 1.15 1998/08/08 21:17:03 jwise Exp $
 #
 # See the file COPYING, distributed with empire, for restriction
 # and warranty information.
@@ -33,7 +33,7 @@ LIBS = -L/usr/pkg/lib -lncurses
 
 # You shouldn't have to modify anything below this line.
 
-TARGET = empire
+TARGET = cempire
 
 CPPFLAGS = -DUSE_NCURSES -I/usr/pkg/include
 CFLAGS = $(DEBUG) $(PROFILE)
@@ -75,7 +75,7 @@ OFILES = \
 all: $(TARGET)
 
 $(TARGET): $(OFILES)
-	$(CC) $(PROFILE) -o empire $(OFILES) $(LIBS)
+	$(CC) $(PROFILE) -o $(TARGET) $(OFILES) $(LIBS)
 
 lint: $(FILES)
 	lint $(CPPFLAGS) -u $(FILES) $(LIBS)
@@ -86,14 +86,14 @@ clean:
 clobber: clean
 	rm -f empire.tar*
 
-SOURCES = READ.ME empire.6 COPYING Makefile BUGS $(FILES) $(HEADERS)
+SOURCES = READ.ME cempire.6 COPYING Makefile BUGS $(FILES) $(HEADERS)
 
-empire.tar: $(SOURCES)
-	(cd ..; tar -cvf empire-$(V)/empire.tar `echo $(SOURCES) | sed "/\(^\| \)/s// empire-$(V)\//g"`)
-empire.tar.gz: empire.tar
-	gzip -9 -f empire.tar
+cempire.tar: $(SOURCES)
+	(cd ..; tar -cvf cempire-$(V)/empire.tar `echo $(SOURCES) | sed "/\(^\| \)/s// cempire-$(V)\//g"`)
+cempire.tar.gz: cempire.tar
+	gzip -9 -f cempire.tar
 
-empire.shar: $(SOURCES)
-	shar $(SOURCES) >empire.shar
+cempire.shar: $(SOURCES)
+	shar $(SOURCES) >cempire.shar
 
 $(OFILES): extern.h empire.h

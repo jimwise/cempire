@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: compmove.c,v 1.32 1998/03/11 02:13:58 jim Exp $
+ * $Id: compmove.c,v 1.33 1998/03/11 02:38:34 jim Exp $
  */
 
 /*
@@ -1116,7 +1116,8 @@ check_endgame (void)
 	int i;
 	
 	date += 1; /* one more turn has passed */
-	if (win != 0) return; /* we already know game is over */
+	if (win != UNOWNED)
+		return; /* we already know game is over */
 
 	nuser_city = 0; /* nothing counted yet */
 	ncomp_city = 0;
@@ -1147,7 +1148,7 @@ check_endgame (void)
 		info("they've learned with the ''E'' command.");
 
 		resigned = TRUE;
-		win = 2;
+		win = USER;
 		automove = FALSE;
 	}
 	else if ((ncomp_city == 0) && (ncomp_army == 0))
@@ -1156,7 +1157,7 @@ check_endgame (void)
 	    	info("There may be, however, remnants of the enemy fleet");
 	    	info("to be routed out and destroyed.");
 
-		win = 1;
+		win = USER;
 		automove = FALSE;
 	}
 	else if ((nuser_city == 0) && (nuser_army == 0))
@@ -1165,7 +1166,7 @@ check_endgame (void)
 	    	info("the rampaging enemy. The empire is lost. If you");
 	    	info("have any ships left, you may hold out at sea.");
 
-		win = 1;
+		win = COMP;
 		automove = FALSE;
 	}
 }

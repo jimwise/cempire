@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: game.c,v 1.32 1998/03/11 00:34:50 jim Exp $
+ * $Id: game.c,v 1.33 1998/03/11 02:38:35 jim Exp $
  */
 
 /*
@@ -62,7 +62,7 @@ init_game (void)
 	print_vmap = FALSE;
 	trace_pmap = FALSE;
 	save_movie = FALSE;
-	win = 0;
+	win = UNOWNED;
 	date = 0; /* no date yet */
 	user_score = 0;
 	comp_score = 0;

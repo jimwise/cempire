@@ -1,7 +1,7 @@
 #
 #	Copyright (C) 1987, 1988 Chuck Simmons
 #
-# $Id: Makefile,v 1.28 1999/09/29 01:11:22 jwise Exp $
+# $Id: Makefile,v 1.29 1999/09/29 01:16:24 jwise Exp $
 #
 # See the file COPYING, distributed with empire, for restriction
 # and warranty information.
@@ -83,7 +83,7 @@ INCLUDES=-I/usr/pkg/include
 #
 # The following turns on _extremely_ pedantic error checking for gcc or egcs.
 # Don't try to use this if you are using another compiler.  If cempire
-# won't build this way on your system, please let me know...
+# isn't happy this way on your system, please let me know...
 #
 WARNS=-ansi -Wall -W -pedantic -Wtraditional -Wshadow \
 	-Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings \
@@ -91,9 +91,18 @@ WARNS=-ansi -Wall -W -pedantic -Wtraditional -Wshadow \
 	-Wnested-externs -Winline
 
 #
+# If you want to debug cempire, you can turn on debugging here.  If you
+# define DEBUG, various debugging checks in the program are turned on.
+#
+# If you want to turn off even normal diagnostic checks, you can define
+# NDEBUG here
+#
+DEBUG=-g -DDEBUG
+
+#
 # Here's where you put your favorite c compiler options
 #
-COPTS=-g
+COPTS=
 
 #
 # You shouldn't have to modify anything below this line.
@@ -102,7 +111,7 @@ COPTS=-g
 TARGET = cempire
 
 CPPFLAGS= $(DEFINES) $(INCLUDES)
-CFLAGS= $(CPPFLAGS) $(COPTS) $(WARNS)
+CFLAGS= $(CPPFLAGS) $(COPTS) $(DEBUG) $(WARNS)
 LINTFLAGS = -brxHu
 
 FILES= attack.c compmove.c data.c display.c edit.c empire.c game.c main.c \

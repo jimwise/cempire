@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: util.c,v 1.16 1998/02/27 01:46:51 jim Exp $
+ * $Id: util.c,v 1.17 1998/02/27 02:51:19 jim Exp $
  */
 
 /*
@@ -15,7 +15,6 @@ util.c -- various utility routines.
 
 #include <assert.h>
 #include <stdio.h>
-#include <curses.h>
 #include <ctype.h>
 #include "empire.h"
 #include "extern.h"

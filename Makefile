@@ -1,12 +1,12 @@
 #
 #	Copyright (C) 1987, 1988 Chuck Simmons
 #
-# $Id: Makefile,v 1.38 2001/02/08 19:32:34 jwise Exp $
+# $Id: Makefile,v 1.39 2001/10/23 04:44:10 jwise Exp $
 #
 # See the file COPYING, distributed with empire, for restriction
 # and warranty information.
 
-VERSION=1.3_ALPHA
+VERSION=1.3_ALPHA2
 
 #
 # 1.) Pick where to install cempire

@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: edit.c,v 1.35 2001/02/08 21:19:51 jwise Exp $
+ * $Id: edit.c,v 1.36 2001/10/23 04:44:11 jwise Exp $
  */
 
 /* edit.c -- Routines to handle edit mode commands. */
@@ -530,8 +530,7 @@ e_city_info (long edit_cursor)
 		strncat (func_buf, temp_buf, STRSIZE);
 	}
 
-	snprintf (junk_buf2, STRSIZE,
-		"City at location %ld will complete %s on round %ld",
+	snprintf (junk_buf2, STRSIZE, "City at location %ld will complete %s on round %ld",
 		cityp->loc,
 		piece_attr[cityp->prod].article,
 		date + piece_attr[cityp->prod].build_time - cityp->work);

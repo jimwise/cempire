@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: term.c,v 1.71 2001/02/07 03:28:09 jwise Exp $
+ * $Id: term.c,v 1.72 2001/10/23 04:44:11 jwise Exp $
  */
 
 /*
@@ -135,11 +135,7 @@ get_str (char *buf, const int sizep  __attribute__((__unused__)))
 {
 	echo();
 	nocrmode();
-#ifdef USE_NCURSES
 	wgetnstr(statuswin, buf, sizep);
-#else
-	wgetstr(statuswin, buf);
-#endif
 	crmode();
 	noecho();
 }

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: compmove.c,v 1.14 1998/02/27 00:33:34 jim Exp $
+ * $Id: compmove.c,v 1.15 1998/02/27 02:33:12 jim Exp $
  */
 
 /*
@@ -20,7 +20,6 @@ For each move the user wants us to make, we do the following:
 */
 
 #include <assert.h>
-#include <curses.h>
 #include <string.h>
 #include "empire.h"
 #include "extern.h"
@@ -81,7 +80,7 @@ comp_move (int nmoves)
 		check_endgame (); /* see if game is over */
 
 		topini ();
-		refresh ();
+		redraw ();
 	}
 }
 
@@ -1104,9 +1103,12 @@ check_endgame (void)
 	nuser_army = 0;
 	ncomp_army = 0;
 	
-	for (i = 0; i < NUM_CITY; i++) {
-		if (city[i].owner == USER) nuser_city++;
-		else if (city[i].owner == COMP) ncomp_city++;
+	for (i = 0; i < NUM_CITY; i++)
+	{
+		if (city[i].owner == USER)
+			nuser_city++;
+		else if (city[i].owner == COMP)
+			ncomp_city++;
 	}
 	
 	for (p = user_obj[ARMY]; p != NULL; p = p->piece_link.next)
@@ -1115,34 +1117,44 @@ check_endgame (void)
 	for (p = comp_obj[ARMY]; p != NULL; p = p->piece_link.next)
 		ncomp_army++;
 		
-	if (ncomp_city < nuser_city/3 && ncomp_army < nuser_army/3) {
-		clear_screen ();
+	if ((ncomp_city < nuser_city / 3) && (ncomp_army < nuser_army / 3))
+	{
+		clear_screen();
 		prompt ("The computer acknowledges defeat. Do");
 		error ("you wish to smash the rest of the enemy? ");
 
-		if (get_chx() !=  'Y') empend ();
-		addstr ("\nThe enemy inadvertantly revealed its code used for");
-		addstr ("\nreceiving battle information. You can display what");
-		addstr ("\nthey've learned with the ''E'' command.");
+		if (get_chx() !=  'Y')
+			empend ();
+
+		topmsg(1, "\nThe enemy inadvertantly revealed its code used for");
+		topmsg(2, "\nreceiving battle information. You can display what");
+		topmsg(3, "\nthey've learned with the ''E'' command.");
+
 		resigned = TRUE;
 		win = 2;
 		automove = FALSE;
 	}
-	else if (ncomp_city == 0 && ncomp_army == 0) {
+	else if ((ncomp_city == 0) && (ncomp_army == 0))
+	{
 		clear_screen ();
-		addstr ("The enemy is incapable of defeating you.\n");
-		addstr ("You are free to rape the empire as you wish.\n");
-	    	addstr ("There may be, however, remnants of the enemy fleet\n");
-	    	addstr ("to be routed out and destroyed.\n");
+
+		topmsg(1, "The enemy is incapable of defeating you.\n");
+		topmsg(2, "You are free to rape the empire as you wish.\n");
+	    	topmsg(3, "There may be, however, remnants of the enemy fleet\n");
+	    	topmsg(4, "to be routed out and destroyed.\n");
+
 		win = 1;
 		automove = FALSE;
 	}
-	else if (nuser_city == 0 && nuser_army == 0) {
+	else if ((nuser_city == 0) && (nuser_army == 0))
+	{
 	    	clear_screen ();
-	    	addstr ("You have been rendered incapable of\n");
-	    	addstr ("defeating the rampaging enemy fascists! The\n");
-	    	addstr ("empire is lost. If you have any ships left, you\n");
-	    	addstr ("may attempt to harass enemy shipping.");
+
+	    	topmsg(1, "You have been rendered incapable of\n");
+	    	topmsg(2, "defeating the rampaging enemy fascists! The\n");
+	    	topmsg(3, "empire is lost. If you have any ships left, you\n");
+	    	topmsg(4, "may attempt to harass enemy shipping.");
+
 		win = 1;
 		automove = FALSE;
 	}

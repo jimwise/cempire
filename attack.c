@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: attack.c,v 1.16 1998/03/03 13:32:34 jim Exp $
+ * $Id: attack.c,v 1.17 1998/03/09 04:57:26 jim Exp $
  */
 
 /*
@@ -66,7 +66,9 @@ attack_city (piece_info_t *att_obj, long loc)
 		
 		kill_obj (att_obj, loc);
 	}
-	else { /* attack succeeded */
+	else
+	{
+		/* attack succeeded */
 		kill_city (cityp);
 		cityp->owner = att_owner;
 		kill_obj (att_obj, loc);

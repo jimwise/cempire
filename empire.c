@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: empire.c,v 1.24 1998/03/04 13:41:23 jim Exp $
+ * $Id: empire.c,v 1.25 1998/03/04 13:47:44 jim Exp $
  */
 
 /*
@@ -263,7 +263,7 @@ void
 c_quit (void)
 {
 	if (getyn ("QUIT - Are you sure? ")) {
-	    empend ();
+	    emp_end ();
 	}
 }
 

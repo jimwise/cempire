@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: compmove.c,v 1.28 1998/03/03 14:17:46 jim Exp $
+ * $Id: compmove.c,v 1.29 1998/03/04 13:47:43 jim Exp $
  */
 
 /*
@@ -1137,7 +1137,7 @@ check_endgame (void)
 	if ((ncomp_city < nuser_city / 3) && (ncomp_army < nuser_army / 3))
 	{
 		if (getyn("The computer acknowledges defeat. Do you accept?"))
-			empend ();
+			emp_end ();
 
 		info("The enemy inadvertantly revealed its code used for");
 		info("receiving battle information. You can display what");

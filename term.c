@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.49 1998/03/04 13:38:25 jim Exp $
+ * $Id: term.c,v 1.50 1998/03/04 13:47:45 jim Exp $
  */
 
 /*
@@ -34,7 +34,7 @@ screen refreshed as the user has had time to read these lines.
 #include "extern.h"
 
 void    delay (void);
-void	empend (void);
+void	emp_end (void);
 void	emp_beep (void);
 void    error (char *, ...);
 int	getyn (char *message);
@@ -377,7 +377,7 @@ End the game by cleaning up the display.
 */
 
 void
-empend (void)
+emp_end (void)
 {
         term_end();
         exit (0);

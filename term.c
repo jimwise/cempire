@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.60 1998/03/10 22:22:34 jim Exp $
+ * $Id: term.c,v 1.61 1998/03/10 23:24:00 jim Exp $
  */
 
 /*
@@ -243,7 +243,6 @@ Redraw the screen.
 void
 redraw (void)
 {
-	clearok (curscr, TRUE);
 	wrefresh(stdscr);
 }
 

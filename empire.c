@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: empire.c,v 1.29 1998/03/10 22:13:35 jim Exp $
+ * $Id: empire.c,v 1.30 1998/03/10 23:23:59 jim Exp $
  */
 
 /*
@@ -41,7 +41,6 @@ empire (void)
 
 	term_clear(); /* nothing on screen */
 	info(VERSION_STRING);
-	redraw ();
 
 	if (!restore_game ()) /* try to restore previous game */
 		init_game (); /* otherwise init a new game */
@@ -61,7 +60,6 @@ empire (void)
 	    	}
 	   	else
 		{
-			redraw ();
 	        	prompt ("Your orders? ");
 	        	order = get_chx (); /* get a command */
 			do_command (order);

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: compmove.c,v 1.30 1998/03/06 22:40:26 jim Exp $
+ * $Id: compmove.c,v 1.31 1998/03/10 23:23:58 jim Exp $
  */
 
 /*
@@ -83,8 +83,6 @@ comp_move (int nmoves)
 			save_movie_screen ();
 
 		check_endgame (); /* see if game is over */
-
-		redraw ();
 	}
 }
 

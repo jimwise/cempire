@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: usermove.c,v 1.22 1998/03/10 22:03:51 jim Exp $
+ * $Id: usermove.c,v 1.23 1998/03/10 23:24:00 jim Exp $
  */
 
 /*
@@ -128,7 +128,6 @@ user_move (void)
 			{
 				/* is sector displayed? */
 				print_sector_u (sec); /* make screen up-to-date */
-				redraw (); /* show it to the user */
 			}
 	}
 	if (save_movie) save_movie_screen ();
@@ -169,7 +168,6 @@ piece_move (piece_info_t *obj)
 		if (awake (obj) || need_input){ /* need user input? */
 			ask_user (obj);
 			display_loc_u (obj->loc); /* let user see result */
-			redraw ();
 			need_input = FALSE; /* we got it */
 		}
 		

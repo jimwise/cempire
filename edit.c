@@ -5,7 +5,7 @@
  * and warranty information.
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: edit.c,v 1.18 1998/03/03 13:41:22 jim Exp $
+ * $Id: edit.c,v 1.19 1998/03/03 16:21:21 jim Exp $
  */
 
 /*
@@ -147,7 +147,6 @@ e_cursor (long *edit_cursor)
 	
 	/* set up terminal */
 	crmode();
-	refresh();
 	e = getch();
 
 	for (;;) {
@@ -156,8 +155,6 @@ e_cursor (long *edit_cursor)
 
 		if (!move_cursor (edit_cursor, dir_offset[(p-dirchars) / 2]))
 			emp_beep ();
-		
-		refresh();
 		e = getch ();
 	}
 	nocrmode (); /* reset terminal */

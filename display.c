@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.24 1998/03/03 15:40:35 jim Exp $
+ * $Id: display.c,v 1.25 1998/03/03 16:21:20 jim Exp $
  */
 
 /*
@@ -295,15 +295,19 @@ move_cursor (long *cursor, int offset)
 	int r, c;
  
 	t = *cursor + offset; /* proposed location */
-	if (!map[t].on_board) return (FALSE); /* trying to move off map */
-	if (!on_screen (t)) return (FALSE); /* loc is off screen */
+
+	if (!map[t].on_board)
+		return (FALSE); /* trying to move off map */
+	if (!on_screen (t))
+		return (FALSE); /* loc is off screen */
 	
 	*cursor = t; /* update cursor position */
 	save_cursor = *cursor;
 	       
 	r = loc_row (save_cursor);
 	c = loc_col (save_cursor);
-	wmove (mapwin, r-ref_row, c-ref_col);
+	wmove(mapwin, r-ref_row, c-ref_col);
+	wrefresh(mapwin);
        
 	return (TRUE);
 }

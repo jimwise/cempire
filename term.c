@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.25 1998/03/02 15:36:44 jim Exp $
+ * $Id: term.c,v 1.26 1998/03/02 15:47:35 jim Exp $
  */
 
 /*
@@ -144,7 +144,7 @@ vtopmsg (int linep, char *buf, va_list ap)
 }
 
 /*
-Print a prompt on the first message line.
+Print a prompt on the status line.
 */
 
 void
@@ -154,7 +154,10 @@ prompt (char *buf, ...)
 
 	va_start(ap, buf);
 
-	vtopmsg (1, buf, ap);
+	wmove(statuswin, 0, 0);
+	wclrtoeol(statuswin);
+	vwprintw(statuswin, buf, ap);
+	wrefresh(statuswin);
 
 	va_end(ap);
 }

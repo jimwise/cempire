@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: empire.c,v 1.14 1998/03/02 12:10:50 jim Exp $
+ * $Id: empire.c,v 1.15 1998/03/02 15:47:35 jim Exp $
  */
 
 /*
@@ -59,7 +59,7 @@ empire (void)
 	    	}
 	   	else
 		{
-			prompt (0); /* blank top line */
+			/* prompt (0); blank top line */
 			redraw ();
 	        	prompt ("Your orders? ");
 	        	order = get_chx (); /* get a command */

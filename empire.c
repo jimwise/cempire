@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: empire.c,v 1.8 1998/02/27 02:50:41 jim Exp $
+ * $Id: empire.c,v 1.9 1998/02/28 00:16:41 jim Exp $
  */
 
 /*
@@ -47,20 +47,25 @@ empire (void)
 
 	/* Command loop starts here. */
 
-	for (;;) { /* until user quits */
-	    if (automove) { /* don't ask for cmd in auto mode */
-		user_move ();
-		comp_move (1);
-		if (++turn % save_interval == 0)
-			save_game ();
-	    }
-	    else {
-		prompt (0); /* blank top line */
-		redraw ();
-	        prompt ("Your orders? ");
-	        order = get_chx (); /* get a command */
-		do_command (order);
-	    }
+	while(1)
+	{
+		/* until user quits */
+		if (automove)
+		{
+			/* don't ask for cmd in auto mode */
+			user_move ();
+			comp_move (1);
+			if (++turn % save_interval == 0)
+				save_game ();
+	    	}
+	   	else
+		{
+			prompt (0); /* blank top line */
+			redraw ();
+	        	prompt ("Your orders? ");
+	        	order = get_chx (); /* get a command */
+			do_command (order);
+		}
 	}
 }
 

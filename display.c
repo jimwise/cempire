@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.13 1998/02/28 00:01:02 jim Exp $
+ * $Id: display.c,v 1.14 1998/02/28 00:16:40 jim Exp $
  */
 
 /*
@@ -399,7 +399,7 @@ print_zoom (view_map_t *vmap)
 
 	pos_str (0, 0, "Round #%d", date);
 	
-	refresh ();
+	redraw ();
 }
 
 /*
@@ -445,7 +445,7 @@ print_pzoom (char *s, path_map_t *pmap, view_map_t *vmap)
 	prompt (s);
 	get_chx (); /* wait for user */
 	
-	refresh ();
+	redraw ();
 }
 
 /*

@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: game.c,v 1.40 1999/01/12 23:27:21 jwise Exp $
+ * $Id: game.c,v 1.41 2001/02/07 03:19:55 jwise Exp $
  */
 
 /* game.c -- Routines to initialize, save, and restore a game. */
@@ -19,31 +19,31 @@
 #include "empire.h"
 #include "extern.h"
 
-void	find_cont (void);
-int	find_next (long *);
-int	good_cont (long);
-void	inconsistent (void);
 void	init_game (void);
-void	make_map (void);
-void	make_pair (void);
-void	mark_cont (long);
-void	place_cities (void);
-void	read_embark (piece_info_t *, piece_type_t);
-long	remove_land (long, long);
-long	regen_land (long);
-long    remove_land (long, long);
 void	replay_movie (void);
 int	restore_game (void);
 void	save_game (void);
 void	save_movie_screen (void);
-int	select_cities (void);
-void	stat_display (char *, int);
+static void	find_cont (void);
+static int	find_next (long *);
+static int	good_cont (long);
+static void	inconsistent (void);
+static void	make_map (void);
+static void	make_pair (void);
+static void	mark_cont (long);
+static void	place_cities (void);
+static void	read_embark (piece_info_t *, piece_type_t);
+static long	remove_land (long, long);
+static long	regen_land (long);
+static long    remove_land (long, long);
+static int	select_cities (void);
+static void	stat_display (char *, int);
 #ifndef USE_ZLIB
-int	xread (FILE *, char *, int);
-int	xwrite (FILE *, char *, int);
+static int	xread (FILE *, char *, int);
+static int	xwrite (FILE *, char *, int);
 #else
-int	xread (gzFile *, char *, int);
-int	xwrite (gzFile *, char *, int);
+static int	xread (gzFile *, char *, int);
+static int	xwrite (gzFile *, char *, int);
 #endif
 /*
  * Initialize a new game.  Here we generate a new random map, put cities
@@ -128,7 +128,7 @@ init_game (void)
 static int height[2][MAP_SIZE];
 static int height_count[MAX_HEIGHT+1];
 
-void
+static void
 make_map (void)
 {
 	int from, to, k;
@@ -201,7 +201,7 @@ make_map (void)
 /* avoid compiler problems with large automatic arrays */
 static long land[MAP_SIZE];
 
-void
+static void
 place_cities (void)
 {
 	long placed, i, loc;
@@ -238,7 +238,7 @@ place_cities (void)
  * remove any land which is too close to a city.
  */
 
-long
+static long
 regen_land (long placed)
 {
 	long num_land;
@@ -263,7 +263,7 @@ regen_land (long placed)
 
 /* Remove land that is too close to a city. */
 
-long
+static long
 remove_land (long loc, long num_land)
 {
 	long new, i;
@@ -328,7 +328,7 @@ static cont_t cont_tab[MAX_CONT];		/* list of good continenets		*/
 static int rank_tab[MAX_CONT];			/* indices to cont_tab in order of rank	*/
 static pair_t pair_tab[MAX_CONT*MAX_CONT];	/* ranked pairs of continents		*/
 
-int
+static int
 select_cities (void)
 {
 	long compi, useri;
@@ -375,7 +375,7 @@ select_cities (void)
  * city.  We rank the continents.
  */
 
-void
+static void
 find_cont (void)
 {
 	long i;
@@ -395,7 +395,7 @@ find_cont (void)
  * If there are no more continents, we return false.
  */
 
-int
+static int
 find_next (long *mapi)
 {
 	long i, val;
@@ -431,7 +431,7 @@ find_next (long *mapi)
 
 static long ncity, nland, nshore;
 
-int
+static int
 good_cont (long mapi)
 {
 	long val;
@@ -468,7 +468,7 @@ good_cont (long mapi)
  * cities for the continent.  We then examine each surrounding cell.
  */
 
-void
+static void
 mark_cont (long mapi)
 {
 	int i;
@@ -498,7 +498,7 @@ mark_cont (long mapi)
  * between the user's continent and the computer's continent.
  */
 
-void
+static void
 make_pair (void)
 {
 	int i, j, k, npair;
@@ -690,7 +690,7 @@ restore_game (void)
  * the ship has the same amount of cargo it previously had.
  */
 
-void
+static void
 read_embark (piece_info_t *list, piece_type_t piece_type)
 {
 	piece_info_t *ship;
@@ -712,7 +712,7 @@ read_embark (piece_info_t *list, piece_type_t piece_type)
 	}
 }
 
-void
+static void
 inconsistent (void)
 {
 	error("empsave.dat is inconsistent.  Please remove it.\n");
@@ -725,7 +725,7 @@ inconsistent (void)
  * Also, tell the user why the write did not work if it didn't.
  */
 
-int
+static int
 xwrite (FILE *f, char *buf, int size)
 {
 	int bytes;
@@ -749,7 +749,7 @@ xwrite (FILE *f, char *buf, int size)
  * work if it didn't.
  */
 
-int
+static int
 xwrite (gzFile *f, char *buf, int size)
 {
         int bytes;
@@ -774,7 +774,7 @@ xwrite (gzFile *f, char *buf, int size)
  * and return FALSE.
  */
 
-int
+static int
 xread (FILE *f, char *buf, int size)
 {
 	int bytes;
@@ -797,7 +797,7 @@ xread (FILE *f, char *buf, int size)
  * we tell the user why and return FALSE.
  */
 
-int
+static int
 xread (gzFile *f, char *buf, int size)
 {
         int bytes;
@@ -931,7 +931,7 @@ replay_movie (void)
 /* in declared order, with city first */
 static const char *pieces = "OAFPDSTCBZXafpdstcbz";
 
-void
+static void
 stat_display (char *mbuf, int round)
 {
 	long i;

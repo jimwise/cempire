@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: map.c,v 1.28 1999/10/02 04:44:47 jwise Exp $
+ * $Id: map.c,v 1.29 2001/02/07 03:19:56 jwise Exp $
  */
 
 /*
@@ -18,19 +18,19 @@
 #include "empire.h"
 #include "extern.h"
 
-void	add_cell (path_map_t *, long, perimeter_t *, int, int, int);
-void	expand_perimeter (path_map_t *, const view_map_t *, const move_info_t *, perimeter_t *,
+static void	add_cell (path_map_t *, long, perimeter_t *, int, int, int);
+static void	expand_perimeter (path_map_t *, const view_map_t *, const move_info_t *, perimeter_t *,
 		int, int, int, int, perimeter_t *, perimeter_t *);
-void	expand_prune (view_map_t *, path_map_t *, long, int, perimeter_t *, int *);
-int	objective_cost (const view_map_t *, const move_info_t *, long, int);
+static void	expand_prune (view_map_t *, path_map_t *, long, int, perimeter_t *, int *);
+static int	objective_cost (const view_map_t *, const move_info_t *, long, int);
 int     rmap_shore (long);
-void	start_perimeter (path_map_t *, perimeter_t *, long, int);
-int	terrain_type (const path_map_t *, const view_map_t *, const move_info_t *, long, long);
+static void	start_perimeter (path_map_t *, perimeter_t *, long, int);
+static int	terrain_type (const path_map_t *, const view_map_t *, const move_info_t *, long, long);
 int     vmap_at_sea (const view_map_t *, long);
 void	vmap_cont (int *, const view_map_t *, long, char);
 scan_counts_t	vmap_cont_scan (int *, const view_map_t *);
-int	vmap_count_adjacent (const view_map_t *, long, const char *);
-int	vmap_count_path (path_map_t *, long);
+static int	vmap_count_adjacent (const view_map_t *, long, const char *);
+static int	vmap_count_path (path_map_t *, long);
 long    vmap_find_aobj (path_map_t[], const view_map_t *, long, const move_info_t *);
 long    vmap_find_dest (path_map_t[], view_map_t[], long, long, int, int);
 long    vmap_find_dir (path_map_t[], const view_map_t *, long, const char *, const char *);
@@ -38,7 +38,7 @@ long    vmap_find_lobj (path_map_t[], const view_map_t *, long, const move_info_
 long    vmap_find_lwobj (path_map_t[], const view_map_t *, long, const move_info_t *, int);
 long    vmap_find_wobj (path_map_t[], const view_map_t *, long, const move_info_t *);
 long    vmap_find_wlobj (path_map_t[], const view_map_t *, long, const move_info_t *);
-long	vmap_find_xobj (path_map_t[], const view_map_t *, long, const move_info_t *, int, int);
+static long	vmap_find_xobj (path_map_t[], const view_map_t *, long, const move_info_t *, int, int);
 void    vmap_mark_adjacent (path_map_t[], long);
 void    vmap_mark_near_path (path_map_t[], long);
 void    vmap_mark_path (path_map_t *, const view_map_t *, long);
@@ -209,7 +209,7 @@ vmap_cont_scan (int *cont_map, const view_map_t *vmap)
 
 /* Find an objective over a single type of terrain. */
 
-long
+static long
 vmap_find_xobj (path_map_t path_map[], const view_map_t *vmap, long loc,
 			const move_info_t *move_info, int start, int expand)
 {
@@ -386,7 +386,7 @@ vmap_find_wlobj (path_map_t path_map[], const view_map_t *vmap, long loc, const 
 static path_map_t pmap_init[MAP_SIZE];
 static int init_done = 0;
 
-void
+static void
 start_perimeter (path_map_t *pmap, perimeter_t *perim, long loc, int terrain)
 {
 	int i;
@@ -438,7 +438,7 @@ start_perimeter (path_map_t *pmap, perimeter_t *perim, long loc, int terrain)
  * 	landp == pointer to new land perimeter
 */
 
-void
+static void
 expand_perimeter (path_map_t *pmap, const view_map_t *vmap, const move_info_t *move_info, perimeter_t *curp, int type,
 			int cur_cost, int inc_wcost, int inc_lcost, perimeter_t *waterp, perimeter_t *landp)
 {
@@ -481,7 +481,7 @@ expand_perimeter (path_map_t *pmap, const view_map_t *vmap, const move_info_t *m
 			
 /* Add a cell to a perimeter list. */
 	
-void
+static void
 add_cell (path_map_t *pmap, long new_loc, perimeter_t *perim, int terrain, int cur_cost, int inc_cost)
 {
 	path_map_t	*pm = &pmap[new_loc];
@@ -496,7 +496,7 @@ add_cell (path_map_t *pmap, long new_loc, perimeter_t *perim, int terrain, int c
 
 /* Compute the cost to move to an objective. */
 
-int
+static int
 objective_cost (const view_map_t *vmap, const move_info_t *move_info, long loc, int base_cost)
 {
 	char *p;
@@ -532,7 +532,7 @@ objective_cost (const view_map_t *vmap, const move_info_t *move_info, long loc, 
 
 /* Return the type of terrain at a vmap location. */
 
-int
+static int
 terrain_type (const path_map_t *pmap, const view_map_t *vmap, const move_info_t *move_info, long from_loc, long to_loc)
 {
 	if (vmap[to_loc].contents == '+') return T_LAND;
@@ -726,7 +726,7 @@ vmap_prune_explore_locs (view_map_t *vmap)
  * Careful:  'loc' may be "off board".
  */
 
-void
+static void
 expand_prune (view_map_t *vmap, path_map_t *pmap, long loc, int type, perimeter_t *to, int *explored)
 {
 	int i;
@@ -944,7 +944,7 @@ vmap_find_dir (path_map_t path_map[], const view_map_t *vmap, long loc, const ch
  * is the most interesting.
  */
 
-int
+static int
 vmap_count_adjacent (const view_map_t *vmap, long loc, const char *adj_char)
 {
 	int i, count;
@@ -965,7 +965,7 @@ vmap_count_adjacent (const view_map_t *vmap, long loc, const char *adj_char)
 
 /* Count the number of adjacent cells that are on the path. */
 
-int
+static int
 vmap_count_path (path_map_t *pmap, long loc)
 {
 	int i, count;

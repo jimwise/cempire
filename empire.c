@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: empire.c,v 1.36 1998/08/09 00:41:20 jwise Exp $
+ * $Id: empire.c,v 1.37 2001/02/07 03:19:55 jwise Exp $
  */
 
 /*
@@ -16,17 +16,17 @@
 #include "empire.h"
 #include "extern.h"
 
-void	c_debug (char order);
-void	c_examine (void);
-void	c_give (void);
-void	c_map (void);
-void	c_movie (void);
-void	c_quit (void);
-void	c_sector (void);
-void	do_command (char);
 void	empire (void);
-void	emp_end (void);
-void	emp_start (void);
+static void	c_debug (char order);
+static void	c_examine (void);
+static void	c_give (void);
+static void	c_map (void);
+static void	c_movie (void);
+static void	c_quit (void);
+static void	c_sector (void);
+static void	do_command (char);
+static void	emp_end (void);
+static void	emp_start (void);
 
 void
 empire (void)
@@ -66,7 +66,7 @@ empire (void)
 
 /* Execute a command. */
 
-void
+static void
 do_command (char orders)
 {
 	char e;
@@ -187,7 +187,7 @@ do_command (char orders)
  * it as the computers.
  */
 
-void
+static void
 c_give (void)
 {
 	int unowned[NUM_CITY];
@@ -217,7 +217,7 @@ c_give (void)
  * The order cannot be any legal command.
  */
 
-void
+static void
 c_debug (char order)
 {
 	char e;
@@ -250,7 +250,7 @@ c_debug (char order)
 
 /* The quit command.  Make sure the user really wants to quit. */
 
-void
+static void
 c_quit (void)
 {
 	if (getyn ("QUIT - Are you sure? ")) {
@@ -260,7 +260,7 @@ c_quit (void)
 
 /* Read the sector number from the user and print that sector. */
 
-void
+static void
 c_sector (void)
 {
 	int num;
@@ -276,7 +276,7 @@ c_sector (void)
  * out the map.
  */
 
-void
+static void
 c_map (void)
 {
 	FILE *f;
@@ -314,7 +314,7 @@ c_map (void)
 
 /* Allow user to examine the computer's map. */
 
-void
+static void
 c_examine (void)
 {
 	int num;
@@ -328,7 +328,7 @@ c_examine (void)
  * Print a "zoomed" version of the computer's map.
  */
 
-void
+static void
 c_movie (void)
 {
 	while (1)
@@ -341,7 +341,7 @@ c_movie (void)
 
 /*This provides a single place for collecting all startup routines */
 
-void
+static void
 emp_start (void)
 {
 	term_init();	/* init tty, and info and status windows */
@@ -351,7 +351,7 @@ emp_start (void)
 
 /* This provides a single place for collecting all cleanup routines */
 
-void
+static void
 emp_end (void)
 {
 	term_end();

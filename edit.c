@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: edit.c,v 1.31 1998/09/11 22:10:01 jwise Exp $
+ * $Id: edit.c,v 1.32 2001/02/07 03:19:55 jwise Exp $
  */
 
 /* edit.c -- Routines to handle edit mode commands. */
@@ -17,35 +17,35 @@
 #include "extern.h"
 
 void	edit (long);
-void	e_attack (long);
 void	e_city_attack (city_info_t *, int);
 void	e_city_explore (city_info_t *, int);
 void	e_city_fill (city_info_t *, int);
-void	e_city_func (long *, long, int *);
-void	e_city_info (long);
 void	e_city_random (city_info_t *, int);
 void	e_city_repair (city_info_t *, int);
 void	e_city_stasis (city_info_t *, int);
 void	e_city_wake (city_info_t *, int);
-char	e_cursor (long *);
-void	e_end (long *, long, int);
-void	e_explore (long);
-void	e_fill (long);
-void	e_info (long);
-void	e_land (long);
-void	e_leave (void);
-void	e_move (long *, long);
-void	e_piece_info (long, char);
-void	e_print (long *);
-void	e_prod (long);
-void	e_random (long);
-void	e_repair (long);
-void	e_set_city_func (city_info_t *, int, function_t);
-void	e_set_func (long, function_t);
-void	e_sleep (long);
-void	e_stasis (long);
-void	e_transport (long);
-void	e_wake (long loc);
+static void	e_attack (long);
+static void	e_city_func (long *, long, int *);
+static void	e_city_info (long);
+static char	e_cursor (long *);
+static void	e_end (long *, long, int);
+static void	e_explore (long);
+static void	e_fill (long);
+static void	e_info (long);
+static void	e_land (long);
+static void	e_leave (void);
+static void	e_move (long *, long);
+static void	e_piece_info (long, char);
+static void	e_print (long *);
+static void	e_prod (long);
+static void	e_random (long);
+static void	e_repair (long);
+static void	e_set_city_func (city_info_t *, int, function_t);
+static void	e_set_func (long, function_t);
+static void	e_sleep (long);
+static void	e_stasis (long);
+static void	e_transport (long);
+static void	e_wake (long loc);
 
 void
 edit (long edit_cursor)
@@ -130,7 +130,7 @@ edit (long edit_cursor)
 
 static char dirchars[] = "WEDCXZAQ";
 
-char
+static char
 e_cursor (long *edit_cursor)
 {
 	uchar e;
@@ -151,14 +151,14 @@ e_cursor (long *edit_cursor)
 
 /* Leave edit mode. */
 
-void
+static void
 e_leave (void)
 {
 }
 
 /* Print new sector. */
 
-void
+static void
 e_print (long *edit_cursor)
 {
         int sector;
@@ -172,7 +172,7 @@ e_print (long *edit_cursor)
 
 /* Set the function of a piece. */
 
-void
+static void
 e_set_func (long loc, function_t func)
 {
 	piece_info_t *obj;
@@ -186,7 +186,7 @@ e_set_func (long loc, function_t func)
 	
 /* Set the function of a city for some piece. */
 
-void
+static void
 e_set_city_func (city_info_t *cityp, int type, function_t func)
 {
 	cityp->func[type] = func;
@@ -194,7 +194,7 @@ e_set_city_func (city_info_t *cityp, int type, function_t func)
 
 /* Set a piece to move randomly. */
 
-void
+static void
 e_random (long loc)
 {
 	e_set_func (loc, RANDOM);
@@ -208,7 +208,7 @@ e_city_random (city_info_t *cityp, int type)
 
 /* Put a ship in fill mode. */
 
-void
+static void
 e_fill (long loc)
 {
 	if (user_map[loc].contents == 'T' || user_map[loc].contents == 'C')
@@ -226,7 +226,7 @@ e_city_fill (city_info_t *cityp, int type)
 
 /* Set a piece to explore. */
 
-void
+static void
 e_explore (long loc)
 {
 	e_set_func (loc, EXPLORE);
@@ -240,7 +240,7 @@ e_city_explore (city_info_t *cityp, int type)
 
 /* Set a fighter to land. */
 
-void
+static void
 e_land (long loc)
 {
 	if (user_map[loc].contents == 'F')
@@ -249,7 +249,7 @@ e_land (long loc)
 }
 /* Set an army's function to TRANSPORT. */
 
-void
+static void
 e_transport (long loc)
 {
 	if (user_map[loc].contents == 'A')
@@ -259,7 +259,7 @@ e_transport (long loc)
 
 /* Set an army's function to ATTACK. */
 
-void
+static void
 e_attack (long loc)
 {
 	if (user_map[loc].contents == 'A')
@@ -277,7 +277,7 @@ e_city_attack (city_info_t *cityp, int type)
 
 /* Set a ship's function to REPAIR. */
 
-void
+static void
 e_repair (long loc)
 {
 	if (strchr ("PDSTBC", user_map[loc].contents))
@@ -297,7 +297,7 @@ e_city_repair (city_info_t *cityp, int type)
 
 static char dirs[] = "WEDCXZAQ";
  
-void
+static void
 e_stasis (long loc)
 {
 	uchar e;
@@ -329,7 +329,7 @@ e_city_stasis (city_info_t *cityp, int type)
 
 /* Wake up anything and everything. */
 
-void
+static void
 e_wake (long loc)
 {
 	city_info_t *cityp;
@@ -356,7 +356,7 @@ e_city_wake (city_info_t *cityp, int type)
  * the function itself.
  */
 
-void
+static void
 e_city_func (long *path_start, long loc, int *path_type)
 {
 	int type;
@@ -411,7 +411,7 @@ e_city_func (long *path_start, long loc, int *path_type)
 
 /* Beginning of move to location. */
 
-void
+static void
 e_move (long *path_start, long loc)
 {
 	if (!isupper(user_map[loc].contents)) huh (); /* nothing there? */
@@ -421,7 +421,7 @@ e_move (long *path_start, long loc)
 
 /* End of move to location. */
 
-void
+static void
 e_end (long *path_start, long loc, int path_type)
 {
 	city_info_t *cityp;
@@ -439,7 +439,7 @@ e_end (long *path_start, long loc, int path_type)
 
 /* Put a piece to sleep. */
 
-void
+static void
 e_sleep (long loc)
 {
 	if (user_map[loc].contents == 'O') huh (); /* can't sleep a city */
@@ -448,7 +448,7 @@ e_sleep (long loc)
 
 /* Print out information about a piece. */
 
-void
+static void
 e_info (long edit_cursor)
 {
 	char ab;
@@ -469,7 +469,7 @@ e_info (long edit_cursor)
 
 /* Print info about a piece. */
 
-void
+static void
 e_piece_info (long edit_cursor, char ab)
 {
 	piece_info_t *obj;
@@ -487,7 +487,7 @@ e_piece_info (long edit_cursor, char ab)
 
 /* Display info on a city. */
 
-void
+static void
 e_city_info (long edit_cursor)
 {
 	piece_info_t *obj;
@@ -543,7 +543,7 @@ e_city_info (long edit_cursor)
 
 /* Change city production. */
 
-void
+static void
 e_prod (long loc)
 {
 	city_info_t *cityp;

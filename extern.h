@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: extern.h,v 1.75 1998/09/11 22:10:01 jwise Exp $
+ * $Id: extern.h,v 1.76 2001/02/07 03:19:55 jwise Exp $
  */
 
 /* extern.h -- define global non-constant storage.  */
@@ -142,7 +142,6 @@ void	replay_movie (void);
 int	restore_game (void);
 void	save_game (void);
 void	save_movie_screen (void);
-int	select_cities (void);
 
 /* map routines (map.c) */
 int	rmap_shore (long);

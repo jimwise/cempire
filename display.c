@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: display.c,v 1.72 1998/09/11 21:29:11 jwise Exp $
+ * $Id: display.c,v 1.73 2001/02/07 03:19:55 jwise Exp $
  */
 
 /*
@@ -34,20 +34,21 @@ int     cur_sector (void);
 void    display_loc (int, view_map_t[], long);
 void    display_locx (int, view_map_t[], long);
 void    display_score (void);
-void    display_screen (view_map_t[]);
-void    disp_square(view_map_t *);
 void    help (const char **, int);
 void	kill_display (void);
+void	map_init (void);
 int     move_cursor (long *, int);
-int     on_screen (long);
 void	print_movie_screen(const char *);
 void    print_sector (char, view_map_t[], int);
 void    print_pzoom (const char *, const path_map_t *, const view_map_t *);
-void    print_pzoom_cell (const path_map_t *, const view_map_t *, int, int, int, int);
 void    print_zoom (const view_map_t *);
-void    print_zoom_cell (const view_map_t *, int, int, int, int);
 void	sector_change (void);
-void	show_loc (view_map_t[], long);
+static void	display_screen (view_map_t[]);
+static void	disp_square(view_map_t *);
+static int	on_screen (long);
+static void	print_pzoom_cell (const path_map_t *, const view_map_t *, int, int, int, int);
+static void	print_zoom_cell (const view_map_t *, int, int, int, int);
+static void	show_loc (view_map_t[], long);
 
 static int whose_map = UNOWNED; /* user's or computer's point of view */
 static int ref_row; /* map loc displayed in upper-left corner */
@@ -73,7 +74,8 @@ map_init (void)
  * trashed and no sector is shown on the screen.
  */
 
-void kill_display (void)
+void
+kill_display (void)
 {
 	whose_map = UNOWNED;
 }
@@ -83,7 +85,8 @@ void kill_display (void)
  * screen even if the location to be displayed is already on the screen.
  */
 
-void sector_change (void)
+void
+sector_change (void)
 {
 	change_ok = TRUE;
 }
@@ -93,7 +96,8 @@ void sector_change (void)
  * sector is not displayed, return -1.
  */
 
-int cur_sector (void)
+int
+cur_sector (void)
 {
 	if (whose_map != USER)
 		return (-1);
@@ -130,7 +134,7 @@ display_locx (int whose, view_map_t vmap[], long loc)
 
 /* Display a location which exists on the screen. */
 
-void
+static void
 show_loc (view_map_t vmap[], long loc)
 {
 	int r, c;
@@ -243,7 +247,7 @@ print_sector (char whose, view_map_t vmap[], int sector)
 /* Display the contents of a single map square. */
 
 
-void
+static void
 disp_square(view_map_t *vp)
 {
 	waddch(mapwin, (chtype)vp->contents);
@@ -313,7 +317,7 @@ move_cursor (long *cursor, int offset)
 
 /* See if a location is displayed on the screen. */
 
-int
+static int
 on_screen (long loc)
 {
 	int new_r, new_c;
@@ -391,7 +395,7 @@ print_zoom (const view_map_t *vmap)
 
 /* Print a single cell in condensed format. */
 
-void
+static void
 print_zoom_cell (const view_map_t *vmap, int row, int col, int row_inc, int col_inc)
 {
 	int r, c;
@@ -473,7 +477,7 @@ print_pzoom (const char *s, const path_map_t *pmap, const view_map_t *vmap)
  * between P and Z are printed as U.
  */
 
-void
+static void
 print_pzoom_cell (const path_map_t *pmap, const view_map_t *vmap, int row, int col, int row_inc, int col_inc)
 {
 	int r, c;

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.9 1998/02/25 23:44:28 jim Exp $
+ * $Id: term.c,v 1.10 1998/02/26 22:28:35 jim Exp $
  */
 
 /*
@@ -39,8 +39,25 @@ to read the lines.  The new information is then displayed, and the
 #include "empire.h"
 #include "extern.h"
 
-char	get_cq (void);
-void	get_strq (char *, int);
+void    comment (char *, ...);
+void    error (char *, ...);
+void    extra (char *, ...);
+int	getint (char *message);
+int	getyn (char *message);
+char	get_chx (void);
+char	get_c (void);
+char    get_cq (void);
+int     get_range (char *, int, int);
+void	get_str (char *, int);
+void    get_strq (char *, int);
+void    help (char **, int);
+void    huh (void);
+void    info (char *, char *, char *);
+void    pdebug (char *, ...);
+void    prompt (char *, ...);
+void    set_need_delay (void);
+void    topini (void);
+void    topmsg(int, char *, ...);
 void	vcomment (char *, va_list);
 void	vtopmsg(int, char *, va_list);
 
@@ -68,7 +85,7 @@ we finish printing information to the screen.
 */
 
 void
-topini()
+topini (void)
 {
 	info (0, 0, 0);
 }
@@ -77,7 +94,7 @@ Write a message to one of the top lines.
 */
 
 void
-topmsg(int linep, char *buf, ...)
+topmsg (int linep, char *buf, ...)
 {
 	va_list ap;
 
@@ -88,7 +105,8 @@ topmsg(int linep, char *buf, ...)
 	va_end(ap);
 }
 
-void vtopmsg(int linep, char *buf, va_list ap)
+void
+vtopmsg (int linep, char *buf, va_list ap)
 {
         if ((linep < 1) || (linep > NUMTOPS))
                 linep = 1;
@@ -154,7 +172,7 @@ Print out a generic error message.
 */
 
 void
-huh ()
+huh (void)
 {
 	error ("Type H for Help.");
 }
@@ -166,8 +184,7 @@ information, we set the need_delay flag.
 */
 
 void
-info (a, b, c)
-char *a, *b, *c;
+info (char *a, char *b, char *c)
 {
 	if (need_delay) delay ();
 	topmsg (1, a);
@@ -177,7 +194,8 @@ char *a, *b, *c;
 }
 
 void
-set_need_delay () {
+set_need_delay (void)
+{
 	need_delay = 1;
 }
 
@@ -208,9 +226,7 @@ Get a string from the user, echoing characters all the while.
 */
 
 void
-get_str (buf, sizep)
-char *buf;
-int sizep;
+get_str (char *buf, int sizep)
 {
 	(void) echo();
 	get_strq(buf, sizep);
@@ -222,9 +238,7 @@ Get a string from the user, ignoring the current echo mode.
 */
 
 void
-get_strq (buf, sizep)
-char *buf;
-int sizep;
+get_strq (char *buf, int sizep)
 {
 	sizep = sizep; /* size of buf, currently unused */
 
@@ -241,7 +255,7 @@ Get a character from the user and convert it to uppercase.
 */
 
 char
-get_chx()
+get_chx (void)
 {
 	uchar c;
 
@@ -258,8 +272,7 @@ Input an integer from the user.
 */
 
 int
-getint (message)
-char *message;
+getint (char *message)
 {
 	char buf[STRSIZE];
 	char *p;
@@ -287,7 +300,7 @@ Input a character from the user with echoing.
 */
 
 char
-get_c ()
+get_c (void)
 {
 	char c; /* one char and a null */
 
@@ -302,7 +315,7 @@ Input a character quietly.
 */
 
 char
-get_cq ()
+get_cq (void)
 {
 	char c;
 
@@ -320,8 +333,7 @@ a valid response.  We return TRUE iff the user replies 'y'.
 */
 
 int
-getyn (message)
-char *message;
+getyn (char *message)
 {
 	char c;
 
@@ -341,9 +353,7 @@ Input an integer in a range.
 */
 
 int
-get_range (message, low, high)
-char *message;
-int low, high;
+get_range (char *message, int low, int high)
 {
 	int result;
 
@@ -362,9 +372,7 @@ Print a screen of help information.
 */
 
 void
-help (text, nlines)
-char **text;
-int nlines;
+help (char **text, int nlines)
 {
 	int i, r, c;
 	int text_lines;

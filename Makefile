@@ -1,7 +1,7 @@
 #
 #	Copyright (C) 1987, 1988 Chuck Simmons
 #
-# $Id: Makefile,v 1.35 2001/02/07 03:45:53 jwise Exp $
+# $Id: Makefile,v 1.36 2001/02/07 03:47:01 jwise Exp $
 #
 # See the file COPYING, distributed with empire, for restriction
 # and warranty information.
@@ -9,7 +9,7 @@
 VERSION=1.3_ALPHA
 
 #
-# 0.) Pick where to install cempire
+# 1.) Pick where to install cempire
 #	The cempire binary will be installed in BINDIR
 #
 #	The cempire man page will be installed in MANDIR
@@ -19,7 +19,7 @@ BINDIR=${PREFIX}/bin
 MANDIR=${PREFIX}/man/man6
 
 #
-# 1.) Pick your compiler and `install' program
+# 2.) Pick your compiler and `install' program
 #	If you want to use your system's native compiler, use the following.
 #	It MUST be at least relatively ANSI compliant for this to work.
 #       	CC=cc
@@ -41,7 +41,7 @@ CC=gcc
 INSTALL=install
 
 #
-# 2.) Pick your preprocessor defines
+# 3.) Pick your preprocessor defines
 #	choose from the following options:
 #		-DUSE_NCURSES		you need to turn this on if you want
 #					to use the ncurses library.  Use this if
@@ -58,7 +58,7 @@ INSTALL=install
 DEFINES=-D__EXTENSIONS__ -DUSE_ZLIB
 
 #
-# 3.) Pick your library specifications
+# 4.) Pick your library specifications
 #	for System V curses, or other non-termcap curses implementations, use:
 #		LIBS=-lcurses
 #
@@ -84,7 +84,7 @@ DEFINES=-D__EXTENSIONS__ -DUSE_ZLIB
 LIBS=-lz -lcurses
 
 #
-# 4.) Pick your includes
+# 5.) Pick your includes
 #
 #	If your system curses works, use this:
 #		INCLUDES=

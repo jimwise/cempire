@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: map.c,v 1.30 2001/11/12 15:40:52 jwise Exp $
+ * $Id: map.c,v 1.31 2001/11/12 15:46:10 jwise Exp $
  */
 
 /*
@@ -14,7 +14,7 @@
  * real_maps, path_maps, and cont_maps.
  */
 
-#include <strings.h>
+#include <string.h>
 #include "empire.h"
 #include "extern.h"
 

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: game.c,v 1.30 1998/03/11 00:03:26 jim Exp $
+ * $Id: game.c,v 1.31 1998/03/11 00:13:10 jim Exp $
  */
 
 /*
@@ -782,7 +782,9 @@ replay_movie (void)
 		return;
 	}
 	round = 0;
+
 	term_clear();
+
 	while (1)
 	{
 		if (fread ((char *)mapbuf, 1, sizeof (mapbuf), f) != sizeof (mapbuf))
@@ -801,6 +803,7 @@ replay_movie (void)
 		
 		redraw ();
 	}
+
 	fclose (f);
 }
 

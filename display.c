@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.52 1998/03/10 22:51:21 jim Exp $
+ * $Id: display.c,v 1.53 1998/03/11 00:13:08 jim Exp $
  */
 
 /*
@@ -38,6 +38,7 @@ void	kill_display (void);
 int     move_cursor (long *, int);
 int     on_screen (long);
 void    print_movie_cell (char *, int, int, int, int);
+void	print_movie_screen(char *);
 void    print_sector (char, view_map_t[], int);
 void    print_pzoom (char *, path_map_t *, view_map_t *);
 void    print_pzoom_cell (path_map_t *, view_map_t *, int, int, int, int);
@@ -478,6 +479,22 @@ display_score (void)
 {
 	mvwprintw(stdscr, 0, cols-12, " User  Comp");
 	mvwprintw(stdscr, 1, cols-12, "%5d %5d", user_score, comp_score);
+	wrefresh(stdscr);
+}
+
+void
+print_movie_screen(char *mapbuf)
+{
+	int row_inc, col_inc;
+	int r, c;
+
+	row_inc = (MAP_HEIGHT + lines - NUMTOPS - 2) / (lines - NUMTOPS);
+	col_inc = (MAP_WIDTH + cols - 1) / (cols - 1);
+
+	for (r = 0; r < MAP_HEIGHT; r += row_inc)
+		for (c = 0; c < MAP_WIDTH; c += col_inc)
+			print_movie_cell (mapbuf, r, c, row_inc, col_inc);
+
 	wrefresh(stdscr);
 }
 

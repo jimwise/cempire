@@ -2,7 +2,7 @@
 .\"	Copyright (C) 1987, 1988 Chuck Simmons
 .\"	Portions of this file Copyright (C) 1998 Jim Wise
 .\" 
-.\"	$Id: empire.6,v 1.3 1998/02/24 23:48:00 jim Exp $
+.\"	$Id: empire.6,v 1.4 1998/03/11 18:03:13 jim Exp $
 .\"
 .\" See the file COPYING, distributed with empire, for restriction
 .\" and warranty information.
@@ -11,7 +11,7 @@
 .SH NAME
 empire -- the wargame of the century
 .SH SYNOPSIS
-empire [-w water] [-s smooth] [-d delay]
+empire [-d delay] [-S save_interval] [-s smooth] [-w water]
 .SH DESCRIPTION
 Empire is a simulation of a full-scale war between two
 emperors, the computer and you.  Naturally, there is only
@@ -19,11 +19,18 @@ room for one, so the object of the game is to destroy
 the other.  The computer plays by the same rules that you
 do.
 .TP 10
-.BI \-w water\^
-This option controls the amount of water on the map.
-This is given as the percentage of the map which should
-be water.  The default is 70% water.  \f2water\fP
-must be an integer in the between 10 and 90 inclusive.
+.BI \-d delay\^
+This option controls the length of time the computer will
+delay after printing informational messages at the top of
+the screen.  \f2delay\fP is specified in milliseconds.  The
+default value is 2000 which allows the user two seconds to
+read a message.
+.TP
+.BI \-S save_interval\^
+sets the \fIsave interval\fR for the game (default is 10). Once per
+\fIinterval\fR turns the game state will be automatically saved after
+your move. It will be saved in any case when you change modes or
+do various special things from command mode, such as `M' or `N'.
 .TP
 .BI \-s smooth\^
 This controls the smoothness of the map.  A low value
@@ -33,12 +40,11 @@ with a few scattered continents.  Be forewarned that
 a high value will cause the program to take a long
 time to start up.  The default value is 5.
 .TP
-.BI \-d delay\^
-This option controls the length of time the computer will
-delay after printing informational messages at the top of
-the screen.  \f2delay\fP is specified in milliseconds.  The
-default value is 2000 which allows the user two seconds to
-read a message.
+.BI \-w water\^
+This option controls the amount of water on the map.
+This is given as the percentage of the map which should
+be water.  The default is 70% water.  \f2water\fP
+must be an integer in the between 10 and 90 inclusive.
 .SH EXAMPLES
 empire -w90 -s2
 .P
@@ -55,15 +61,6 @@ This produces a map with lots of land and a few lakes.
 The computer will have a hard time on this sort of map
 as it will try and produce lots of troop transports,
 which are fairly useless.
-.P
-There is one other option.
-.TP
-.BI \-S interval\^
-.P
-sets the \fIsave interval\fR for the game (default is 10). Once per
-\fIinterval\fR turns the game state will be automatically saved after
-your move. It will be saved in any case when you change modes or
-do various special things from command mode, such as `M' or `N'.
 .SH INTRODUCTION
 Empire is a war game played between you and the user.  The world
 on which the game takes place is a square rectangle containing cities,

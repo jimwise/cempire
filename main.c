@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: main.c,v 1.15 1999/01/12 22:17:53 jwise Exp $
+ * $Id: main.c,v 1.16 2002/11/11 06:18:59 jwise Exp $
  */
 
 /*
@@ -44,7 +44,7 @@ main (int argc, char *argv[])
 
 	/* extract command line options */
 
-	while ((c = getopt (argc, argv, OPTFLAGS)) != EOF) {
+	while ((c = getopt (argc, argv, OPTFLAGS)) != -1) {
 		switch (c) {
 		case 'w':
 			wflg = atoi (optarg);

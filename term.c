@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.42 1998/03/03 14:08:56 jim Exp $
+ * $Id: term.c,v 1.43 1998/03/03 14:11:22 jim Exp $
  */
 
 /*
@@ -119,6 +119,7 @@ error (char *fmt, ...)
 	beep();
 	delay();
 	wscrl(statuswin, -1);
+	wrefresh(statuswin);
 	scrollok(statuswin, FALSE);
 
 	va_end(fmt);

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.48 1998/03/04 13:37:22 jim Exp $
+ * $Id: term.c,v 1.49 1998/03/04 13:38:25 jim Exp $
  */
 
 /*
@@ -41,7 +41,6 @@ int	getyn (char *message);
 char	get_chx (void);
 char    get_cq (void);
 void	get_str (char *, int);
-void    get_strq (char *, int);
 void    help (char **, int);
 void    huh (void);
 void	info (char *, ...);

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.37 1998/03/07 00:24:37 jim Exp $
+ * $Id: display.c,v 1.38 1998/03/09 12:45:41 jim Exp $
  */
 
 /*
@@ -151,10 +151,10 @@ show_loc (view_map_t vmap[], long loc)
 	
 	r = loc_row (loc);
 	c = loc_col (loc);
-	wmove(mapwin, r-ref_row, c-ref_col);
+	wmove(mapwin, r-ref_row+1, c-ref_col+1);
 	disp_square(&vmap[loc]);
 	save_cursor = loc; /* remember cursor location */
-	wmove(mapwin, r-ref_row, c-ref_col);
+	wmove(mapwin, r-ref_row+1, c-ref_col+1);
 	wrefresh(mapwin);
 }
 
@@ -187,8 +187,8 @@ print_sector (char whose, view_map_t vmap[], int sector)
 	save_sector = sector; /* remember last sector displayed */
 	change_ok = FALSE; /* we are displaying a new sector */
 
-	display_rows = MAPWIN_HEIGHT; /* num lines to display */
-	display_cols = MAPWIN_WIDTH;
+	display_rows = MAPWIN_HEIGHT - 2; /* num lines to display */
+	display_cols = MAPWIN_WIDTH - 2;
 
 	/* compute row and column edges of sector */
 	first_row = sector_row (sector) * ROWS_PER_SECTOR;
@@ -268,16 +268,17 @@ display_screen (view_map_t vmap[])
 	int r, c;
 	long t;
 
-	display_rows = MAPWIN_HEIGHT; /* num lines to display */
-	display_cols = MAPWIN_WIDTH;
+	display_rows = MAPWIN_HEIGHT - 2; /* num lines to display */
+	display_cols = MAPWIN_WIDTH - 2;
 
 	for (r = ref_row; r < ref_row + display_rows && r < MAP_HEIGHT - 1; r++)
 		for (c = ref_col; c < ref_col + display_cols && c < MAP_WIDTH - 1; c++)
 		{
 			t = row_col_loc (r, c);
-			wmove (mapwin, r-ref_row, c-ref_col);
+			wmove (mapwin, r-ref_row+1, c-ref_col+1);
 			disp_square(&vmap[t]);
 		}
+	box(mapwin, 0, 0);
 	wrefresh(mapwin);
 }
 
@@ -307,7 +308,7 @@ move_cursor (long *cursor, int offset)
 	       
 	r = loc_row (save_cursor);
 	c = loc_col (save_cursor);
-	wmove(mapwin, r-ref_row, c-ref_col);
+	wmove(mapwin, r-ref_row+1, c-ref_col+1);
 	wrefresh(mapwin);
        
 	return (TRUE);
@@ -326,9 +327,9 @@ on_screen (long loc)
 	new_c = loc_col (loc);
 
 	if (new_r < ref_row					/* past top of screen */
-		    || new_r > (ref_row + MAPWIN_HEIGHT - 1)	/* past bot of screen? */
+		    || new_r > (ref_row + MAPWIN_HEIGHT - 3)	/* past bot of screen? */
 		    || new_c < ref_col				/* past left edge of screen? */
-		    || new_c > (ref_col + MAPWIN_WIDTH - 1))	/* past right edge of screen? */
+		    || new_c > (ref_col + MAPWIN_WIDTH - 3))	/* past right edge of screen? */
 		return (FALSE);
 
 	return (TRUE);

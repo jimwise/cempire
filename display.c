@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.47 1998/03/09 18:48:08 jim Exp $
+ * $Id: display.c,v 1.48 1998/03/09 18:49:24 jim Exp $
  */
 
 /*
@@ -523,11 +523,9 @@ help (char **text, int nlines)
 
 	helpwin = derwin(mapwin, help_height, help_width, start_row, start_col);
 
-	idlok(helpwin, TRUE);
 	scrollok(helpwin, TRUE);
 	wscrl(helpwin, help_height);
 	scrollok(helpwin, FALSE);
-	idlok(helpwin, FALSE);
 
 	wattron(helpwin, A_REVERSE);
         mvwprintw(helpwin, 2, 2, text[0]); /* mode */
@@ -573,7 +571,6 @@ help (char **text, int nlines)
 	prompt("Press any key to continue");
 	get_chx();
 
-	idlok(helpwin, TRUE);
 	scrollok(helpwin, TRUE);
 	wscrl(helpwin, -help_height);
 

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.18 1998/03/01 01:31:29 jim Exp $
+ * $Id: term.c,v 1.19 1998/03/02 12:10:52 jim Exp $
  */
 
 /*
@@ -40,7 +40,6 @@ to read the lines.  The new information is then displayed, and the
 #include "empire.h"
 #include "extern.h"
 
-void	clear_screen (void);
 void    clreol (int, int);
 void    comment (char *, ...);
 void    delay (void);
@@ -64,6 +63,7 @@ void    pos_str (int, int, char *, ...);
 void    prompt (char *, ...);
 void    redraw (void);
 void    set_need_delay (void);
+void	term_clear (void);
 void    term_end (void);
 void    term_init (void);
 void    topini (void);
@@ -389,7 +389,7 @@ help (char **text, int nlines)
 
 	text_lines = (nlines + 1) / 2; /* lines of text */
 
-	clear_screen ();
+	term_clear();
 
 	pos_str (NUMTOPS, 1, text[0]); /* mode */
 	pos_str (NUMTOPS, 41, "See empire.doc for more information.");
@@ -444,7 +444,7 @@ display.
 */
 
 void
-clear_screen (void)
+term_clear (void)
 {
 	clear ();
 	refresh ();

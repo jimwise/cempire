@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: compmove.c,v 1.20 1998/02/27 23:30:19 jim Exp $
+ * $Id: compmove.c,v 1.21 1998/03/02 12:10:49 jim Exp $
  */
 
 /*
@@ -1132,7 +1132,7 @@ check_endgame (void)
 		
 	if ((ncomp_city < nuser_city / 3) && (ncomp_army < nuser_army / 3))
 	{
-		clear_screen();
+		term_clear();
 		topmsg(1, "The computer acknowledges defeat. Do");
 		topmsg(2, "you wish to smash the rest of the enemy? ");
 
@@ -1149,7 +1149,7 @@ check_endgame (void)
 	}
 	else if ((ncomp_city == 0) && (ncomp_army == 0))
 	{
-		clear_screen ();
+		term_clear();
 
 		topmsg(1, "The enemy is incapable of defeating you.\n");
 	    	topmsg(2, "There may be, however, remnants of the enemy fleet\n");
@@ -1160,7 +1160,7 @@ check_endgame (void)
 	}
 	else if ((nuser_city == 0) && (nuser_army == 0))
 	{
-	    	clear_screen ();
+	    	term_clear();
 
 	    	topmsg(1, "You have been rendered incapable of defeating\n");
 	    	topmsg(2, "the rampaging enemy. The empire is lost. If you\n");

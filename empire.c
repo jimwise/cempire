@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: empire.c,v 1.13 1998/03/01 01:55:40 jim Exp $
+ * $Id: empire.c,v 1.14 1998/03/02 12:10:50 jim Exp $
  */
 
 /*
@@ -37,7 +37,7 @@ empire (void)
 	term_init(); /* init tty */
 	rand_init(); /* init random number generator */
 
-	clear_screen (); /* nothing on screen */
+	term_clear(); /* nothing on screen */
 	comment(VERSION_STRING);
 	redraw ();
 
@@ -140,7 +140,7 @@ do_command (char orders)
 		break;
 
 	case 'R': /* restore game */
-		clear_screen ();
+		term_clear();
 		e = restore_game ();
 		break;
 
@@ -160,7 +160,7 @@ do_command (char orders)
 		break;
 	
 	case 'Z': /* print compressed map */
-		clear_screen();
+		term_clear();
 		print_zoom (user_map);
 		redraw();
 		break;
@@ -335,7 +335,7 @@ Print a "zoomed" version of the computer's map.
 void
 c_movie (void)
 {
-	clear_screen();
+	term_clear();
 
 	for (;;) {
 		comp_move (1);

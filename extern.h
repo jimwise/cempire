@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: extern.h,v 1.37 1998/03/01 01:55:41 jim Exp $
+ * $Id: extern.h,v 1.38 1998/03/02 12:10:51 jim Exp $
  */
 
 /*
@@ -196,7 +196,7 @@ void	scan (view_map_t[], long);
 void	set_prod (city_info_t *);
 
 /* terminal routines (term.c) */
-void    clear_screen (void);
+void    term_clear (void);
 void    delay (void);
 void    empend (void);
 void	emp_beep (void);

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.15 1998/02/27 02:42:53 jim Exp $
+ * $Id: term.c,v 1.16 1998/02/27 22:17:04 jim Exp $
  */
 
 /*
@@ -383,6 +383,7 @@ void
 help (char **text, int nlines)
 {
 	int i, r, c;
+	piece_type_t j;
 	int text_lines;
 
 	text_lines = (nlines + 1) / 2; /* lines of text */
@@ -401,23 +402,25 @@ help (char **text, int nlines)
 	pos_str (text_lines + NUMTOPS + 2,  1, "--Piece---Yours-Enemy-Moves-Hits-Cost");
 	pos_str (text_lines + NUMTOPS + 2, 41, "--Piece---Yours-Enemy-Moves-Hits-Cost");
 
-	for (i = 0; i < NUM_OBJECTS; i++) {
-		if (i >= (NUM_OBJECTS+1)/2) {
-			r = i - (NUM_OBJECTS+1)/2;
+	for (j = ARMY; j < NUM_OBJECTS; j++)
+	{
+		if (j >= (NUM_OBJECTS+1)/2) {
+			r = j - (NUM_OBJECTS+1)/2;
 			c = 41;
 		}
-		else {
-			r = i;
+		else
+		{
+			r = j;
 			c = 1;
 		}
 		pos_str (r + text_lines + NUMTOPS + 3, c, 
 			"%-12s%c     %c%6d%5d%6d",
-			piece_attr[i].nickname,
-			piece_attr[i].sname,
-			tolower (piece_attr[i].sname),
-			piece_attr[i].speed,
-			piece_attr[i].max_hits,
-			piece_attr[i].build_time);
+			piece_attr[j].nickname,
+			piece_attr[j].sname,
+			tolower (piece_attr[j].sname),
+			piece_attr[j].speed,
+			piece_attr[j].max_hits,
+			piece_attr[j].build_time);
 
 	}
 	refresh ();

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: empire.h,v 1.16 1998/02/27 20:56:26 jim Exp $
+ * $Id: empire.h,v 1.17 1998/02/27 22:17:03 jim Exp $
  */
 
 /*
@@ -73,20 +73,6 @@ typedef enum
 
 #define	NUM_OBJECTS	9
 
-/*
-#define ARMY 0
-#define FIGHTER 1
-#define PATROL 2
-#define DESTROYER 3
-#define SUBMARINE 4
-#define TRANSPORT 5
-#define CARRIER 6
-#define BATTLESHIP 7
-#define SATELLITE 8
-#define NUM_OBJECTS 9
-#define NOPIECE ((uchar)255)
-*/
-
 #define LIST_SIZE 5000 /* max number of pieces on board */
 
 typedef struct city_info {
@@ -94,7 +80,7 @@ typedef struct city_info {
 	uchar owner; /* UNOWNED, USER, COMP */
 	long func[NUM_OBJECTS]; /* function for each object */
 	long work; /* units of work performed */
-	uchar prod; /* item being produced */
+	piece_type_t prod; /* item being produced */
 } city_info_t;
 
 /*

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: data.c,v 1.3 1998/02/24 23:47:58 jim Exp $
+ * $Id: data.c,v 1.4 1998/02/27 22:17:01 jim Exp $
  */
 
 /*
@@ -28,7 +28,7 @@ the range of a fighter from 20 to 30 so that fighters will be somewhat
 more useful.
 */
 
-piece_attr_t piece_attr[] = {
+piece_attr_t piece_attr[NUM_OBJECTS] = {
 	{'A', /* character for printing piece */
 	 "army", /* name of piece */ 
 	 "army", /* nickname */
@@ -92,8 +92,7 @@ char *func_name[] = {"none", "random", "sentry", "fill", "land",
 			"W", "E", "D", "C", "X", "Z", "A", "Q"};
 
 /* The order in which pieces should be moved. */
-int move_order[] = {SATELLITE, TRANSPORT, CARRIER, BATTLESHIP, 
-		    PATROL, SUBMARINE, DESTROYER, ARMY, FIGHTER};
+int move_order[NUM_OBJECTS] = {SATELLITE, TRANSPORT, CARRIER, BATTLESHIP, PATROL, SUBMARINE, DESTROYER, ARMY, FIGHTER};
 
 /* types of pieces, in declared order */
 char type_chars[] = "AFPDSTCBZ";

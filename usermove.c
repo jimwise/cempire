@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: usermove.c,v 1.12 1998/02/27 20:19:03 jim Exp $
+ * $Id: usermove.c,v 1.13 1998/02/27 22:17:05 jim Exp $
  */
 
 /*
@@ -61,7 +61,8 @@ void	user_wake (piece_info_t *);
 void
 user_move (void)
 {
-	int i, j, sec, sec_start;
+	int i, sec, sec_start;
+	piece_type_t n;
 	piece_info_t *obj, *next_obj;
 	int prod;
 
@@ -72,11 +73,12 @@ user_move (void)
 	also scan through all cities before possibly asking the
 	user what to produce in each city. */
 
-	for (i = 0; i < NUM_OBJECTS; i++)
-	for (obj = user_obj[i]; obj != NULL; obj = obj->piece_link.next) {
-		obj->moved = 0; /* nothing moved yet */
-		scan (user_map, obj->loc); /* refresh user's view of world */
-	}
+	for (n = ARMY; n < NUM_OBJECTS; n++)
+		for (obj = user_obj[n]; obj != NULL; obj = obj->piece_link.next)
+		{
+			obj->moved = 0; /* nothing moved yet */
+			scan (user_map, obj->loc); /* refresh user's view of world */
+		}
 
 	/* produce new hardware */
 	for (i = 0; i < NUM_CITY; i++)
@@ -106,23 +108,27 @@ user_move (void)
 	if (sec_start == -1) sec_start = 0;
 
 	/* loop through sectors, moving every piece in the sector */
-	for (i = sec_start; i < sec_start + NUM_SECTORS; i++) {
+	for (i = sec_start; i < sec_start + NUM_SECTORS; i++)
+	{
 		sec = i % NUM_SECTORS;
 		sector_change (); /* allow screen to be redrawn */
 
-		for (j = 0; j < NUM_OBJECTS; j++) /* loop through obj lists */
-		for (obj = user_obj[move_order[j]]; obj != NULL;
-			obj = next_obj) { /* loop through objs in list */
-			next_obj = obj->piece_link.next;
+		for (n = ARMY; n < NUM_OBJECTS; n++) /* loop through obj lists */
+			for (obj = user_obj[move_order[n]]; obj != NULL; obj = next_obj)
+			{
+				/* loop through objs in list */
+				next_obj = obj->piece_link.next;
 
-			if (!obj->moved) /* object not moved yet? */
-			if (loc_sector (obj->loc) == sec) /* object in sector? */
-			piece_move (obj); /* yup; move the object */
-		}
-		if (cur_sector () == sec) { /* is sector displayed? */
-			print_sector_u (sec); /* make screen up-to-date */
-			redraw (); /* show it to the user */
-		}
+				if (!obj->moved) /* object not moved yet? */
+					if (loc_sector (obj->loc) == sec) /* object in sector? */
+						piece_move (obj); /* yup; move the object */
+			}
+			if (cur_sector() == sec)
+			{
+				/* is sector displayed? */
+				print_sector_u (sec); /* make screen up-to-date */
+				redraw (); /* show it to the user */
+			}
 	}
 	if (save_movie) save_movie_screen ();
 }

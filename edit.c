@@ -5,7 +5,7 @@
  * and warranty information.
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: edit.c,v 1.13 1998/02/27 02:44:49 jim Exp $
+ * $Id: edit.c,v 1.14 1998/02/27 22:17:02 jim Exp $
  */
 
 /*
@@ -377,13 +377,13 @@ e_wake (long loc)
 {
 	city_info_t *cityp;
 	piece_info_t *obj;
-	int i;
+	piece_type_t i;
 
 	cityp = find_city (loc);
-        if (cityp != NULL) {
+        if (cityp != NULL)
 		for (i = 0; i < NUM_OBJECTS; i++)
 			cityp->func[i] = NOFUNC;
-	}
+	
 	for (obj = map[loc].objp; obj != NULL; obj = obj->loc_link.next)
 		obj->func = NOFUNC;
 }
@@ -545,6 +545,7 @@ e_city_info (long edit_cursor)
 	piece_info_t *obj;
 	city_info_t *cityp;
 	int f, s;
+	piece_type_t i;
 	char func_buf[STRSIZE];
 	char temp_buf[STRSIZE];
 	char junk_buf2[STRSIZE];
@@ -573,14 +574,14 @@ e_city_info (long edit_cursor)
 	assert (cityp != NULL);
 
 	*func_buf = 0; /* nothing in buffer */
-	for (s = 0; s < NUM_OBJECTS; s++) { /* for each piece */
-		if (cityp->func[s] < 0)
+	for (i = ARMY; i < NUM_OBJECTS; i++) { /* for each piece */
+		if (cityp->func[i] < 0)
 				sprintf (temp_buf, "%c:%s; ",
-				piece_attr[s].sname,
-				func_name[FUNCI(cityp->func[s])]);
+				piece_attr[i].sname,
+				func_name[FUNCI(cityp->func[i])]);
 		else sprintf (temp_buf, "%c: %ld;",
-				piece_attr[s].sname,
-				cityp->func[s]);
+				piece_attr[i].sname,
+				cityp->func[i]);
 		
 		strcat (func_buf, temp_buf);
 	}

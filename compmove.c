@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: compmove.c,v 1.17 1998/02/27 02:50:40 jim Exp $
+ * $Id: compmove.c,v 1.18 1998/02/27 22:17:01 jim Exp $
  */
 
 /*
@@ -32,7 +32,7 @@ void	check_endgame (void);
 void	comp_move (int);
 void	comp_prod (city_info_t *, int);
 void	comp_set_needed (city_info_t *, int *, int, int);
-void	comp_set_prod (city_info_t *, int);
+void	comp_set_prod (city_info_t *, piece_type_t);
 void	cpiece_move (piece_info_t *);
 void	do_cities (void);
 void	do_pieces (void);
@@ -59,15 +59,18 @@ void
 comp_move (int nmoves) 
 {
 	int i;
+	piece_type_t j;
 	piece_info_t *obj;
 
 	/* Update our view of the world. */
 	
-	for (i = 0; i < NUM_OBJECTS; i++)
-	for (obj = comp_obj[i]; obj != NULL; obj = obj->piece_link.next)
-		scan (comp_map, obj->loc); /* refresh comp's view of world */
+	for (j = ARMY; j < NUM_OBJECTS; j++)
+		for (obj = comp_obj[j]; obj != NULL; obj = obj->piece_link.next)
+			scan (comp_map, obj->loc); /* refresh comp's view of world */
 
-	for (i = 1; i <= nmoves; i++) { /* for each move we get... */
+	for (i = 1; i <= nmoves; i++)
+	{
+		/* for each move we get... */
 		comment ("Thinking...");
 
 		memcpy (emap, comp_map, MAP_SIZE * sizeof (view_map_t));
@@ -161,6 +164,7 @@ comp_prod (city_info_t *cityp, int is_lake)
 	int cont_map[MAP_SIZE];
 	int total_cities;
 	long i;
+	piece_type_t j;
 	int comp_ac;
 	city_info_t *p;
 	int need_count, interest;
@@ -207,8 +211,8 @@ comp_prod (city_info_t *cityp, int is_lake)
 	/* Produce a TT and SAT if we don't have one. */
 	
 	/* count # of cities producing each piece */
-	for (i = 0; i < NUM_OBJECTS; i++)
-		city_count[i] = 0;
+	for (j = ARMY; j < NUM_OBJECTS; j++)
+		city_count[j] = 0;
 		
 	total_cities = 0;
 		
@@ -282,7 +286,7 @@ reset production if it is already correct.
 */
 
 void
-comp_set_prod (city_info_t *cityp, int type)
+comp_set_prod (city_info_t *cityp, piece_type_t type)
 {
 	if (cityp->prod == type) return;
 	
@@ -300,14 +304,13 @@ See if a city is producing an object which is being overproduced.
 int
 overproduced (city_info_t *cityp, int *city_count)
 {
-	int i;
+	piece_type_t i;
 
-	for (i = 0; i < NUM_OBJECTS; i++) {
+	for (i = ARMY; i < NUM_OBJECTS; i++)
+	{
 		/* return true if changing production would improve balance */
-		if (i != cityp->prod
-		 && ((city_count[cityp->prod] - 1) * ratio[i]
-		   > (city_count[i] + 1) * ratio[cityp->prod]))
-  		return (TRUE);
+		if (i != cityp->prod && ((city_count[cityp->prod] - 1) * ratio[i] > (city_count[i] + 1) * ratio[cityp->prod]))
+  			return (TRUE);
 	}
 	return (FALSE);
 }
@@ -335,21 +338,25 @@ void
 comp_set_needed (city_info_t *cityp, int *city_count, int army_ok, int is_lake)
 {
 	int best_prod;
-	int prod;
+	piece_type_t prod;
 
-	if (!army_ok) city_count[ARMY] = INFINITY;
+	if (!army_ok)
+		city_count[ARMY] = INFINITY;
 
-	if (is_lake) { /* choose fighter or army */
+	if (is_lake)
+	{
+		/* choose fighter or army */
 		comp_set_prod (cityp, need_more (city_count, ARMY, FIGHTER));
 		return;
 	}
+
 	/* don't choose fighter */
 	city_count[FIGHTER] = INFINITY;
 	
 	best_prod = ARMY; /* default */
-	for (prod = 0; prod < NUM_OBJECTS; prod++) {
+	for (prod = ARMY; prod < NUM_OBJECTS; prod++)
 		best_prod = need_more (city_count, best_prod, prod);
-	}
+	
 	comp_set_prod (cityp, best_prod);
 }
 
@@ -386,8 +393,9 @@ static path_map_t path_map[MAP_SIZE];
 
 void
 do_pieces (void)
-{ /* move pieces */
-	int i;
+{
+	/* move pieces */
+	piece_type_t i;
 	piece_info_t *obj, *next_obj;
 
 	for (i = 0; i < NUM_OBJECTS; i++) { /* loop through obj lists */

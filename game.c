@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: game.c,v 1.11 1998/02/27 20:56:27 jim Exp $
+ * $Id: game.c,v 1.12 1998/02/27 22:17:03 jim Exp $
  */
 
 /*
@@ -53,6 +53,7 @@ void
 init_game (void)
 {
 	long i;
+	piece_type_t j;
 
 	kill_display (); /* nothing on screen */
 	automove = FALSE;
@@ -73,9 +74,9 @@ init_game (void)
 		comp_map[i].contents = ' ';
 		comp_map[i].seen = 0;
 	}
-	for (i = 0; i < NUM_OBJECTS; i++) {
-		user_obj[i] = NULL;
-		comp_obj[i] = NULL;
+	for (j = ARMY; j < NUM_OBJECTS; j++) {
+		user_obj[j] = NULL;
+		comp_obj[j] = NULL;
 	}
 	free_list = NULL; /* nothing free yet */
 	for (i = 0; i < LIST_SIZE; i++) { /* for each object */
@@ -191,6 +192,7 @@ void
 place_cities (void)
 {
 	long placed, i, loc;
+	piece_type_t j;
 	long num_land;
 
 	num_land = 0; /* nothing in land array yet */
@@ -205,8 +207,8 @@ place_cities (void)
 		city[placed].work = 0;
 		city[placed].prod = NOPIECE;
 		
-		for (i = 0; i < NUM_OBJECTS; i++)
-			city[placed].func[i] = NOFUNC; /* no function */
+		for (j = ARMY; j < NUM_OBJECTS; j++)
+			city[placed].func[j] = NOFUNC; /* no function */
 			
 		map[loc].contents = '*';
 		map[loc].cityp = &(city[placed]);
@@ -566,6 +568,7 @@ restore_game (void)
 	
 	FILE *f; /* file to save game in */
 	long i;
+	piece_type_t j;
 	piece_info_t **list;
 	piece_info_t *obj;
 
@@ -609,9 +612,9 @@ restore_game (void)
 		object[i].ship = NULL;
 		object[i].cargo = NULL;
 	}
-	for (i = 0; i < NUM_OBJECTS; i++) {
-		comp_obj[i] = NULL;
-		user_obj[i] = NULL;
+	for (j = 0; j < NUM_OBJECTS; j++) {
+		comp_obj[j] = NULL;
+		user_obj[j] = NULL;
 	}
 	/* put cities on map */
 	for (i = 0; i < NUM_CITY; i++)

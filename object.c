@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: object.c,v 1.11 1998/02/27 20:56:28 jim Exp $
+ * $Id: object.c,v 1.12 1998/02/27 22:17:04 jim Exp $
  */
 
 /*
@@ -258,7 +258,7 @@ kill_city (city_info_t *cityp)
 	piece_info_t *p;
 	piece_info_t *next_p;
 	piece_info_t **list;
-	int i;
+	piece_type_t i;
 	
 	/* change ownership of hardware at this location; but not satellites */
 	for (p = map[cityp->loc].objp; p; p = next_p) {
@@ -288,7 +288,7 @@ kill_city (city_info_t *cityp)
 		cityp->work = 0;
 		cityp->prod = NOPIECE;
 		
-		for (i = 0; i < NUM_OBJECTS; i++)
+		for (i = ARMY; i < NUM_OBJECTS; i++)
 			cityp->func[i] = NOFUNC;
 		
 		scan (vmap, cityp->loc);
@@ -665,11 +665,11 @@ int
 get_piece_name (void)
 {
 	char c;
-	int i;
+	piece_type_t i;
 	
 	c = get_chx (); /* get the answer */
 
-	for (i = 0; i < NUM_OBJECTS; i++)
+	for (i = ARMY; i < NUM_OBJECTS; i++)
 	if (piece_attr[i].sname == c) {
 		return i;
 	}

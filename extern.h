@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: extern.h,v 1.10 1998/02/25 02:20:54 jim Exp $
+ * $Id: extern.h,v 1.11 1998/02/25 22:11:42 jim Exp $
  */
 
 /*
@@ -118,7 +118,6 @@ void	edit(long);		/* edit.c */
 /* map routines */
 void vmap_cont();
 void rmap_cont();
-void vmap_mark_up_cont();
 scan_counts_t vmap_cont_scan();
 scan_counts_t rmap_cont_scan();
 int map_cont_edge();
@@ -141,8 +140,6 @@ int rmap_at_sea();
 /* display routines */
 long cur_cursor();
 void display_locx();
-void print_pzoom();
-void print_xzoom();
 void display_score();
 #ifdef A_COLOR
 void init_colors();
@@ -188,7 +185,9 @@ int	cur_sector (void);
 void	display_loc (int, view_map_t[], long);
 void	kill_display (void);
 int	move_cursor (long *, int);
+void	print_pzoom (char *, path_map_t *, view_map_t *);
 void	print_sector (char, view_map_t[], int);
+void	print_xzoom (view_map_t *);
 void	print_zoom (view_map_t *);
 void    sector_change (void);
 
@@ -207,6 +206,7 @@ int	getyn (char *);
 
 /* map routines */
 int	rmap_shore (long);
+void	vmap_mark_up_cont (int *, view_map_t *, long, char);
 
 /* math routines (math.c) */
 int	dist (long, long);

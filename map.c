@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: map.c,v 1.3 1998/02/24 23:48:03 jim Exp $
+ * $Id: map.c,v 1.4 1998/02/25 22:11:42 jim Exp $
  */
 
 /*
@@ -25,26 +25,22 @@ real_maps, path_maps, and cont_maps.
 #include "empire.h"
 #include "extern.h"
 
-#ifndef PROFILE
-#define STATIC static
-#else
-#define STATIC
-/* can't get accurate profile when procedures are static */
-#endif
+void	add_cell (path_map_t *, long, perimeter_t *, int, int, int);
+void	expand_perimeter (path_map_t *, view_map_t *, move_info_t *, perimeter_t *,
+		int, int, int, int, perimeter_t *, perimeter_t *);
+void	expand_prune (view_map_t *, path_map_t *, long, int, perimeter_t *, int *);
+int	objective_cost (view_map_t *, move_info_t *, long, int);
+void	rmap_mark_up_cont ( int *, long, char);
+
+void	start_perimeter (path_map_t *, perimeter_t *, long, int);
+int	terrain_type (path_map_t *, view_map_t *, move_info_t *, long, long);
+int	vmap_count_adjacent (view_map_t *, long, char *);
+int	vmap_count_path (path_map_t *, long);
 
 #define SWAP(a,b) { \
 	perimeter_t *x; \
 	x = a; a = b; b = x; \
 }
-
-STATIC void expand_perimeter();
-STATIC void expand_prune();
-STATIC void expand_dest_perimeter();
-STATIC int objective_cost();
-STATIC int terrain_type();
-STATIC void start_perimeter();
-STATIC void add_cell();
-STATIC int vmap_count_path ();
 
 static perimeter_t p1; /* perimeter list for use as needed */
 static perimeter_t p2;
@@ -131,8 +127,6 @@ By adjusting the value of
 or lakes.
 */
 
-static void rmap_mark_up_cont();
-
 void
 rmap_cont (cont_map, loc, bad_terrain)
 int *cont_map;
@@ -151,7 +145,7 @@ known to be either on the continent or adjacent to the continent.
 Someday this should be tweaked to use perimeter lists.
 */
 
-static void
+void
 rmap_mark_up_cont (cont_map, loc, bad_terrain)
 int *cont_map;
 long loc;
@@ -430,9 +424,8 @@ int beat_cost;
 			print_pzoom ("After lwobj loop:", path_map, vmap);
 		
 		cur_cost += 2;
-		if (cur_water->len == 0 && new_land->len == 0 || best_cost <= cur_cost) {
+		if (((cur_water->len == 0) && (new_land->len == 0)) || (best_cost <= cur_cost))
 			return best_loc;
-		}
 
 		SWAP (cur_land, new_land);
 	}
@@ -443,7 +436,7 @@ Return the cost to reach the adjacent cell of the correct type
 with the lowest cost.
 */
 
-STATIC int
+int
 best_adj (pmap, loc, type)
 path_map_t *pmap;
 long loc;
@@ -514,9 +507,9 @@ move_info_t *move_info;
 			print_pzoom ("After wlobj loop:", path_map, vmap);
 		
 		cur_cost += 2;
-		if (cur_water->len == 0 && new_land->len == 0 || best_cost <= cur_cost) {
+		if (((cur_water->len == 0) && (new_land->len == 0)) || (best_cost <= cur_cost))
 			return best_loc;
-		}
+		
 		SWAP (cur_land, new_land);
 	}
 }
@@ -532,7 +525,7 @@ constant and 'memcpy'.
 static path_map_t pmap_init[MAP_SIZE];
 static int init_done = 0;
 
-STATIC void
+void
 start_perimeter (pmap, perim, loc, terrain)
 path_map_t *pmap;
 perimeter_t *perim;
@@ -578,7 +571,7 @@ or the new land perimeter.
 We set the cost to reach the current perimeter.
 */
 
-STATIC void
+void
 expand_perimeter (pmap, vmap, move_info, curp, type, cur_cost, inc_wcost, inc_lcost, waterp, landp)
 path_map_t *pmap; /* path map to update */
 view_map_t *vmap;
@@ -630,7 +623,7 @@ perimeter_t *landp; /* pointer to new land perimeter */
 			
 /* Add a cell to a perimeter list. */
 	
-STATIC void
+void
 add_cell (pmap, new_loc, perim, terrain, cur_cost, inc_cost)
 path_map_t *pmap;
 long new_loc;
@@ -651,7 +644,7 @@ int inc_cost;
 
 /* Compute the cost to move to an objective. */
 
-STATIC int
+int
 objective_cost (vmap, move_info, loc, base_cost)
 view_map_t *vmap;
 move_info_t *move_info;
@@ -684,6 +677,7 @@ int base_cost;
 	default:
 		ABORT;
 		/* NOTREACHED */
+		return w;
 	}
 }
 
@@ -691,7 +685,7 @@ int base_cost;
 Return the type of terrain at a vmap location.
 */
 
-STATIC int
+int
 terrain_type (pmap, vmap, move_info, from_loc, to_loc)
 path_map_t *pmap;
 view_map_t *vmap;
@@ -714,6 +708,7 @@ long to_loc;
 	}
 	ABORT;
 	/*NOTREACHED*/
+	return T_UNKNOWN;
 }
 
 /*
@@ -874,7 +869,7 @@ territory is incremented.
 Careful:  'loc' may be "off board".
 */
 
-STATIC void
+void
 expand_prune (vmap, pmap, loc, type, to, explored)
 view_map_t *vmap;
 path_map_t *pmap;
@@ -1098,8 +1093,8 @@ char *adj_char;
 				path_count = vmap_count_path (path_map, new_loc);
 				
 				/* remember best location */
-				if (count > bestcount
-				    || count == bestcount && path_count > bestpath) {
+				if ((count > bestcount) || ((count == bestcount) && (path_count > bestpath)))
+				{
 					bestcount = count;
 					bestpath = path_count;
 					bestloc = new_loc;
@@ -1142,7 +1137,7 @@ char *adj_char;
 Count the number of adjacent cells that are on the path.
 */
 
-static int
+int
 vmap_count_path (pmap, loc)
 path_map_t *pmap;
 long loc;

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: object.c,v 1.12 1998/02/27 22:17:04 jim Exp $
+ * $Id: object.c,v 1.13 1998/02/27 23:08:55 jim Exp $
  */
 
 /*
@@ -385,7 +385,6 @@ move_obj (piece_info_t *obj, long new_loc)
 		if (p != NULL) embark (p, obj);
 		break;
 	    default:
-		panic();
 		break;
 	}
 

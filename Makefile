@@ -2,15 +2,12 @@
 #	Copyright (C) 1987, 1988 Chuck Simmons
 #	Portions of this file Copyright (C) 1998 Jim Wise
 #
-# $Id: Makefile,v 1.15 1998/08/08 21:17:03 jwise Exp $
+# $Id: Makefile,v 1.16 1998/08/08 21:34:10 jwise Exp $
 #
 # See the file COPYING, distributed with empire, for restriction
 # and warranty information.
 
-# Note: When the version changes, you also have to change
-#  * the name of the containing directory
-#  * the RPM spec file
-V=1.1
+VERSION=1.5
 
 # Use -g to compile the program for debugging.
 
@@ -86,14 +83,18 @@ clean:
 clobber: clean
 	rm -f empire.tar*
 
-SOURCES = READ.ME cempire.6 COPYING Makefile BUGS $(FILES) $(HEADERS)
+SOURCES = READ.ME cempire.6 COPYING Makefile BUGS .cvsignore $(FILES) $(HEADERS)
 
-cempire.tar: $(SOURCES)
-	(cd ..; tar -cvf cempire-$(V)/empire.tar `echo $(SOURCES) | sed "/\(^\| \)/s// cempire-$(V)\//g"`)
-cempire.tar.gz: cempire.tar
-	gzip -9 -f cempire.tar
+tar:	cempire-$(VERSION).tar
+tgz:	cempire-$(VERSION).tar.gz
 
-cempire.shar: $(SOURCES)
+cempire-$(VERSION).tar: $(SOURCES)
+	(cd ..;tar -cvf cempire-$(VERSION)/cempire-$(VERSION).tar `for X in $(SOURCES); do echo cempire-$(VERSION)/$$X; done`)
+
+cempire-$(VERSION).tar.gz: cempire-$(VERSION).tar
+	gzip -9 -f cempire-$(VERSION).tar
+
+cempire-$(VERSION).shar: $(SOURCES)
 	shar $(SOURCES) >cempire.shar
 
 $(OFILES): extern.h empire.h

@@ -1,7 +1,7 @@
 #
 #	Copyright (C) 1987, 1988 Chuck Simmons
 #
-# $Id: Makefile,v 1.29 1999/09/29 01:16:24 jwise Exp $
+# $Id: Makefile,v 1.30 1999/09/29 01:19:14 jwise Exp $
 #
 # See the file COPYING, distributed with empire, for restriction
 # and warranty information.
@@ -23,7 +23,6 @@ CC=gcc
 #
 # 2.) Pick your preprocessor defines
 #	choose from the following options:
-#		-DDEBUG			turn on consistency checking
 #		-DUSE_NCURSES		you need to turn this on if you want
 #					to use the ncurses library.  Use this if
 #					cempire doesn't work with your system's
@@ -36,7 +35,7 @@ CC=gcc
 #		-DUSE_ZLIB		define this to compress saved files on write and
 #					decompress them on reads.  Saves a lot of space.
 #
-DEFINES=-DDEBUG -D__EXTENSIONS__ -DUSE_NCURSES -DUSE_ZLIB
+DEFINES=-D__EXTENSIONS__ -DUSE_NCURSES -DUSE_ZLIB
 
 #
 # 3.) Pick your library specifications

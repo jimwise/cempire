@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.23 1998/03/03 15:11:43 jim Exp $
+ * $Id: display.c,v 1.24 1998/03/03 15:40:35 jim Exp $
  */
 
 /*
@@ -58,7 +58,7 @@ static WINDOW *mapwin;
 void
 map_init (void)
 {
-	mapwin = newwin(0, 0, LINES - NUMTOPS, COLS - NUMSIDES);
+	mapwin = newwin(lines - NUMTOPS, cols - NUMSIDES, NUMTOPS, 0);
 }
 
 /*
@@ -88,7 +88,9 @@ sector is not displayed, return -1.
 
 int cur_sector (void)
 {
-	if (whose_map != USER) return (-1);
+	if (whose_map != USER)
+		return (-1);
+
 	return (save_sector);
 }
 
@@ -99,7 +101,9 @@ is not on the screen, we return -1.
 
 long cur_cursor (void)
 {
-	if (whose_map != USER) return (-1);
+	if (whose_map != USER)
+		return (-1);
+
 	return (save_cursor);
 }
 
@@ -143,10 +147,11 @@ show_loc (view_map_t vmap[], long loc)
 	
 	r = loc_row (loc);
 	c = loc_col (loc);
-	wmove(stdscr, r-ref_row+NUMTOPS, c-ref_col);
+	wmove(mapwin, r-ref_row, c-ref_col);
 	disp_square(&vmap[loc]);
 	save_cursor = loc; /* remember cursor location */
-	wmove(stdscr, r-ref_row+NUMTOPS, c-ref_col);
+	wmove(mapwin, r-ref_row, c-ref_col);
+	wrefresh(mapwin);
 }
 
 /*
@@ -188,11 +193,11 @@ print_sector (char whose, view_map_t vmap[], int sector)
 	last_col = first_col + COLS_PER_SECTOR - 1;
 
 	if (!(whose == whose_map /* correct map is on screen? */
-	   && ref_row <= first_row /* top row on screen? */
-	   && ref_col <= first_col /* first col on screen? */
-	   && ref_row + display_rows - 1 >= last_row /* bot row on screen? */
-	   && ref_col + display_cols - 1 >= last_col)) /* last col on screen? */
-		term_clear(); /* erase current screen */
+			&& ref_row <= first_row /* top row on screen? */
+			&& ref_col <= first_col /* first col on screen? */
+			&& ref_row + display_rows - 1 >= last_row /* bot row on screen? */
+			&& ref_col + display_cols - 1 >= last_col)) /* last col on screen? */
+		wclear(mapwin); /* erase current screen */
 
 	/* figure out first row and col to print; subtract half
 	   the extra lines from the first line */
@@ -205,13 +210,15 @@ print_sector (char whose, view_map_t vmap[], int sector)
 		ref_row = MAP_HEIGHT - 1 - (display_rows - 1);
 
 	/* never go past top of map */
-        if (ref_row < 0) ref_row = 0;
+        if (ref_row < 0)
+		ref_row = 0;
 
 	/* same with columns */
 	if (ref_col + display_cols - 1 > MAP_WIDTH - 1)
 		ref_col = MAP_WIDTH - 1 - (display_cols - 1);
 
-	if (ref_col < 0) ref_col = 0;
+	if (ref_col < 0)
+		ref_col = 0;
 
         whose_map = whose; /* remember whose map is displayed */
 	display_screen (vmap);
@@ -219,9 +226,8 @@ print_sector (char whose, view_map_t vmap[], int sector)
 	/* print x-coordinates along bottom of screen */
 	for (c = ref_col; c < ref_col + display_cols && c < MAP_WIDTH; c++)
 		if (c % 10 == 0)
-		{
 			pos_str (lines-1, c-ref_col, "%d", c);
-		}
+
 	/* print y-coordinates along right of screen */
 	for (r = ref_row; r < ref_row + display_rows && r < MAP_HEIGHT; r++)
 		if (r % 2 == 0)
@@ -246,7 +252,7 @@ Display the contents of a single map square.
 void
 disp_square(view_map_t *vp)
 {
-	waddch (stdscr, (chtype)vp->contents);
+	waddch(mapwin, (chtype)vp->contents);
 }
 
 
@@ -265,11 +271,13 @@ display_screen (view_map_t vmap[])
 	display_cols = cols - NUMSIDES;
 
 	for (r = ref_row; r < ref_row + display_rows && r < MAP_HEIGHT; r++)
-	for (c = ref_col; c < ref_col + display_cols && c < MAP_WIDTH; c++) {
-		t = row_col_loc (r, c);
-		wmove (stdscr, r-ref_row+NUMTOPS, c-ref_col);
-		disp_square(&vmap[t]);
-	}
+		for (c = ref_col; c < ref_col + display_cols && c < MAP_WIDTH; c++)
+		{
+			t = row_col_loc (r, c);
+			wmove (mapwin, r-ref_row, c-ref_col);
+			disp_square(&vmap[t]);
+		}
+	wrefresh(mapwin);
 }
 
 /*
@@ -295,7 +303,7 @@ move_cursor (long *cursor, int offset)
 	       
 	r = loc_row (save_cursor);
 	c = loc_col (save_cursor);
-	wmove (stdscr, r-ref_row+NUMTOPS, c-ref_col);
+	wmove (mapwin, r-ref_row, c-ref_col);
        
 	return (TRUE);
 }
@@ -376,8 +384,8 @@ print_zoom_cell (view_map_t *vmap, int row, int col, int row_inc, int col_inc)
 		< strchr (zoom_list, cell))
 	cell = vmap[row_col_loc(r,c)].contents;
 	
-	wmove (stdscr, row/row_inc + NUMTOPS, col/col_inc);
-	waddch (stdscr, (chtype)cell);
+	wmove (mapwin, row/row_inc, col/col_inc);
+	waddch (mapwin, (chtype)cell);
 }
 
 /*
@@ -445,8 +453,8 @@ print_pzoom_cell (path_map_t *pmap, view_map_t *vmap, int row, int col, int row_
 	if (cell == ' ')
 		print_zoom_cell (vmap, row, col, row_inc, col_inc);
 	else {
-		wmove (stdscr, row/row_inc + NUMTOPS, col/col_inc);
-		waddch (stdscr, (chtype)cell);
+		wmove (mapwin, row/row_inc, col/col_inc);
+		waddch (mapwin, (chtype)cell);
 	}
 }
 

@@ -5,7 +5,7 @@
  * and warranty information.
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: edit.c,v 1.7 1998/02/26 23:47:38 jim Exp $
+ * $Id: edit.c,v 1.8 1998/02/27 00:18:49 jim Exp $
  */
 
 /*
@@ -160,12 +160,12 @@ e_cursor (long *edit_cursor)
 		if (!p) break;
 
 		if (!move_cursor (edit_cursor, dir_offset[(p-dirchars) / 2]))
-			(void) beep ();
+			beep ();
 		
-		(void) refresh ();
+		refresh ();
 		e = getch ();
 	}
-	(void) nocrmode (); /* reset terminal */
+	nocrmode (); /* reset terminal */
 
 	if (islower (e))
 		e = upper (e);
@@ -567,12 +567,12 @@ e_city_info (long edit_cursor)
 			if (obj->type >= DESTROYER) s++;
 
 	if (f == 1 && s == 1) 
-		(void) sprintf (jnkbuf, "1 fighter landed, 1 ship docked");
+		sprintf (jnkbuf, "1 fighter landed, 1 ship docked");
 	else if (f == 1)
-		(void) sprintf (jnkbuf, "1 fighter landed, %d ships docked", s);
+		sprintf (jnkbuf, "1 fighter landed, %d ships docked", s);
 	else if (s == 1)
-		(void) sprintf (jnkbuf, "%d fighters landed, 1 ship docked", f);
-	else (void) sprintf (jnkbuf, "%d fighters landed, %d ships docked", f, s);
+		sprintf (jnkbuf, "%d fighters landed, 1 ship docked", f);
+	else sprintf (jnkbuf, "%d fighters landed, %d ships docked", f, s);
 
 	cityp = find_city (edit_cursor);
 	assert (cityp != NULL);
@@ -580,17 +580,17 @@ e_city_info (long edit_cursor)
 	*func_buf = 0; /* nothing in buffer */
 	for (s = 0; s < NUM_OBJECTS; s++) { /* for each piece */
 		if (cityp->func[s] < 0)
-			(void) sprintf (temp_buf, "%c:%s; ",
+				sprintf (temp_buf, "%c:%s; ",
 				piece_attr[s].sname,
 				func_name[FUNCI(cityp->func[s])]);
-		else (void) sprintf (temp_buf, "%c: %ld;",
+		else sprintf (temp_buf, "%c: %ld;",
 				piece_attr[s].sname,
 				cityp->func[s]);
 		
-		(void) strcat (func_buf, temp_buf);
+		strcat (func_buf, temp_buf);
 	}
 
-	(void) sprintf (junk_buf2,
+	sprintf (junk_buf2,
 		"City at location %ld will complete %s on round %ld",
 		cityp->loc,
 		piece_attr[cityp->prod].article,

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: util.c,v 1.11 1998/02/27 00:02:32 jim Exp $
+ * $Id: util.c,v 1.12 1998/02/27 00:18:54 jim Exp $
  */
 
 /*
@@ -72,8 +72,8 @@ Clear the end of a specified line starting at the specified column.
 void
 clreol(int linep, int colp)
 {
-	(void) move (linep, colp);
-	(void) clrtoeol();
+	move (linep, colp);
+	clrtoeol();
 }
 
 /*
@@ -83,9 +83,9 @@ Initialize the terminal.
 void
 ttinit (void)
 {
-	(void) initscr();
-	(void) noecho();
-	(void) crmode();
+	initscr();
+	noecho();
+	crmode();
 #ifdef USE_COLOR
 	init_colors();
 #endif /* USE_COLOR */
@@ -142,10 +142,10 @@ Clean up the display.  This routine gets called as we leave the game.
 void
 close_disp (void)
 {
-	(void) move (LINES - 1, 0);
-	(void) clrtoeol ();
-	(void) refresh ();
-	(void) endwin ();
+	move (LINES - 1, 0);
+	clrtoeol ();
+	refresh ();
+	endwin ();
 }
 
 /*
@@ -188,7 +188,7 @@ empend (void)
 void
 ver (void)
 {
-        (void) addstr ("EMPIRE, Version 5.00 site Amdahl 1-Apr-1988");
+        addstr ("EMPIRE, Version 5.00 site Amdahl 1-Apr-1988");
 }
 
 /*

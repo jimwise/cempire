@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.11 1998/02/26 23:29:18 jim Exp $
+ * $Id: term.c,v 1.12 1998/02/27 00:18:52 jim Exp $
  */
 
 /*
@@ -228,9 +228,9 @@ Get a string from the user, echoing characters all the while.
 void
 get_str (char *buf, int sizep)
 {
-	(void) echo();
+	echo();
 	get_strq(buf, sizep);
-	(void) noecho();
+	noecho();
 }
 
 /*
@@ -242,12 +242,12 @@ get_strq (char *buf, int sizep)
 {
 	sizep = sizep; /* size of buf, currently unused */
 
-	(void) nocrmode ();
-	(void) refresh ();
-	(void) getstr (buf);
+	nocrmode ();
+	refresh ();
+	getstr (buf);
 	need_delay = FALSE;
 	info (0, 0, 0);
-	(void) crmode ();
+	crmode ();
 }
 
 /*
@@ -304,9 +304,9 @@ get_c (void)
 {
 	char c; /* one char and a null */
 
-	(void) echo ();
+	echo ();
 	c = get_cq ();
-	(void) noecho ();
+	noecho ();
 	return (c);
 }
 
@@ -319,11 +319,11 @@ get_cq (void)
 {
 	char c;
 
-	(void) crmode ();
-	(void) refresh ();
+	crmode ();
+	refresh ();
 	c = getch ();
 	topini (); /* clear information lines */
-	(void) nocrmode ();
+	nocrmode ();
 	return (c);
 }
 
@@ -412,6 +412,6 @@ help (char **text, int nlines)
 			piece_attr[i].build_time);
 
 	}
-	(void) refresh ();
+	refresh ();
 }
 

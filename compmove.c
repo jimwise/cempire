@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: compmove.c,v 1.12 1998/02/27 00:08:45 jim Exp $
+ * $Id: compmove.c,v 1.13 1998/02/27 00:18:47 jim Exp $
  */
 
 /*
@@ -76,7 +76,7 @@ comp_move (int nmoves)
 	for (i = 1; i <= nmoves; i++) { /* for each move we get... */
 		comment ("Thinking...");
 
-		(void) memcpy (emap, comp_map, MAP_SIZE * sizeof (view_map_t));
+		memcpy (emap, comp_map, MAP_SIZE * sizeof (view_map_t));
 		vmap_prune_explore_locs (emap);
 	
 		do_cities (); /* handle city production */
@@ -86,7 +86,7 @@ comp_move (int nmoves)
 		check_endgame (); /* see if game is over */
 
 		topini ();
-		(void) refresh ();
+		refresh ();
 	}
 }
 
@@ -508,7 +508,7 @@ army_move (piece_info_t *obj)
 	
 	obj->func = 0; /* army doesn't want a tt */
 	if (vmap_at_sea (comp_map, obj->loc)) { /* army can't move? */
-		(void) load_army (obj);
+		load_army (obj);
 		obj->moved = piece_attr[ARMY].speed;
 		if (!obj->ship) obj->func = 1; /* load army on ship */
 		return;
@@ -600,7 +600,7 @@ make_army_load_map (piece_info_t *obj, view_map_t *xmap, view_map_t *vmap)
 	piece_info_t *p;
 	int i;
 	
-	(void) memcpy (xmap, vmap, sizeof (view_map_t) * MAP_SIZE);
+	memcpy (xmap, vmap, sizeof (view_map_t) * MAP_SIZE);
 
 	/* mark loading transports or cities building transports */
 	for (p = comp_obj[TRANSPORT]; p; p = p->piece_link.next)
@@ -648,7 +648,7 @@ make_tt_load_map (view_map_t *xmap, view_map_t *vmap)
 {
 	piece_info_t *p;
 	
-	(void) memcpy (xmap, vmap, sizeof (view_map_t) * MAP_SIZE);
+	memcpy (xmap, vmap, sizeof (view_map_t) * MAP_SIZE);
 
 	/* mark loading armies */
 	for (p = comp_obj[ARMY]; p; p = p->piece_link.next)
@@ -694,7 +694,7 @@ make_unload_map (view_map_t *xmap, view_map_t *vmap)
 	long i;
 	scan_counts_t counts;
 
-	(void) memcpy (xmap, vmap, sizeof (view_map_t) * MAP_SIZE);
+	memcpy (xmap, vmap, sizeof (view_map_t) * MAP_SIZE);
 	unmark_explore_locs (xmap);
 	
 	for (i = 0; i < MAP_SIZE; i++)
@@ -886,7 +886,7 @@ transport_move (piece_info_t *obj)
 		new_loc = vmap_find_wlobj (path_map, amap, obj->loc, &tt_load);
 		
 		if (new_loc == obj->loc) { /* nothing to load? */
-			(void) memcpy (amap, comp_map, MAP_SIZE * sizeof (view_map_t));
+			memcpy (amap, comp_map, MAP_SIZE * sizeof (view_map_t));
 			unmark_explore_locs (amap);
 			if (print_vmap == 'S') print_xzoom (amap);
 			new_loc = vmap_find_wobj (path_map, amap, obj->loc, &tt_explore);
@@ -968,7 +968,7 @@ ship_move (piece_info_t *obj)
 			return;
 		}
 		/* look for an objective */
-		(void) memcpy (amap, comp_map, MAP_SIZE * sizeof (view_map_t));
+		memcpy (amap, comp_map, MAP_SIZE * sizeof (view_map_t));
 		unmark_explore_locs (amap);
 		if (print_vmap == 'S') print_xzoom (amap);
 		
@@ -1126,28 +1126,28 @@ check_endgame (void)
 		error ("you wish to smash the rest of the enemy? ");
 
 		if (get_chx() !=  'Y') empend ();
-		(void) addstr ("\nThe enemy inadvertantly revealed its code used for");
-		(void) addstr ("\nreceiving battle information. You can display what");
-		(void) addstr ("\nthey've learned with the ''E'' command.");
+		addstr ("\nThe enemy inadvertantly revealed its code used for");
+		addstr ("\nreceiving battle information. You can display what");
+		addstr ("\nthey've learned with the ''E'' command.");
 		resigned = TRUE;
 		win = 2;
 		automove = FALSE;
 	}
 	else if (ncomp_city == 0 && ncomp_army == 0) {
 		clear_screen ();
-		(void) addstr ("The enemy is incapable of defeating you.\n");
-		(void) addstr ("You are free to rape the empire as you wish.\n");
-	    	(void) addstr ("There may be, however, remnants of the enemy fleet\n");
-	    	(void) addstr ("to be routed out and destroyed.\n");
+		addstr ("The enemy is incapable of defeating you.\n");
+		addstr ("You are free to rape the empire as you wish.\n");
+	    	addstr ("There may be, however, remnants of the enemy fleet\n");
+	    	addstr ("to be routed out and destroyed.\n");
 		win = 1;
 		automove = FALSE;
 	}
 	else if (nuser_city == 0 && nuser_army == 0) {
 	    	clear_screen ();
-	    	(void) addstr ("You have been rendered incapable of\n");
-	    	(void) addstr ("defeating the rampaging enemy fascists! The\n");
-	    	(void) addstr ("empire is lost. If you have any ships left, you\n");
-	    	(void) addstr ("may attempt to harass enemy shipping.");
+	    	addstr ("You have been rendered incapable of\n");
+	    	addstr ("defeating the rampaging enemy fascists! The\n");
+	    	addstr ("empire is lost. If you have any ships left, you\n");
+	    	addstr ("may attempt to harass enemy shipping.");
 		win = 1;
 		automove = FALSE;
 	}

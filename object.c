@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: object.c,v 1.8 1998/02/27 00:08:47 jim Exp $
+ * $Id: object.c,v 1.9 1998/02/27 00:18:52 jim Exp $
  */
 
 /*
@@ -517,22 +517,22 @@ describe_obj (piece_info_t *obj)
 	char func[STRSIZE];
 	char other[STRSIZE];
 
-	if (obj->func >= 0) (void) sprintf (func, "%ld", obj->func);
-	else (void) sprintf (func, func_name[FUNCI(obj->func)]);
+	if (obj->func >= 0) sprintf (func, "%ld", obj->func);
+	else sprintf (func, func_name[FUNCI(obj->func)]);
 	
 	other[0] = 0;
 
 	switch (obj->type) { /* set other information */
 	case FIGHTER:
-		(void) sprintf (other,"; range = %d",obj->range);
+		sprintf (other,"; range = %d",obj->range);
 		break;
 
 	case TRANSPORT:
-		(void) sprintf (other,"; armies = %d",obj->count);
+		sprintf (other,"; armies = %d",obj->count);
 		break;
 
 	case CARRIER:
-		(void) sprintf (other,"; fighters = %d",obj->count);
+		sprintf (other,"; fighters = %d",obj->count);
 		break;
 	}
 

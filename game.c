@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: game.c,v 1.7 1998/02/26 23:47:39 jim Exp $
+ * $Id: game.c,v 1.8 1998/02/27 00:18:50 jim Exp $
  */
 
 /*
@@ -333,7 +333,7 @@ select_cities (void)
 
 	make_pair (); /* create list of ranked pairs */
 
-	(void) sprintf (jnkbuf,
+	sprintf (jnkbuf,
 		"Choose a difficulty level where 0 is easy and %d is hard: ",
 		ncont*ncont-1);
 
@@ -553,7 +553,7 @@ save_game (void)
 	wval (user_score);
 	wval (comp_score);
 
-	(void) fclose (f);
+	fclose (f);
 	topmsg (3, "Game saved.");
 }
 
@@ -641,7 +641,7 @@ restore_game (void)
 	read_embark (comp_obj[TRANSPORT], ARMY);
 	read_embark (comp_obj[CARRIER], FIGHTER);
 	
-	(void) fclose (f);
+	fclose (f);
 	kill_display (); /* what we had is no longer good */
 	topmsg (3, "Game restored from empsave.dat.");
 	return (TRUE);
@@ -760,7 +760,7 @@ save_movie_screen (void)
 		}
 	}
 	wbuf (mapbuf);
-	(void) fclose (f);
+	fclose (f);
 }
 
 /*
@@ -796,10 +796,10 @@ replay_movie (void)
 		for (c = 0; c < MAP_WIDTH; c += col_inc)
 		print_movie_cell (mapbuf, r, c, row_inc, col_inc);
 		
-		(void) refresh ();
+		refresh ();
 		delay ();
 	}
-	(void) fclose (f);
+	fclose (f);
 }
 
 /*
@@ -824,7 +824,7 @@ stat_display (char *mbuf, int round)
 	int user_cost, comp_cost;
 	char *p;
 	
-	(void) bzero ((char *)counts, sizeof (counts));
+	bzero ((char *)counts, sizeof (counts));
 	
 	for (i = 0; i < MAP_SIZE; i++) {
 		p = strchr (pieces, mbuf[i]);
@@ -867,6 +867,6 @@ print_movie_cell (char *mbuf, int row, int col, int row_inc, int col_inc)
 		< strchr (zoom_list, cell))
 	cell = mbuf[row_col_loc(r,c)];
 	
-	(void) move (row/row_inc + NUMTOPS, col/col_inc);
-	(void) addch ((chtype)cell);
+	move (row/row_inc + NUMTOPS, col/col_inc);
+	addch ((chtype)cell);
 }

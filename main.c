@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: main.c,v 1.5 1998/02/26 02:07:46 jim Exp $
+ * $Id: main.c,v 1.6 1998/02/27 00:18:51 jim Exp $
  */
 
 /*
@@ -74,21 +74,21 @@ main (int argc, char *argv[])
 		}
 	}
 	if (errflg || (argc-optind) != 0) {
-		(void) printf ("empire: usage: empire [-w water] [-s smooth] [-d delay]\n");
+		printf ("empire: usage: empire [-w water] [-s smooth] [-d delay]\n");
 		exit (1);
 	}
 
 	if (wflg < 10 || wflg > 90) {
-		(void) printf ("empire: -w argument must be in the range 0..90.\n");
+		printf ("empire: -w argument must be in the range 0..90.\n");
 		exit (1);
 	}
 	if (sflg < 0) {
-		(void) printf ("empire: -s argument must be greater or equal to zero.\n");
+		printf ("empire: -s argument must be greater or equal to zero.\n");
 		exit (1);
 	}
 	
 	if (dflg < 0 || dflg > 30000) {
-		(void) printf ("empire: -d argument must be in the range 0..30000.\n");
+		printf ("empire: -d argument must be in the range 0..30000.\n");
 		exit (1);
 	}
 

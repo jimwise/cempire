@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: usermove.c,v 1.8 1998/02/27 00:08:48 jim Exp $
+ * $Id: usermove.c,v 1.9 1998/02/27 00:18:53 jim Exp $
  */
 
 /*
@@ -121,7 +121,7 @@ user_move (void)
 		}
 		if (cur_sector () == sec) { /* is sector displayed? */
 			print_sector_u (sec); /* make screen up-to-date */
-			(void) refresh (); /* show it to the user */
+			refresh (); /* show it to the user */
 		}
 	}
 	if (save_movie) save_movie_screen ();
@@ -163,7 +163,7 @@ piece_move (piece_info_t *obj)
 			ask_user (obj);
 			topini (); /* clear info lines */
 			display_loc_u (obj->loc); /* let user see result */
-			(void) refresh ();
+			refresh ();
 			need_input = FALSE; /* we got it */
 		}
 		
@@ -338,7 +338,7 @@ move_armyload (piece_info_t *obj)
 		obj->func = NOFUNC;
 	}
 	else { /* look for nearest non-full transport */
-		(void) memcpy (amap, user_map, sizeof (view_map_t) * MAP_SIZE);
+		memcpy (amap, user_map, sizeof (view_map_t) * MAP_SIZE);
 
 		/* mark loading transports or cities building transports */
 		for (p = user_obj[TRANSPORT]; p; p = p->piece_link.next)
@@ -581,7 +581,7 @@ ask_user (piece_info_t *obj)
 	case 'P': user_redraw (); break;
 	case '?': describe_obj (obj); break;
 
-	default: (void) beep ();
+	default: beep ();
 	}
     }
 }
@@ -603,7 +603,7 @@ reset_func (piece_info_t *obj)
 	if (cityp != NULL)
 	if (cityp->func[obj->type] != NOFUNC) {
 		obj->func = cityp->func[obj->type];
-		(void) awake (obj);
+		awake (obj);
 	} 
 }
 
@@ -629,7 +629,8 @@ or carrier.  If not, we beep at the user.
 void
 user_fill (piece_info_t *obj)
 {
-	if (obj->type != TRANSPORT && obj->type != CARRIER) (void) beep ();
+	if (obj->type != TRANSPORT && obj->type != CARRIER)
+		beep ();
 	else obj->func = FILL;
 }
 
@@ -667,7 +668,7 @@ user_set_dir (piece_info_t *obj)
 	case 'X': obj->func = MOVE_S ; break;
 	case 'Z': obj->func = MOVE_SW; break;
 	case 'A': obj->func = MOVE_W ; break;
-	default: (void) beep (); break;
+	default: beep (); break;
 	}
 }
 
@@ -708,7 +709,7 @@ Set a fighter's function to land at the nearest city.
 void
 user_land (piece_info_t *obj)
 {
-	if (obj->type != FIGHTER) (void) beep ();
+	if (obj->type != FIGHTER) beep ();
 	else obj->func = LAND;
 }
 
@@ -729,7 +730,7 @@ Set an army's function to WFTRANSPORT.
 void
 user_transport (piece_info_t *obj)
 {
-	if (obj->type != ARMY) (void) beep ();
+	if (obj->type != ARMY) beep ();
 	else obj->func = WFTRANSPORT;
 }
 
@@ -740,7 +741,7 @@ Set an army's function to ARMYATTACK.
 void
 user_armyattack (piece_info_t *obj)
 {
-	if (obj->type != ARMY) (void) beep ();
+	if (obj->type != ARMY) beep ();
 	else obj->func = ARMYATTACK;
 }
 
@@ -751,7 +752,7 @@ Set a ship's function to REPAIR.
 void
 user_repair (piece_info_t *obj)
 {
-	if (obj->type == ARMY || obj->type == FIGHTER) (void) beep ();
+	if (obj->type == ARMY || obj->type == FIGHTER) beep ();
 	else obj->func = REPAIR;
 }
 
@@ -768,13 +769,13 @@ user_set_city_func (piece_info_t *obj)
 
 	cityp = find_city (obj->loc);
 	if (!cityp || cityp->owner != USER) {
-		(void) beep ();
+		beep ();
 		return;
 	}
 
 	type = get_piece_name();
 	if (type == NOPIECE) {
-		(void) beep ();
+		beep ();
 		return;
 	}
 	
@@ -803,7 +804,7 @@ user_set_city_func (piece_info_t *obj)
 		e_city_attack (cityp, type);
 		break;
 	default: /* bad command? */
-		(void) beep ();
+		beep ();
 		break;
 	}
 }
@@ -818,7 +819,7 @@ user_build (piece_info_t *obj)
 	city_info_t *cityp;
 
 	if (user_map[obj->loc].contents != 'O') { /* no user city here? */
-		(void) beep ();
+		beep ();
 		return;
 	}
 	cityp = find_city (obj->loc);
@@ -949,7 +950,7 @@ user_dir_ship (piece_info_t *obj, long loc)
 	enemy_killed = FALSE;
 
 	if (map[loc].contents == '*') {
-		(void) sprintf (jnkbuf, "Your %s broke up on shore.",
+		sprintf (jnkbuf, "Your %s broke up on shore.",
 				piece_attr[obj->type].name);
 
 		fatal (obj, loc,

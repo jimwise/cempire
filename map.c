@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: map.c,v 1.6 1998/02/27 00:08:47 jim Exp $
+ * $Id: map.c,v 1.7 1998/02/27 00:18:51 jim Exp $
  */
 
 /*
@@ -239,7 +239,7 @@ rmap_cont_scan (int *cont_map)
 	scan_counts_t counts;
 	long i;
 
-	(void) bzero ((char *)&counts, sizeof (scan_counts_t));
+	bzero ((char *)&counts, sizeof (scan_counts_t));
 	
 	for (i = 0; i < MAP_SIZE; i++) {
 		if (cont_map[i]) { /* cell on continent? */
@@ -511,7 +511,7 @@ start_perimeter (path_map_t *pmap, perimeter_t *perim, long loc, int terrain)
 			pmap_init[i].terrain = T_UNKNOWN;
 		}
 	}
-	(void) memcpy ((char *)pmap, (char *)pmap_init, sizeof (pmap_init));
+	memcpy ((char *)pmap, (char *)pmap_init, sizeof (pmap_init));
 	
 	/* put first location in perimeter */
 	pmap[loc].cost = 0;
@@ -706,7 +706,7 @@ vmap_prune_explore_locs (view_map_t *vmap)
 	long i;
 	long copied;
 
-	(void) bzero (pmap, sizeof (pmap));
+	bzero (pmap, sizeof (pmap));
 	from = &p1;
 	to = &p2;
 	from->len = 0;
@@ -955,7 +955,7 @@ vmap_mark_near_path (path_map_t path_map[], long loc)
 	long new_loc, xloc;
 	int hit_loc[8];
 
-	(void) bzero ((char *)hit_loc, sizeof(int)*8);
+	bzero ((char *)hit_loc, sizeof(int)*8);
 	
 	FOR_ADJ_ON (loc, new_loc, i) {
 		FOR_ADJ_ON (new_loc, xloc, j)

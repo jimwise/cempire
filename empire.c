@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: empire.c,v 1.5 1998/02/26 02:02:36 jim Exp $
+ * $Id: empire.c,v 1.6 1998/02/27 00:18:49 jim Exp $
  */
 
 /*
@@ -39,10 +39,10 @@ empire (void)
 	rndini (); /* init random number generator */
 
 	clear_screen (); /* nothing on screen */
-	(void) move (7, 0);
+	move (7, 0);
 	ver ();
 	pos_str (8, 0, "Detailed directions are in EMPIRE.DOC\n");
-	(void) refresh ();
+	refresh ();
 
 	if (!restore_game ()) /* try to restore previous game */
 		init_game (); /* otherwise init a new game */
@@ -58,7 +58,7 @@ empire (void)
 	    }
 	    else {
 		prompt (0); /* blank top line */
-		(void) refresh ();
+		refresh ();
 	        prompt ("Your orders? ");
 	        order = get_chx (); /* get a command */
 		do_command (order);
@@ -158,9 +158,9 @@ do_command (char orders)
 		break;
 	
 	case 'Z': /* print compressed map */
-		(void) clear ();
+		clear();
 		print_zoom (user_map);
-		(void) refresh ();
+		refresh();
 		break;
 
 	case '\014': /* redraw the screen */
@@ -307,9 +307,9 @@ c_map (void)
 			
 		line[++j] = '\n';
 		line[++j] = 0; /* trailing null */
-		(void) fputs (line, f);
+		fputs (line, f);
 	}
-	(void) fclose (f);
+	fclose (f);
 }
 
 /*

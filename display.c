@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.9 1998/02/26 02:16:23 jim Exp $
+ * $Id: display.c,v 1.10 1998/02/27 00:18:48 jim Exp $
  */
 
 /*
@@ -38,7 +38,7 @@ void    display_score (void);
 void    display_screen (view_map_t[]);
 void    disp_square(view_map_t *);
 #ifdef USE_COLOR
-void	init_colors(void);
+void	init_colors (void);
 #endif
 void	kill_display (void);
 int     move_cursor (long *, int);
@@ -60,7 +60,7 @@ static int save_cursor; /* currently displayed cursor position */
 static int change_ok = TRUE; /* true if new sector may be displayed */
 
 #ifdef USE_COLOR
-void init_colors(void)
+void init_colors (void)
 {
     start_color();
 
@@ -157,10 +157,10 @@ show_loc (view_map_t vmap[], long loc)
 	
 	r = loc_row (loc);
 	c = loc_col (loc);
-	(void) move (r-ref_row+NUMTOPS, c-ref_col);
+	move (r-ref_row+NUMTOPS, c-ref_col);
 	disp_square(&vmap[loc]);
 	save_cursor = loc; /* remember cursor location */
-	(void) move (r-ref_row+NUMTOPS, c-ref_col);
+	move (r-ref_row+NUMTOPS, c-ref_col);
 }
 
 /*
@@ -206,7 +206,7 @@ print_sector (char whose, view_map_t vmap[], int sector)
 	   && ref_col <= first_col /* first col on screen? */
 	   && ref_row + display_rows - 1 >= last_row /* bot row on screen? */
 	   && ref_col + display_cols - 1 >= last_col)) /* last col on screen? */
-	(void) clear (); /* erase current screen */
+		clear (); /* erase current screen */
 
 	/* figure out first row and col to print; subtract half
 	   the extra lines from the first line */
@@ -242,11 +242,11 @@ print_sector (char whose, view_map_t vmap[], int sector)
 		else pos_str (r-ref_row+NUMTOPS, cols-NUMSIDES+1, "  ");
 	}
 	/* print round number */
-	(void) sprintf (jnkbuf, "Sector %d Round %ld", sector, date);
+	sprintf (jnkbuf, "Sector %d Round %ld", sector, date);
 	for (r = 0; jnkbuf[r] != '\0'; r++) {
 		if (r+NUMTOPS >= MAP_HEIGHT) break;
-		(void) move (r+NUMTOPS, cols-NUMSIDES+4);
-		(void) addch ((chtype)jnkbuf[r]);
+		move (r+NUMTOPS, cols-NUMSIDES+4);
+		addch ((chtype)jnkbuf[r]);
 	}
 }
 
@@ -288,7 +288,7 @@ disp_square(view_map_t *vp)
 		break;
 	}
 #endif /* USE_COLOR */
-	(void) addch ((chtype)vp->contents);
+	addch ((chtype)vp->contents);
 #ifdef USE_COLOR
 	attrset(0);
 	attron(COLOR_PAIR(COLOR_WHITE));
@@ -313,7 +313,7 @@ display_screen (view_map_t vmap[])
 	for (r = ref_row; r < ref_row + display_rows && r < MAP_HEIGHT; r++)
 	for (c = ref_col; c < ref_col + display_cols && c < MAP_WIDTH; c++) {
 		t = row_col_loc (r, c);
-		(void) move (r-ref_row+NUMTOPS, c-ref_col);
+		move (r-ref_row+NUMTOPS, c-ref_col);
 		disp_square(&vmap[t]);
 	}
 }
@@ -341,7 +341,7 @@ move_cursor (long *cursor, int offset)
 	       
 	r = loc_row (save_cursor);
 	c = loc_col (save_cursor);
-	(void) move (r-ref_row+NUMTOPS, c-ref_col);
+	move (r-ref_row+NUMTOPS, c-ref_col);
        
 	return (TRUE);
 }
@@ -375,7 +375,7 @@ print_xzoom (view_map_t *vmap)
 	print_zoom (vmap);
 #if 0
 	prompt ("Hit a key: ");
-	(void) get_chx (); /* wait for user */
+	get_chx (); /* wait for user */
 #endif
 }
 
@@ -402,7 +402,7 @@ print_zoom (view_map_t *vmap)
 
 	pos_str (0, 0, "Round #%d", date);
 	
-	(void) refresh ();
+	refresh ();
 }
 
 /*
@@ -422,8 +422,8 @@ print_zoom_cell (view_map_t *vmap, int row, int col, int row_inc, int col_inc)
 		< strchr (zoom_list, cell))
 	cell = vmap[row_col_loc(r,c)].contents;
 	
-	(void) move (row/row_inc + NUMTOPS, col/col_inc);
-	(void) addch ((chtype)cell);
+	move (row/row_inc + NUMTOPS, col/col_inc);
+	addch ((chtype)cell);
 }
 
 /*
@@ -446,9 +446,9 @@ print_pzoom (char *s, path_map_t *pmap, view_map_t *vmap)
 	print_pzoom_cell (pmap, vmap, r, c, row_inc, col_inc);
 
 	prompt (s);
-	(void) get_chx (); /* wait for user */
+	get_chx (); /* wait for user */
 	
-	(void) refresh ();
+	refresh ();
 }
 
 /*
@@ -491,8 +491,8 @@ print_pzoom_cell (path_map_t *pmap, view_map_t *vmap, int row, int col, int row_
 	if (cell == ' ')
 		print_zoom_cell (vmap, row, col, row_inc, col_inc);
 	else {
-		(void) move (row/row_inc + NUMTOPS, col/col_inc);
-		(void) addch ((chtype)cell);
+		move (row/row_inc + NUMTOPS, col/col_inc);
+		addch ((chtype)cell);
 	}
 }
 

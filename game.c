@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: game.c,v 1.16 1998/02/28 00:39:01 jim Exp $
+ * $Id: game.c,v 1.17 1998/02/28 01:01:44 jim Exp $
  */
 
 /*
@@ -673,7 +673,7 @@ read_embark (piece_info_t *list, piece_type_t piece_type)
 void
 inconsistent (void)
 {
-	printf ("empsave.dat is inconsistent.  Please remove it.\n");
+	error("empsave.dat is inconsistent.  Please remove it.\n");
 	exit (1);
 }
 

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: util.c,v 1.20 1998/02/27 23:15:25 jim Exp $
+ * $Id: util.c,v 1.21 1998/02/28 01:01:45 jim Exp $
  */
 
 /*
@@ -238,9 +238,9 @@ void
 emp_panic (char *file, int line, char *why)
 {
 	if (why == NULL)
-		printf("empire panic (file %s, line %d)\n", file, line);
+		fprintf(stderr, "empire panic (file %s, line %d)\n", file, line);
 	else
-		printf("empire panic (file %s, line %d): %s\n", file, line, why);
+		fprintf(stderr, "empire panic (file %s, line %d): %s\n", file, line, why);
 	
 	abort();
 }

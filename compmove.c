@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: compmove.c,v 1.34 1998/03/11 02:49:38 jim Exp $
+ * $Id: compmove.c,v 1.35 1998/03/11 02:52:51 jim Exp $
  */
 
 /*
@@ -1101,17 +1101,21 @@ move_objective (piece_info_t *obj, path_map_t pathmap[], long new_loc, char *adj
 }
 
 /*
-Check to see if the game is over.  We count the number of cities
-owned by each side.  If either side has no cities and no armies, then
-the game is over.  If the computer has less than half as many cities
-and armies as the user, then the computer will give up.
-*/
+ * Check to see if the game is over.  We count the number of cities
+ * owned by each side.  If either side has no cities and no armies, then
+ * the game is over.  If the computer has less than one third as many cities
+ * and armies as the user, then the computer will offer to resign.
+ *
+ * The computer will only offer to resign once per session, and the game continues
+ * normally if the player refuses the computers offer.
+ */
 
 static int	to_the_death = FALSE;
 
 void
 check_endgame (void)
-{ /* see if game is over */
+{
+	/* see if game is over */
 	int nuser_city, ncomp_city;
 	int nuser_army, ncomp_army;
 	piece_info_t *p;

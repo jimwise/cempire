@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.4 1998/02/25 22:22:18 jim Exp $
+ * $Id: term.c,v 1.5 1998/02/25 22:26:53 jim Exp $
  */
 
 /*
@@ -70,11 +70,7 @@ Write a message to one of the top lines.
 */
 
 void
-/* VARARGS2 */
-topmsg(linep, buf, a, b, c, d, e, f, g, h)
-int linep;
-char *buf;
-int a, b, c, d, e, f, g, h;
+topmsg(linep, buf, ...)
 {
 	if (linep < 1 || linep > NUMTOPS)
 		linep = 1;

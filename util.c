@@ -6,13 +6,15 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: util.c,v 1.3 1998/02/24 23:48:06 jim Exp $
+ * $Id: util.c,v 1.4 1998/02/25 22:26:53 jim Exp $
  */
 
 /*
 util.c -- various utility routines.
 */
 
+#include <stdarg.h>
+#include <stdio.h>
 #include <curses.h>
 #include <ctype.h>
 #include "empire.h"
@@ -23,8 +25,6 @@ util.c -- various utility routines.
 Convert a string to uppercase.
 Shirley this is defined elsewhere?
 */
-
-#include <ctype.h>
 
 void
 tupper (str)
@@ -147,13 +147,11 @@ int a, b, c, d, e, f, g, h;
 
 void
 /* VARARGS1 */
-addprintf (str, a, b, c, d, e, f, g, h)
-char *str;
-int a, b, c, d, e, f, g, h;
+addprintf (char *str, va_list ap);
 {
 	char junkbuf[STRSIZE];
 	
-	(void) sprintf (junkbuf, str, a, b, c, d, e, f, g, h);
+	(void) vsprintf (junkbuf, str, ap);
 	(void) addstr (junkbuf);
 }
 

@@ -6,12 +6,15 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: extern.h,v 1.13 1998/02/25 22:18:05 jim Exp $
+ * $Id: extern.h,v 1.14 1998/02/25 22:26:52 jim Exp $
  */
 
 /*
 extern.h -- define global non-constant storage.
 */
+
+/* for now, because of va_list, below */
+#include <stdarg.h>
 
 /* user-supplied parameters */
 int SMOOTH;        /* number of times to smooth map */
@@ -241,7 +244,7 @@ void	redraw (void);
 void	clear_screen (void);
 void	delay (void);
 void	pos_str (int, int, char *, ...);
-void	addprintf (char *, ...);
+void	addprintf (char *, va_list ap);
 void	assert (char *, char *, int);
 void	empend (void);
 void	ver (void);

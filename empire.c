@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: empire.c,v 1.25 1998/03/04 13:47:44 jim Exp $
+ * $Id: empire.c,v 1.26 1998/03/04 13:58:00 jim Exp $
  */
 
 /*
@@ -27,6 +27,7 @@ void	c_quit (void);
 void	c_sector (void);
 void	do_command (char);
 void	empire (void);
+void	emp_end (void);
 
 void
 empire (void)
@@ -347,4 +348,15 @@ c_movie (void)
 		print_zoom (comp_map);
 		save_game ();
 	}
+}
+
+/*
+ * This provides a single place for collecting all cleanup routines
+ */
+
+void
+emp_end (void)
+{
+	term_end();
+	exit (0);
 }

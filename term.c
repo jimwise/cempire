@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.50 1998/03/04 13:47:45 jim Exp $
+ * $Id: term.c,v 1.51 1998/03/04 13:58:01 jim Exp $
  */
 
 /*
@@ -34,7 +34,6 @@ screen refreshed as the user has had time to read these lines.
 #include "extern.h"
 
 void    delay (void);
-void	emp_end (void);
 void	emp_beep (void);
 void    error (char *, ...);
 int	getyn (char *message);
@@ -370,17 +369,6 @@ term_init (void)
 	statuswin = newwin(1, cols-12, 0, 0);
 	wattrset(statuswin, A_REVERSE);
 	infowin = newwin(NUMINFO, cols-12, 1, 0);
-}
-
-/*
-End the game by cleaning up the display.
-*/
-
-void
-emp_end (void)
-{
-        term_end();
-        exit (0);
 }
 
 void

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: extern.h,v 1.53 1998/03/04 13:47:45 jim Exp $
+ * $Id: extern.h,v 1.54 1998/03/04 13:58:00 jim Exp $
  */
 
 /*
@@ -139,6 +139,9 @@ void    e_city_repair (city_info_t *, int);
 void    e_city_stasis (city_info_t *, int);
 void    e_city_wake (city_info_t *, int);
 
+/* driver routines (empire.c) */
+void	emp_end (void);
+
 /* game routines (game.c) */
 void	init_game (void);
 void	replay_movie (void);
@@ -195,7 +198,6 @@ void	set_prod (city_info_t *);
 
 /* terminal routines (term.c) */
 void    delay (void);
-void    emp_end (void);
 void	emp_beep (void);
 void	error (char *, ...);
 char    get_chx (void);
@@ -209,6 +211,7 @@ void	info (char *, ...);
 void    pos_str (int, int, char *, ...);
 void    redraw (void);
 void    term_clear (void);
+void	term_end (void);
 void    term_init (void);
 void	prompt (char *, ...);
 

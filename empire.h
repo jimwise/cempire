@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: empire.h,v 1.19 1998/02/28 00:32:16 jim Exp $
+ * $Id: empire.h,v 1.20 1998/03/01 02:18:04 jim Exp $
  */
 
 /*
@@ -75,7 +75,8 @@ typedef enum
 
 #define LIST_SIZE 5000 /* max number of pieces on board */
 
-typedef struct city_info {
+typedef struct
+{
 	long loc; /* location of city */
 	uchar owner; /* UNOWNED, USER, COMP */
 	long func[NUM_OBJECTS]; /* function for each object */
@@ -121,12 +122,15 @@ Macro to convert a movement function into a direction.
 Information we maintain about each piece.
 */
 
-typedef struct { /* ptrs for doubly linked list */
+typedef struct
+{
+	/* ptrs for doubly linked list */
 	struct piece_info *next; /* pointer to next in list */
 	struct piece_info *prev; /* pointer to prev in list */
 } link_t;
 
-typedef struct piece_info {
+typedef struct piece_info
+{
 	link_t piece_link; /* linked list of pieces of this type */
 	link_t loc_link; /* linked list of pieces at a location */
 	link_t cargo_link; /* linked list of cargo pieces */
@@ -146,14 +150,16 @@ typedef struct piece_info {
 Macros to link and unlink an object from a doubly linked list.
 */
 
-#define LINK(head,obj,list) { \
+#define LINK(head,obj,list) \
+{ \
 	obj->list.prev = NULL; \
 	obj->list.next = head; \
 	if (head) head->list.prev = obj; \
 	head = obj; \
 }
 
-#define UNLINK(head,obj,list) { \
+#define UNLINK(head,obj,list) \
+{ \
 	if (obj->list.next) \
 		obj->list.next->list.prev = obj->list.prev; \
         if (obj->list.prev) \
@@ -179,7 +185,8 @@ beginning of a game.
 
 #define INFINITY 1000000 /* a large number */
 
-typedef struct piece_attr {
+typedef struct
+{
 	char sname; /* eg 'C' */
 	char name[20]; /* eg "aircraft carrier" */
 	char nickname[20]; /* eg "carrier" */
@@ -207,21 +214,26 @@ the computer's view of the world.
 #define MAP_HEIGHT 60
 #define MAP_SIZE (MAP_WIDTH * MAP_HEIGHT)
 
-typedef struct real_map { /* a cell of the actual map */
+typedef struct
+{
+	/* a cell of the actual map */
 	char contents; /* '+', '.', or '*' */
 	uchar on_board; /* TRUE iff on the board */
 	city_info_t *cityp; /* ptr to city at this location */
 	piece_info_t *objp; /* list of objects at this location */
 } real_map_t;
 
-typedef struct view_map { /* a cell of one player's world view */
+typedef struct
+{
+	/* a cell of one player's world view */
 	uchar contents; /* '+', '.', '*', 'A', 'a', etc */
 	long seen; /* date when last updated */
 } view_map_t;
 
 /* Define information we maintain for a pathmap. */
 
-typedef struct {
+typedef struct
+{
 	int cost; /* total cost to get here */
 	int inc_cost; /* incremental cost to get here */
 	char terrain; /* T_LAND, T_WATER, T_UNKNOWN, T_PATH */

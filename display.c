@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.3 1998/02/24 23:47:59 jim Exp $
+ * $Id: display.c,v 1.4 1998/02/25 00:16:27 jim Exp $
  */
 
 /*
@@ -30,15 +30,32 @@ information:
 #include "empire.h"
 #include "extern.h"
 
+void	kill_display (void);
+void	sector_change (void);
+int	cur_sector (void);
+long	cur_cursor (void);
+void	display_loc (int, view_map_t[], long);
+void	display_locx (int, view_map_t[], long);
+void	show_loc (view_map_t[], long);
+void	print_sector (char, view_map_t[], int);
+static int	disp_square(view_map_t *);
+void	display_screen (view_map_t[]);
+int	move_cursor (long *, int);
+int	on_screen (long);
+void	print_xzoom (view_map_t *);
+void	print_zoom (view_map_t *);
+void	print_zoom_cell (view_map_t *, int, int, int, int);
+void	print_pzoom (char *, path_map_t *, view_map_t *);
+void	print_pzoom_cell (path_map_t *, view_map_t *, int, int, int, int);
+void	display_score (void);
+
+
 static int whose_map = UNOWNED; /* user's or computer's point of view */
 static int ref_row; /* map loc displayed in upper-left corner */
 static int ref_col;
 static int save_sector; /* the currently displayed sector */
 static int save_cursor; /* currently displayed cursor position */
 static int change_ok = TRUE; /* true if new sector may be displayed */
-
-static void show_loc();
-static disp_square();
 
 #ifdef A_COLOR
 void init_colors()
@@ -61,7 +78,8 @@ This routine is called when the current display has been
 trashed and no sector is shown on the screen.
 */
 
-void kill_display () {
+void kill_display (void)
+{
 	whose_map = UNOWNED;
 }
 
@@ -70,7 +88,8 @@ This routine is called when a new sector may be displayed on the
 screen even if the location to be displayed is already on the screen.
 */
 
-void sector_change () {
+void sector_change (void)
+{
 	change_ok = TRUE;
 }
 
@@ -79,7 +98,8 @@ Return the currently displayed user sector, if any.  If a user
 sector is not displayed, return -1.
 */
 
-int cur_sector () {
+int cur_sector (void)
+{
 	if (whose_map != USER) return (-1);
 	return (save_sector);
 }
@@ -89,7 +109,8 @@ Return the current position of the cursor.  If the user's map
 is not on the screen, we return -1.
 */
 
-long cur_cursor () {
+long cur_cursor (void)
+{
 	if (whose_map != USER) return (-1);
 	return (save_cursor);
 }
@@ -104,13 +125,10 @@ redisplay the sector, or if the location is not on the screen.
 */
 
 void
-display_loc (whose, vmap, loc)
-int whose; /* whose map to display */
-view_map_t vmap[];
-long loc; /* location to display */
+display_loc (int whose, view_map_t vmap[], long loc)
+/* whose == whose map to display */
+/* loc == location to display */
 {
-	void print_sector();
-	
 	if (change_ok || whose != whose_map || !on_screen (loc))
 		print_sector (whose, vmap, loc_sector (loc));
 		
@@ -122,10 +140,7 @@ Display a location iff the location is on the screen.
 */
 
 void
-display_locx (whose, vmap, loc)
-int whose; /* whose map to display */
-view_map_t vmap[];
-long loc; /* location to display */
+display_locx (int whose, view_map_t vmap[], long loc)
 {
 	if (whose == whose_map && on_screen (loc))
 		show_loc (vmap, loc);
@@ -136,9 +151,7 @@ Display a location which exists on the screen.
 */
 
 void
-show_loc (vmap, loc)
-view_map_t vmap[];
-long loc;
+show_loc (view_map_t vmap[], long loc)
 {
 	int r, c;
 	
@@ -170,13 +183,11 @@ screen.
 */
  
 void
-print_sector (whose, vmap, sector)
-char whose; /* USER or COMP */
-view_map_t vmap[]; /* map to display */
-int sector; /* sector to display */
+print_sector (char whose, view_map_t vmap[], int sector)
+/* whos; == USER or COMP */
+/* vmap == map to display */
+/* sector == sector to display */
 {
-	void display_screen();
-
 	int first_row, first_col, last_row, last_col;
 	int display_rows, display_cols;
 	int r, c;
@@ -251,8 +262,8 @@ pretty.
 */
 
 
-static int disp_square(vp)
-view_map_t *vp;
+static int
+disp_square(view_map_t *vp)
 {
 #ifdef A_COLOR
 	switch(vp->contents)
@@ -292,8 +303,8 @@ view_map_t *vp;
 Display the portion of the map that appears on the screen.
 */
 
-void display_screen (vmap)
-view_map_t vmap[];
+void
+display_screen (view_map_t vmap[])
 {
 	int display_rows, display_cols;
 	int r, c;
@@ -317,9 +328,9 @@ We display the cursor on the screen, if possible.
 */
 
 int
-move_cursor (cursor, offset)
-long *cursor; /* current cursor position */
-int offset; /* offset to add to cursor */
+move_cursor (long *cursor, int offset)
+/* cursor == current cursor position */
+/* offset == offset to add to cursor */
 {
 	long t;
 	int r, c;
@@ -342,8 +353,8 @@ int offset; /* offset to add to cursor */
 See if a location is displayed on the screen.
 */
 
-int on_screen (loc)
-long loc;
+int
+on_screen (long loc)
 {
 	int new_r, new_c;
 	
@@ -362,8 +373,7 @@ long loc;
 /* Print a view map for debugging. */
 
 void
-print_xzoom (vmap)
-view_map_t *vmap;
+print_xzoom (view_map_t *vmap)
 {
 	print_zoom (vmap);
 #if 0
@@ -379,11 +389,8 @@ Print a condensed version of the map.
 char zoom_list[] = "XO*tcbsdpfaTCBSDPFAzZ+. ";
 
 void
-print_zoom (vmap)
-view_map_t *vmap;
+print_zoom (view_map_t *vmap)
 {
-	void print_zoom_cell();
-
 	int row_inc, col_inc;
 	int r, c;
 
@@ -406,10 +413,7 @@ Print a single cell in condensed format.
 */
 
 void
-print_zoom_cell (vmap, row, col, row_inc, col_inc)
-view_map_t *vmap;
-int row, col;
-int row_inc, col_inc;
+print_zoom_cell (view_map_t *vmap, int row, int col, int row_inc, int col_inc)
 {
 	int r, c;
 	char cell;
@@ -430,13 +434,8 @@ Print a condensed version of a pathmap.
 */
 
 void
-print_pzoom (s, pmap, vmap)
-char *s;
-path_map_t *pmap;
-view_map_t *vmap;
+print_pzoom (char *s, path_map_t *pmap, view_map_t *vmap)
 {
-	void print_pzoom_cell();
-
 	int row_inc, col_inc;
 	int r, c;
 
@@ -465,11 +464,7 @@ between P and Z are printed as U.
 */
 
 void
-print_pzoom_cell (pmap, vmap, row, col, row_inc, col_inc)
-path_map_t *pmap;
-view_map_t *vmap;
-int row, col;
-int row_inc, col_inc;
+print_pzoom_cell (path_map_t *pmap, view_map_t *vmap, int row, int col, int row_inc, int col_inc)
 {
 	int r, c;
 	int sum, d;
@@ -509,7 +504,7 @@ Display the score off in the corner of the screen.
 */
 
 void
-display_score ()
+display_score (void)
 {
 	pos_str (0, cols-12, " User  Comp");
 	pos_str (1, cols-12, "%5d %5d", user_score, comp_score);

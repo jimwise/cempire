@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.13 1998/02/27 01:35:00 jim Exp $
+ * $Id: term.c,v 1.14 1998/02/27 01:39:19 jim Exp $
  */
 
 /*
@@ -271,10 +271,7 @@ get_chx (void)
 
 	c = get_cq ();
 
-	if (islower(c))
-		return (upper(c));
-	else
-		return (c);
+	return (toupper(c));
 }
 
 /*

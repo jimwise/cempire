@@ -5,7 +5,7 @@
  * and warranty information.
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: edit.c,v 1.9 1998/02/27 00:33:36 jim Exp $
+ * $Id: edit.c,v 1.10 1998/02/27 01:39:18 jim Exp $
  */
 
 /*
@@ -163,7 +163,7 @@ e_cursor (long *edit_cursor)
 	nocrmode (); /* reset terminal */
 
 	if (islower (e))
-		e = upper (e);
+		e = toupper (e);
 
 	return e;
 }
@@ -526,7 +526,7 @@ e_piece_info (long edit_cursor, char ab)
 	int type;
 	char *p;
 
-	ab = upper (ab);
+	ab = toupper (ab);
 	p = strchr (type_chars, ab);
 	type = p - type_chars;
 

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: util.c,v 1.13 1998/02/27 01:35:01 jim Exp $
+ * $Id: util.c,v 1.14 1998/02/27 01:39:20 jim Exp $
  */
 
 /*
@@ -26,7 +26,6 @@ void	check_obj (piece_info_t **, int);
 void	check_obj_cargo (piece_info_t **);
 void	emp_panic (char *, int);
 void    tupper (uchar *);
-char    upper (uchar);
 void    ver (void);
 
 /*
@@ -38,21 +37,9 @@ void
 tupper (uchar *str)
 {
 	while (*str) {
-		if (islower (*str)) *str = upper (*str);
+		if (islower (*str)) *str = toupper (*str);
 		str++;
 	}
-}
-
-/*
-Convert a character to uppercase (if it is lowercase)
-*/
-
-char
-upper (uchar c)
-{
-	if (islower (c))
-		return toupper (c);
-	else return c;
 }
 
 void

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: extern.h,v 1.64 1998/08/08 17:21:28 jwise Exp $
+ * $Id: extern.h,v 1.65 1998/08/08 18:05:29 jwise Exp $
  */
 
 /*
@@ -111,8 +111,8 @@ extern int comp_score;
 #define panic(why)      emp_panic(__FILE__, __LINE__, (why))
 
 /* global routines */
-void	attack (piece_info_t *, long);	/* attack.c */
-void	comp_move (int);	/* compmove.c */
+void	attack (piece_info_t *, const long);	/* attack.c */
+void	comp_move (const int);	/* compmove.c */
 void    edit(long);             /* edit.c */
 void    empire (void);          /* empire.c */
 void	user_move (void);	/* usermove.c */
@@ -156,7 +156,7 @@ void	vmap_cont (int *, view_map_t *, long, char);
 scan_counts_t	vmap_cont_scan (int *, view_map_t *);
 long	vmap_find_aobj (path_map_t[], view_map_t *, long, move_info_t *);
 long	vmap_find_dest (path_map_t[], view_map_t[], long, long, int, int);
-long	vmap_find_dir (path_map_t[], view_map_t *, long, char *, char *);
+long	vmap_find_dir (path_map_t[], view_map_t *, long, const char *, const char *);
 long	vmap_find_lobj (path_map_t[], view_map_t *, long, move_info_t *);
 long	vmap_find_lwobj (path_map_t[], view_map_t *, long, move_info_t *, int);
 long	vmap_find_wobj (path_map_t[], view_map_t *, long, move_info_t *);

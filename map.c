@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: map.c,v 1.13 1998/03/11 02:13:59 jim Exp $
+ * $Id: map.c,v 1.14 1998/08/08 18:05:29 jwise Exp $
  */
 
 /*
@@ -41,7 +41,7 @@ int	vmap_count_adjacent (view_map_t *, long, char *);
 int	vmap_count_path (path_map_t *, long);
 long    vmap_find_aobj (path_map_t[], view_map_t *, long, move_info_t *);
 long    vmap_find_dest (path_map_t[], view_map_t[], long, long, int, int);
-long    vmap_find_dir (path_map_t[], view_map_t *, long, char *, char *);
+long    vmap_find_dir (path_map_t[], view_map_t *, long, const char *, const char *);
 long    vmap_find_lobj (path_map_t[], view_map_t *, long, move_info_t *);
 long    vmap_find_lwobj (path_map_t[], view_map_t *, long, move_info_t *, int);
 long    vmap_find_wobj (path_map_t[], view_map_t *, long, move_info_t *);
@@ -1008,7 +1008,7 @@ static direction_t order[] = {NORTHWEST, NORTHEAST, SOUTHWEST, SOUTHEAST,
 					WEST, EAST, NORTH, SOUTH};
 
 long
-vmap_find_dir (path_map_t path_map[], view_map_t *vmap, long loc, char *terrain, char *adj_char)
+vmap_find_dir (path_map_t path_map[], view_map_t *vmap, long loc, const char *terrain, const char *adj_char)
 {
 	int i, count, bestcount;
 	long bestloc, new_loc;

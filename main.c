@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: main.c,v 1.7 1998/02/27 23:40:02 jim Exp $
+ * $Id: main.c,v 1.8 1998/02/27 23:41:55 jim Exp $
  */
 
 /*
@@ -23,7 +23,7 @@ options:
     -d delay:  number of milliseconds to delay between output.
                default is 2000 (2 seconds).
 
-    -S saveinterval: sets turn interval between saves.
+    -S save_interval: sets turn interval between saves.
 	       default is 10
 */
 
@@ -38,9 +38,6 @@ int
 main (int argc, char *argv[])
 {
 	int c;
-	extern char *optarg;
-	extern int optind;
-	extern int opterr;      /* set to 1 to suppress error msg */
 	int errflg = 0;
 	int wflg, sflg, dflg, Sflg;
 	int land;

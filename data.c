@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: data.c,v 1.6 1998/03/06 22:31:18 jim Exp $
+ * $Id: data.c,v 1.7 1998/08/08 18:25:45 jwise Exp $
  */
 
 /*
@@ -86,7 +86,7 @@ int dir_offset [] = {-MAP_WIDTH, /* north */
 
 /* Names of movement functions. */
 
-char *func_name[] = {"none", "random", "sentry", "fill", "land",
+const char *func_name[] = {"none", "random", "sentry", "fill", "land",
 			"explore", "load", "attack", "load", "repair",
 			"transport",
 			"W", "E", "D", "C", "X", "Z", "A", "Q"};
@@ -115,7 +115,7 @@ move_info_t tt_explore = { /* water objectives */
 	{1} /* weights */
 };
 move_info_t tt_load = { /* land objectives */
-	COMP, "$",           {1}
+	COMP, "$", {1}
 };
 
 /*
@@ -149,7 +149,6 @@ the computer unloads its tts.
 move_info_t tt_unload     = {
 	COMP, "9876543210 ", {1, 1, 1, 1, 1, 1, 11, 21, 41, 101, 61}
 };
-
 /*
  '$' represents loading tt must be first
  'x' represents tt producing city
@@ -161,7 +160,6 @@ move_info_t army_fight    = { /* land objectives */
 move_info_t army_load     = { /* water objectives */
 	COMP, "$x",          {1, W_TT_BUILD}
 };
-
 move_info_t fighter_fight = {
 	COMP, "TCFBSDPA ",   {1, 1, 5, 5, 5, 5, 5, 5, 9}
 };
@@ -171,7 +169,6 @@ move_info_t ship_fight    = {
 move_info_t ship_repair   = {
 	COMP, "X",           {1}
 };
-
 move_info_t user_army        = {
 	USER, " ",   {1}
 };
@@ -192,7 +189,7 @@ move_info_t user_ship_repair = {
 Various help texts.
 */
 
-char *help_cmd[] = {
+const char *help_cmd[] = {
 	"COMMAND MODE",
 	"Auto:     enter automove mode",
 	"City:     give city to computer",
@@ -215,7 +212,7 @@ char *help_cmd[] = {
 };
 int cmd_lines = 19;
 
-char *help_user[] = {
+const char *help_user[] = {
 	"USER MODE",
 	"QWE",
 	"A D       movement directions",
@@ -241,7 +238,7 @@ char *help_user[] = {
 };
 int user_lines = 22;
 	
-char *help_edit[] = {
+const char *help_edit[] = {
 	"EDIT MODE",
 	"QWE",
 	"A D       movement directions",

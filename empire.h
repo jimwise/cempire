@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: empire.h,v 1.26 1998/03/06 22:54:40 jim Exp $
+ * $Id: empire.h,v 1.27 1998/08/08 18:25:46 jwise Exp $
  */
 
 /*
@@ -231,7 +231,7 @@ typedef struct {
 
 typedef struct {
         char city_owner; /* char that represents home city */
-        char *objectives; /* list of objectives */
+        const char *objectives; /* list of objectives */
         int weights[11]; /* weight of each objective */
 } move_info_t;
 

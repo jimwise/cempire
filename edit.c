@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: edit.c,v 1.34 2001/02/08 19:46:01 jwise Exp $
+ * $Id: edit.c,v 1.35 2001/02/08 21:19:51 jwise Exp $
  */
 
 /* edit.c -- Routines to handle edit mode commands. */
@@ -494,7 +494,7 @@ e_city_info (long edit_cursor)
 	city_info_t *cityp;
 	int f, s;
 	piece_type_t i;
-	char func_buf[STRSIZE];
+	char func_buf[STRSIZE * 2];
 	char temp_buf[STRSIZE];
 	char junk_buf2[STRSIZE];
 
@@ -509,12 +509,12 @@ e_city_info (long edit_cursor)
 			if (obj->type >= DESTROYER) s++;
 
 	if (f == 1 && s == 1) 
-		sprintf (jnkbuf, "1 fighter landed, 1 ship docked");
+		snprintf (jnkbuf, STRSIZE, "1 fighter landed, 1 ship docked");
 	else if (f == 1)
-		sprintf (jnkbuf, "1 fighter landed, %d ships docked", s);
+		snprintf (jnkbuf, STRSIZE, "1 fighter landed, %d ships docked", s);
 	else if (s == 1)
-		sprintf (jnkbuf, "%d fighters landed, 1 ship docked", f);
-	else sprintf (jnkbuf, "%d fighters landed, %d ships docked", f, s);
+		snprintf (jnkbuf, STRSIZE, "%d fighters landed, 1 ship docked", f);
+	else snprintf (jnkbuf, STRSIZE, "%d fighters landed, %d ships docked", f, s);
 
 	cityp = find_city (edit_cursor);
 	assert (cityp != NULL);
@@ -523,14 +523,14 @@ e_city_info (long edit_cursor)
 	for (i = FIRST_OBJECT; i < NUM_OBJECTS; i++)
 	{
 		if (cityp->func[i] < 0)
-			sprintf (temp_buf, "%c:%s; ", piece_attr[i].sname, func_name[FUNCI(cityp->func[i])]);
+			snprintf (temp_buf, STRSIZE, "%c:%s; ", piece_attr[i].sname, func_name[FUNCI(cityp->func[i])]);
 		else
-			sprintf (temp_buf, "%c: %d;", piece_attr[i].sname, cityp->func[i]);
+			snprintf (temp_buf, STRSIZE, "%c: %d;", piece_attr[i].sname, cityp->func[i]);
 		
-		strcat (func_buf, temp_buf);
+		strncat (func_buf, temp_buf, STRSIZE);
 	}
 
-	sprintf (junk_buf2,
+	snprintf (junk_buf2, STRSIZE,
 		"City at location %ld will complete %s on round %ld",
 		cityp->loc,
 		piece_attr[cityp->prod].article,

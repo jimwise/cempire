@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: object.c,v 1.25 2001/02/07 03:28:09 jwise Exp $
+ * $Id: object.c,v 1.26 2001/02/08 21:19:51 jwise Exp $
  */
 
 /* object.c -- routines for manipulating objects. */
@@ -503,8 +503,8 @@ describe_obj (const piece_info_t *obj)
 	char func[STRSIZE];
 	char other[STRSIZE];
 
-	if (obj->func >= 0) sprintf (func, "%d", obj->func);
-	else sprintf (func, func_name[FUNCI(obj->func)]);
+	if (obj->func >= 0) snprintf (func, STRSIZE, "%d", obj->func);
+	else snprintf (func, STRSIZE, "%s", func_name[FUNCI(obj->func)]);
 	
 	other[0] = 0;
 
@@ -512,13 +512,13 @@ describe_obj (const piece_info_t *obj)
 	{
 		/* set other information */
 	    case FIGHTER:
-		sprintf (other,"; range = %d",obj->range);
+		snprintf (other, STRSIZE, "; range = %d",obj->range);
 		break;
 	    case TRANSPORT:
-		sprintf (other,"; armies = %d",obj->count);
+		snprintf (other, STRSIZE, "; armies = %d",obj->count);
 		break;
 	    case CARRIER:
-		sprintf (other,"; fighters = %d",obj->count);
+		snprintf (other, STRSIZE, "; fighters = %d",obj->count);
 		break;
 	    default:
 		break;

@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: usermove.c,v 1.33 2001/02/08 19:42:07 jwise Exp $
+ * $Id: usermove.c,v 1.34 2001/02/08 21:19:51 jwise Exp $
  */
 
 /* usermove.c -- Let the user move her troops. */
@@ -909,7 +909,7 @@ user_dir_ship (piece_info_t *obj, long loc)
 	enemy_killed = FALSE;
 
 	if (map[loc].contents == '*') {
-		sprintf (jnkbuf, "Your %s broke up on shore.",
+		snprintf (jnkbuf, STRSIZE, "Your %s broke up on shore.",
 				piece_attr[obj->type].name);
 
 		fatal (obj, loc,

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: object.c,v 1.21 1998/08/08 19:48:40 jwise Exp $
+ * $Id: object.c,v 1.22 1998/08/08 23:41:00 jwise Exp $
  */
 
 /*
@@ -21,7 +21,7 @@ object.c -- routines for manipulating objects.
 #include "extern.h"
 
 long	bounce (long, long, long, long);
-void    describe_obj (piece_info_t *);
+void    describe_obj (const piece_info_t *);
 void    disembark (piece_info_t *);
 void    embark (piece_info_t *, piece_info_t *);
 city_info_t     *find_city (long);
@@ -31,15 +31,15 @@ piece_info_t    *find_obj (piece_type_t, long);
 piece_info_t    *find_obj_at_loc (long);
 long    find_transport (int, long);
 int     get_piece_name (void);
-int     good_loc (piece_info_t *, long);
+int     good_loc (const piece_info_t *, long);
 void    kill_city (city_info_t *);
 void    kill_obj (piece_info_t *, long);
 void	kill_one (piece_info_t **, piece_info_t *);
 void    move_obj (piece_info_t *, long);
 void    move_sat (piece_info_t *);
 void	move_sat1 (piece_info_t *obj);
-int     obj_capacity (piece_info_t *);
-int     obj_moves (piece_info_t *);
+int     obj_capacity (const piece_info_t *);
+int     obj_moves (const piece_info_t *);
 void    produce (city_info_t *);
 void    scan (view_map_t[], long);
 void	scan_sat (view_map_t *, long);
@@ -93,7 +93,7 @@ half of its hits moves at half-speed, for example.
 */
 
 int
-obj_moves (piece_info_t *obj)
+obj_moves (const piece_info_t *obj)
 {
 	return (piece_attr[obj->type].speed * obj->hits
 	       + piece_attr[obj->type].max_hits - 1) /* round up */
@@ -105,7 +105,7 @@ Figure out the capacity for an object.
 */
 
 int
-obj_capacity (piece_info_t *obj)
+obj_capacity (const piece_info_t *obj)
 {
 	return (piece_attr[obj->type].capacity * obj->hits
 	       + piece_attr[obj->type].max_hits - 1) /* round up */
@@ -482,7 +482,7 @@ move onto transports, and fighters may move onto cities or carriers.
 */
 
 int
-good_loc (piece_info_t *obj, long loc)
+good_loc (const piece_info_t *obj, long loc)
 {
 	view_map_t *vmap;
 	piece_info_t *p;
@@ -514,7 +514,7 @@ good_loc (piece_info_t *obj, long loc)
 }
 
 void
-describe_obj (piece_info_t *obj)
+describe_obj (const piece_info_t *obj)
 {
 	char func[STRSIZE];
 	char other[STRSIZE];

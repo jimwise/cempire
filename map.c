@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: map.c,v 1.17 1998/08/08 23:21:35 jwise Exp $
+ * $Id: map.c,v 1.18 1998/08/08 23:41:00 jwise Exp $
  */
 
 /*
@@ -35,8 +35,8 @@ int     rmap_shore (long);
 void	start_perimeter (path_map_t *, perimeter_t *, long, int);
 int	terrain_type (const path_map_t *, const view_map_t *, const move_info_t *, long, long);
 int     vmap_at_sea (const view_map_t *, long);
-void	vmap_cont (int *, view_map_t *, long, char);
-scan_counts_t	vmap_cont_scan (int *, view_map_t *);
+void	vmap_cont (int *, const view_map_t *, long, char);
+scan_counts_t	vmap_cont_scan (int *, const view_map_t *);
 int	vmap_count_adjacent (const view_map_t *, long, const char *);
 int	vmap_count_path (path_map_t *, long);
 long    vmap_find_aobj (path_map_t[], const view_map_t *, long, const move_info_t *);
@@ -49,8 +49,8 @@ long    vmap_find_wlobj (path_map_t[], const view_map_t *, long, const move_info
 long	vmap_find_xobj (path_map_t[], const view_map_t *, long, const move_info_t *, int, int);
 void    vmap_mark_adjacent (path_map_t[], long);
 void    vmap_mark_near_path (path_map_t[], long);
-void    vmap_mark_path (path_map_t *, view_map_t *, long);
-void    vmap_mark_up_cont (int *, view_map_t *, long, char);
+void    vmap_mark_path (path_map_t *, const view_map_t *, long);
+void    vmap_mark_up_cont (int *, const view_map_t *, long, char);
 void    vmap_prune_explore_locs (view_map_t *);
 int	vmap_shore (view_map_t *, long);
 
@@ -76,7 +76,7 @@ or lakes.
 */
 
 void
-vmap_cont (int *cont_map, view_map_t *vmap, long loc, char bad_terrain)
+vmap_cont (int *cont_map, const view_map_t *vmap, long loc, char bad_terrain)
 {
 	bzero(cont_map, MAP_SIZE * sizeof(int));
 	vmap_mark_up_cont (cont_map, vmap, loc, bad_terrain);
@@ -89,7 +89,7 @@ known to be either on the continent or adjacent to the continent.
 */
 
 void
-vmap_mark_up_cont (int *cont_map, view_map_t *vmap, long loc, char bad_terrain)
+vmap_mark_up_cont (int *cont_map, const view_map_t *vmap, long loc, char bad_terrain)
 {
 	int i, j;
 	long new_loc;
@@ -176,7 +176,7 @@ This could be done as we mark up the continent.
 #define COUNT(c,item) case c: item += 1; break
 
 scan_counts_t
-vmap_cont_scan (int *cont_map, view_map_t *vmap)
+vmap_cont_scan (int *cont_map, const view_map_t *vmap)
 {
 	scan_counts_t counts;
 	long i;
@@ -919,7 +919,7 @@ Someday, this routine should probably use perimeter lists as well.
 */
 
 void
-vmap_mark_path (path_map_t *path_map, view_map_t *vmap, long dest)
+vmap_mark_path (path_map_t *path_map, const view_map_t *vmap, long dest)
 {
 	int n;
 	long new_dest;

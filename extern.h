@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: extern.h,v 1.71 1998/08/08 23:21:35 jwise Exp $
+ * $Id: extern.h,v 1.72 1998/08/08 23:41:00 jwise Exp $
  */
 
 /* extern.h -- define global non-constant storage.  */
@@ -150,8 +150,8 @@ int	select_cities (void);
 /* map routines (map.c) */
 int	rmap_shore (long);
 int	vmap_at_sea (const view_map_t *, long);
-void	vmap_cont (int *, view_map_t *, long, char);
-scan_counts_t	vmap_cont_scan (int *, view_map_t *);
+void	vmap_cont (int *, const view_map_t *, long, char);
+scan_counts_t	vmap_cont_scan (int *, const view_map_t *);
 long	vmap_find_aobj (path_map_t[], const view_map_t *, long, const move_info_t *);
 long	vmap_find_dest (path_map_t[], view_map_t[], long, long, int, int);
 long	vmap_find_dir (path_map_t[], const view_map_t *, long, const char *, const char *);
@@ -161,8 +161,8 @@ long	vmap_find_wobj (path_map_t[], const view_map_t *, long, const move_info_t *
 long	vmap_find_wlobj (path_map_t[], const view_map_t *, long, const move_info_t *);
 void	vmap_mark_adjacent (path_map_t[], long);
 void	vmap_mark_near_path (path_map_t[], long);
-void	vmap_mark_path (path_map_t *, view_map_t *, long);
-void	vmap_mark_up_cont (int *, view_map_t *, long, char);
+void	vmap_mark_path (path_map_t *, const view_map_t *, long);
+void	vmap_mark_up_cont (int *, const view_map_t *, long, char);
 void	vmap_prune_explore_locs (view_map_t *);
 
 /* math routines (math.c) */
@@ -172,7 +172,7 @@ int	isqrt (int);
 void	rand_init (void);
 
 /* object routines (object.c) */
-void	describe_obj (piece_info_t *);
+void	describe_obj (const piece_info_t *);
 void	disembark (piece_info_t *);
 void	embark (piece_info_t *, piece_info_t *);
 city_info_t     *find_city (long);
@@ -182,13 +182,13 @@ piece_info_t	*find_obj (piece_type_t, long);
 piece_info_t	*find_obj_at_loc (long);
 long	find_transport (int, long);
 int	get_piece_name (void);
-int	good_loc (piece_info_t *, long);
+int	good_loc (const piece_info_t *, long);
 void	kill_city (city_info_t *);
 void	kill_obj (piece_info_t *, long);
 void	move_obj (piece_info_t *, long);
 void	move_sat (piece_info_t *);
-int	obj_capacity (piece_info_t *);
-int	obj_moves (piece_info_t *);
+int	obj_capacity (const piece_info_t *);
+int	obj_moves (const piece_info_t *);
 void	produce (city_info_t *);
 void	scan (view_map_t[], long);
 void	set_prod (city_info_t *);

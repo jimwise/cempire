@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: game.c,v 1.9 1998/02/27 00:33:37 jim Exp $
+ * $Id: game.c,v 1.10 1998/02/27 02:56:52 jim Exp $
  */
 
 /*
@@ -15,7 +15,7 @@ game.c -- Routines to initialize, save, and restore a game.
 
 #include <assert.h>
 #include <ctype.h>
-#include <curses.h>
+#include <stdio.h>
 #include <strings.h>
 #include "empire.h"
 #include "extern.h"
@@ -791,7 +791,7 @@ replay_movie (void)
 		for (c = 0; c < MAP_WIDTH; c += col_inc)
 		print_movie_cell (mapbuf, r, c, row_inc, col_inc);
 		
-		refresh ();
+		redraw ();
 		delay ();
 	}
 	fclose (f);
@@ -853,15 +853,12 @@ void
 print_movie_cell (char *mbuf, int row, int col, int row_inc, int col_inc)
 {
 	int r, c;
-	char cell;
+	char *cell = " ";
 
-	cell = ' ';
 	for (r = row; r < row + row_inc; r++)
-	for (c = col; c < col + col_inc; c++)
-	if (strchr (zoom_list, mbuf[row_col_loc(r,c)])
-		< strchr (zoom_list, cell))
-	cell = mbuf[row_col_loc(r,c)];
+		for (c = col; c < col + col_inc; c++)
+			if (strchr(zoom_list, mbuf[row_col_loc(r,c)]) < strchr(zoom_list, *cell))
+				*cell = mbuf[row_col_loc(r,c)];
 	
-	move (row/row_inc + NUMTOPS, col/col_inc);
-	addch ((chtype)cell);
+	pos_str(row/row_inc + NUMTOPS, col/col_inc, cell);
 }

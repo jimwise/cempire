@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.33 1998/03/06 23:22:17 jim Exp $
+ * $Id: display.c,v 1.34 1998/03/06 23:49:04 jim Exp $
  */
 
 /*
@@ -54,8 +54,8 @@ static int save_cursor; /* currently displayed cursor position */
 static int change_ok = TRUE; /* true if new sector may be displayed */
 
 #define NUMBOTS		2
-#define MAPWIN_HEIGHT	(lines - NUMTOPS - NUMBOTS - 2)
-#define	MAPWIN_WIDTH	(cols - NUMSIDES - 2)
+#define MAPWIN_HEIGHT	(lines - NUMTOPS - NUMBOTS)
+#define	MAPWIN_WIDTH	(cols - NUMSIDES)
 
 static WINDOW *mapwin;
 
@@ -187,8 +187,8 @@ print_sector (char whose, view_map_t vmap[], int sector)
 	save_sector = sector; /* remember last sector displayed */
 	change_ok = FALSE; /* we are displaying a new sector */
 
-	display_rows = lines - NUMTOPS - 4; /* num lines to display */
-	display_cols = cols - NUMSIDES - 1;
+	display_rows = MAPWIN_HEIGHT; /* num lines to display */
+	display_cols = MAPWIN_WIDTH;
 
 	/* compute row and column edges of sector */
 	first_row = sector_row (sector) * ROWS_PER_SECTOR;
@@ -196,15 +196,12 @@ print_sector (char whose, view_map_t vmap[], int sector)
 	last_row = first_row + ROWS_PER_SECTOR - 1;
 	last_col = first_col + COLS_PER_SECTOR - 1;
 
-	if (!(whose == whose_map /* correct map is on screen? */
-			&& ref_row <= first_row /* top row on screen? */
-			&& ref_col <= first_col /* first col on screen? */
-			&& ref_row + display_rows - 1 >= last_row /* bot row on screen? */
-			&& ref_col + display_cols - 1 >= last_col)) /* last col on screen? */
+	if ((whose != whose_map)
+		    || (!on_screen(row_col_loc(first_row, first_col)))
+		    || (!on_screen(row_col_loc(last_row, last_col))))
 		wclear(mapwin); /* erase current screen */
 
-	/* figure out first row and col to print; subtract half
-	   the extra lines from the first line */
+	/* figure out first row and col to print; subtract half the extra lines from the first line */
 
 	ref_row = first_row - (display_rows - ROWS_PER_SECTOR) / 2;
 	ref_col = first_col - (display_cols - COLS_PER_SECTOR) / 2;
@@ -271,8 +268,8 @@ display_screen (view_map_t vmap[])
 	int r, c;
 	long t;
 
-	display_rows = lines - NUMTOPS - 4; /* num lines to display */
-	display_cols = cols - NUMSIDES - 1;
+	display_rows = MAPWIN_HEIGHT; /* num lines to display */
+	display_cols = MAPWIN_WIDTH;
 
 	for (r = ref_row; r < ref_row + display_rows && r < MAP_HEIGHT; r++)
 		for (c = ref_col; c < ref_col + display_cols && c < MAP_WIDTH; c++)

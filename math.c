@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: math.c,v 1.5 1998/02/25 22:15:00 jim Exp $
+ * $Id: math.c,v 1.6 1998/02/26 02:07:46 jim Exp $
  */
 
 /*
@@ -30,13 +30,20 @@ Other routines include:
 #include "empire.h"
 #include "extern.h"
 
-void rndini()
+long	dist (long, long);
+long	irand (long);
+int	isqrt (int);
+void	rndini (void);
+int	rndint (int, int);
+
+void
+rndini (void)
 {
 	srand((unsigned)(time(0) & 0xFFFF));
 }
 
-long irand(high)
-long high;
+long
+irand (long high)
 {
 	if (high < 2) {
 		return (0);
@@ -44,8 +51,8 @@ long high;
 	return (rand() % high);
 }
 
-int rndint(minp, maxp)
-int minp, maxp;
+int
+rndint (int minp, int maxp)
 {
 	int size;
 
@@ -63,10 +70,9 @@ the max of the absolute differnce between the x and y coordinates.
 #define ABS(a) ((a) < 0 ? -(a) : (a))
 
 long
-dist (a, b)
-long a, b;
+dist (long a, long b)
 {
-	int ax, ay, bx, by;
+	long ax, ay, bx, by;
 
 	ax = loc_row (a);
 	ay = loc_col (a);
@@ -81,8 +87,8 @@ Find the square root of an integer.  We actually return the floor
 of the square root using Newton's method.
 */
 
-int isqrt (n)
-int n;
+int
+isqrt (int n)
 {
 	int guess;
 	

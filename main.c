@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: main.c,v 1.4 1998/02/25 02:20:55 jim Exp $
+ * $Id: main.c,v 1.5 1998/02/26 02:07:46 jim Exp $
  */
 
 /*
@@ -35,9 +35,7 @@ options:
 #define OPTFLAGS "w:s:d:S:"
 
 int
-main (argc, argv)
-int argc;
-char *argv[];
+main (int argc, char *argv[])
 {
 	int c;
 	extern char *optarg;

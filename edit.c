@@ -3,9 +3,8 @@
  * 
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
- * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: edit.c,v 1.29 1998/08/08 22:07:34 jwise Exp $
+ * $Id: edit.c,v 1.30 1998/08/09 00:41:19 jwise Exp $
  */
 
 /* edit.c -- Routines to handle edit mode commands. */

@@ -4,9 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * Portions of this file Copyright (C) 1998 Jim Wise
- *
- * $Id: compmove.c,v 1.40 1998/08/08 20:28:28 jwise Exp $
+ * $Id: compmove.c,v 1.41 1998/08/09 00:41:18 jwise Exp $
  */
 
 /*

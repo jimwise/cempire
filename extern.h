@@ -4,9 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * Portions of this file Copyright (C) 1998 Jim Wise
- *
- * $Id: extern.h,v 1.73 1998/08/09 00:04:36 jwise Exp $
+ * $Id: extern.h,v 1.74 1998/08/09 00:41:20 jwise Exp $
  */
 
 /* extern.h -- define global non-constant storage.  */

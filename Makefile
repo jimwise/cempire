@@ -1,8 +1,7 @@
 #
 #	Copyright (C) 1987, 1988 Chuck Simmons
-#	Portions of this file Copyright (C) 1998 Jim Wise
 #
-# $Id: Makefile,v 1.17 1998/08/08 21:37:40 jwise Exp $
+# $Id: Makefile,v 1.18 1998/08/09 00:41:17 jwise Exp $
 #
 # See the file COPYING, distributed with empire, for restriction
 # and warranty information.

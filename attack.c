@@ -4,9 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * Portions of this file Copyright (C) 1998 Jim Wise
- *
- * $Id: attack.c,v 1.21 1998/08/08 20:28:27 jwise Exp $
+ * $Id: attack.c,v 1.22 1998/08/09 00:41:17 jwise Exp $
  */
 
 /*

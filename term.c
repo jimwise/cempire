@@ -4,9 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * Portions of this file Copyright (C) 1998 Jim Wise
- *
- * $Id: term.c,v 1.65 1998/08/09 00:04:38 jwise Exp $
+ * $Id: term.c,v 1.66 1998/08/09 00:41:22 jwise Exp $
  */
 
 /*

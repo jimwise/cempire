@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.21 1998/03/02 14:25:24 jim Exp $
+ * $Id: term.c,v 1.22 1998/03/02 15:03:41 jim Exp $
  */
 
 /*
@@ -69,12 +69,12 @@ void    term_end (void);
 void    term_init (void);
 void    topini (void);
 void    topmsg(int, char *, ...);
-void    term_init (void);
 void    vaddprintf (char *, va_list);
 void	vcomment (char *, va_list);
 void	vtopmsg(int, char *, va_list);
 
 static int need_delay;
+static WINDOW *topwin;
 
 void
 status (char *fmt, ...)
@@ -136,12 +136,12 @@ vtopmsg (int linep, char *buf, va_list ap)
         if ((linep < 1) || (linep > NUMTOPS))
                 linep = 1;
 
-        wmove(stdscr, linep - 1, 0);
+        wmove(topwin, linep - 1, 0);
 
         if (buf != NULL && strlen (buf) > 0)
                 vaddprintf (buf, ap);
 
-        wclrtoeol(stdscr);
+        wclrtoeol(topwin);
 }
 
 /*
@@ -268,7 +268,7 @@ get_strq (char *buf, int sizep)
 	sizep = sizep; /* size of buf, currently unused */
 
 	nocrmode ();
-	wrefresh(stdscr);
+	wrefresh(topwin);
 	getstr (buf);
 	need_delay = FALSE;
 	info (0, 0, 0);
@@ -342,7 +342,7 @@ get_cq (void)
 	char c;
 
 	crmode ();
-	wrefresh(stdscr);
+	wrefresh(topwin);
 	c = getch ();
 	topini (); /* clear information lines */
 	nocrmode ();
@@ -437,7 +437,7 @@ help (char **text, int nlines)
 			piece_attr[j].build_time);
 
 	}
-	wrefresh(stdscr);
+	wrefresh(topwin);
 }
 
 /*
@@ -447,8 +447,8 @@ Clear the end of a specified line starting at the specified column.
 void
 clreol(int linep, int colp)
 {
-	wmove(stdscr, linep, colp);
-	wclrtoeol(stdscr);
+	wmove(topwin, linep, colp);
+	wclrtoeol(topwin);
 }
 
 /*
@@ -459,7 +459,7 @@ display.
 void
 term_clear (void)
 {
-	clear ();
+	wclear (stdscr);
 	wrefresh(stdscr);
 	kill_display ();
 }
@@ -483,7 +483,7 @@ the screen and pause for a few milliseconds.
 void
 delay (void)
 {
-	wrefresh(stdscr);
+	wrefresh(topwin);
 	napms (delay_time); /* pause a bit */
 }
 
@@ -512,7 +512,7 @@ pos_str (int row, int col, char *str, ...)
 
 	va_start(ap, str);
 
-	wmove(stdscr, row, col);
+	wmove(topwin, row, col);
 	vaddprintf (str, ap);
 
 	va_end(ap);
@@ -524,7 +524,7 @@ vaddprintf (char *str, va_list ap)
 	char junkbuf[STRSIZE];
 
 	vsprintf (junkbuf, str, ap);
-	waddstr(stdscr, junkbuf);
+	waddstr(topwin, junkbuf);
 }
 
 /*
@@ -546,6 +546,8 @@ term_init (void)
 		lines = MAP_HEIGHT + NUMTOPS + 1;
 	if (cols > MAP_WIDTH + NUMSIDES)
 		cols = MAP_WIDTH + NUMSIDES;
+	
+	topwin = newwin(NUMTOPS, cols, 0, 0);
 }
 
 /*

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: game.c,v 1.31 1998/03/11 00:13:10 jim Exp $
+ * $Id: game.c,v 1.32 1998/03/11 00:34:50 jim Exp $
  */
 
 /*
@@ -771,8 +771,6 @@ void
 replay_movie (void)
 {
 	FILE *f; /* file to save game in */
-	int row_inc, col_inc;
-	int r, c;
 	int round;
 	
 	f = fopen ("empmovie.dat", "r"); /* open for input */
@@ -793,15 +791,8 @@ replay_movie (void)
 		round += 1;
 		
 		stat_display(mapbuf, round);
-		
-		row_inc = (MAP_HEIGHT + lines - NUMTOPS - 2) / (lines - NUMTOPS);
-		col_inc = (MAP_WIDTH + cols - 1) / (cols - 1);
 	
-		for (r = 0; r < MAP_HEIGHT; r += row_inc)
-			for (c = 0; c < MAP_WIDTH; c += col_inc)
-				print_movie_cell (mapbuf, r, c, row_inc, col_inc);
-		
-		redraw ();
+		print_movie_screen(mapbuf);
 	}
 
 	fclose (f);

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.14 1998/02/28 00:16:40 jim Exp $
+ * $Id: display.c,v 1.15 1998/03/02 14:25:24 jim Exp $
  */
 
 /*
@@ -154,10 +154,10 @@ show_loc (view_map_t vmap[], long loc)
 	
 	r = loc_row (loc);
 	c = loc_col (loc);
-	move (r-ref_row+NUMTOPS, c-ref_col);
+	wmove(stdscr, r-ref_row+NUMTOPS, c-ref_col);
 	disp_square(&vmap[loc]);
 	save_cursor = loc; /* remember cursor location */
-	move (r-ref_row+NUMTOPS, c-ref_col);
+	wmove(stdscr, r-ref_row+NUMTOPS, c-ref_col);
 }
 
 /*
@@ -203,7 +203,7 @@ print_sector (char whose, view_map_t vmap[], int sector)
 	   && ref_col <= first_col /* first col on screen? */
 	   && ref_row + display_rows - 1 >= last_row /* bot row on screen? */
 	   && ref_col + display_cols - 1 >= last_col)) /* last col on screen? */
-		clear (); /* erase current screen */
+		wclear(stdscr); /* erase current screen */
 
 	/* figure out first row and col to print; subtract half
 	   the extra lines from the first line */
@@ -242,8 +242,8 @@ print_sector (char whose, view_map_t vmap[], int sector)
 	sprintf (jnkbuf, "Sector %d Round %ld", sector, date);
 	for (r = 0; jnkbuf[r] != '\0'; r++) {
 		if (r+NUMTOPS >= MAP_HEIGHT) break;
-		move (r+NUMTOPS, cols-NUMSIDES+4);
-		addch ((chtype)jnkbuf[r]);
+		wmove (stdscr, r+NUMTOPS, cols-NUMSIDES+4);
+		waddch(stdscr,(chtype)jnkbuf[r]);
 	}
 }
 
@@ -285,7 +285,7 @@ disp_square(view_map_t *vp)
 		break;
 	}
 #endif /* USE_COLOR */
-	addch ((chtype)vp->contents);
+	waddch (stdscr, (chtype)vp->contents);
 #ifdef USE_COLOR
 	attrset(0);
 	attron(COLOR_PAIR(COLOR_WHITE));
@@ -310,7 +310,7 @@ display_screen (view_map_t vmap[])
 	for (r = ref_row; r < ref_row + display_rows && r < MAP_HEIGHT; r++)
 	for (c = ref_col; c < ref_col + display_cols && c < MAP_WIDTH; c++) {
 		t = row_col_loc (r, c);
-		move (r-ref_row+NUMTOPS, c-ref_col);
+		wmove (stdscr, r-ref_row+NUMTOPS, c-ref_col);
 		disp_square(&vmap[t]);
 	}
 }
@@ -338,7 +338,7 @@ move_cursor (long *cursor, int offset)
 	       
 	r = loc_row (save_cursor);
 	c = loc_col (save_cursor);
-	move (r-ref_row+NUMTOPS, c-ref_col);
+	wmove (stdscr, r-ref_row+NUMTOPS, c-ref_col);
        
 	return (TRUE);
 }
@@ -419,8 +419,8 @@ print_zoom_cell (view_map_t *vmap, int row, int col, int row_inc, int col_inc)
 		< strchr (zoom_list, cell))
 	cell = vmap[row_col_loc(r,c)].contents;
 	
-	move (row/row_inc + NUMTOPS, col/col_inc);
-	addch ((chtype)cell);
+	wmove (stdscr, row/row_inc + NUMTOPS, col/col_inc);
+	waddch (stdscr, (chtype)cell);
 }
 
 /*
@@ -488,8 +488,8 @@ print_pzoom_cell (path_map_t *pmap, view_map_t *vmap, int row, int col, int row_
 	if (cell == ' ')
 		print_zoom_cell (vmap, row, col, row_inc, col_inc);
 	else {
-		move (row/row_inc + NUMTOPS, col/col_inc);
-		addch ((chtype)cell);
+		wmove (stdscr, row/row_inc + NUMTOPS, col/col_inc);
+		waddch (stdscr, (chtype)cell);
 	}
 }
 

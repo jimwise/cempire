@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.20 1998/03/02 13:23:17 jim Exp $
+ * $Id: term.c,v 1.21 1998/03/02 14:25:24 jim Exp $
  */
 
 /*
@@ -136,12 +136,12 @@ vtopmsg (int linep, char *buf, va_list ap)
         if ((linep < 1) || (linep > NUMTOPS))
                 linep = 1;
 
-        move (linep - 1, 0);
+        wmove(stdscr, linep - 1, 0);
 
         if (buf != NULL && strlen (buf) > 0)
                 vaddprintf (buf, ap);
 
-        clrtoeol ();
+        wclrtoeol(stdscr);
 }
 
 /*
@@ -268,7 +268,7 @@ get_strq (char *buf, int sizep)
 	sizep = sizep; /* size of buf, currently unused */
 
 	nocrmode ();
-	refresh ();
+	wrefresh(stdscr);
 	getstr (buf);
 	need_delay = FALSE;
 	info (0, 0, 0);
@@ -342,7 +342,7 @@ get_cq (void)
 	char c;
 
 	crmode ();
-	refresh ();
+	wrefresh(stdscr);
 	c = getch ();
 	topini (); /* clear information lines */
 	nocrmode ();
@@ -437,7 +437,7 @@ help (char **text, int nlines)
 			piece_attr[j].build_time);
 
 	}
-	refresh ();
+	wrefresh(stdscr);
 }
 
 /*
@@ -447,8 +447,8 @@ Clear the end of a specified line starting at the specified column.
 void
 clreol(int linep, int colp)
 {
-	move (linep, colp);
-	clrtoeol();
+	wmove(stdscr, linep, colp);
+	wclrtoeol(stdscr);
 }
 
 /*
@@ -460,7 +460,7 @@ void
 term_clear (void)
 {
 	clear ();
-	refresh ();
+	wrefresh(stdscr);
 	kill_display ();
 }
 
@@ -472,7 +472,7 @@ void
 redraw (void)
 {
 	clearok (curscr, TRUE);
-	refresh ();
+	wrefresh(stdscr);
 }
 
 /*
@@ -483,7 +483,7 @@ the screen and pause for a few milliseconds.
 void
 delay (void)
 {
-	refresh ();
+	wrefresh(stdscr);
 	napms (delay_time); /* pause a bit */
 }
 
@@ -495,9 +495,9 @@ Clean up the display.  This routine gets called as we leave the game.
 void
 term_end (void)
 {
-	move (LINES - 1, 0);
-	clrtoeol ();
-	refresh ();
+	wmove(stdscr, LINES - 1, 0);
+	wclrtoeol (stdscr);
+	wrefresh(stdscr);
 	endwin ();
 }
 
@@ -512,7 +512,7 @@ pos_str (int row, int col, char *str, ...)
 
 	va_start(ap, str);
 
-	move (row, col);
+	wmove(stdscr, row, col);
 	vaddprintf (str, ap);
 
 	va_end(ap);
@@ -524,7 +524,7 @@ vaddprintf (char *str, va_list ap)
 	char junkbuf[STRSIZE];
 
 	vsprintf (junkbuf, str, ap);
-	addstr (junkbuf);
+	waddstr(stdscr, junkbuf);
 }
 
 /*

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.19 1998/03/03 14:17:47 jim Exp $
+ * $Id: display.c,v 1.20 1998/03/03 14:41:40 jim Exp $
  */
 
 /*
@@ -33,9 +33,6 @@ void    display_locx (int, view_map_t[], long);
 void    display_score (void);
 void    display_screen (view_map_t[]);
 void    disp_square(view_map_t *);
-#ifdef USE_COLOR
-void	init_colors (void);
-#endif
 void	kill_display (void);
 int     move_cursor (long *, int);
 int     on_screen (long);
@@ -55,22 +52,6 @@ static int ref_col;
 static int save_sector; /* the currently displayed sector */
 static int save_cursor; /* currently displayed cursor position */
 static int change_ok = TRUE; /* true if new sector may be displayed */
-
-#ifdef USE_COLOR
-void init_colors (void)
-{
-    start_color();
-
-    init_pair(COLOR_BLACK, COLOR_BLACK, COLOR_BLACK);
-    init_pair(COLOR_GREEN, COLOR_GREEN, COLOR_BLACK);
-    init_pair(COLOR_RED, COLOR_RED, COLOR_BLACK);
-    init_pair(COLOR_CYAN, COLOR_CYAN, COLOR_BLACK);
-    init_pair(COLOR_WHITE, COLOR_WHITE, COLOR_BLACK);
-    init_pair(COLOR_MAGENTA, COLOR_MAGENTA, COLOR_BLACK);
-    init_pair(COLOR_BLUE, COLOR_BLUE, COLOR_BLACK);
-    init_pair(COLOR_YELLOW, COLOR_YELLOW, COLOR_BLACK);
-}
-#endif /* USE_COLOR */
 
 /*
 This routine is called when the current display has been
@@ -261,37 +242,7 @@ pretty.
 void
 disp_square(view_map_t *vp)
 {
-#ifdef USE_COLOR
-	switch(vp->contents)
-	{
-	case '+':
-		attron(COLOR_PAIR(COLOR_GREEN));
-		break;
-	case '.':
-		attron(COLOR_PAIR(COLOR_CYAN));
-		break;
-	case 'a':
-	case 'f':
-	case 'p':
-	case 'd':
-	case 'b':
-	case 't':
-	case 'c':
-	case 's':
-	case 'z':
-	case 'X':
-		attron(COLOR_PAIR(COLOR_RED));
-		break;
-	default:
-		attron(COLOR_PAIR(COLOR_WHITE));
-		break;
-	}
-#endif /* USE_COLOR */
 	waddch (stdscr, (chtype)vp->contents);
-#ifdef USE_COLOR
-	attrset(0);
-	attron(COLOR_PAIR(COLOR_WHITE));
-#endif /* USE_COLOR */
 }
 
 

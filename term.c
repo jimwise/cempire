@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.43 1998/03/03 14:11:22 jim Exp $
+ * $Id: term.c,v 1.44 1998/03/03 14:41:43 jim Exp $
  */
 
 /*
@@ -400,9 +400,6 @@ term_init (void)
 	initscr();
 	noecho();
 	crmode();
-#ifdef USE_COLOR
-	init_colors();
-#endif /* USE_COLOR */
 	lines = LINES;
 	cols = COLS;
 	if (lines > MAP_HEIGHT + NUMTOPS + 1)

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: empire.h,v 1.23 1998/03/03 13:25:03 jim Exp $
+ * $Id: empire.h,v 1.24 1998/03/03 14:41:42 jim Exp $
  */
 
 /*
@@ -20,10 +20,6 @@ empire.h -- type and constant declarations
 
 #ifndef NULL
 #define NULL 0
-#endif
-
-#ifdef A_COLOR
-#define USE_COLOR
 #endif
 
 #define VERSION_STRING "EMPIRE, Version 1.2, February 1998"

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: extern.h,v 1.48 1998/03/03 13:52:06 jim Exp $
+ * $Id: extern.h,v 1.49 1998/03/03 14:41:42 jim Exp $
  */
 
 /*
@@ -120,9 +120,6 @@ int	cur_sector (void);
 void	display_loc (int, view_map_t[], long);
 void	display_locx (int, view_map_t[], long);
 void    display_score (void);
-#ifdef USE_COLOR
-void	init_colors(void);
-#endif /* USE_COLOR */
 void	kill_display (void);
 int	move_cursor (long *, int);
 void    print_movie_cell (char *, int, int, int, int);

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: empire.c,v 1.19 1998/03/03 14:03:50 jim Exp $
+ * $Id: empire.c,v 1.20 1998/03/03 14:41:41 jim Exp $
  */
 
 /*
@@ -157,13 +157,14 @@ do_command (char orders)
 		break;
 
 	case 'W': /* watch movie */
-		if (resigned || debug) replay_movie ();
+		if (resigned || debug)
+			replay_movie();
 		else error ("You cannot watch movie until computer resigns.");
 		break;
 	
 	case 'Z': /* print compressed map */
 		term_clear();
-		print_zoom (user_map);
+		print_zoom(user_map);
 		redraw();
 		break;
 

@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: edit.c,v 1.33 2001/02/08 19:42:07 jwise Exp $
+ * $Id: edit.c,v 1.34 2001/02/08 19:46:01 jwise Exp $
  */
 
 /* edit.c -- Routines to handle edit mode commands. */
@@ -133,12 +133,12 @@ static char dirchars[] = "WEDCXZAQ";
 static char
 e_cursor (long *edit_cursor)
 {
-	unsigned char e;
+	int e;
 	char *p;
 	
 	while (1)
 	{
-		e = toupper(get_chx());
+		e = get_chx();
 		p = strchr(dirchars, e);
 		if (!p)
 			break;
@@ -300,7 +300,7 @@ static char dirs[] = "WEDCXZAQ";
 static void
 e_stasis (long loc)
 {
-	unsigned char e;
+	int e;
 	char *p;
 	
 	if (!isupper (user_map[loc].contents)) huh (); /* no object here */

@@ -6,19 +6,19 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.66 1998/08/08 21:06:04 jwise Exp $
+ * $Id: display.c,v 1.67 1998/08/08 22:07:34 jwise Exp $
  */
 
 /*
-display.c -- This file contains routines for displaying sectors and
-moving the cursor about in a sector.  We need to remember the following
-information:
-
-	the current map portion displayed on the screen;
-
-	whether the displayed portion is from the user's or the computer's
-	point of view;
-*/
+ * display.c -- This file contains routines for displaying sectors and
+ * moving the cursor about in a sector.  We need to remember the following
+ * information:
+ * 
+ * 	the current map portion displayed on the screen;
+ * 
+ * 	whether the displayed portion is from the user's or the computer's
+ * 	point of view;
+ */
 
 #include <stdio.h>
 #include <string.h>
@@ -72,9 +72,9 @@ map_init (void)
 }
 
 /*
-This routine is called when the current display has been
-trashed and no sector is shown on the screen.
-*/
+ * This routine is called when the current display has been
+ * trashed and no sector is shown on the screen.
+ */
 
 void kill_display (void)
 {
@@ -82,9 +82,9 @@ void kill_display (void)
 }
 
 /*
-This routine is called when a new sector may be displayed on the
-screen even if the location to be displayed is already on the screen.
-*/
+ * This routine is called when a new sector may be displayed on the
+ * screen even if the location to be displayed is already on the screen.
+ */
 
 void sector_change (void)
 {
@@ -92,9 +92,9 @@ void sector_change (void)
 }
 
 /*
-Return the currently displayed user sector, if any.  If a user
-sector is not displayed, return -1.
-*/
+ * Return the currently displayed user sector, if any.  If a user
+ * sector is not displayed, return -1.
+ */
 
 int cur_sector (void)
 {
@@ -105,9 +105,9 @@ int cur_sector (void)
 }
 
 /*
-Return the current position of the cursor.  If the user's map
-is not on the screen, we return -1.
-*/
+ * Return the current position of the cursor.  If the user's map
+ * is not on the screen, we return -1.
+ */
 
 long cur_cursor (void)
 {
@@ -118,13 +118,13 @@ long cur_cursor (void)
 }
 
 /*
-Display a location on the screen. We figure out the sector the
-location is in and display that sector.  The cursor is left at
-the requested location.
-
-We redisplay the sector only if we either have been requested to
-redisplay the sector, or if the location is not on the screen.
-*/
+ * Display a location on the screen. We figure out the sector the
+ * location is in and display that sector.  The cursor is left at
+ * the requested location.
+ * 
+ * We redisplay the sector only if we either have been requested to
+ * redisplay the sector, or if the location is not on the screen.
+ */
 
 void
 display_loc (int whose, view_map_t vmap[], long loc)
@@ -135,9 +135,7 @@ display_loc (int whose, view_map_t vmap[], long loc)
 	show_loc (vmap, loc);
 }
 
-/*
-Display a location iff the location is on the screen.
-*/
+/* Display a location iff the location is on the screen. */
 
 void
 display_locx (int whose, view_map_t vmap[], long loc)
@@ -146,9 +144,7 @@ display_locx (int whose, view_map_t vmap[], long loc)
 		show_loc (vmap, loc);
 }
 
-/*
-Display a location which exists on the screen.
-*/
+/* Display a location which exists on the screen. */
 
 void
 show_loc (view_map_t vmap[], long loc)
@@ -165,23 +161,23 @@ show_loc (view_map_t vmap[], long loc)
 }
 
 /*
-Print a sector of the user's on the screen.  If it is already displayed,
-we do nothing.  Otherwise we redraw the screen.  Someday, some intelligence
-in doing this might be interesting.  We heavily depend on curses to update
-the screen in a reasonable fashion.
-
-If the desired sector
-is not displayed, we clear the screen.  We then update the screen
-to reflect the current map.  We heavily depend on curses to correctly
-optimize the redrawing of the screen.
-
-When redrawing the screen, we figure out where the
-center of the sector is in relation to the map.  We then compute
-the screen coordinates where we want to display the center of the
-sector.  We will remember the sector displayed, the map displayed,
-and the map location that appears in the upper-left corner of the
-screen.
-*/
+ * Print a sector of the user's on the screen.  If it is already displayed,
+ * we do nothing.  Otherwise we redraw the screen.  Someday, some intelligence
+ * in doing this might be interesting.  We heavily depend on curses to update
+ * the screen in a reasonable fashion.
+ * 
+ * If the desired sector
+ * is not displayed, we clear the screen.  We then update the screen
+ * to reflect the current map.  We heavily depend on curses to correctly
+ * optimize the redrawing of the screen.
+ * 
+ * When redrawing the screen, we figure out where the
+ * center of the sector is in relation to the map.  We then compute
+ * the screen coordinates where we want to display the center of the
+ * sector.  We will remember the sector displayed, the map displayed,
+ * and the map location that appears in the upper-left corner of the
+ * screen.
+ */
  
 void
 print_sector (char whose, view_map_t vmap[], int sector)
@@ -260,9 +256,7 @@ print_sector (char whose, view_map_t vmap[], int sector)
 	wrefresh(stdscr);
 }
 
-/*
-Display the contents of a single map square.
-*/
+/* Display the contents of a single map square. */
 
 
 void
@@ -272,9 +266,7 @@ disp_square(view_map_t *vp)
 }
 
 
-/*
-Display the portion of the map that appears on the screen.
-*/
+/* Display the portion of the map that appears on the screen. */
 
 void
 display_screen (view_map_t vmap[])
@@ -298,10 +290,10 @@ display_screen (view_map_t vmap[])
 }
 
 /*
-Move the cursor in a specified direction.  We return TRUE if the
-cursor remains in the currently displayed screen, otherwise FALSE.
-We display the cursor on the screen, if possible.
-*/
+ * Move the cursor in a specified direction.  We return TRUE if the
+ * cursor remains in the currently displayed screen, otherwise FALSE.
+ * We display the cursor on the screen, if possible.
+ */
 
 int
 move_cursor (long *cursor, int offset)
@@ -327,9 +319,7 @@ move_cursor (long *cursor, int offset)
 	return (TRUE);
 }
 
-/*
-See if a location is displayed on the screen.
-*/
+/* See if a location is displayed on the screen. */
 
 int
 on_screen (long loc)
@@ -348,9 +338,7 @@ on_screen (long loc)
 	return (TRUE);
 }
 
-/*
-Print a condensed version of the map.
-*/
+/* Print a condensed version of the map. */
 
 char zoom_list[] = "XO*tcbsdpfaTCBSDPFAzZ+. ";
 
@@ -409,9 +397,7 @@ print_zoom (view_map_t *vmap)
 		print_sector_u(save_sector);
 }
 
-/*
-Print a single cell in condensed format.
-*/
+/* Print a single cell in condensed format. */
 
 void
 print_zoom_cell (view_map_t *vmap, int row, int col, int row_inc, int col_inc)
@@ -429,9 +415,7 @@ print_zoom_cell (view_map_t *vmap, int row, int col, int row_inc, int col_inc)
 	waddch (mapwin, (chtype)cell);
 }
 
-/*
-Print a condensed version of a pathmap.
-*/
+/* Print a condensed version of a pathmap. */
 
 void
 print_pzoom (const char *s, path_map_t *pmap, view_map_t *vmap)
@@ -489,13 +473,13 @@ print_pzoom (const char *s, path_map_t *pmap, view_map_t *vmap)
 }
 
 /*
-Print a single cell of a pathmap in condensed format.
-We average all squares in the cell and take the mod 10 value.
-Squares with a value of -1 are printed with '-', squares with
-a value of INFINITY/2 are printed with 'P', and squares with
-a value of INFINITY are printed with 'Z'.  Squares with a value
-between P and Z are printed as U.
-*/
+ * Print a single cell of a pathmap in condensed format.
+ * We average all squares in the cell and take the mod 10 value.
+ * Squares with a value of -1 are printed with '-', squares with
+ * a value of INFINITY/2 are printed with 'P', and squares with
+ * a value of INFINITY are printed with 'Z'.  Squares with a value
+ * between P and Z are printed as U.
+ */
 
 void
 print_pzoom_cell (path_map_t *pmap, view_map_t *vmap, int row, int col, int row_inc, int col_inc)
@@ -543,9 +527,7 @@ print_pzoom_cell (path_map_t *pmap, view_map_t *vmap, int row, int col, int row_
 	}
 }
 
-/*
-Display the score off in the corner of the screen.
-*/
+/* Display the score off in the corner of the screen. */
 
 void
 display_score (void)
@@ -556,7 +538,8 @@ display_score (void)
 }
 
 /*
- * given a frame of a movie (i.e. the map at one particular point), print a zoomed map at that point)
+ * given a frame of a movie (i.e. the map at one particular point), print a zoomed
+ * map at that point)
  */
 
 void
@@ -585,9 +568,7 @@ print_movie_screen(char *mapbuf)
 	wrefresh(stdscr);
 }
 
-/*
-Print a screen of help information.
-*/
+/* Print a screen of help information. */
 
 #define MIN(a,b) ((a)<(b) ? (a) : (b))
 

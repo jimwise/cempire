@@ -6,13 +6,13 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: empire.c,v 1.34 1998/03/11 02:57:14 jim Exp $
+ * $Id: empire.c,v 1.35 1998/08/08 22:07:35 jwise Exp $
  */
 
 /*
-empire.c -- this file contains initialization code, the main command
-parser, and the simple commands.
-*/
+ * empire.c -- this file contains initialization code, the main command
+ * parser, and the simple commands.
+ */
 
 #include <stdio.h>
 #include "empire.h"
@@ -66,9 +66,7 @@ empire (void)
 	}
 }
 
-/*
-Execute a command.
-*/
+/* Execute a command. */
 
 void
 do_command (char orders)
@@ -186,10 +184,10 @@ do_command (char orders)
 }
 
 /*
-Give an unowned city (if any) to the computer.  We make
-a list of unowned cities, choose one at random, and mark
-it as the computers.
-*/
+ * Give an unowned city (if any) to the computer.  We make
+ * a list of unowned cities, choose one at random, and mark
+ * it as the computers.
+ */
 
 void
 c_give (void)
@@ -217,9 +215,9 @@ c_give (void)
 }
 
 /*
-Debugging commands should be implemented here.  
-The order cannot be any legal command.
-*/
+ * Debugging commands should be implemented here.  
+ * The order cannot be any legal command.
+ */
 
 void
 c_debug (char order)
@@ -252,9 +250,7 @@ c_debug (char order)
 	}
 }
 
-/*
-The quit command.  Make sure the user really wants to quit.
-*/
+/* The quit command.  Make sure the user really wants to quit. */
 
 void
 c_quit (void)
@@ -264,10 +260,7 @@ c_quit (void)
 	}
 }
 
-/*
-Print a sector.  Read the sector number from the user
-and print it.
-*/
+/* Read the sector number from the user and print that sector. */
 
 void
 c_sector (void)
@@ -279,11 +272,11 @@ c_sector (void)
 }
 
 /*
-Print the map to a file.  We ask for a filename, attempt to open the
-file, and if successful, print out the user's information to the file.
-We print the map sideways to make it easier for the user to print
-out the map.
-*/
+ * Print the map to a file.  We ask for a filename, attempt to open the
+ * file, and if successful, print out the user's information to the file.
+ * We print the map sideways to make it easier for the user to print
+ * out the map.
+ */
 
 void
 c_map (void)
@@ -321,9 +314,7 @@ c_map (void)
 	fclose (f);
 }
 
-/*
-Allow user to examine the computer's map.
-*/
+/* Allow user to examine the computer's map. */
 
 void
 c_examine (void)
@@ -335,9 +326,9 @@ c_examine (void)
 }
 
 /*
-We give the computer lots of free moves and
-Print a "zoomed" version of the computer's map.
-*/
+ * We give the computer lots of free moves and
+ * Print a "zoomed" version of the computer's map.
+ */
 
 void
 c_movie (void)
@@ -350,9 +341,7 @@ c_movie (void)
 	}
 }
 
-/*
- * This provides a single place for collecting all startup routines
- */
+/*This provides a single place for collecting all startup routines */
 
 void
 emp_start (void)
@@ -362,9 +351,7 @@ emp_start (void)
 	rand_init();	/* init random number generator */
 }
 
-/*
- * This provides a single place for collecting all cleanup routines
- */
+/* This provides a single place for collecting all cleanup routines */
 
 void
 emp_end (void)

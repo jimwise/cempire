@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: empire.h,v 1.12 1998/02/27 00:33:36 jim Exp $
+ * $Id: empire.h,v 1.13 1998/02/27 01:44:23 jim Exp $
  */
 
 /*
@@ -25,6 +25,8 @@ empire.h -- type and constant declarations
 #ifdef A_COLOR
 #define USE_COLOR
 #endif
+
+#define VERSION_STRING "EMPIRE, Version 5.00 site Amdahl 1-Apr-1988"
 
 typedef unsigned char uchar;
 

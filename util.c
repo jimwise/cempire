@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: util.c,v 1.14 1998/02/27 01:39:20 jim Exp $
+ * $Id: util.c,v 1.15 1998/02/27 01:44:24 jim Exp $
  */
 
 /*
@@ -26,7 +26,6 @@ void	check_obj (piece_info_t **, int);
 void	check_obj_cargo (piece_info_t **);
 void	emp_panic (char *, int);
 void    tupper (uchar *);
-void    ver (void);
 
 /*
 Convert a string to uppercase.
@@ -40,12 +39,6 @@ tupper (uchar *str)
 		if (islower (*str)) *str = toupper (*str);
 		str++;
 	}
-}
-
-void
-ver (void)
-{
-        addstr ("EMPIRE, Version 5.00 site Amdahl 1-Apr-1988");
 }
 
 /*

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.34 1998/03/03 13:16:41 jim Exp $
+ * $Id: term.c,v 1.35 1998/03/03 13:29:54 jim Exp $
  */
 
 /*
@@ -49,7 +49,6 @@ void    get_strq (char *, int);
 void    help (char **, int);
 void    huh (void);
 void	info (char *, ...);
-void    pdebug (char *, ...);
 void    pos_str (int, int, char *, ...);
 void    prompt (char *, ...);
 void    redraw (void);
@@ -61,21 +60,6 @@ void	vcomment (char *, va_list);
 void	vtopmsg(int, char *, va_list);
 
 static WINDOW *statuswin, *infowin;
-
-void
-pdebug (char *s, ...)
-{
-	va_list ap;
-
-	va_start(ap, s);
-
-	if (!print_debug)
-		return;
-
-	vcomment (s, ap);
-
-	va_end(ap);
-}
 
 /*
 Here are routines that handle printing to the top few lines of the

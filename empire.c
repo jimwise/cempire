@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: empire.c,v 1.32 1998/03/11 02:20:58 jim Exp $
+ * $Id: empire.c,v 1.33 1998/03/11 02:31:15 jim Exp $
  */
 
 /*
@@ -28,6 +28,7 @@ void	c_sector (void);
 void	do_command (char);
 void	empire (void);
 void	emp_end (void);
+void	emp_start (void);
 
 void
 empire (void)
@@ -35,9 +36,7 @@ empire (void)
 	char order;
 	int turn = 0;
 
-	term_init(); /* init tty, and info and status windows */
-	map_init(); /* init map window */
-	rand_init(); /* init random number generator */
+	emp_start();
 
 	term_clear(); /* nothing on screen */
 	info(VERSION_STRING);
@@ -349,6 +348,18 @@ c_movie (void)
 		print_zoom(comp_map);
 		save_game();
 	}
+}
+
+/*
+ * This provides a single place for collecting all startup routines
+ */
+
+void
+emp_start (void)
+{
+	term_init(); /* init tty, and info and status windows */
+	map_init(); /* init map window */
+	rand_init(); /* init random number generator */
 }
 
 /*

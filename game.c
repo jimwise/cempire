@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: game.c,v 1.26 1998/03/09 14:51:26 jim Exp $
+ * $Id: game.c,v 1.27 1998/03/09 15:00:11 jim Exp $
  */
 
 /*
@@ -778,17 +778,19 @@ replay_movie (void)
 	round = 0;
 	term_clear();
 	for (;;) {
-		if (fread ((char *)mapbuf, 1, sizeof (mapbuf), f) != sizeof (mapbuf)) break;
+		if (fread ((char *)mapbuf, 1, sizeof (mapbuf), f) != sizeof (mapbuf))
+			break;
+
 		round += 1;
 		
 		stat_display (mapbuf, round);
 		
-		row_inc = (MAP_HEIGHT + lines - NUMTOPS - 1) / (lines - NUMTOPS);
+		row_inc = (MAP_HEIGHT + lines - NUMTOPS - 2) / (lines - NUMTOPS);
 		col_inc = (MAP_WIDTH + cols - 1) / (cols - 1);
 	
 		for (r = 0; r < MAP_HEIGHT; r += row_inc)
-		for (c = 0; c < MAP_WIDTH; c += col_inc)
-		print_movie_cell (mapbuf, r, c, row_inc, col_inc);
+			for (c = 0; c < MAP_WIDTH; c += col_inc)
+				print_movie_cell (mapbuf, r, c, row_inc, col_inc);
 		
 		redraw ();
 		delay ();

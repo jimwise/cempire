@@ -1,7 +1,7 @@
 #
 #	Copyright (C) 1987, 1988 Chuck Simmons
 #
-# $Id: Makefile,v 1.41 2003/03/13 19:51:24 jwise Exp $
+# $Id: Makefile,v 1.42 2003/03/13 19:52:26 jwise Exp $
 #
 # See the file COPYING, distributed with empire, for restriction
 # and warranty information.
@@ -177,6 +177,7 @@ clean:
 	rm -f *.o $(TARGET) cempire-$(VERSION).tar cempire-$(VERSION).tar.gz cempire-$(VERSION).shar cempire-$(VERSION).tar.gz.asc
 
 cleandir: clean
+	rm -f .depend
 
 install:
 	${INSTALL} -c -s -m 0755 cempire ${BINDIR}

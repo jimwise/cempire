@@ -1,7 +1,7 @@
 #
 #	Copyright (C) 1987, 1988 Chuck Simmons
 #
-# $Id: Makefile,v 1.27 1999/01/12 22:18:42 jwise Exp $
+# $Id: Makefile,v 1.28 1999/09/29 01:11:22 jwise Exp $
 #
 # See the file COPYING, distributed with empire, for restriction
 # and warranty information.
@@ -89,6 +89,11 @@ WARNS=-ansi -Wall -W -pedantic -Wtraditional -Wshadow \
 	-Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings \
 	-Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations \
 	-Wnested-externs -Winline
+
+#
+# Here's where you put your favorite c compiler options
+#
+COPTS=-g
 
 #
 # You shouldn't have to modify anything below this line.

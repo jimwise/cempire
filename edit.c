@@ -5,7 +5,7 @@
  * and warranty information.
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: edit.c,v 1.15 1998/02/28 00:16:40 jim Exp $
+ * $Id: edit.c,v 1.16 1998/03/02 17:48:10 jim Exp $
  */
 
 /*
@@ -506,13 +506,16 @@ e_info (long edit_cursor)
 
 	ab = user_map[edit_cursor].contents;
 
-	if (ab == 'O') e_city_info (edit_cursor);
-	else if (ab == 'X' && debug) e_city_info (edit_cursor);
+	if (ab == 'O')
+		e_city_info(edit_cursor);
+	else if (ab == 'X' && debug)
+		e_city_info (edit_cursor);
 	else if ((ab >= 'A') && (ab <= 'T'))
-		e_piece_info (edit_cursor, ab);
+		e_piece_info(edit_cursor, ab);
 	else if ((ab >= 'a') && (ab <= 't') && (debug))
-		e_piece_info (edit_cursor, ab);
-	else huh ();
+		e_piece_info(edit_cursor, ab);
+	else
+		huh();
 }
 
 /*
@@ -574,14 +577,12 @@ e_city_info (long edit_cursor)
 	assert (cityp != NULL);
 
 	*func_buf = 0; /* nothing in buffer */
-	for (i = ARMY; i < NUM_OBJECTS; i++) { /* for each piece */
+	for (i = ARMY; i < NUM_OBJECTS; i++)
+	{
 		if (cityp->func[i] < 0)
-				sprintf (temp_buf, "%c:%s; ",
-				piece_attr[i].sname,
-				func_name[FUNCI(cityp->func[i])]);
-		else sprintf (temp_buf, "%c: %ld;",
-				piece_attr[i].sname,
-				cityp->func[i]);
+			sprintf (temp_buf, "%c:%s; ", piece_attr[i].sname, func_name[FUNCI(cityp->func[i])]);
+		else
+			sprintf (temp_buf, "%c: %ld;", piece_attr[i].sname, cityp->func[i]);
 		
 		strcat (func_buf, temp_buf);
 	}
@@ -592,7 +593,9 @@ e_city_info (long edit_cursor)
 		piece_attr[cityp->prod].article,
 		date + piece_attr[cityp->prod].build_time - cityp->work);
 
-	info (junk_buf2, jnkbuf, func_buf);
+	topmsg(1, junk_buf2);
+	topmsg(2, jnkbuf);
+	topmsg(3, func_buf);
 }
 
 /*

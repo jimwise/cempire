@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: usermove.c,v 1.3 1998/02/24 23:48:05 jim Exp $
+ * $Id: usermove.c,v 1.4 1998/02/25 22:49:58 jim Exp $
  */
 
 /*
@@ -24,8 +24,6 @@ void move_army_to_city();
 
 void
 user_move () {
-	void piece_move();
-
 	int i, j, sec, sec_start;
 	piece_info_t *obj, *next_obj;
 	int prod;

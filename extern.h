@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: extern.h,v 1.14 1998/02/25 22:26:52 jim Exp $
+ * $Id: extern.h,v 1.15 1998/02/25 22:49:58 jim Exp $
  */
 
 /*
@@ -164,7 +164,6 @@ int obj_moves();
 int obj_capacity();
 void kill_obj();
 void kill_city();
-void produce();
 void move_obj();
 void move_sat();
 int good_loc();
@@ -218,12 +217,13 @@ int	isqrt(int);
 void	rndini(void);
 
 /* object routines (object.c) */
-void describe_obj (piece_info_t *);
-void embark (piece_info_t *, piece_info_t *);
+void	describe_obj (piece_info_t *);
+void	embark (piece_info_t *, piece_info_t *);
 city_info_t     *find_city (long);
 piece_info_t	*find_obj (int, long);
 piece_info_t	*find_obj_at_loc (long);
 int	get_piece_name (void);
+void	produce (city_info_t *);
 void	scan (view_map_t[], long);
 void	set_prod (city_info_t *);
 

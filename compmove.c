@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: compmove.c,v 1.7 1998/02/24 23:47:58 jim Exp $
+ * $Id: compmove.c,v 1.8 1998/02/25 22:49:57 jim Exp $
  */
 
 /*
@@ -324,11 +324,10 @@ Return the most-needed type of production.
 int
 need_more (int *city_count, int prod1, int prod2)
 {
-	if (city_count[prod1] * ratio[prod2]
-		 <= city_count[prod2] * ratio[prod1])
-	return (prod1);
-
-	else return (prod2);
+	if (city_count[prod1] * ratio[prod2] <= city_count[prod2] * ratio[prod1])
+		return (prod1);
+	else
+		return (prod2);
 }
 
 /*

@@ -2,7 +2,7 @@
 #	Copyright (C) 1987, 1988 Chuck Simmons
 #	Portions of this file Copyright (C) 1998 Jim Wise
 #
-# $Id: Makefile,v 1.7 1998/02/25 02:20:53 jim Exp $
+# $Id: Makefile,v 1.8 1998/02/25 22:49:56 jim Exp $
 #
 # See the file COPYING, distributed with empire, for restriction
 # and warranty information.
@@ -95,3 +95,5 @@ empire.tar.gz: empire.tar
 
 empire.shar: $(SOURCES)
 	shar $(SOURCES) >empire.shar
+
+$(OFILES): extern.h empire.h

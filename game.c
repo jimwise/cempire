@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: game.c,v 1.24 1998/03/04 13:27:19 jim Exp $
+ * $Id: game.c,v 1.25 1998/03/06 22:40:28 jim Exp $
  */
 
 /*
@@ -73,7 +73,7 @@ init_game (void)
 		comp_map[i].contents = ' ';
 		comp_map[i].seen = 0;
 	}
-	for (j = ARMY; j < NUM_OBJECTS; j++) {
+	for (j = FIRST_OBJECT; j < NUM_OBJECTS; j++) {
 		user_obj[j] = NULL;
 		comp_obj[j] = NULL;
 	}
@@ -206,7 +206,7 @@ place_cities (void)
 		city[placed].work = 0;
 		city[placed].prod = NOPIECE;
 		
-		for (j = ARMY; j < NUM_OBJECTS; j++)
+		for (j = FIRST_OBJECT; j < NUM_OBJECTS; j++)
 			city[placed].func[j] = NOFUNC; /* no function */
 			
 		map[loc].contents = '*';

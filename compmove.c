@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: compmove.c,v 1.29 1998/03/04 13:47:43 jim Exp $
+ * $Id: compmove.c,v 1.30 1998/03/06 22:40:26 jim Exp $
  */
 
 /*
@@ -64,7 +64,7 @@ comp_move (int nmoves)
 
 	/* Update our view of the world. */
 	
-	for (j = ARMY; j < NUM_OBJECTS; j++)
+	for (j = FIRST_OBJECT; j < NUM_OBJECTS; j++)
 		for (obj = comp_obj[j]; obj != NULL; obj = obj->piece_link.next)
 			scan (comp_map, obj->loc); /* refresh comp's view of world */
 
@@ -210,7 +210,7 @@ comp_prod (city_info_t *cityp, int is_lake)
 	/* Produce a TT and SAT if we don't have one. */
 	
 	/* count # of cities producing each piece */
-	for (j = ARMY; j < NUM_OBJECTS; j++)
+	for (j = FIRST_OBJECT; j < NUM_OBJECTS; j++)
 		city_count[j] = 0;
 		
 	total_cities = 0;
@@ -306,7 +306,7 @@ overproduced (city_info_t *cityp, int *city_count)
 {
 	piece_type_t i;
 
-	for (i = ARMY; i < NUM_OBJECTS; i++)
+	for (i = FIRST_OBJECT; i < NUM_OBJECTS; i++)
 	{
 		/* return true if changing production would improve balance */
 		if (i != cityp->prod && ((city_count[cityp->prod] - 1) * ratio[i] > (city_count[i] + 1) * ratio[cityp->prod]))
@@ -354,7 +354,7 @@ comp_set_needed (city_info_t *cityp, int *city_count, int army_ok, int is_lake)
 	city_count[FIGHTER] = INFINITY;
 	
 	best_prod = ARMY; /* default */
-	for (prod = ARMY; prod < NUM_OBJECTS; prod++)
+	for (prod = NUM_OBJECTS; prod < NUM_OBJECTS; prod++)
 		best_prod = need_more (city_count, best_prod, prod);
 	
 	comp_set_prod (cityp, best_prod);

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.52 1998/03/04 14:25:58 jim Exp $
+ * $Id: term.c,v 1.53 1998/03/06 22:40:29 jim Exp $
  */
 
 /*
@@ -257,7 +257,7 @@ help (char **text, int nlines)
 	pos_str (text_lines + NUMTOPS + 2,  1, "--Piece---Yours-Enemy-Moves-Hits-Cost");
 	pos_str (text_lines + NUMTOPS + 2, 41, "--Piece---Yours-Enemy-Moves-Hits-Cost");
 
-	for (j = ARMY; j < NUM_OBJECTS; j++)
+	for (j = FIRST_OBJECT; j < NUM_OBJECTS; j++)
 	{
 		if (j >= (NUM_OBJECTS+1)/2) {
 			r = j - (NUM_OBJECTS+1)/2;

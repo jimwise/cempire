@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: usermove.c,v 1.20 1998/03/04 14:25:59 jim Exp $
+ * $Id: usermove.c,v 1.21 1998/03/06 22:40:30 jim Exp $
  */
 
 /*
@@ -73,7 +73,7 @@ user_move (void)
 	also scan through all cities before possibly asking the
 	user what to produce in each city. */
 
-	for (n = ARMY; n < NUM_OBJECTS; n++)
+	for (n = FIRST_OBJECT; n < NUM_OBJECTS; n++)
 		for (obj = user_obj[n]; obj != NULL; obj = obj->piece_link.next)
 		{
 			obj->moved = 0; /* nothing moved yet */
@@ -114,7 +114,7 @@ user_move (void)
 		sec = i % NUM_SECTORS;
 		sector_change (); /* allow screen to be redrawn */
 
-		for (n = ARMY; n < NUM_OBJECTS; n++) /* loop through obj lists */
+		for (n = FIRST_OBJECT; n < NUM_OBJECTS; n++) /* loop through obj lists */
 			for (obj = user_obj[move_order[n]]; obj != NULL; obj = next_obj)
 			{
 				/* loop through objs in list */

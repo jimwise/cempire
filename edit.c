@@ -5,7 +5,7 @@
  * and warranty information.
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: edit.c,v 1.22 1998/03/04 14:25:56 jim Exp $
+ * $Id: edit.c,v 1.23 1998/03/06 22:40:26 jim Exp $
  */
 
 /*
@@ -567,7 +567,7 @@ e_city_info (long edit_cursor)
 	assert (cityp != NULL);
 
 	*func_buf = 0; /* nothing in buffer */
-	for (i = ARMY; i < NUM_OBJECTS; i++)
+	for (i = FIRST_OBJECT; i < NUM_OBJECTS; i++)
 	{
 		if (cityp->func[i] < 0)
 			sprintf (temp_buf, "%c:%s; ", piece_attr[i].sname, func_name[FUNCI(cityp->func[i])]);

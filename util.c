@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: util.c,v 1.21 1998/02/28 01:01:45 jim Exp $
+ * $Id: util.c,v 1.22 1998/03/06 22:40:30 jim Exp $
  */
 
 /*
@@ -149,7 +149,7 @@ check_obj (piece_info_t **list, int owner)
 	piece_type_t i;
 	piece_info_t *p;
 	
-	for (i = ARMY; i < NUM_OBJECTS; i++)
+	for (i = FIRST_OBJECT; i < NUM_OBJECTS; i++)
 		for (p = list[i]; p != NULL; p = p->piece_link.next)
 		{
 			assert (p->owner == owner);
@@ -224,7 +224,7 @@ check_obj_cargo (piece_info_t **list)
 	piece_info_t *p;
 	piece_type_t i;
 
-	for (i = ARMY; i < NUM_OBJECTS; i++)
+	for (i = FIRST_OBJECT; i < NUM_OBJECTS; i++)
 		for (p = list[i]; p != NULL; p = p->piece_link.next)
 			if (p->ship)
 				assert(in_cargo[p-object]);

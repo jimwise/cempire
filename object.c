@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: object.c,v 1.18 1998/03/03 13:15:14 jim Exp $
+ * $Id: object.c,v 1.19 1998/03/06 22:40:28 jim Exp $
  */
 
 /*
@@ -288,7 +288,7 @@ kill_city (city_info_t *cityp)
 		cityp->work = 0;
 		cityp->prod = NOPIECE;
 		
-		for (i = ARMY; i < NUM_OBJECTS; i++)
+		for (i = FIRST_OBJECT; i < NUM_OBJECTS; i++)
 			cityp->func[i] = NOFUNC;
 		
 		scan (vmap, cityp->loc);
@@ -668,7 +668,7 @@ get_piece_name (void)
 	
 	c = get_chx (); /* get the answer */
 
-	for (i = ARMY; i < NUM_OBJECTS; i++)
+	for (i = FIRST_OBJECT; i < NUM_OBJECTS; i++)
 	if (piece_attr[i].sname == c) {
 		return i;
 	}

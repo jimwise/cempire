@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: game.c,v 1.46 2001/11/12 15:46:10 jwise Exp $
+ * $Id: game.c,v 1.47 2002/11/11 06:17:46 jwise Exp $
  */
 
 /* game.c -- Routines to initialize, save, and restore a game. */
@@ -96,7 +96,7 @@ init_game (void)
 		LINK (free_list, obj, piece_link); 
 	}
 
-	make_map (); /* make land and water */
+	make_map(); /* make land and water */
 
 	do
 	{

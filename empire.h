@@ -25,7 +25,6 @@ empire.h -- type and constant declarations
 #ifndef SYSV
 #define memcpy(dst,src,len) bcopy((src),(dst),(len))
 #define strchr(s,c) index(s,c)
-typedef char chtype;
 #define beep() (putchar('\7'))
 #define napms(d) (usleep((d)*1000))
 #else
@@ -71,7 +70,7 @@ typedef unsigned char uchar;
 #define BATTLESHIP 7
 #define SATELLITE 8
 #define NUM_OBJECTS 9 /* number of defined objects */
-#define NOPIECE ((char)255) /* a 'null' piece */
+#define NOPIECE ((uchar)255) /* a 'null' piece */
 
 #define LIST_SIZE 5000 /* max number of pieces on board */
 
@@ -80,7 +79,7 @@ typedef struct city_info {
 	uchar owner; /* UNOWNED, USER, COMP */
 	long func[NUM_OBJECTS]; /* function for each object */
 	long work; /* units of work performed */
-	char prod; /* item being produced */
+	uchar prod; /* item being produced */
 } city_info_t;
 
 /*

@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: util.c,v 1.27 1999/09/29 01:19:50 jwise Exp $
+ * $Id: util.c,v 1.28 2001/01/13 03:09:24 jwise Exp $
  */
 
 /* util.c -- various utility routines. */
@@ -16,9 +16,9 @@
 #include "extern.h"
 
 void	check (void);
-void	check_cargo (const piece_info_t *, const piece_type_t);
-void	check_obj (piece_info_t **, const int);
-void	check_obj_cargo (piece_info_t **);
+static void	check_cargo (const piece_info_t *, const piece_type_t);
+static void	check_obj (piece_info_t **, const int);
+static void	check_obj_cargo (piece_info_t **);
 void	emp_panic (const char *, const int, const char *);
 
 /*
@@ -138,7 +138,7 @@ check (void)
  * 4)  Invalid owners.
  */
 
-void
+static void
 check_obj (piece_info_t **list, const int owner)
 {
 	long j;
@@ -181,7 +181,7 @@ check_obj (piece_info_t **list, const int owner)
  * 6)  All cargo is alive.
  */
 
-void
+static void
 check_cargo (const piece_info_t *list, const piece_type_t cargo_type)
 {
 	const piece_info_t *p, *q;
@@ -214,7 +214,7 @@ check_cargo (const piece_info_t *list, const piece_type_t cargo_type)
  * lists are valid.
  */
 
-void
+static void
 check_obj_cargo (piece_info_t **list)
 {
 	const piece_info_t *p;

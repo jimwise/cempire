@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: attack.c,v 1.22 1998/08/09 00:41:17 jwise Exp $
+ * $Id: attack.c,v 1.23 2001/01/13 03:09:23 jwise Exp $
  */
 
 /*
@@ -30,10 +30,10 @@
 #include "extern.h"
 
 void	attack (piece_info_t *, long);
-void	attack_city (piece_info_t *, long);
-void	attack_obj (piece_info_t *, long);
-void	describe (piece_info_t *, piece_info_t *, long);
-void	survive (piece_info_t *, long);
+static void	attack_city (piece_info_t *, long);
+static void	attack_obj (piece_info_t *, long);
+static void	describe (piece_info_t *, piece_info_t *, long);
+static void	survive (piece_info_t *, long);
 
 void
 attack (piece_info_t *att_obj, long loc)
@@ -44,7 +44,7 @@ attack (piece_info_t *att_obj, long loc)
 		attack_obj (att_obj, loc); /* attacking a piece */
 }
 
-void
+static void
 attack_city (piece_info_t *att_obj, long loc)
 {
 	city_info_t *cityp;
@@ -90,7 +90,7 @@ attack_city (piece_info_t *att_obj, long loc)
  * First we have to figure out what is being attacked.
  */
 
-void
+static void
 attack_obj (piece_info_t *att_obj, long loc)
 {
 	piece_info_t *def_obj; /* defender */
@@ -137,7 +137,7 @@ attack_obj (piece_info_t *att_obj, long loc)
  * location.
  */
 
-void
+static void
 survive (piece_info_t *obj, long loc)
 {
 	while (obj_capacity (obj) < obj->count)
@@ -146,7 +146,7 @@ survive (piece_info_t *obj, long loc)
 	move_obj (obj, loc);
 }
 
-void
+static void
 describe (piece_info_t *win_obj, piece_info_t *lose_obj, long loc)
 {
 	char buf[STRSIZE];

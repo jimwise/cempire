@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: empire.h,v 1.30 1998/08/09 00:41:20 jwise Exp $
+ * $Id: empire.h,v 1.31 2001/01/13 03:09:23 jwise Exp $
  */
 
 /*
@@ -50,7 +50,7 @@
 #define ROWS_PER_SECTOR ((MAP_HEIGHT+SECTOR_ROWS-1)/SECTOR_ROWS)
 #define COLS_PER_SECTOR ((MAP_WIDTH+SECTOR_COLS-1)/SECTOR_COLS)
 
-#define VERSION_STRING "EMPIRE, Version 1.2, February 1998"
+#define VERSION_STRING "EMPIRE, Version 1.3_ALPHA, February 1998"
 
 /*
  * types and related constants

@@ -1,12 +1,12 @@
 #
 #	Copyright (C) 1987, 1988 Chuck Simmons
 #
-# $Id: Makefile,v 1.30 1999/09/29 01:19:14 jwise Exp $
+# $Id: Makefile,v 1.31 2001/01/13 03:09:23 jwise Exp $
 #
 # See the file COPYING, distributed with empire, for restriction
 # and warranty information.
 
-VERSION=1.2
+VERSION=1.3_ALPHA
 
 #
 # 1.) Pick your compiler
@@ -35,7 +35,7 @@ CC=gcc
 #		-DUSE_ZLIB		define this to compress saved files on write and
 #					decompress them on reads.  Saves a lot of space.
 #
-DEFINES=-D__EXTENSIONS__ -DUSE_NCURSES -DUSE_ZLIB
+DEFINES=-D__EXTENSIONS__ -DUSE_ZLIB
 
 #
 # 3.) Pick your library specifications
@@ -61,7 +61,7 @@ DEFINES=-D__EXTENSIONS__ -DUSE_NCURSES -DUSE_ZLIB
 #	system which has zlib in its default library path.
 #		LIBS=-L/usr/local/lib -lz
 #
-LIBS=-L/usr/pkg/lib -lncurses -lz
+LIBS=-lz -lcurses
 
 #
 # 4.) Pick your includes
@@ -77,7 +77,7 @@ LIBS=-L/usr/pkg/lib -lncurses -lz
 #	use this if you have ncurses installed under NetBSD's package system.
 #		INCLUDES=-I/usr/pkg/include
 #
-INCLUDES=-I/usr/pkg/include
+INCLUDES=
 
 #
 # The following turns on _extremely_ pedantic error checking for gcc or egcs.

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.35 1998/03/07 00:07:09 jim Exp $
+ * $Id: display.c,v 1.36 1998/03/07 00:22:05 jim Exp $
  */
 
 /*
@@ -206,20 +206,20 @@ print_sector (char whose, view_map_t vmap[], int sector)
 	ref_row = first_row - (display_rows - ROWS_PER_SECTOR) / 2;
 	ref_col = first_col - (display_cols - COLS_PER_SECTOR) / 2;
 
-	/* try not to go past bottom of map */
-	if (ref_row + display_rows - 1 > MAP_HEIGHT - 1)
-		ref_row = MAP_HEIGHT - 1 - (display_rows - 1);
+	/* try not to go past bottom of usable map (outer rim cannot be used) */
+	if (ref_row > MAP_HEIGHT - display_rows - 1)
+		ref_row = MAP_HEIGHT - display_rows - 1;
 
-	/* never go past top of map */
-        if (ref_row < 0)
-		ref_row = 0;
+	/* never go past top of usable map */
+        if (ref_row < 1)
+		ref_row = 1;
 
 	/* same with columns */
-	if (ref_col + display_cols - 1 > MAP_WIDTH - 1)
-		ref_col = MAP_WIDTH - 1 - (display_cols - 1);
+	if (ref_col > MAP_WIDTH - display_cols - 1)
+		ref_col = MAP_WIDTH - display_cols - 1;
 
-	if (ref_col < 0)
-		ref_col = 0;
+	if (ref_col < 1)
+		ref_col = 1;
 
         whose_map = whose; /* remember whose map is displayed */
 	display_screen (vmap);

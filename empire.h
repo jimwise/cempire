@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: empire.h,v 1.20 1998/03/01 02:18:04 jim Exp $
+ * $Id: empire.h,v 1.21 1998/03/02 15:36:44 jim Exp $
  */
 
 /*
@@ -45,7 +45,8 @@ typedef enum
 	NORTHWEST
 } direction_t;
 
-#define NUMTOPS 3 /* number of lines at top of screen for messages */
+#define NUMTOPS 4 /* number of lines at top of screen for messages */
+#define NUMINFO (NUMTOPS - 1)
 #define NUMSIDES 6 /* number of lines at side of screen */
 #define STRSIZE 80 /* number of characters in a string */
 

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.24 1998/03/02 15:18:03 jim Exp $
+ * $Id: term.c,v 1.25 1998/03/02 15:36:44 jim Exp $
  */
 
 /*
@@ -73,7 +73,7 @@ void	vcomment (char *, va_list);
 void	vtopmsg(int, char *, va_list);
 
 static int need_delay;
-static WINDOW *topwin;
+static WINDOW *statuswin, *infowin;
 
 void
 status (char *fmt, ...)
@@ -135,12 +135,12 @@ vtopmsg (int linep, char *buf, va_list ap)
         if ((linep < 1) || (linep > NUMTOPS))
                 linep = 1;
 
-        wmove(topwin, linep - 1, 0);
+        wmove(infowin, linep - 1, 0);
 
         if (buf != NULL && strlen (buf) > 0)
-                vwprintw(topwin, buf, ap);
+                vwprintw(infowin, buf, ap);
 
-        wclrtoeol(topwin);
+        wclrtoeol(infowin);
 }
 
 /*
@@ -267,7 +267,7 @@ get_strq (char *buf, int sizep)
 	sizep = sizep; /* size of buf, currently unused */
 
 	nocrmode ();
-	wrefresh(topwin);
+	wrefresh(infowin);
 	getstr (buf);
 	need_delay = FALSE;
 	info (0, 0, 0);
@@ -341,7 +341,7 @@ get_cq (void)
 	char c;
 
 	crmode ();
-	wrefresh(topwin);
+	wrefresh(infowin);
 	c = getch ();
 	topini (); /* clear information lines */
 	nocrmode ();
@@ -436,7 +436,7 @@ help (char **text, int nlines)
 			piece_attr[j].build_time);
 
 	}
-	wrefresh(topwin);
+	wrefresh(infowin);
 }
 
 /*
@@ -446,8 +446,8 @@ Clear the end of a specified line starting at the specified column.
 void
 clreol(int linep, int colp)
 {
-	wmove(topwin, linep, colp);
-	wclrtoeol(topwin);
+	wmove(infowin, linep, colp);
+	wclrtoeol(infowin);
 }
 
 /*
@@ -482,7 +482,7 @@ the screen and pause for a few milliseconds.
 void
 delay (void)
 {
-	wrefresh(topwin);
+	wrefresh(infowin);
 	napms (delay_time); /* pause a bit */
 }
 
@@ -537,7 +537,8 @@ term_init (void)
 	if (cols > MAP_WIDTH + NUMSIDES)
 		cols = MAP_WIDTH + NUMSIDES;
 	
-	topwin = newwin(NUMTOPS, cols-12, 0, 0);
+	statuswin = newwin(1, cols-12, 0, 0);
+	infowin = newwin(NUMINFO, cols-12, 1, 0);
 }
 
 /*

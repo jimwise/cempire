@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: extern.h,v 1.57 1998/03/09 17:07:09 jim Exp $
+ * $Id: extern.h,v 1.58 1998/03/09 17:26:50 jim Exp $
  */
 
 /*
@@ -123,6 +123,7 @@ int	cur_sector (void);
 void	display_loc (int, view_map_t[], long);
 void	display_locx (int, view_map_t[], long);
 void    display_score (void);
+void    help (char **, int);
 void	kill_display (void);
 int	move_cursor (long *, int);
 void    print_movie_cell (char *, int, int, int, int);
@@ -207,7 +208,6 @@ char    get_cq (void);
 int	get_int (char *, int, int);
 int     getyn (char *);
 void    get_str (char *, int);
-void	help (char **, int);
 void	huh (void);
 void	info (char *, ...);
 void    redraw (void);

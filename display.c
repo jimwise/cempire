@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.44 1998/03/09 17:22:00 jim Exp $
+ * $Id: display.c,v 1.45 1998/03/09 17:26:49 jim Exp $
  */
 
 /*
@@ -33,6 +33,7 @@ void    display_locx (int, view_map_t[], long);
 void    display_score (void);
 void    display_screen (view_map_t[]);
 void    disp_square(view_map_t *);
+void    help (char **, int);
 void	kill_display (void);
 int     move_cursor (long *, int);
 int     on_screen (long);

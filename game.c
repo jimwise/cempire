@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: game.c,v 1.14 1998/02/28 00:01:03 jim Exp $
+ * $Id: game.c,v 1.15 1998/02/28 00:32:17 jim Exp $
  */
 
 /*
@@ -329,11 +329,9 @@ select_cities (void)
 
 	make_pair (); /* create list of ranked pairs */
 
-	sprintf (jnkbuf,
-		"Choose a difficulty level where 0 is easy and %d is hard: ",
-		ncont*ncont-1);
+	sprintf(jnkbuf, "Choose a difficulty level where 0 is easy and %d is hard: ", ncont*ncont-1);
+	pair = get_range(jnkbuf, 0, ncont*ncont-1);
 
-	pair = get_range (jnkbuf, 0, ncont*ncont-1);
 	comp_cont = pair_tab[pair].comp_cont;
 	user_cont = pair_tab[pair].user_cont;
 
@@ -573,7 +571,7 @@ restore_game (void)
 
 	f = fopen ("empsave.dat", "r"); /* open for input */
 	if (f == NULL) {
-		perror ("Cannot open empsave.dat");
+		error("Cannot open empsave.dat");
 		return (FALSE);
 	}
 	rbuf (map);

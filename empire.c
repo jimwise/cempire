@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: empire.c,v 1.9 1998/02/28 00:16:41 jim Exp $
+ * $Id: empire.c,v 1.10 1998/02/28 00:32:16 jim Exp $
  */
 
 /*
@@ -38,8 +38,7 @@ empire (void)
 	rndini (); /* init random number generator */
 
 	clear_screen (); /* nothing on screen */
-	pos_str (7, 0, VERSION_STRING);
-	pos_str (8, 0, "Detailed directions are in EMPIRE.DOC\n");
+	comment(VERSION_STRING);
 	redraw ();
 
 	if (!restore_game ()) /* try to restore previous game */

@@ -6,18 +6,18 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: compmove.c,v 1.39 1998/08/08 19:48:39 jwise Exp $
+ * $Id: compmove.c,v 1.40 1998/08/08 20:28:28 jwise Exp $
  */
 
 /*
-compmove.c -- Make a move for the computer. 
-
-For each move the user wants us to make, we do the following:
-
-    1)  Handle city production;
-    2)  Move computer's pieces;
-    3)  Check to see if the game is over.
-*/
+ * compmove.c -- Make a move for the computer. 
+ * 
+ * For each move the user wants us to make, we do the following:
+ * 
+ *     1)  Handle city production;
+ *     2)  Move computer's pieces;
+ *     3)  Check to see if the game is over.
+ */
 
 #include <assert.h>
 #include <string.h>
@@ -87,19 +87,19 @@ comp_move (int nmoves)
 }
 
 /*
-Handle city production.  First, we set production for new cities.
-Then we produce new pieces.  After producing a piece, we will see
-if we should change our production.
-
-Our goals for city production are first, not to change production
-while something is in the process of being built.  Second, we attempt
-to have enough city producing armies on a continent to counter any
-threat on the continent, and to adequately explore and control the
-continent.  Third, we attempt to always have at least one transport
-producer.  Fourth, we attempt to maintain a good ratio between the
-number of producers we have of each type of piece.  Fifth, we never
-build carriers, as we don't have a good strategy for moving these.
-*/
+ * Handle city production.  First, we set production for new cities.
+ * Then we produce new pieces.  After producing a piece, we will see
+ * if we should change our production.
+ * 
+ * Our goals for city production are first, not to change production
+ * while something is in the process of being built.  Second, we attempt
+ * to have enough city producing armies on a continent to counter any
+ * threat on the continent, and to adequately explore and control the
+ * continent.  Third, we attempt to always have at least one transport
+ * producer.  Fourth, we attempt to maintain a good ratio between the
+ * number of producers we have of each type of piece.  Fifth, we never
+ * build carriers, as we don't have a good strategy for moving these.
+ */
 
 void
 do_cities (void)
@@ -128,13 +128,13 @@ do_cities (void)
 }
 			
 /*
-Define ratios for numbers of cities we want producing each object.
-
-Early in the game, we want to produce armies and transports for
-rapid expansion.  After a while, we add fighters and pt boats
-for exploration.  Later, we add ships of all kinds for control of
-the sea.
-*/
+ * Define ratios for numbers of cities we want producing each object.
+ * 
+ * Early in the game, we want to produce armies and transports for
+ * rapid expansion.  After a while, we add fighters and pt boats
+ * for exploration.  Later, we add ships of all kinds for control of
+ * the sea.
+ */
                                  /* A    F    P    S    D    T    C    B   Z*/
 static int ratio1[NUM_OBJECTS] = { 60,   0,  10,   0,   0,  20,   0,   0,  0};
 static int ratio2[NUM_OBJECTS] = { 90,  10,  10,  10,  10,  40,   0,   0,  0};
@@ -143,16 +143,16 @@ static int ratio4[NUM_OBJECTS] = {150,  30,  30,  20,  20,  70,  10,  10,  0};
 static int *ratio;
 
 /*
-Set city production if necessary.
-
-The algorithm below contains three parts:
-
-1)  Defend continents we own.
-
-2)  Produce a TT and a Satellite.
-
-3)  Meet the ratio requirements given above.
-*/
+ * Set city production if necessary.
+ * 
+ * The algorithm below contains three parts:
+ * 
+ * 1)  Defend continents we own.
+ * 
+ * 2)  Produce a TT and a Satellite.
+ * 
+ * 3)  Meet the ratio requirements given above.
+ */
 
 void
 comp_prod (city_info_t *cityp, int is_lake)
@@ -232,8 +232,10 @@ comp_prod (city_info_t *cityp, int is_lake)
 			comp_set_prod (cityp, TRANSPORT);
 			return;
 		}
-		/* if we have one army producer that is not on a lake, */
-		/* produce armies here instead */
+		/* 
+		 * if we have one army producer that is not on a lake,
+		 * produce armies here instead
+		 */
 		if (city_count[ARMY] == 1) {
 			for (i = 0; i < NUM_CITY; i++)
 			if (city[i].owner == COMP && city[i].prod == ARMY) break;
@@ -262,11 +264,13 @@ comp_prod (city_info_t *cityp, int is_lake)
 		return;
 	}
 
-	/* Set production to item most needed.  Continents with one
-	city and nothing interesting may not produce armies.  We
-	set production for unset cities, and change production for
-	cities that produce objects for which we have many city producers.
-	Ship producers on lakes also get there production changed. */
+	/*
+	 * Set production to item most needed.  Continents with one
+	 * city and nothing interesting may not produce armies.  We
+	 * set production for unset cities, and change production for
+	 * cities that produce objects for which we have many city producers.
+	 * Ship producers on lakes also get there production changed.
+	 */
 	
 	interest = (counts.comp_cities != 1 || interest);
 	
@@ -278,9 +282,9 @@ comp_prod (city_info_t *cityp, int is_lake)
 }
 	
 /*
-Set production for a computer city to a given type.  Don't
-reset production if it is already correct.
-*/
+ * Set production for a computer city to a given type.  Don't
+ * reset production if it is already correct.
+ */
 
 void
 comp_set_prod (city_info_t *cityp, piece_type_t type)
@@ -295,9 +299,7 @@ comp_set_prod (city_info_t *cityp, piece_type_t type)
 	cityp->work = -(piece_attr[type].build_time / 5);
 }
 
-/*
-See if a city is producing an object which is being overproduced.
-*/
+/* See if a city is producing an object which is being overproduced. */
 
 int
 overproduced (city_info_t *cityp, int *city_count)
@@ -314,9 +316,9 @@ overproduced (city_info_t *cityp, int *city_count)
 }
 
 /*
-See if one type of production is needed more than another type.
-Return the most-needed type of production.
-*/
+ * See if one type of production is needed more than another type.
+ * Return the most-needed type of production.
+ */
 
 int
 need_more (int *city_count, int prod1, int prod2)
@@ -328,9 +330,9 @@ need_more (int *city_count, int prod1, int prod2)
 }
 
 /*
-Figure out the most needed type of production.  We are passed
-a flag telling us if armies are ok to produce.
-*/
+ * Figure out the most needed type of production.  We are passed
+ * a flag telling us if armies are ok to produce.
+ */
 
 void
 comp_set_needed (city_info_t *cityp, int *city_count, int army_ok, int is_lake)
@@ -359,16 +361,16 @@ comp_set_needed (city_info_t *cityp, int *city_count, int army_ok, int is_lake)
 }
 
 /*
-See if a city is on a lake.  We define a lake to be a body of
-water (where cities are considered to be water) that does not
-touch either an attackable city or unexplored territory.
-
-Be careful, because we use the 'emap'.  This predicts whether
-unexplored territory will be land or water.  The prediction should
-be helpful, because small bodies of water that enclose unexplored
-territory will appear as solid water.  Big bodies of water should
-have unexplored territory on the edges.
-*/
+ * See if a city is on a lake.  We define a lake to be a body of
+ * water (where cities are considered to be water) that does not
+ * touch either an attackable city or unexplored territory.
+ * 
+ * Be careful, because we use the 'emap'.  This predicts whether
+ * unexplored territory will be land or water.  The prediction should
+ * be helpful, because small bodies of water that enclose unexplored
+ * territory will appear as solid water.  Big bodies of water should
+ * have unexplored territory on the edges.
+ */
 
 int
 lake (long loc)
@@ -382,9 +384,7 @@ lake (long loc)
 	return !(counts.unowned_cities || counts.user_cities || counts.unexplored);
 }
 
-/*
-Move all computer pieces.
-*/
+/* Move all computer pieces. */
 
 static view_map_t amap[MAP_SIZE]; /* temp view map */
 static path_map_t path_map[MAP_SIZE];
@@ -406,10 +406,10 @@ do_pieces (void)
 }
 
 /*
-Move a piece.  We loop until all the moves of a piece are made.  Within
-the loop, we find a direction to move that will take us closer to an
-objective.
-*/
+ * Move a piece.  We loop until all the moves of a piece are made.  Within
+ * the loop, we find a direction to move that will take us closer to an
+ * objective.
+ */
 
 void
 cpiece_move (piece_info_t *obj)
@@ -458,9 +458,7 @@ cpiece_move (piece_info_t *obj)
 	obj->hits++; /* fix some damage */
 }
 
-/*
-Move a piece one square.
-*/
+/* Move a piece one square. */
 
 void
 move1 (piece_info_t *obj)
@@ -474,33 +472,33 @@ move1 (piece_info_t *obj)
 }
 
 /*
-Move an army.
-
-This is a multi-step algorithm:
-
-1)  See if there is an object we can attack immediately.
-If so, attack it.
-
-2)  Look for the nearest land objective.
-
-3)  If we find an objective reachable by land, figure out
-how far away that objective is.  Based on the found objective,
-also figure out how close a loadable tt must be to be of
-interest.  If the objective is closer than the tt must be,
-head towards the objective.
-
-4)  Otherwise, look for the nearest loading tt (or tt producing
-city).  If the nearest loading tt is farther than our land objective,
-head towards the land objective.
-
-5)  Otherwise, head for the tt.
-
-6)  If we still have no destination and we are in a city,
-attempt to leave the city.
-
-7)  Once we have a destination, find the best move toward that
-destination.  (If there is no destination, sit around and wait.)
-*/
+ * Move an army.
+ * 
+ * This is a multi-step algorithm:
+ * 
+ * 1)  See if there is an object we can attack immediately.
+ * If so, attack it.
+ * 
+ * 2)  Look for the nearest land objective.
+ * 
+ * 3)  If we find an objective reachable by land, figure out
+ * how far away that objective is.  Based on the found objective,
+ * also figure out how close a loadable tt must be to be of
+ * interest.  If the objective is closer than the tt must be,
+ * head towards the objective.
+ * 
+ * 4)  Otherwise, look for the nearest loading tt (or tt producing
+ * city).  If the nearest loading tt is farther than our land objective,
+ * head towards the land objective.
+ * 
+ * 5)  Otherwise, head for the tt.
+ * 
+ * 6)  If we still have no destination and we are in a city,
+ * attempt to leave the city.
+ * 
+ * 7)  Once we have a destination, find the best move toward that
+ * destination.  (If there is no destination, sit around and wait.)
+ */
 
 void
 army_move (piece_info_t *obj)
@@ -582,9 +580,7 @@ army_move (piece_info_t *obj)
 	move_objective (obj, path_map, new_loc, " ");
 }
 
-/*
-Remove pruned explore locs from a view map.
-*/
+/* Remove pruned explore locs from a view map. */
 
 void
 unmark_explore_locs (view_map_t *xmap)
@@ -597,9 +593,9 @@ unmark_explore_locs (view_map_t *xmap)
 }
 
 /*
-Make a load map.  We copy the view map and mark each loading
-transport and tt producing city with a '$'.
-*/
+ * Make a load map.  We copy the view map and mark each loading
+ * transport and tt producing city with a '$'.
+ */
 
 void
 make_army_load_map (piece_info_t *obj, view_map_t *xmap, view_map_t *vmap)
@@ -668,31 +664,31 @@ make_tt_load_map (view_map_t *xmap, view_map_t *vmap)
 }
 	
 /*
-Make an unload map.  We copy the view map.  We then create
-a continent map.  For each of our cities, we mark out the continent
-that city is on.  Then, for each city that we don't own and which
-doesn't appear on our continent map, we set that square to a digit.
-
-We want to assign weights to each attackable city.
-Cities are more valuable if they are on a continent which
-has lots of cities.  Cities are also valuable if either it
-will be easy for us to take over the continent, or if we
-need to defend that continent from an enemy.
-
-To implement the above, we assign numbers to each city as follows:
-
-a)  if unowned_cities > user_cities && comp_cities == 0
-       set number to min (total_cities, 9)
-
-b)  if comp_cities != 0 && user_cities != 0
-       set number to min (total_cities, 9)
-       
-b)  if enemy_cities == 1 && total_cities == 1, set number to 2.
-    (( taking the sole enemy city on a continent is as good as
-       getting a two city continent ))
-       
-c)  Any other attackable city is marked with a '0'.
-*/
+ * Make an unload map.  We copy the view map.  We then create
+ * a continent map.  For each of our cities, we mark out the continent
+ * that city is on.  Then, for each city that we don't own and which
+ * doesn't appear on our continent map, we set that square to a digit.
+ * 
+ * We want to assign weights to each attackable city.
+ * Cities are more valuable if they are on a continent which
+ * has lots of cities.  Cities are also valuable if either it
+ * will be easy for us to take over the continent, or if we
+ * need to defend that continent from an enemy.
+ * 
+ * To implement the above, we assign numbers to each city as follows:
+ * 
+ * a)  if unowned_cities > user_cities && comp_cities == 0
+ *        set number to min (total_cities, 9)
+ * 
+ * b)  if comp_cities != 0 && user_cities != 0
+ *        set number to min (total_cities, 9)
+ *        
+ * c)  if enemy_cities == 1 && total_cities == 1, set number to 2.
+ *     (( taking the sole enemy city on a continent is as good as
+ *       getting a two city continent ))
+ *       
+ * d)  Any other attackable city is marked with a '0'.
+ */
 
 static int owncont_map[MAP_SIZE];
 static int tcont_map[MAP_SIZE];
@@ -743,10 +739,10 @@ make_unload_map (view_map_t *xmap, view_map_t *vmap)
 }
 
 /*
-Load an army onto a ship.  First look for an adjacent ship.
-If that doesn't work, move to the objective, trying to be
-close to the ocean.
-*/
+ * Load an army onto a ship.  First look for an adjacent ship.
+ * If that doesn't work, move to the objective, trying to be
+ * close to the ocean.
+ */
 
 void
 board_ship (piece_info_t *obj, path_map_t *pmap, long dest)
@@ -758,10 +754,10 @@ board_ship (piece_info_t *obj, path_map_t *pmap, long dest)
 }
 
 /*
-Look for the most full, non-full transport at a location.
-Prefer switching to staying.  If we switch, we force
-one of the ships to become more full.
-*/
+ * Look for the most full, non-full transport at a location.
+ * refer switching to staying.  If we switch, we force
+ * one of the ships to become more full.
+ */
 
 piece_info_t *
 find_best_tt (piece_info_t *best, long loc)
@@ -776,9 +772,7 @@ find_best_tt (piece_info_t *best, long loc)
 	return best;
 }
 
-/*
-Load an army onto the most full non-full ship.
-*/
+/* Load an army onto the most full non-full ship. */
 
 int
 load_army (piece_info_t *obj)
@@ -810,9 +804,9 @@ load_army (piece_info_t *obj)
 }
 
 /*
-Return the first location we find adjacent to the current location of
-the correct terrain.
-*/
+ * Return the first location we find adjacent to the current location of
+ * the correct terrain.
+ */
 
 long
 move_away (view_map_t *vmap, long loc, const char *terrain)
@@ -830,12 +824,12 @@ move_away (view_map_t *vmap, long loc, const char *terrain)
 }
 
 /*
-Look to see if there is an adjacent object to attack.  We are passed
-a location and a list of items we attack sorted in order of most
-valuable first.  We look at each surrounding on board location.
-If there is an object we can attack, we return the location of the
-best of these.
-*/
+ * Look to see if there is an adjacent object to attack.  We are passed
+ * a location and a list of items we attack sorted in order of most
+ * valuable first.  We look at each surrounding on board location.
+ * If there is an object we can attack, we return the location of the
+ * best of these.
+ */
 
 long
 find_attack (long loc, const char *obj_list, const char *terrain)
@@ -862,16 +856,16 @@ find_attack (long loc, const char *obj_list, const char *terrain)
 }
 
 /*
-Move a transport.
-
-There are two kinds of transports:  loading and unloading.
-
-Loading transports move toward loading armies.  Unloading
-transports move toward attackable cities on unowned continents.
-
-An empty transport is willing to attack adjacent enemy transports.
-Transports become 'loading' when empty, and 'unloading' when full.
-*/
+ * Move a transport.
+ *
+ * There are two kinds of transports:  loading and unloading.
+ * 
+ * Loading transports move toward loading armies.  Unloading
+ * transports move toward attackable cities on unowned continents.
+ * 
+ * An empty transport is willing to attack adjacent enemy transports.
+ * Transports become 'loading' when empty, and 'unloading' when full.
+ */
 
 void
 transport_move (piece_info_t *obj)
@@ -913,16 +907,16 @@ transport_move (piece_info_t *obj)
 }
 
 /*
-Move a fighter.
-
-1)  See if there is an object we can attack immediately.
-If so, attack it.
-
-2)  Otherwise, if fighter is low on fuel, move toward nearest city
-if there is one in range.
-
-3)  Otherwise, look for an objective.
-*/
+ * Move a fighter.
+ * 
+ * 1)  See if there is an object we can attack immediately.
+ * If so, attack it.
+ * 
+ * 2)  Otherwise, if fighter is low on fuel, move toward nearest city
+ * if there is one in range.
+ * 
+ * 3)  Otherwise, look for an objective.
+ */
 
 void
 fighter_move (piece_info_t *obj)
@@ -950,11 +944,11 @@ fighter_move (piece_info_t *obj)
 }
 
 /*
-Move a ship.
-
-Attack anything adjacent.  If nothing adjacent, explore or look for
-something to attack.
-*/
+ * Move a ship.
+ * 
+ * Attack anything adjacent.  If nothing adjacent, explore or look for
+ * something to attack.
+ */
 
 void
 ship_move (piece_info_t *obj)
@@ -992,9 +986,7 @@ ship_move (piece_info_t *obj)
 	move_objective (obj, path_map, new_loc, adj_list);
 }
 
-/*
-Move to an objective.
-*/
+/* Move to an objective. */
 
 void
 move_objective (piece_info_t *obj, path_map_t pathmap[], long new_loc, const char *adj_list)

@@ -6,26 +6,26 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: attack.c,v 1.20 1998/08/08 18:08:36 jwise Exp $
+ * $Id: attack.c,v 1.21 1998/08/08 20:28:27 jwise Exp $
  */
 
 /*
-attack.c -- handle an attack between two pieces.  We do everything from
-fighting it out between the pieces to notifying the user who won and
-killing off the losing object.  Somewhere far above, our caller is
-responsible for actually removing the object from its list and actually
-updating the player's view of the world.
-
-Find object being attacked.  If it is a city, attacker has 50% chance
-of taking city.  If successful, give city to attacker.  Otherwise
-kill attacking piece.  Tell user who won.
-
-If attacking object is not a city, loop.  On each iteration, select one
-piece to throw a blow.  Damage the opponent by the strength of the blow
-thrower.  Stop looping when one object has 0 or fewer hits.  Kill off 
-the dead object.  Tell user who won and how many hits her piece has left,
-if any.
-*/
+ * attack.c -- handle an attack between two pieces.  We do everything from
+ * fighting it out between the pieces to notifying the user who won and
+ * killing off the losing object.  Somewhere far above, our caller is
+ * responsible for actually removing the object from its list and actually
+ * updating the player's view of the world.
+ * 
+ * Find object being attacked.  If it is a city, attacker has 50% chance
+ * of taking city.  If successful, give city to attacker.  Otherwise
+ * kill attacking piece.  Tell user who won.
+ * 
+ * If attacking object is not a city, loop.  On each iteration, select one
+ * piece to throw a blow.  Damage the opponent by the strength of the blow
+ * thrower.  Stop looping when one object has 0 or fewer hits.  Kill off 
+ * the dead object.  Tell user who won and how many hits her piece has left,
+ * if any.
+ */
 
 #include <assert.h>
 #include "empire.h"
@@ -88,9 +88,9 @@ attack_city (piece_info_t *att_obj, long loc)
 }
 
 /*
-Attack a piece other than a city.  The piece could be anyone's.
-First we have to figure out what is being attacked.
-*/
+ * Attack a piece other than a city.  The piece could be anyone's.
+ * First we have to figure out what is being attacked.
+ */
 
 void
 attack_obj (piece_info_t *att_obj, long loc)
@@ -133,11 +133,11 @@ attack_obj (piece_info_t *att_obj, long loc)
 }
 
 /*
-Here we look to see if any cargo was killed in the attack.  If
-a ships contents exceeds its capacity, some of the survivors
-fall overboard and drown.  We also move the survivor to the given
-location.
-*/
+ * Here we look to see if any cargo was killed in the attack.  If
+ * a ships contents exceeds its capacity, some of the survivors
+ * fall overboard and drown.  We also move the survivor to the given
+ * location.
+ */
 
 void
 survive (piece_info_t *obj, long loc)

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.49 1998/03/09 18:57:03 jim Exp $
+ * $Id: display.c,v 1.50 1998/03/09 20:48:50 jim Exp $
  */
 
 /*
@@ -247,10 +247,10 @@ print_sector (char whose, view_map_t vmap[], int sector)
 	sprintf (jnkbuf, "Sector %d Round %ld", sector, date);
 	for (r = 0; jnkbuf[r] != '\0'; r++)
 	{
-		if (r+NUMTOPS >= MAP_HEIGHT)
+		if (r+NUMTOPS + 2 >= MAP_HEIGHT)
 			break;
 
-		mvwaddch(stdscr, r+NUMTOPS, cols-NUMSIDES+4, jnkbuf[r]);
+		mvwaddch(stdscr, r+NUMTOPS + 2, cols-NUMSIDES+4, jnkbuf[r]);
 	}
 
 	wrefresh(stdscr);
@@ -505,58 +505,64 @@ print_movie_cell (char *mbuf, int row, int col, int row_inc, int col_inc)
 Print a screen of help information.
 */
 
+#define MIN(a,b) ((a)<(b) ? (a) : (b))
+
 void
 help (char **text, int nlines)
 {
         int	i, r, c;
         piece_type_t j;
-        int	text_lines, start_col, start_row, help_height, help_width;
+        int	text_lines, obj_lines, start_col, start_row, help_height, help_width;
 	WINDOW 	*helpwin;
 
         text_lines = (nlines + 1) / 2; /* lines of text */
+	obj_lines = (NUM_OBJECTS + 1) / 2;
 
-	help_height = (nlines / 2) +  ((NUM_OBJECTS + 1)/2) + 4 + 4;
-	help_width = 78 + 4;
+	help_height = MIN((text_lines + obj_lines + 4), MAPWIN_HEIGHT);
+	help_width = MIN(78, cols);
 
-	start_row = (MAPWIN_HEIGHT - help_height) / 2;
-	start_col = (MAPWIN_WIDTH - help_width) / 2;
+	start_row = (MAPWIN_HEIGHT - help_height ) / 2 + NUMTOPS + 1;
+	start_col = (MAPWIN_WIDTH - help_width) / 2 + 2;
 
-	helpwin = derwin(mapwin, help_height, help_width, start_row, start_col);
+	helpwin = newwin(help_height, help_width, start_row, start_col);
+
+	if (helpwin == NULL)
+		panic("no help window");
 
 	scrollok(helpwin, TRUE);
 	wscrl(helpwin, help_height);
 	scrollok(helpwin, FALSE);
 
 	wattron(helpwin, A_REVERSE);
-        mvwprintw(helpwin, 2, 2, text[0]); /* mode */
-        mvwprintw(helpwin, 2, 42, "See empire(6) for more information.");
+        mvwprintw(helpwin, 1, 1, text[0]); /* mode */
+        mvwprintw(helpwin, 1, 40, "See empire(6) for more information.");
 	wattroff(helpwin, A_REVERSE);
 
         for (i = 1; i < nlines; i++)
         {
                 if (i > text_lines)
-                        mvwprintw(helpwin, i - text_lines + 3, 42, text[i]);
+                        mvwprintw(helpwin, i - text_lines + 1, 40, text[i]);
                 else
-                        mvwprintw(helpwin, i + 3, 2, text[i]);
+                        mvwprintw(helpwin, i + 1, 1, text[i]);
         }
 
 	wattron(helpwin, A_REVERSE);
-        mvwprintw(helpwin, text_lines + 5, 2, "  Piece   Yours Enemy Moves Hits Cost");
-        mvwprintw(helpwin, text_lines + 5, 42, "  Piece   Yours Enemy Moves Hits Cost");
+        mvwprintw(helpwin, text_lines + 2, 1, "  Piece   Yours Enemy Moves Hits Cost");
+        mvwprintw(helpwin, text_lines + 2, 40, "  Piece   Yours Enemy Moves Hits Cost");
 	wattroff(helpwin, A_REVERSE);
 
         for (j = FIRST_OBJECT; j < NUM_OBJECTS; j++)
         {
                 if (j >= (NUM_OBJECTS+1)/2) {
                         r = j - (NUM_OBJECTS+1)/2;
-                        c = 42;
+                        c = 40;
                 }
                 else
                 {
                         r = j;
-                        c = 2;
+                        c = 1;
                 }
-                mvwprintw(helpwin, r + text_lines + 6, c, "%-12s%c     %c%6d%5d%6d",
+                mvwprintw(helpwin, r + text_lines + 3, c, "%-12s%c     %c%6d%5d%6d",
                         piece_attr[j].nickname,
                         piece_attr[j].sname,
                         tolower (piece_attr[j].sname),
@@ -566,6 +572,8 @@ help (char **text, int nlines)
         }
 
 	box(helpwin, 0, 0);
+	wmove(helpwin, 0, 2);
+	wprintw(helpwin, "(%d,%d)", help_height, help_width);
         wrefresh(helpwin);
 
 	prompt("Press any key to continue");

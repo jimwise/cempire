@@ -5,7 +5,7 @@
  * and warranty information.
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: edit.c,v 1.3 1998/02/24 23:47:59 jim Exp $
+ * $Id: edit.c,v 1.4 1998/02/25 01:47:46 jim Exp $
  */
 
 /*
@@ -124,7 +124,7 @@ char
 e_cursor (edit_cursor)
 long *edit_cursor;
 {
-	char e;
+	uchar e;
 	char *p;
 	
 	/* set up terminal */
@@ -144,7 +144,10 @@ long *edit_cursor;
 		e = getch ();
 	}
 	(void) nocrmode (); /* reset terminal */
-	if (islower (e)) e = upper (e);
+
+	if (islower (e))
+		e = upper (e);
+
 	return e;
 }
 
@@ -344,7 +347,7 @@ void
 e_stasis (loc)
 long loc;
 {
-	char e;
+	uchar e;
 	char *p;
 	
 	if (!isupper (user_map[loc].contents)) huh (); /* no object here */
@@ -601,7 +604,7 @@ long edit_cursor;
 			(void) sprintf (temp_buf, "%c:%s; ",
 				piece_attr[s].sname,
 				func_name[FUNCI(cityp->func[s])]);
-		else (void) sprintf (temp_buf, "%c: %d;",
+		else (void) sprintf (temp_buf, "%c: %ld;",
 				piece_attr[s].sname,
 				cityp->func[s]);
 		
@@ -609,7 +612,7 @@ long edit_cursor;
 	}
 
 	(void) sprintf (junk_buf2,
-		"City at location %d will complete %s on round %d",
+		"City at location %ld will complete %s on round %ld",
 		cityp->loc,
 		piece_attr[cityp->prod].article,
 		date + piece_attr[cityp->prod].build_time - cityp->work);

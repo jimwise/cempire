@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: empire.h,v 1.4 1998/02/24 23:48:01 jim Exp $
+ * $Id: empire.h,v 1.5 1998/02/25 01:47:46 jim Exp $
  */
 
 /*
@@ -216,7 +216,7 @@ typedef struct real_map { /* a cell of the actual map */
 } real_map_t;
 
 typedef struct view_map { /* a cell of one player's world view */
-	char contents; /* '+', '.', '*', 'A', 'a', etc */
+	uchar contents; /* '+', '.', '*', 'A', 'a', etc */
 	long seen; /* date when last updated */
 } view_map_t;
 

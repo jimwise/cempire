@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: extern.h,v 1.7 1998/02/25 01:11:08 jim Exp $
+ * $Id: extern.h,v 1.8 1998/02/25 01:47:47 jim Exp $
  */
 
 /*
@@ -112,7 +112,7 @@ void	empire (void);		/* empire.c */
 void	attack (piece_info_t *, long);	/* attack.c */
 void	comp_move (int);	/* compmove.c */
 void	user_move (void);	/* usermove.c */
-void	edit(void);		/* edit.c */
+void	edit(long);		/* edit.c */
 
 #if 0
 /* map routines */
@@ -140,12 +140,10 @@ int vmap_at_sea();
 int rmap_at_sea();
 
 void kill_display(); /* display routines */
-void sector_change();
 int cur_sector();
 long cur_cursor();
 void display_locx();
 void print_sector();
-int move_cursor();
 void print_zoom();
 void print_pzoom();
 void print_xzoom();
@@ -166,16 +164,14 @@ int getint();
 char get_c();
 char get_cq();
 int getyn();
-int get_range();
 
 void rndini(); /* math routines */
 long irand();
 int dist();
 int isqrt();
 
+/* object routines */
 int find_nearest_city();
-city_info_t *find_city(); /* object routines */
-piece_info_t *find_obj();
 piece_info_t *find_nfull();
 long find_transport();
 piece_info_t *find_obj_at_loc();
@@ -189,16 +185,13 @@ void move_sat();
 int good_loc();
 void embark();
 void disembark();
-void describe_obj();
 void scan();
 void scan_sat();
 
 /* terminal routines */
 void pdebug();
-void topini();
 void clreol();
 void topmsg();
-void error();
 void comment();
 void extra();
 void set_need_delay();
@@ -208,22 +201,32 @@ void close_disp();
 void tupper();
 #endif
 
-/* display routines */
-void  display_loc (int, view_map_t[], long);
+/* display routines (display.c) */
+void	display_loc (int, view_map_t[], long);
+int	move_cursor (long *, int);
+void    sector_change (void);
 
-/* input routines */
+/* input routines (input.c) */
 char	get_chx (void);
 
-/* object routines */
+/* object routines (object.c) */
+void describe_obj (piece_info_t *);
+city_info_t     *find_city (long);
+piece_info_t	*find_obj (int, long);
+piece_info_t	*find_obj_at_loc (long);
+int	get_piece_name (void);
 void	set_prod (city_info_t *);
 
-/* terminal routines */
+/* terminal routines (term.c) */
+void	error (char *, ...);
+int	get_range (char *, int, int);
 void	help (char **, int);
 void	huh (void);
 void	info (char *, char *, char *);
 void	prompt (char *, ...);
+void	topini (void);
 
-/* utility routines */
+/* utility routines (util.c) */
 void	ttinit (void);
 void	redraw (void);
 void	clear_screen (void);

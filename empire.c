@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: empire.c,v 1.26 1998/03/04 13:58:00 jim Exp $
+ * $Id: empire.c,v 1.27 1998/03/04 13:59:57 jim Exp $
  */
 
 /*
@@ -300,12 +300,18 @@ c_map (void)
 	get_str (jnkbuf, STRSIZE);
 
 	f = fopen (jnkbuf, "w");
-	if (f == NULL) {
+	if (f == NULL)
+	{
 		error ("I can't open that file.");
 		return;
 	}
-	for (i = 0; i < MAP_WIDTH; i++) { /* for each column */
-		for (j = MAP_HEIGHT-1; j >= 0; j--) { /* for each row */
+
+	for (i = 0; i < MAP_WIDTH; i++)
+	{
+		/* for each column */
+		for (j = MAP_HEIGHT-1; j >= 0; j--)
+		{
+			/* for each row */
                         line[MAP_HEIGHT-1-j] = user_map[row_col_loc(j,i)].contents;
 		}
 		j = MAP_HEIGHT-1;

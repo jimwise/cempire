@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: data.c,v 1.11 1998/08/09 00:41:18 jwise Exp $
+ * $Id: data.c,v 1.12 2003/10/23 14:49:35 jwise Exp $
  */
 
 /*
@@ -169,76 +169,76 @@ const move_info_t user_ship_repair = {USER, "O", {1}};
 
 const char *help_cmd[] = {
 	"COMMAND MODE",
-	"Auto:     enter automove mode",
-	"City:     give city to computer",
-	"Date:     print round",
-	"Examine:  examine enemy map",
-	"File:     print map to file",
-	"Give:     give move to computer",
-	"Help:     display this text",
-	"J:        enter edit mode",
-	"Move:     make a move",
-	"N:        give N moves to computer",
-	"Print:    print a sector",
-	"Quit:     quit game",
-	"Restore:  restore game",
-	"Save:     save game",
-	"Trace:    save movie in empmovie.dat",
-	"Watch:    watch movie",
-	"Zoom:     display compressed map",
-	"<ctrl-L>: redraw screen"
+	"a - enter Automove mode",
+	"c - give City to computer",
+	"d - print game Date (round)",
+	"e - Examine enemy map",
+	"f - print map to File",
+	"g - Give move to computer",
+	"h - display this Help text",
+	"j - enter edit mode",
+	"m - Move",
+	"n - give N moves to computer",
+	"p - Print a sector",
+	"q - Quit game",
+	"r - Restore game",
+	"s - Save game",
+	"t - save movie in empmovie.dat",
+	"w - Watch movie",
+	"z - display Zoomed out map",
+	"<ctrl-L> - redraw screen"
 };
 const int cmd_lines = 19;
 
 const char *help_user[] = {
 	"USER MODE",
 	"QWE",
-	"A D       movement directions",
+	"A D - movement directions",
 	"ZXC",
-	"<space>:  sit",
-	"Build:    change city production",
-	"Fill:     set func to fill",
-	"Grope:    set func to explore",
-	"Help:     display this text",
-	"I <dir>:  set func to dir",
-	"J:        enter edit mode",
-	"Kill:     set func to awake",
-	"Land:     set func to land",
-	"Out:      leave automove mode",
-	"Print:    redraw screen",
-	"Random:   set func to random",
-	"Sentry:   set func to sentry",
-	"Upgrade:  set func to repair",
-	"V <piece> <func>:  set city func",
-	"Y:        set func to attack",
-	"<ctrl-L>: redraw screen",
-	"?:        describe piece"
+	"<space>:           skip",
+	"b - change city production",
+	"f - set func to Fill",
+	"g - set func to explore",
+	"h - display this Help text",
+	"i <dir> - set func to dir",
+	"j - enter edit mode",
+	"k - set func to awake",
+	"l - set func to Land",
+	"o - get Out of automove mode",
+	"p - redraw screen",
+	"r - set func to Random",
+	"s - set func to Sentry",
+	"u - set func to repair",
+	"v <piece> <func> - set city func",
+	"y - set func to attack",
+	"<ctrl-L> - redraw screen",
+	"= - describe piece"
 };
 const int user_lines = 22;
 	
 const char *help_edit[] = {
 	"EDIT MODE",
 	"QWE",
-	"A D       movement directions",
+	"A D - movement directions",
 	"ZXC",
-	"Build:    change city production",
-	"Fill:     set func to fill",
-	"Grope:    set func to explore",
-	"Help:     display this text",
-	"I <dir>:  set func to dir",
-	"Kill:     set func to awake",
-	"Land:     set func to land",
-	"Mark:     mark piece",
-	"N:        set dest for marked piece",
-	"Out:      exit edit mode",
-	"Print:    print sector",
-	"Random:   set func to random",
-	"Sentry:   set func to sentry",
-	"Upgrade:  set func to repair",
-	"V <piece> <func>:  set city func",
-	"Y:        set func to attack",
-	"<ctrl-L>: redraw screen",
-	"?:        describe piece"
+	"b - change city production",
+	"f - set func to Fill",
+	"g - set func to explore",
+	"h - display this Help text",
+	"i <dir> - set func to dir",
+	"k - set func to awake",
+	"l - set func to Land",
+	"m - Mark piece",
+	"n - set dest for marked piece",
+	"o - get Out of automove mode",
+	"p - redraw screen",
+	"r - set func to Random",
+	"s - set func to Sentry",
+	"u - set func to repair",
+	"v <piece> <func> - set city func",
+	"y - set func to attack",
+	"<ctrl-L> - redraw screen",
+	"= - describe piece"
 };
 const int edit_lines = 22;
 
@@ -247,6 +247,7 @@ int SMOOTH;		/* number of times to smooth map */
 int WATER_RATIO;	/* percentage of map that is water */
 int MIN_CITY_DIST;	/* cities must be at least this far apart */
 int save_interval;	/* turns between autosaves */
+int traditional = 0;	/* use `traditional' UI */
 
 real_map_t map[MAP_SIZE];	/* the way the world really looks */
 view_map_t comp_map[MAP_SIZE];	/* computer's view of the world */

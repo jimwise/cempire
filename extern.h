@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: extern.h,v 1.16 1998/02/25 23:24:02 jim Exp $
+ * $Id: extern.h,v 1.17 1998/02/26 00:36:18 jim Exp $
  */
 
 /*
@@ -122,16 +122,11 @@ void	edit(long);		/* edit.c */
 void rmap_cont();
 scan_counts_t rmap_cont_scan();
 int map_cont_edge();
-long vmap_find_dest();
-void vmap_prune_explore_locs();
-long vmap_find_dir();
-int vmap_count_adjacent();
 int vmap_shore();
 int rmap_at_sea();
 
 /* display routines */
 long cur_cursor();
-void display_score();
 #ifdef A_COLOR
 void init_colors();
 #endif /* A_COLOR */
@@ -142,10 +137,6 @@ char get_c();
 char get_cq();
 
 /* object routines */
-piece_info_t *find_nfull();
-long find_transport();
-piece_info_t *find_obj_at_loc();
-int good_loc();
 void scan_sat();
 
 /* terminal routines */
@@ -160,6 +151,7 @@ void tupper();
 int	cur_sector (void);
 void	display_loc (int, view_map_t[], long);
 void	display_locx (int, view_map_t[], long);
+void    display_score (void);
 void	kill_display (void);
 int	move_cursor (long *, int);
 void	print_pzoom (char *, path_map_t *, view_map_t *);
@@ -212,9 +204,12 @@ void	disembark (piece_info_t *);
 void	embark (piece_info_t *, piece_info_t *);
 city_info_t     *find_city (long);
 int	find_nearest_city ( long, int, long *);
+piece_info_t	*find_nfull (int, long);
 piece_info_t	*find_obj (int, long);
 piece_info_t	*find_obj_at_loc (long);
+long	find_transport (int, long);
 int	get_piece_name (void);
+int	good_loc (piece_info_t *, long);
 void	kill_city (city_info_t *);
 void	kill_obj (piece_info_t *, long);
 void	move_obj (piece_info_t *, long);

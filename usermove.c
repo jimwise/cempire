@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: usermove.c,v 1.4 1998/02/25 22:49:58 jim Exp $
+ * $Id: usermove.c,v 1.5 1998/02/26 00:36:19 jim Exp $
  */
 
 /*
@@ -18,9 +18,12 @@ usermove.c -- Let the user move her troops.
 #include "empire.h"
 #include "extern.h"
 
-void fatal();
-void move_to_dest();
-void move_army_to_city();
+int	awake (piece_info_t *);
+void	fatal (piece_info_t *, long, char *, char *);
+void	move_army_to_city (piece_info_t *, long);
+void	move_random (piece_info_t *);
+void	move_to_dest (piece_info_t *, long);
+void	piece_move (piece_info_t *);
 
 void
 user_move () {
@@ -1060,7 +1063,7 @@ awake (obj)
 piece_info_t *obj;
 {
 	int i;
-	char c;
+	uchar c;
 	long t;
 
 	if (obj->type == ARMY && vmap_at_sea (user_map, obj->loc)) {

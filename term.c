@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.26 1998/03/02 15:47:35 jim Exp $
+ * $Id: term.c,v 1.27 1998/03/02 16:28:15 jim Exp $
  */
 
 /*
@@ -63,7 +63,6 @@ void    pos_str (int, int, char *, ...);
 void    prompt (char *, ...);
 void    redraw (void);
 void    set_need_delay (void);
-void	status (char *, ...);
 void	term_clear (void);
 void    term_end (void);
 void    term_init (void);
@@ -74,18 +73,6 @@ void	vtopmsg(int, char *, va_list);
 
 static int need_delay;
 static WINDOW *statuswin, *infowin;
-
-void
-status (char *fmt, ...)
-{
-	va_list ap;
-
-	va_start(ap, fmt);
-
-	vtopmsg(1, fmt, ap);
-
-	va_end(ap);
-}
 
 void
 pdebug (char *s, ...)

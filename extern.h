@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: extern.h,v 1.39 1998/03/02 13:23:17 jim Exp $
+ * $Id: extern.h,v 1.40 1998/03/02 16:28:14 jim Exp $
  */
 
 /*
@@ -212,7 +212,6 @@ void	huh (void);
 void	info (char *, char *, char *);
 void    pos_str (int, int, char *, ...);
 void    redraw (void);
-void	status (char *, ...);
 void    term_clear (void);
 void    term_init (void);
 void	pdebug (char *, ...);

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: compmove.c,v 1.13 1998/02/27 00:18:47 jim Exp $
+ * $Id: compmove.c,v 1.14 1998/02/27 00:33:34 jim Exp $
  */
 
 /*
@@ -19,14 +19,9 @@ For each move the user wants us to make, we do the following:
     3)  Check to see if the game is over.
 */
 
-#ifdef SYSV
-#include <string.h>
-#else
-#include <strings.h>
-#endif
-
 #include <assert.h>
 #include <curses.h>
+#include <string.h>
 #include "empire.h"
 #include "extern.h"
 

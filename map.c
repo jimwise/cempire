@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: map.c,v 1.7 1998/02/27 00:18:51 jim Exp $
+ * $Id: map.c,v 1.8 1998/02/27 00:33:37 jim Exp $
  */
 
 /*
@@ -16,12 +16,7 @@ This file contains routines for playing around with view_maps,
 real_maps, path_maps, and cont_maps.
 */
 
-#ifdef SYSV
-#include <string.h>
-#else
 #include <strings.h>
-#endif
-
 #include "empire.h"
 #include "extern.h"
 
@@ -82,7 +77,7 @@ or lakes.
 void
 vmap_cont (int *cont_map, view_map_t *vmap, long loc, char bad_terrain)
 {
-	bzero ((char *)cont_map, MAP_SIZE * sizeof (int));
+	bzero(cont_map, MAP_SIZE * sizeof(int));
 	vmap_mark_up_cont (cont_map, vmap, loc, bad_terrain);
 }
 
@@ -143,7 +138,7 @@ or lakes.
 void
 rmap_cont (int *cont_map, long loc, char bad_terrain)
 {
-	bzero ((char *)cont_map, MAP_SIZE * sizeof (int));
+	bzero(cont_map, MAP_SIZE * sizeof(int));
 	rmap_mark_up_cont (cont_map, loc, bad_terrain);
 }
 
@@ -185,7 +180,7 @@ vmap_cont_scan (int *cont_map, view_map_t *vmap)
 	scan_counts_t counts;
 	long i;
 
-	bzero ((char *)&counts, sizeof (scan_counts_t));
+	bzero(&counts, sizeof(scan_counts_t));
 	
 	for (i = 0; i < MAP_SIZE; i++) {
 		if (cont_map[i]) { /* cell on continent? */
@@ -239,7 +234,7 @@ rmap_cont_scan (int *cont_map)
 	scan_counts_t counts;
 	long i;
 
-	bzero ((char *)&counts, sizeof (scan_counts_t));
+	bzero(&counts, sizeof(scan_counts_t));
 	
 	for (i = 0; i < MAP_SIZE; i++) {
 		if (cont_map[i]) { /* cell on continent? */
@@ -706,7 +701,7 @@ vmap_prune_explore_locs (view_map_t *vmap)
 	long i;
 	long copied;
 
-	bzero (pmap, sizeof (pmap));
+	bzero(pmap, sizeof(pmap));
 	from = &p1;
 	to = &p2;
 	from->len = 0;
@@ -955,7 +950,7 @@ vmap_mark_near_path (path_map_t path_map[], long loc)
 	long new_loc, xloc;
 	int hit_loc[8];
 
-	bzero ((char *)hit_loc, sizeof(int)*8);
+	bzero(hit_loc, 8 * sizeof(int));
 	
 	FOR_ADJ_ON (loc, new_loc, i) {
 		FOR_ADJ_ON (new_loc, xloc, j)

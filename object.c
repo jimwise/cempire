@@ -6,22 +6,17 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: object.c,v 1.9 1998/02/27 00:18:52 jim Exp $
+ * $Id: object.c,v 1.10 1998/02/27 00:33:38 jim Exp $
  */
 
 /*
 object.c -- routines for manipulating objects.
 */
 
-#ifdef SYSV
-#include <string.h>
-#else
-#include <strings.h>
-#endif
-
 #include <assert.h>
 #include <ctype.h>
 #include <stdio.h>
+#include <string.h>
 #include "empire.h"
 #include "extern.h"
 

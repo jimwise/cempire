@@ -2,7 +2,7 @@
 #	Copyright (C) 1987, 1988 Chuck Simmons
 #	Portions of this file Copyright (C) 1998 Jim Wise
 #
-# $Id: Makefile,v 1.9 1998/02/26 01:05:37 jim Exp $
+# $Id: Makefile,v 1.10 1998/02/27 00:33:34 jim Exp $
 #
 # See the file COPYING, distributed with empire, for restriction
 # and warranty information.
@@ -11,12 +11,6 @@
 #  * the name of the containing directory
 #  * the RPM spec file
 V=1.1
-
-# Change the line below for your system.  If you are on a Sun or Vax,
-# you may want BSD.
-
-#SYS = BSD
-SYS = SYSV
 
 # Use -g to compile the program for debugging.
 
@@ -38,7 +32,7 @@ LIBS = -lcurses # -ltermcap
 
 TARGET = empire
 
-CFLAGS = $(DEBUG) $(PROFILE) -D$(SYS)
+CFLAGS = $(DEBUG) $(PROFILE)
 
 FILES = \
 	attack.c \
@@ -80,7 +74,7 @@ $(TARGET): $(OFILES)
 	$(CC) $(PROFILE) -o empire $(OFILES) $(LIBS)
 
 lint: $(FILES)
-	lint -u -D$(SYS) $(FILES) -lcurses
+	lint -u $(FILES) -lcurses
 
 clean:
 	rm -f *.o $(TARGET)

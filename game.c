@@ -6,22 +6,17 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: game.c,v 1.8 1998/02/27 00:18:50 jim Exp $
+ * $Id: game.c,v 1.9 1998/02/27 00:33:37 jim Exp $
  */
 
 /*
 game.c -- Routines to initialize, save, and restore a game.
 */
 
-#ifdef SYSV
-#include <string.h>
-#else
-#include <strings.h>
-#endif
-
 #include <assert.h>
 #include <ctype.h>
 #include <curses.h>
+#include <strings.h>
 #include "empire.h"
 #include "extern.h"
 
@@ -824,7 +819,7 @@ stat_display (char *mbuf, int round)
 	int user_cost, comp_cost;
 	char *p;
 	
-	bzero ((char *)counts, sizeof (counts));
+	bzero(counts, sizeof(counts));
 	
 	for (i = 0; i < MAP_SIZE; i++) {
 		p = strchr (pieces, mbuf[i]);

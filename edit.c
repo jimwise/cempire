@@ -5,22 +5,17 @@
  * and warranty information.
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: edit.c,v 1.8 1998/02/27 00:18:49 jim Exp $
+ * $Id: edit.c,v 1.9 1998/02/27 00:33:36 jim Exp $
  */
 
 /*
 edit.c -- Routines to handle edit mode commands.
 */
 
-#ifdef SYSV
-#include <string.h>
-#else
-#include <strings.h>
-#endif
-
 #include <assert.h>
 #include <curses.h>
 #include <ctype.h>
+#include <string.h>
 #include "empire.h"
 #include "extern.h"
 

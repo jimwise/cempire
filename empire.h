@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: empire.h,v 1.11 1998/02/27 00:08:46 jim Exp $
+ * $Id: empire.h,v 1.12 1998/02/27 00:33:36 jim Exp $
  */
 
 /*
@@ -20,19 +20,6 @@ empire.h -- type and constant declarations
 
 #ifndef NULL
 #define NULL 0
-#endif
-
-/* Redefine some functions for portability. */
-
-#ifndef SYSV
-#define memcpy(dst,src,len) bcopy((src),(dst),(len))
-#define strchr(s,c) index(s,c)
-#define beep() (putchar('\7'))
-#define napms(d) (usleep((d)*1000))
-#else
-char *memset();
-char *memcpy();
-#define bzero(dst,len) memset(dst,0,len)
 #endif
 
 #ifdef A_COLOR

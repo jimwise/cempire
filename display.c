@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.10 1998/02/27 00:18:48 jim Exp $
+ * $Id: display.c,v 1.11 1998/02/27 00:33:35 jim Exp $
  */
 
 /*
@@ -20,13 +20,8 @@ information:
 	point of view;
 */
 
-#ifdef SYSV
-#include <string.h>
-#else
-#include <strings.h>
-#endif
-
 #include <curses.h>
+#include <string.h>
 #include "empire.h"
 #include "extern.h"
 

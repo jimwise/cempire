@@ -33,34 +33,35 @@ void	comp_move (int);
 void	do_cities (void);
 void	comp_prod (city_info_t *, int);
 void	comp_set_prod (city_info_t *, int);
-int	overproduced (city_info_t *, int);
+int	overproduced (city_info_t *, int *);
 int	need_more (int *, int, int);
 void	comp_set_needed (city_info_t *, int *, int, int);
 int	lake (long);
+void	do_pieces (void);
 void	cpiece_move (piece_info_t *);
 void	move1 (piece_info_t *);
-void	army_move (piece_info_t *)
+void	army_move (piece_info_t *);
 void	unmark_explore_locs (view_map_t *);
 void	make_army_load_map (piece_info_t *, view_map_t *, view_map_t *);
-int	nearby_load (piece_info_t *, loc);
+int	nearby_load (piece_info_t *, long);
 int	nearby_count (long);
 void	make_tt_load_map (view_map_t *, view_map_t *);
 void	make_unload_map (view_map_t *, view_map_t *);
-void	board_ship (piece_info_t *, path_map_t *);
+void	board_ship (piece_info_t *, path_map_t *, long);
 piece_info_t *find_best_tt (piece_info_t *, long);
 int	load_army (piece_info_t *);
-long	move_away (view_map_t *, long char *);
+long	move_away (view_map_t *, long, char *);
 long	find_attack (long, char *, char *);
+void	transport_move (piece_info_t *);
+void	fighter_move (piece_info_t *);
+void	ship_move (piece_info_t *);
+void	move_objective (piece_info_t *, path_map_t[], long, char *);
+void	check_endgame (void);
 
-
-int load_army();
-void move_objective();
 
 void
 comp_move (int nmoves) 
 {
-	void do_cities(), do_pieces(), check_endgame();
-
 	int i;
 	piece_info_t *obj;
 
@@ -276,10 +277,10 @@ int is_lake;
 	
 	interest = (counts.comp_cities != 1 || interest);
 	
-	if (cityp->prod == NOPIECE
-	    || cityp->prod == ARMY && counts.comp_cities == 1
+	if ((cityp->prod == NOPIECE)
+	    || (cityp->prod == ARMY && counts.comp_cities == 1)
 	    || overproduced (cityp, city_count)
-	    || cityp->prod > FIGHTER && is_lake)
+	    || (cityp->prod > FIGHTER && is_lake))
 		comp_set_needed (cityp, city_count, interest, is_lake);
 }
 	
@@ -1151,7 +1152,8 @@ and armies as the user, then the computer will give up.
 */
 
 void
-check_endgame () { /* see if game is over */
+check_endgame (void)
+{ /* see if game is over */
 
 	int nuser_city, ncomp_city;
 	int nuser_army, ncomp_army;

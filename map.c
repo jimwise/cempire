@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: map.c,v 1.26 1998/08/09 01:54:37 jwise Exp $
+ * $Id: map.c,v 1.27 1998/08/09 01:55:57 jwise Exp $
  */
 
 /*
@@ -44,7 +44,6 @@ void    vmap_mark_near_path (path_map_t[], long);
 void    vmap_mark_path (path_map_t *, const view_map_t *, long);
 void    vmap_mark_up_cont (int *, const view_map_t *, long, char);
 void    vmap_prune_explore_locs (view_map_t *);
-int	vmap_shore (view_map_t *, long);
 
 #define SWAP(a,b) { \
 	perimeter_t *x; \
@@ -993,18 +992,6 @@ rmap_shore (long loc)
 
 	FOR_ADJ_ON (loc, j, i)
 		if (map[j].contents == '.')
-			return (TRUE);
-
-	return (FALSE);
-}
-
-int
-vmap_shore (view_map_t *vmap, long loc)
-{
-	long i, j;
-
-	FOR_ADJ_ON (loc, j, i)
-	if (vmap[j].contents != ' ' && vmap[j].contents != '+' && map[j].contents == '.')
 			return (TRUE);
 
 	return (FALSE);

@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: map.c,v 1.27 1998/08/09 01:55:57 jwise Exp $
+ * $Id: map.c,v 1.28 1999/10/02 04:44:47 jwise Exp $
  */
 
 /*
@@ -399,7 +399,7 @@ start_perimeter (path_map_t *pmap, perimeter_t *perim, long loc, int terrain)
 			pmap_init[i].terrain = T_UNKNOWN;
 		}
 	}
-	memcpy ((char *)pmap, (char *)pmap_init, sizeof (pmap_init));
+	memcpy (pmap, pmap_init, sizeof (pmap_init));
 	
 	/* put first location in perimeter */
 	pmap[loc].cost = 0;

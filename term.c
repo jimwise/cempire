@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.28 1998/03/02 17:46:50 jim Exp $
+ * $Id: term.c,v 1.29 1998/03/02 17:50:34 jim Exp $
  */
 
 /*
@@ -56,7 +56,6 @@ void	get_str (char *, int);
 void    get_strq (char *, int);
 void    help (char **, int);
 void    huh (void);
-void    info (char *, char *, char *);
 void    pdebug (char *, ...);
 void    pos_str (int, int, char *, ...);
 void    prompt (char *, ...);
@@ -97,7 +96,8 @@ we finish printing information to the screen.
 void
 topini (void)
 {
-	info (0, 0, 0);
+	wclear(infowin);
+	wrefresh(infowin);
 }
 /*
 Write a message to one of the top lines.
@@ -192,22 +192,6 @@ huh (void)
 	error ("Type H for Help.");
 }
 
-/*
-Display information on the screen.  If the 'need_delay' flag is set,
-we force a delay, then print the information.  After we print the
-information, we set the need_delay flag.
-*/
-
-void
-info (char *a, char *b, char *c)
-{
-	if (need_delay) delay ();
-	topmsg (1, a);
-	topmsg (2, b);
-	topmsg (3, c);
-	need_delay = (a || b || c);
-}
-
 void
 set_need_delay (void)
 {
@@ -261,7 +245,7 @@ get_strq (char *buf, int sizep)
 	wrefresh(infowin);
 	getstr (buf);
 	need_delay = FALSE;
-	info (0, 0, 0);
+	topini();
 	crmode ();
 }
 

@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: empire.c,v 1.40 2003/10/22 22:16:43 jwise Exp $
+ * $Id: empire.c,v 1.41 2003/10/23 15:40:44 jwise Exp $
  */
 
 /*
@@ -52,7 +52,7 @@ empire (void)
 		{
 			/* don't ask for cmd in auto mode */
 			user_move();
-			comp_move(1);
+			comp_move();
 			if (++turn % save_interval == 0)
 				save_game();
 	    	}
@@ -71,14 +71,14 @@ static void
 do_command (char orders)
 {
 	char e;
-	int ncycle;
+	int i, loc, ncycle;
 
 	switch (orders) {
 	case 'A': /* turn on auto move mode */
 		automove = TRUE;
 		info("Entering Auto-Mode");
 		user_move();
-		comp_move(1);
+		comp_move();
 		save_game();
 		break;
 
@@ -102,7 +102,7 @@ do_command (char orders)
 		break;
 
 	case 'G': /* give one free enemy move */
-		comp_move(1);
+		comp_move();
 		break;
 
 	case '?': /* help */
@@ -110,20 +110,22 @@ do_command (char orders)
 		break;
 
 	case 'J': /* edit mode */
-		ncycle = cur_sector ();
-		if (ncycle == -1) ncycle = 0;
-		edit(sector_loc(ncycle));
+		loc = cur_sector ();
+		if (loc == -1)
+			loc = 0;
+		edit(sector_loc(loc));
 		break;
 
 	case 'M': /* move */
 		user_move();
-		comp_move(1);
+		comp_move();
 		save_game();
 		break;
 
 	case 'N': /* give enemy free moves */
 		ncycle = get_int("Number of free enemy moves: ", 1, 1000);
-		comp_move(ncycle);
+		for (i = 0; i < ncycle; i++)
+			comp_move();
 		save_game();
 		break;
 
@@ -340,7 +342,7 @@ c_movie (void)
 {
 	while (1)
 	{
-		comp_move(1);
+		comp_move();
 		print_zoom(comp_map);
 		save_game();
 	}

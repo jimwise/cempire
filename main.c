@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: main.c,v 1.17 2003/10/22 22:23:32 jwise Exp $
+ * $Id: main.c,v 1.18 2003/10/23 15:40:44 jwise Exp $
  */
 
 /*
@@ -28,7 +28,7 @@
 #include "empire.h"
 #include "extern.h"
 
-#define OPTFLAGS "w:s:d:S:V"
+#define OPTFLAGS "w:s:d:S:tV"
 
 int
 main (int argc, char *argv[])
@@ -69,6 +69,9 @@ main (int argc, char *argv[])
 				fprintf(stderr, "empire: -S argument must be greater than or equal to zero.\n");
 				exit (1);
 			}
+			break;
+		case 't':
+			traditional = 1;
 			break;
 		case 'V':
 			printf("%s\n", VERSION_STRING);

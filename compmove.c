@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: compmove.c,v 1.44 2001/02/08 19:16:03 jwise Exp $
+ * $Id: compmove.c,v 1.45 2003/10/23 15:40:44 jwise Exp $
  */
 
 /*
@@ -24,7 +24,7 @@
 
 static view_map_t emap[MAP_SIZE]; /* pruned explore map */
 
-void	comp_move (int);
+void	comp_move (void);
 static void	army_move (piece_info_t *);
 static void	board_ship (piece_info_t *, path_map_t *, long);
 static void	check_endgame (void);
@@ -54,9 +54,8 @@ static void    transport_move (piece_info_t *);
 static void	unmark_explore_locs (view_map_t *);
 
 void
-comp_move (int nmoves) 
+comp_move (void) 
 {
-	int i;
 	piece_type_t j;
 	const piece_info_t *obj;
 
@@ -64,24 +63,21 @@ comp_move (int nmoves)
 	
 	for (j = FIRST_OBJECT; j < NUM_OBJECTS; j++)
 		for (obj = comp_obj[j]; obj != NULL; obj = obj->piece_link.next)
-			scan (comp_map, obj->loc); /* refresh comp's view of world */
+			scan(comp_map, obj->loc); /* refresh comp's view of world */
 
-	for (i = 1; i <= nmoves; i++)
-	{
-		/* for each move we get... */
-		prompt("Thinking...");
+	/* for each move we get... */
+	prompt("Thinking...");
 
-		memcpy (emap, comp_map, MAP_SIZE * sizeof (view_map_t));
-		vmap_prune_explore_locs (emap);
+	memcpy(emap, comp_map, MAP_SIZE * sizeof (view_map_t));
+	vmap_prune_explore_locs(emap);
 	
-		do_cities (); /* handle city production */
-		do_pieces (); /* move pieces */
+	do_cities(); /* handle city production */
+	do_pieces(); /* move pieces */
 		
-		if (save_movie)
-			save_movie_screen ();
+	if (save_movie)
+		save_movie_screen();
 
-		check_endgame (); /* see if game is over */
-	}
+	check_endgame(); /* see if game is over */
 }
 
 /*

@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: extern.h,v 1.77 2001/02/07 03:28:09 jwise Exp $
+ * $Id: extern.h,v 1.78 2003/10/23 15:40:44 jwise Exp $
  */
 
 /* extern.h -- define global non-constant storage.  */
@@ -14,6 +14,7 @@ extern int SMOOTH;		/* number of times to smooth map		*/
 extern int WATER_RATIO;		/* percentage of map that is water		*/
 extern int MIN_CITY_DIST;	/* cities must be at least this far apart	*/
 extern int save_interval;	/* turns between autosaves			*/
+extern int traditional;		/* use `traditional' movement keys instead of new style */
 
 extern real_map_t map[MAP_SIZE];	/* the way the world really looks	*/
 extern view_map_t comp_map[MAP_SIZE];	/* computer's view of the world		*/
@@ -107,7 +108,7 @@ extern int comp_score;
 
 /* global routines */
 void	attack (piece_info_t *, long);	/* attack.c	*/
-void	comp_move (int);		/* compmove.c	*/
+void	comp_move (void);		/* compmove.c	*/
 void    edit(long);            		/* edit.c	*/
 void    empire (void);          	/* empire.c	*/
 void	user_move (void);		/* usermove.c	*/

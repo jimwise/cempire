@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: extern.h,v 1.28 1998/02/27 01:44:24 jim Exp $
+ * $Id: extern.h,v 1.29 1998/02/27 01:49:45 jim Exp $
  */
 
 /*
@@ -108,11 +108,11 @@ int comp_score;
 		sector_col(sector)*COLS_PER_SECTOR+COLS_PER_SECTOR/2)
 		
 /* global routines */
-void	empire (void);		/* empire.c */
 void	attack (piece_info_t *, long);	/* attack.c */
 void	comp_move (int);	/* compmove.c */
+void    edit(long);             /* edit.c */
+void    empire (void);          /* empire.c */
 void	user_move (void);	/* usermove.c */
-void	edit(long);		/* edit.c */
 
 /* display routines (display.c) */
 int	cur_sector (void);

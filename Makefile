@@ -2,7 +2,7 @@
 #	Copyright (C) 1987, 1988 Chuck Simmons
 #	Portions of this file Copyright (C) 1998 Jim Wise
 #
-# $Id: Makefile,v 1.5 1998/02/24 23:52:30 jim Exp $
+# $Id: Makefile,v 1.6 1998/02/25 02:02:55 jim Exp $
 #
 # See the file COPYING, distributed with empire, for restriction
 # and warranty information.
@@ -23,7 +23,7 @@ SYS = SYSV
 CC=gcc
 
 #DEBUG = -g -DDEBUG
-DEBUG = -Wall -W -Werror
+DEBUG = -ansi -pedantic -Wall -W -Werror
 
 # Use -p to profile the program.
 #PROFILE = -p -DPROFILE

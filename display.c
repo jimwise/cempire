@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.7 1998/02/26 01:02:57 jim Exp $
+ * $Id: display.c,v 1.8 1998/02/26 01:08:41 jim Exp $
  */
 
 /*
@@ -129,8 +129,6 @@ redisplay the sector, or if the location is not on the screen.
 
 void
 display_loc (int whose, view_map_t vmap[], long loc)
-/* whose == whose map to display */
-/* loc == location to display */
 {
 	if (change_ok || whose != whose_map || !on_screen (loc))
 		print_sector (whose, vmap, loc_sector (loc));
@@ -187,9 +185,6 @@ screen.
  
 void
 print_sector (char whose, view_map_t vmap[], int sector)
-/* whos; == USER or COMP */
-/* vmap == map to display */
-/* sector == sector to display */
 {
 	int first_row, first_col, last_row, last_col;
 	int display_rows, display_cols;

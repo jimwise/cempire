@@ -1,16 +1,16 @@
 .\"
 .\"	Copyright (C) 1987, 1988 Chuck Simmons
 .\" 
-.\"	$Id: cempire.6,v 1.10 2003/10/22 22:20:06 jwise Exp $
+.\"	$Id: cempire.6,v 1.11 2003/10/22 22:25:50 jwise Exp $
 .\"
 .\" See the file COPYING, distributed with empire, for restriction
 .\" and warranty information.
 .\"
-.TH Empire 6
+.TH cempire 6
 .SH NAME
 cempire -- the wargame of the century
 .SH SYNOPSIS
-cempire [-d delay] [-S save_interval] [-s smooth] [-w water]
+cempire [-d delay] [-S save_interval] [-s smooth] [-w water] [-V]
 .SH DESCRIPTION
 Empire is a simulation of a full-scale war between two
 emperors, the computer and you.  Naturally, there is only
@@ -37,6 +37,9 @@ This option controls the amount of water on the map.
 This is given as the percentage of the map which should
 be water.  The default is 70% water.  \f2water\fP
 must be an integer in the between 10 and 90 inclusive.
+.TP
+.BI \-V\^
+Print the version number of cempire, and exit.
 .SH EXAMPLES
 empire -w90 -s2
 .P

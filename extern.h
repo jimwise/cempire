@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: extern.h,v 1.6 1998/02/25 01:02:46 jim Exp $
+ * $Id: extern.h,v 1.7 1998/02/25 01:11:08 jim Exp $
  */
 
 /*
@@ -143,7 +143,6 @@ void kill_display(); /* display routines */
 void sector_change();
 int cur_sector();
 long cur_cursor();
-void display_loc();
 void display_locx();
 void print_sector();
 int move_cursor();
@@ -193,7 +192,6 @@ void disembark();
 void describe_obj();
 void scan();
 void scan_sat();
-void set_prod();
 
 /* terminal routines */
 void pdebug();
@@ -201,11 +199,8 @@ void topini();
 void clreol();
 void topmsg();
 void error();
-void info();
 void comment();
 void extra();
-void huh();
-void help();
 void set_need_delay();
 
 /* from util.c but not used elsewhere */
@@ -213,11 +208,20 @@ void close_disp();
 void tupper();
 #endif
 
+/* display routines */
+void  display_loc (int, view_map_t[], long);
+
 /* input routines */
 char	get_chx (void);
 
+/* object routines */
+void	set_prod (city_info_t *);
+
 /* terminal routines */
-void	prompt (char *buf, ...);
+void	help (char **, int);
+void	huh (void);
+void	info (char *, char *, char *);
+void	prompt (char *, ...);
 
 /* utility routines */
 void	ttinit (void);

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.53 1998/03/06 22:40:29 jim Exp $
+ * $Id: term.c,v 1.54 1998/03/09 17:22:01 jim Exp $
  */
 
 /*
@@ -226,59 +226,6 @@ getyn (char *message)
 
 		error ("Please answer Y or N.");
 	}
-}
-
-/*
-Print a screen of help information.
-*/
-
-void
-help (char **text, int nlines)
-{
-	int i, r, c;
-	piece_type_t j;
-	int text_lines;
-
-	text_lines = (nlines + 1) / 2; /* lines of text */
-
-	term_clear();
-
-	pos_str (NUMTOPS, 1, text[0]); /* mode */
-	pos_str (NUMTOPS, 41, "See empire.doc for more information.");
-
-	for (i = 1; i < nlines; i++)
-	{
-		if (i > text_lines)
-			pos_str (i - text_lines + NUMTOPS + 1, 41, text[i]);
-		else
-			pos_str (i + NUMTOPS + 1, 1, text[i]);
-	}
-
-	pos_str (text_lines + NUMTOPS + 2,  1, "--Piece---Yours-Enemy-Moves-Hits-Cost");
-	pos_str (text_lines + NUMTOPS + 2, 41, "--Piece---Yours-Enemy-Moves-Hits-Cost");
-
-	for (j = FIRST_OBJECT; j < NUM_OBJECTS; j++)
-	{
-		if (j >= (NUM_OBJECTS+1)/2) {
-			r = j - (NUM_OBJECTS+1)/2;
-			c = 41;
-		}
-		else
-		{
-			r = j;
-			c = 1;
-		}
-		pos_str (r + text_lines + NUMTOPS + 3, c, 
-			"%-12s%c     %c%6d%5d%6d",
-			piece_attr[j].nickname,
-			piece_attr[j].sname,
-			tolower (piece_attr[j].sname),
-			piece_attr[j].speed,
-			piece_attr[j].max_hits,
-			piece_attr[j].build_time);
-
-	}
-	wrefresh(infowin);
 }
 
 /*

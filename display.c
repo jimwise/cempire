@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.43 1998/03/09 17:09:10 jim Exp $
+ * $Id: display.c,v 1.44 1998/03/09 17:22:00 jim Exp $
  */
 
 /*
@@ -422,7 +422,7 @@ print_pzoom (char *s, path_map_t *pmap, view_map_t *vmap)
 	prompt (s);
 	get_chx (); /* wait for user */
 	
-	wrefrsh(stdscr);
+	wrefresh(stdscr);
 }
 
 /*
@@ -498,4 +498,56 @@ print_movie_cell (char *mbuf, int row, int col, int row_inc, int col_inc)
                                 cell = mbuf[row_col_loc(r,c)];
 
         mvwaddch(stdscr, row/row_inc + NUMTOPS, col/col_inc, cell);
+}
+
+/*
+Print a screen of help information.
+*/
+
+void
+help (char **text, int nlines)
+{
+        int i, r, c;
+        piece_type_t j;
+        int text_lines;
+
+        text_lines = (nlines + 1) / 2; /* lines of text */
+
+        term_clear();
+
+        mvwprintw(mapwin, 1, 1, text[0]); /* mode */
+        mvwprintw(mapwin, 1, 41, "See empire(6) for more information.");
+
+        for (i = 1; i < nlines; i++)
+        {
+                if (i > text_lines)
+                        mvwprintw(mapwin, i - text_lines + 1, 41, text[i]);
+                else
+                        mvwprintw(mapwin, i + 1, 1, text[i]);
+        }
+
+        mvwprintw(mapwin, text_lines + 2,  1, "--Piece---Yours-Enemy-Moves-Hits-Cost");
+        mvwprintw(mapwin, text_lines + 2, 41, "--Piece---Yours-Enemy-Moves-Hits-Cost");
+
+        for (j = FIRST_OBJECT; j < NUM_OBJECTS; j++)
+        {
+                if (j >= (NUM_OBJECTS+1)/2) {
+                        r = j - (NUM_OBJECTS+1)/2;
+                        c = 41;
+                }
+                else
+                {
+                        r = j;
+                        c = 1;
+                }
+                mvwprintw(mapwin, r + text_lines + 3, c, "%-12s%c     %c%6d%5d%6d",
+                        piece_attr[j].nickname,
+                        piece_attr[j].sname,
+                        tolower (piece_attr[j].sname),
+                        piece_attr[j].speed,
+                        piece_attr[j].max_hits,
+                        piece_attr[j].build_time);
+        }
+	
+        wrefresh(mapwin);
 }

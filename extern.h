@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: extern.h,v 1.15 1998/02/25 22:49:58 jim Exp $
+ * $Id: extern.h,v 1.16 1998/02/25 23:24:02 jim Exp $
  */
 
 /*
@@ -119,25 +119,14 @@ void	edit(long);		/* edit.c */
 
 #if 0
 /* map routines */
-void vmap_cont();
 void rmap_cont();
-scan_counts_t vmap_cont_scan();
 scan_counts_t rmap_cont_scan();
 int map_cont_edge();
-long vmap_find_aobj();
-long vmap_find_wobj();
-long vmap_find_lobj();
-long vmap_find_lwobj();
-long vmap_find_wlobj();
 long vmap_find_dest();
 void vmap_prune_explore_locs();
-void vmap_mark_path();
-void vmap_mark_adjacent();
-void vmap_mark_near_path();
 long vmap_find_dir();
 int vmap_count_adjacent();
 int vmap_shore();
-int vmap_at_sea();
 int rmap_at_sea();
 
 /* display routines */
@@ -147,34 +136,20 @@ void display_score();
 void init_colors();
 #endif /* A_COLOR */
 
-/* game routines */
-void save_movie_screen();
-
 /* input routines */
 void get_strq();
 char get_c();
 char get_cq();
 
 /* object routines */
-int find_nearest_city();
 piece_info_t *find_nfull();
 long find_transport();
 piece_info_t *find_obj_at_loc();
-int obj_moves();
-int obj_capacity();
-void kill_obj();
-void kill_city();
-void move_obj();
-void move_sat();
 int good_loc();
-void disembark();
 void scan_sat();
 
 /* terminal routines */
-void pdebug();
 void clreol();
-void extra();
-void set_need_delay();
 
 /* from util.c but not used elsewhere */
 void close_disp();
@@ -198,6 +173,7 @@ void	init_game (void);
 void	replay_movie (void);
 int	restore_game (void);
 void	save_game (void);
+void	save_movie_screen (void);
 int	select_cities (void);
 
 /* input routines (input.c) */
@@ -206,9 +182,23 @@ void	get_str (char *, int);
 int	getint (char *);
 int	getyn (char *);
 
-/* map routines */
+/* map routines (map.c)*/
 int	rmap_shore (long);
+int	vmap_at_sea (view_map_t *, long);
+void	vmap_cont (int *, view_map_t *, long, char);
+scan_counts_t	vmap_cont_scan (int *, view_map_t *);
+long	vmap_find_aobj (path_map_t[], view_map_t *, long, move_info_t *);
+long	vmap_find_dest (path_map_t[], view_map_t[], long, long, int, int);
+long	vmap_find_dir (path_map_t[], view_map_t *, long, char *, char *);
+long	vmap_find_lobj (path_map_t[], view_map_t *, long, move_info_t *);
+long	vmap_find_lwobj (path_map_t[], view_map_t *, long, move_info_t *, int);
+long	vmap_find_wobj (path_map_t[], view_map_t *, long, move_info_t *);
+long	vmap_find_wlobj (path_map_t[], view_map_t *, long, move_info_t *);
+void	vmap_mark_adjacent (path_map_t[], long);
+void	vmap_mark_near_path (path_map_t[], long);
+void	vmap_mark_path (path_map_t *, view_map_t *, long);
 void	vmap_mark_up_cont (int *, view_map_t *, long, char);
+void	vmap_prune_explore_locs (view_map_t *);
 
 /* math routines (math.c) */
 long	dist (long, long);
@@ -218,11 +208,19 @@ void	rndini(void);
 
 /* object routines (object.c) */
 void	describe_obj (piece_info_t *);
+void	disembark (piece_info_t *);
 void	embark (piece_info_t *, piece_info_t *);
 city_info_t     *find_city (long);
+int	find_nearest_city ( long, int, long *);
 piece_info_t	*find_obj (int, long);
 piece_info_t	*find_obj_at_loc (long);
 int	get_piece_name (void);
+void	kill_city (city_info_t *);
+void	kill_obj (piece_info_t *, long);
+void	move_obj (piece_info_t *, long);
+void	move_sat (piece_info_t *);
+int	obj_capacity (piece_info_t *);
+int	obj_moves (piece_info_t *);
 void	produce (city_info_t *);
 void	scan (view_map_t[], long);
 void	set_prod (city_info_t *);
@@ -230,11 +228,14 @@ void	set_prod (city_info_t *);
 /* terminal routines (term.c) */
 void	comment (char *, ...);
 void	error (char *, ...);
+void	extra (char *, ...);
 int	get_range (char *, int, int);
 void	help (char **, int);
 void	huh (void);
 void	info (char *, char *, char *);
+void	pdebug (char *, ...);
 void	prompt (char *, ...);
+void	set_need_delay (void);
 void	topini (void);
 void	topmsg(int, char *, ...);
 

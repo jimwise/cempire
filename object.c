@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: object.c,v 1.4 1998/02/25 22:18:05 jim Exp $
+ * $Id: object.c,v 1.5 1998/02/25 23:24:02 jim Exp $
  */
 
 /*
@@ -407,7 +407,7 @@ long loc, dir1, dir2, dir3;
 
 /* Move a satellite one square. */
 
-static void
+void
 move_sat1 (obj)
 piece_info_t *obj;
 {

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.56 1998/03/11 01:20:54 jim Exp $
+ * $Id: display.c,v 1.57 1998/03/11 01:31:08 jim Exp $
  */
 
 /*
@@ -413,8 +413,6 @@ print_pzoom (char *s, path_map_t *pmap, view_map_t *vmap)
 	int row_inc, col_inc;
 	int r, c;
 
-	kill_display();
-
 	wclear(stdscr);
 
 	row_inc = (MAP_HEIGHT + lines - NUMTOPS - 1) / (lines - NUMTOPS);
@@ -427,7 +425,11 @@ print_pzoom (char *s, path_map_t *pmap, view_map_t *vmap)
 	wrefresh(stdscr);
 	prompt(s);
 
-	get_chx (); /* wait for user */
+	get_chx();
+	prompt("");
+
+	if (whose_map == USER)
+		print_sector_u(save_sector);
 }
 
 /*

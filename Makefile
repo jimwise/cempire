@@ -2,7 +2,7 @@
 #	Copyright (C) 1987, 1988 Chuck Simmons
 #	Portions of this file Copyright (C) 1998 Jim Wise
 #
-# $Id: Makefile,v 1.8 1998/02/25 22:49:56 jim Exp $
+# $Id: Makefile,v 1.9 1998/02/26 01:05:37 jim Exp $
 #
 # See the file COPYING, distributed with empire, for restriction
 # and warranty information.
@@ -35,6 +35,8 @@ PROFILE =
 LIBS = -lcurses # -ltermcap
 
 # You shouldn't have to modify anything below this line.
+
+TARGET = empire
 
 CFLAGS = $(DEBUG) $(PROFILE) -D$(SYS)
 
@@ -72,19 +74,19 @@ OFILES = \
 	usermove.o \
 	util.o
 
-all: empire
+all: $(TARGET)
 
-empire: $(OFILES)
+$(TARGET): $(OFILES)
 	$(CC) $(PROFILE) -o empire $(OFILES) $(LIBS)
 
 lint: $(FILES)
 	lint -u -D$(SYS) $(FILES) -lcurses
 
 clean:
-	rm -f *.o TAGS
+	rm -f *.o $(TARGET)
 
 clobber: clean
-	rm -f empire empire.tar*
+	rm -f empire.tar*
 
 SOURCES = READ.ME empire.6 COPYING Makefile BUGS $(FILES) $(HEADERS)
 

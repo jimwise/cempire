@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: usermove.c,v 1.10 1998/02/27 02:42:54 jim Exp $
+ * $Id: usermove.c,v 1.11 1998/02/27 20:15:59 jim Exp $
  */
 
 /*
@@ -40,7 +40,7 @@ void	reset_func (piece_info_t *);
 void	user_armyattack (piece_info_t *);
 void	user_build (piece_info_t *);
 void	user_cancel_auto (void);
-void	user_dir (piece_info_t *, int);
+void	user_dir (piece_info_t *, enum direction);
 void	user_dir_army (piece_info_t *, long);
 void	user_dir_fighter (piece_info_t *, long);
 void	user_dir_ship (piece_info_t *, long);
@@ -835,7 +835,7 @@ This routine handles attacking objects.
 */
 
 void
-user_dir (piece_info_t *obj, int dir)
+user_dir (piece_info_t *obj, enum direction dir)
 {
 	long loc;
 

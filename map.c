@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: map.c,v 1.8 1998/02/27 00:33:37 jim Exp $
+ * $Id: map.c,v 1.9 1998/02/27 20:15:59 jim Exp $
  */
 
 /*
@@ -990,8 +990,8 @@ path toward the city.
 center of the best path.
 */
 
-static int order[] = {NORTHWEST, NORTHEAST, SOUTHWEST, SOUTHEAST, 
-			WEST, EAST, NORTH, SOUTH};
+static enum direction order[] = {NORTHWEST, NORTHEAST, SOUTHWEST, SOUTHEAST, 
+					WEST, EAST, NORTH, SOUTH};
 
 long
 vmap_find_dir (path_map_t path_map[], view_map_t *vmap, long loc, char *terrain, char *adj_char)

@@ -5,7 +5,7 @@
  * and warranty information.
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: edit.c,v 1.26 1998/03/10 22:24:54 jim Exp $
+ * $Id: edit.c,v 1.27 1998/03/10 22:33:59 jim Exp $
  */
 
 /*
@@ -133,7 +133,7 @@ edit (long edit_cursor)
 Get the next command.  We handle cursor movement here.
 */
 
-static char dirchars[] = "WwEeDdCcXxZzAaQq";
+static char dirchars[] = "WEDCXZAQ";
 
 char
 e_cursor (long *edit_cursor)
@@ -141,18 +141,15 @@ e_cursor (long *edit_cursor)
 	uchar e;
 	char *p;
 	
-	e = get_cq();
-
 	while (1)
 	{
-		p = strchr (dirchars, e);
+		e = toupper(get_cq());
+		p = strchr(dirchars, e);
 		if (!p)
 			break;
-		if (!move_cursor (edit_cursor, dir_offset[(p-dirchars) / 2]))
+		if (!move_cursor (edit_cursor, dir_offset[p - dirchars]))
 			alert();
-		e = get_cq ();
 	}
-	e = toupper (e);
 
 	return e;
 }

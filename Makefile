@@ -1,7 +1,7 @@
 #
 #	Copyright (C) 1987, 1988 Chuck Simmons
 #
-# $Id: Makefile,v 1.34 2001/02/07 03:19:41 jwise Exp $
+# $Id: Makefile,v 1.35 2001/02/07 03:45:53 jwise Exp $
 #
 # See the file COPYING, distributed with empire, for restriction
 # and warranty information.
@@ -9,7 +9,17 @@
 VERSION=1.3_ALPHA
 
 #
-# 1.) Pick your compiler
+# 0.) Pick where to install cempire
+#	The cempire binary will be installed in BINDIR
+#
+#	The cempire man page will be installed in MANDIR
+#
+PREFIX=/usr/local
+BINDIR=${PREFIX}/bin
+MANDIR=${PREFIX}/man/man6
+
+#
+# 1.) Pick your compiler and `install' program
 #	If you want to use your system's native compiler, use the following.
 #	It MUST be at least relatively ANSI compliant for this to work.
 #       	CC=cc
@@ -18,7 +28,17 @@ VERSION=1.3_ALPHA
 #	native compiler is not ANSI compliant (or not present)
 #		CC=gcc
 #
+#	If your system ships with a BSD-compatible install, do:
+#		INSTALL=install
+#
+#	On Solaris, do:
+#		INSTALL=/usr/ucb/install
+#
+#	Otherwise, do:
+#		INSTALL=./install-sh
+#
 CC=gcc
+INSTALL=install
 
 #
 # 2.) Pick your preprocessor defines
@@ -145,8 +165,10 @@ lint: $(FILES)
 clean:
 	rm -f *.o $(TARGET) cempire-$(VERSION).tar cempire-$(VERSION).tar.gz cempire-$(VERSION).shar cempire-$(VERSION).tar.gz.asc
 
-clobber:	clean
-	rm -f $(ARCHIVES)
+install:
+	${INSTALL} -c -s -m 0755 cempire ${BINDIR}
+	${INSTALL} -c -m 0644 cempire.6 ${MANDIR}
+
 
 dist:	pgp
 tar:	cempire-$(VERSION).tar

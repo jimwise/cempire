@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: empire.c,v 1.31 1998/03/11 01:20:55 jim Exp $
+ * $Id: empire.c,v 1.32 1998/03/11 02:20:58 jim Exp $
  */
 
 /*
@@ -343,13 +343,11 @@ Print a "zoomed" version of the computer's map.
 void
 c_movie (void)
 {
-	term_clear();
-
 	while (1)
 	{
-		comp_move (1);
-		print_zoom (comp_map);
-		save_game ();
+		comp_move(1);
+		print_zoom(comp_map);
+		save_game();
 	}
 }
 

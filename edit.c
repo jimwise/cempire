@@ -5,7 +5,7 @@
  * and warranty information.
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: edit.c,v 1.4 1998/02/25 01:47:46 jim Exp $
+ * $Id: edit.c,v 1.5 1998/02/26 01:11:10 jim Exp $
  */
 
 /*
@@ -29,13 +29,6 @@ void
 edit(edit_cursor)
 long edit_cursor;
 {
-	char e_cursor();
-	void e_leave(), e_print(), e_random();
-	void e_stasis(), e_end(), e_wake(), e_sleep();
-	void e_info(), e_prod(), e_help(), e_explore();
-	void e_fill(), e_land(), e_city_func(), e_transport();
-	void e_attack(), e_repair();
-
 	long path_start;
 	int path_type;
 	char e;
@@ -128,10 +121,10 @@ long *edit_cursor;
 	char *p;
 	
 	/* set up terminal */
-	(void) crmode ();
-	(void) refresh ();
-	e = getch ();
-	topini (); /* clear any error messages */
+	crmode();
+	refresh();
+	e = getch();
+	topini(); /* clear any error messages */
 
 	for (;;) {
 		p = strchr (dirchars, e);
@@ -523,8 +516,6 @@ void
 e_info (edit_cursor)
 long edit_cursor;
 {
-	void e_city_info(), e_piece_info();
-
 	char ab;
 
 	ab = user_map[edit_cursor].contents;
@@ -644,5 +635,5 @@ void
 e_help () {
 	help (help_edit, edit_lines);
 	prompt ("Press any key to continue: ");
-	(void) get_chx ();
+	get_chx ();
 }

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: map.c,v 1.11 1998/02/27 23:15:23 jim Exp $
+ * $Id: map.c,v 1.12 1998/02/27 23:30:20 jim Exp $
  */
 
 /*
@@ -611,27 +611,28 @@ objective_cost (view_map_t *vmap, move_info_t *move_info, long loc, int base_cos
 	city_info_t *cityp;
 
 	p = strchr (move_info->objectives, vmap[loc].contents);
-	if (!p) return INFINITY;
+	if (!p)
+		return INFINITY;
 
 	w = move_info->weights[p - move_info->objectives];
-	if (w >= 0) return w + base_cost;
-
-	switch (w) {
-	case W_TT_BUILD:
+	if (w != W_TT_BUILD)
+	{
+		return w + base_cost;
+	}
+	else
+	{
 		/* handle special case of moving to tt building city */
 		cityp = find_city (loc);
-		if (!cityp) return base_cost + 2; /* tt is already here */
-		if (cityp->prod != TRANSPORT) return base_cost + 2; /* just finished a tt */
+		if (!cityp)
+			return base_cost + 2; /* tt is already here */
+		if (cityp->prod != TRANSPORT)
+			return base_cost + 2; /* just finished a tt */
 	
 		/* compute time to wait for tt to be built */
 		w = piece_attr[TRANSPORT].build_time - cityp->work;
 		w *= 2; /* had to cross land to get here */
-		if (w < base_cost + 2) w = base_cost + 2;
-		return w;
-
-	default:
-		panic(NULL);
-		/* NOTREACHED */
+		if (w < base_cost + 2)
+			w = base_cost + 2;
 		return w;
 	}
 }
@@ -648,17 +649,25 @@ terrain_type (path_map_t *pmap, view_map_t *vmap, move_info_t *move_info, long f
 	if (vmap[to_loc].contents == '%') return T_UNKNOWN; /* magic objective */
 	if (vmap[to_loc].contents == ' ') return pmap[from_loc].terrain;
 	
-	switch (map[to_loc].contents) {
-	case '.': return T_WATER;
-	case '+': return T_LAND;
-	case '*':
+	switch (map[to_loc].contents)
+	{
+	    case '.':
+	   	 return T_WATER;
+		 break;
+	    case '+':
+	   	 return T_LAND;
+		 break;
+	    case '*':
 		if (map[to_loc].cityp->owner == move_info->city_owner)
 			return T_WATER;
-		else return T_UNKNOWN; /* cannot cross */
+		else
+			return T_UNKNOWN; /* cannot cross */
+	    default:
+		panic("Unknown terrain");
+		/* NOTREACHED */
+		return T_UNKNOWN;
+		break;
 	}
-	panic(NULL);
-	/*NOTREACHED*/
-	return T_UNKNOWN;
 }
 
 /*

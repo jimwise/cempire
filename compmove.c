@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: compmove.c,v 1.19 1998/02/27 23:15:21 jim Exp $
+ * $Id: compmove.c,v 1.20 1998/02/27 23:30:19 jim Exp $
  */
 
 /*
@@ -535,7 +535,7 @@ army_move (piece_info_t *obj)
 		if (obj->ship->func == 0)
 		{
 			if (!load_army (obj)) /* load army on best ship */
-				panic(NULL);
+				panic("couldn't load army");
 			return; /* armies stay on a loading ship */
 		}
 		make_unload_map (amap, comp_map);
@@ -546,20 +546,22 @@ army_move (piece_info_t *obj)
 
 	new_loc = vmap_find_lobj (path_map, comp_map, obj->loc, &army_fight);
 	
-	if (new_loc != obj->loc) { /* something interesting on land? */
-		switch (comp_map[new_loc].contents) {
-		case 'A':
-		case 'O':
+	if (new_loc != obj->loc) {
+		/* something interesting on land? */
+		switch (comp_map[new_loc].contents)
+		{
+		    case 'A':
+		    case 'O':
 			cross_cost = 60; /* high cost if enemy present */
 			break;
-		case '*':
+		    case '*':
 			cross_cost = 30; /* medium cost for attackable city */
 			break;
-		case ' ':
+		    case ' ':
 			cross_cost = 14; /* low cost for exploring */
 			break;
-		default:
-			panic(NULL);
+		    default:
+			panic("unrecognized objective");
 			break;
 		}
 		cross_cost = path_map[new_loc].cost * 2 - cross_cost;

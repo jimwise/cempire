@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: object.c,v 1.14 1998/02/27 23:15:24 jim Exp $
+ * $Id: object.c,v 1.15 1998/02/27 23:30:20 jim Exp $
  */
 
 /*
@@ -427,22 +427,25 @@ move_sat1 (piece_info_t *obj)
 	dir = MOVE_DIR(obj->func);
 	new_loc = obj->loc + dir_offset[dir];
 
-	if (!map[new_loc].on_board) {
-		switch (obj->func) {
-		case MOVE_NE:
+	if (!map[new_loc].on_board)
+	{
+		switch (obj->func)
+		{
+		    case MOVE_NE:
 			obj->func = bounce (obj->loc, MOVE_NW, MOVE_SE, MOVE_SW);
 			break;
-		case MOVE_NW:
+		    case MOVE_NW:
 			obj->func = bounce (obj->loc, MOVE_NE, MOVE_SW, MOVE_SE);
 			break;
-		case MOVE_SE:
+		    case MOVE_SE:
 			obj->func = bounce (obj->loc, MOVE_SW, MOVE_NE, MOVE_NW);
 			break;
-		case MOVE_SW:
+		    case MOVE_SW:
 			obj->func = bounce (obj->loc, MOVE_SE, MOVE_NW, MOVE_NE);
 			break;
-		default:
-			panic(NULL);
+		    default:
+			panic("Satellite not moving diagonally");
+			break;
 		}
 		dir = MOVE_DIR(obj->func);
 		new_loc = obj->loc + dir_offset[dir];

@@ -1,7 +1,7 @@
 #
 #	Copyright (C) 1987, 1988 Chuck Simmons
 #
-# $Id: Makefile,v 1.22 1998/09/11 18:32:10 jwise Exp $
+# $Id: Makefile,v 1.23 1998/09/11 18:32:44 jwise Exp $
 #
 # See the file COPYING, distributed with empire, for restriction
 # and warranty information.
@@ -67,7 +67,7 @@ OFILES = \
 all: $(TARGET)
 
 $(TARGET): $(OFILES)
-	$(CC) $(PROFILE) -o $(TARGET) $(OFILES) $(LIBS)
+	$(CC) -o $(TARGET) $(OFILES) $(LIBS)
 
 lint: $(FILES)
 	lint $(LINTFLAGS) $(CPPFLAGS) $(FILES) $(LIBS)

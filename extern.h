@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: extern.h,v 1.12 1998/02/25 22:13:00 jim Exp $
+ * $Id: extern.h,v 1.13 1998/02/25 22:18:05 jim Exp $
  */
 
 /*
@@ -139,7 +139,6 @@ int rmap_at_sea();
 
 /* display routines */
 long cur_cursor();
-void display_locx();
 void display_score();
 #ifdef A_COLOR
 void init_colors();
@@ -183,6 +182,7 @@ void tupper();
 /* display routines (display.c) */
 int	cur_sector (void);
 void	display_loc (int, view_map_t[], long);
+void	display_locx (int, view_map_t[], long);
 void	kill_display (void);
 int	move_cursor (long *, int);
 void	print_pzoom (char *, path_map_t *, view_map_t *);

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: object.c,v 1.3 1998/02/24 23:48:04 jim Exp $
+ * $Id: object.c,v 1.4 1998/02/25 22:18:05 jim Exp $
  */
 
 /*
@@ -20,9 +20,11 @@ object.c -- routines for manipulating objects.
 #endif
 
 #include <ctype.h>
+#include <stdio.h>
 #include "empire.h"
 #include "extern.h"
 
+void	scan_sat (view_map_t *, long);
 /*
 Find the nearest city to a location.  Return the location
 of the city and the estimated cost to reach the city.
@@ -506,7 +508,7 @@ piece_info_t *obj;
 	char func[STRSIZE];
 	char other[STRSIZE];
 
-	if (obj->func >= 0) (void) sprintf (func, "%d", obj->func);
+	if (obj->func >= 0) (void) sprintf (func, "%ld", obj->func);
 	else (void) sprintf (func, func_name[FUNCI(obj->func)]);
 	
 	other[0] = 0;

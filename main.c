@@ -6,26 +6,23 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: main.c,v 1.11 1998/03/01 01:27:02 jim Exp $
+ * $Id: main.c,v 1.12 1998/08/09 00:04:37 jwise Exp $
  */
 
 /*
-main.c -- parse command line for empire
-
-options:
-
-    -w water: percentage of map that is water.  Must be in the range
-              10..90.  Default is 70.
-	      
-    -s smooth: amount of smoothing performed to generate map.  Must
-	       be a nonnegative integer.  Default is 5.
-	       
-    -d delay:  number of milliseconds to delay between output.
-               default is 2000 (2 seconds).
-
-    -S save_interval: sets turn interval between saves.
-	       default is 10
-*/
+ * main.c -- parse command line for empire
+ * 
+ * options:
+ * 
+ *    -w water: percentage of map that is water.  Must be in the range
+ *             10..90.  Default is 70.
+ *
+ *    -s smooth: amount of smoothing performed to generate map.  Must
+ * 	       be a nonnegative integer.  Default is 5.
+ * 	       
+ *    -S save_interval: sets turn interval between saves.
+ * 	       default is 10
+ */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -39,12 +36,11 @@ main (int argc, char *argv[])
 {
 	int c;
 	int errflg = 0;
-	int wflg, sflg, dflg, Sflg;
+	int wflg, sflg, Sflg;
 	int land;
 	
 	wflg = 70; /* set defaults */
 	sflg = 5;
-	dflg = 2000;
 	Sflg = 10;
 
 	/*
@@ -66,14 +62,6 @@ main (int argc, char *argv[])
 			if (sflg < 0)
 			{
         		        fprintf(stderr, "empire: -s argument must be greater than or equal to zero.\n");
-				exit (1);
-			}
-			break;
-		case 'd':
-			dflg = atoi (optarg);
-			if (dflg < 0 || dflg > 30000)
-			{
-				fprintf(stderr, "empire: -d argument must be in the range 0..30000.\n");
 				exit (1);
 			}
 			break;
@@ -99,7 +87,6 @@ main (int argc, char *argv[])
 
 	SMOOTH = sflg;
 	WATER_RATIO = wflg;
-	delay_time = dflg;
 	save_interval = Sflg;
 
 	/* compute min distance between cities */

@@ -6,12 +6,10 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: game.c,v 1.35 1998/08/08 19:11:55 jwise Exp $
+ * $Id: game.c,v 1.36 1998/08/09 00:04:37 jwise Exp $
  */
 
-/*
-game.c -- Routines to initialize, save, and restore a game.
-*/
+/* game.c -- Routines to initialize, save, and restore a game. */
 
 #include <assert.h>
 #include <ctype.h>
@@ -43,10 +41,10 @@ int	xread (FILE *, char *, int);
 int	xwrite (FILE *, char *, int);
 
 /*
-Initialize a new game.  Here we generate a new random map, put cities
-on the map, select cities for each opponent, and zero out the lists of
-pieces on the board.
-*/
+ * Initialize a new game.  Here we generate a new random map, put cities
+ * on the map, select cities for each opponent, and zero out the lists of
+ * pieces on the board.
+ */
 
 void
 init_game (void)
@@ -108,16 +106,16 @@ init_game (void)
 }
 
 /*
-Create a map.  To do this, we first randomly assign heights to each
-map location.  Then we smooth these heights.  The more we smooth,
-the better the land and water will clump together.  Then we decide
-how high the land will be.  We attempt to choose enough land to meet
-some required percentage.
-
-There are two parameters to this algorithm:  the amount we will smooth,
-and the ratio of land to water.  The user can provide these numbers
-at program start up.
-*/
+ * Create a map.  To do this, we first randomly assign heights to each
+ * map location.  Then we smooth these heights.  The more we smooth,
+ * the better the land and water will clump together.  Then we decide
+ * how high the land will be.  We attempt to choose enough land to meet
+ * some required percentage.
+ * 
+ * There are two parameters to this algorithm:  the amount we will smooth,
+ * and the ratio of land to water.  The user can provide these numbers
+ * at program start up.
+ */
 
 #define MAX_HEIGHT 999	/* highest height */
 
@@ -188,12 +186,12 @@ make_map (void)
 }
 
 /*
-Randomly place cities on the land.  There is a minimum distance that
-should exist between cities.  We maintain a list of acceptable land cells
-on which a city may be placed.  We randomly choose elements from this
-list until all the cities are placed.  After each choice of a land cell
-for a city, we remove land cells which are too close to the city.
-*/
+ * Randomly place cities on the land.  There is a minimum distance that
+ * should exist between cities.  We maintain a list of acceptable land cells
+ * on which a city may be placed.  We randomly choose elements from this
+ * list until all the cities are placed.  After each choice of a land cell
+ * for a city, we remove land cells which are too close to the city.
+ */
 
 /* avoid compiler problems with large automatic arrays */
 static long land[MAP_SIZE];
@@ -205,8 +203,8 @@ place_cities (void)
 	piece_type_t j;
 	long num_land;
 
-	num_land = 0; /* nothing in land array yet */
-	placed = 0; /* nothing placed yet */
+	num_land = 0;	/* nothing in land array yet */
+	placed = 0;	/* nothing placed yet */
 	while (placed < NUM_CITY) {
 		while (num_land == 0) num_land = regen_land (placed);
 		i = rand_long (num_land-1); /* select random piece of land */
@@ -230,10 +228,10 @@ place_cities (void)
 }
 
 /*
-When we run out of available land, we recreate our land list.  We
-put all land in the list, decrement the min_city_dist, and then
-remove any land which is too close to a city.
-*/
+ * When we run out of available land, we recreate our land list.  We
+ * put all land in the list, decrement the min_city_dist, and then
+ * remove any land which is too close to a city.
+ */
 
 long
 regen_land (long placed)
@@ -258,9 +256,7 @@ regen_land (long placed)
 	return (num_land);
 }
 
-/*
-Remove land that is too close to a city.
-*/
+/* Remove land that is too close to a city. */
 
 long
 remove_land (long loc, long num_land)
@@ -278,54 +274,54 @@ remove_land (long loc, long num_land)
 }
 
 /*
-Here we select the cities for the user and the computer.  Our choice of
-cities will be heavily dependent on the difficulty level the user desires.
-
-Our algorithm will not guarantee that either player will eventually be
-able to move armies to any continent on the map.  There may be continents
-which are unreachable by sea.  Consider the case of an island in a lake.
-If the lake has no shore cities, then there is no way for a boat to reach
-the island.  Our hope is that there will be enough water on the map, or enough
-land, and that there will be enough cities, to make this case extremely rare.
-
-First we make a list of continents which contain at least two cities, one
-or more of which is on the coast.  If there are no such continents, we return
-FALSE, and our caller should decide again where cities should be placed
-on the map.  While making this list, we will rank the continents.  Our ranking
-is based on the thought that shore cities are better than inland cities,
-that any city is very important, and that the land area of a continent
-is mildly important.  Usually, we expect every continent to have a different
-ranking.  It will be unusual to have two continents with the same land area,
-the same number of shore cities, and the same number of inland cities.  When
-this is not the case, the first city encountered will be given the highest
-rank.
-
-We then rank pairs of continents.  We tell the user the number of different
-ranks, and ask the user what rank they want to use.  This is how the
-user specifies the difficulty level.  Using that pair, we have now decided
-on a continent for each player.  We now choose a random city on each continent,
-making sure the cities are not the same.
-*/
+ * Here we select the cities for the user and the computer.  Our choice of
+ * cities will be heavily dependent on the difficulty level the user desires.
+ * 
+ * Our algorithm will not guarantee that either player will eventually be
+ * able to move armies to any continent on the map.  There may be continents
+ * which are unreachable by sea.  Consider the case of an island in a lake.
+ * If the lake has no shore cities, then there is no way for a boat to reach
+ * the island.  Our hope is that there will be enough water on the map, or enough
+ * land, and that there will be enough cities, to make this case extremely rare.
+ * 
+ * First we make a list of continents which contain at least two cities, one
+ * or more of which is on the coast.  If there are no such continents, we return
+ * FALSE, and our caller should decide again where cities should be placed
+ * on the map.  While making this list, we will rank the continents.  Our ranking
+ * is based on the thought that shore cities are better than inland cities,
+ * that any city is very important, and that the land area of a continent
+ * is mildly important.  Usually, we expect every continent to have a different
+ * ranking.  It will be unusual to have two continents with the same land area,
+ * the same number of shore cities, and the same number of inland cities.  When
+ * this is not the case, the first city encountered will be given the highest
+ * rank.
+ * 
+ * We then rank pairs of continents.  We tell the user the number of different
+ * ranks, and ask the user what rank they want to use.  This is how the
+ * user specifies the difficulty level.  Using that pair, we have now decided
+ * on a continent for each player.  We now choose a random city on each continent,
+ * making sure the cities are not the same.
+ */
 
 #define MAX_CONT 10 /* most continents we will allow */
 
 typedef struct cont { /* a continent */
-	long value; /* value of continent */
-	int ncity; /* number of cities */
-	city_info_t * cityp[NUM_CITY]; /* pointer to city */
+	long value;				/* value of continent	*/
+	int ncity;				/* number of cities	*/
+	city_info_t * cityp[NUM_CITY];		/* pointer to city	*/
 } cont_t;
 
 typedef struct pair {
-	long value; /* value of pair for user */
-	int user_cont; /* index to user continent */
-	int comp_cont; /* index to computer continent */
+	long value;		/* value of pair for user	*/
+	int user_cont;		/* index to user continent	*/
+	int comp_cont;		/* index to computer continent	*/
 } pair_t;
 
-static int marked[MAP_SIZE]; /* list of examine cells */
-static int ncont; /* number of continents */
-static cont_t cont_tab[MAX_CONT]; /* list of good continenets */
-static int rank_tab[MAX_CONT]; /* indices to cont_tab in order of rank */
-static pair_t pair_tab[MAX_CONT*MAX_CONT]; /* ranked pairs of continents */
+static int marked[MAP_SIZE];			/* list of examine cells		*/
+static int ncont;				/* number of continents			*/
+static cont_t cont_tab[MAX_CONT];		/* list of good continenets		*/
+static int rank_tab[MAX_CONT];			/* indices to cont_tab in order of rank	*/
+static pair_t pair_tab[MAX_CONT*MAX_CONT];	/* ranked pairs of continents		*/
 
 int
 select_cities (void)
@@ -370,9 +366,9 @@ select_cities (void)
 }
 
 /*
-Find all continents with 2 cities or more, one of which must be a shore
-city.  We rank the continents.
-*/
+ * Find all continents with 2 cities or more, one of which must be a shore
+ * city.  We rank the continents.
+ */
 
 void
 find_cont (void)
@@ -390,9 +386,9 @@ find_cont (void)
 }
 
 /*
-Find the next continent and insert it in the rank table.
-If there are no more continents, we return false.
-*/
+ * Find the next continent and insert it in the rank table.
+ * If there are no more continents, we return false.
+ */
 
 int
 find_next (long *mapi)
@@ -422,11 +418,11 @@ find_next (long *mapi)
 }
 
 /*
-Map out the current continent.  We mark every piece of land on the continent,
-count the cities, shore cities, and land area of the continent.  If the
-continent contains 2 cities and a shore city, we set the value of the
-continent and return true.  Otherwise we return false.
-*/
+ * Map out the current continent.  We mark every piece of land on the continent,
+ * count the cities, shore cities, and land area of the continent.  If the
+ * continent contains 2 cities and a shore city, we set the value of the
+ * continent and return true.  Otherwise we return false.
+ */
 
 static long ncity, nland, nshore;
 
@@ -443,10 +439,12 @@ good_cont (long mapi)
 
 	if (nshore < 1 || ncity < 2) return (FALSE);
 
-	/* The first two cities, one of which must be a shore city,
-	don't contribute to the value.  Otherwise shore cities are
-	worth 3/2 an inland city.  A city is worth 1000 times as much
-	as land area. */
+	/*
+	 * The first two cities, one of which must be a shore city,
+	 * don't contribute to the value.  Otherwise shore cities are
+	 * worth 3/2 an inland city.  A city is worth 1000 times as much
+	 * as land area.
+	 */
 
 	if (ncity == nshore) val = (nshore - 2) * 3;
 	else val = (nshore-1) * 3 + (ncity - nshore - 1) * 2;
@@ -459,11 +457,11 @@ good_cont (long mapi)
 }
 
 /*
-Mark a continent.  This recursive algorithm marks the current square
-and counts it if it is land or city.  If it is city, we also check
-to see if it is a shore city, and we install it in the list of
-cities for the continent.  We then examine each surrounding cell.
-*/
+ * Mark a continent.  This recursive algorithm marks the current square
+ * and counts it if it is land or city.  If it is city, we also check
+ * to see if it is a shore city, and we install it in the list of
+ * cities for the continent.  We then examine each surrounding cell.
+ */
 
 void
 mark_cont (long mapi)
@@ -473,10 +471,11 @@ mark_cont (long mapi)
 	if (marked[mapi] || map[mapi].contents == '.'
 		|| !map[mapi].on_board) return;
 
-	marked[mapi] = 1; /* mark this cell seen */
-	nland++; /* count land on continent */
+	marked[mapi] = 1;	/* mark this cell seen		*/
+	nland++;		/* count land on continent	*/
 
-	if (map[mapi].contents == '*') { /* a city? */
+	if (map[mapi].contents == '*')
+	{ /* a city? */
 		cont_tab[ncont].cityp[ncity] = map[mapi].cityp;
 		ncity++;
 		if (rmap_shore (mapi)) nshore++;
@@ -487,11 +486,11 @@ mark_cont (long mapi)
 }
 
 /*
-Create a list of pairs of continents in a ranked order.  The first
-element in the list is the pair which is easiest for the user to
-win with.  Our ranking is simply based on the difference in value
-between the user's continent and the computer's continent.
-*/
+ * Create a list of pairs of continents in a ranked order.  The first
+ * element in the list is the pair which is easiest for the user to
+ * win with.  Our ranking is simply based on the difference in value
+ * between the user's continent and the computer's continent.
+ */
 
 void
 make_pair (void)
@@ -521,10 +520,10 @@ make_pair (void)
 }
 
 /*
-Save a game.  We save the game in emp_save.dat.  Someday we may want
-to ask the user for a file name.  If we cannot save the game, we will
-tell the user why.
-*/
+ * Save a game.  We save the game in emp_save.dat.  Someday we may want
+ * to ask the user for a file name.  If we cannot save the game, we will
+ * tell the user why.
+ */
 
 /* macro to save typing; write an array, return if it fails */
 #define wbuf(buf) if (!xwrite (f, (char *)buf, sizeof (buf))) return
@@ -562,9 +561,9 @@ save_game (void)
 }
 
 /*
-Recover a saved game from emp_save.dat.
-We return TRUE if we succeed, otherwise FALSE.
-*/
+ * Recover a saved game from emp_save.dat.
+ * We return TRUE if we succeed, otherwise FALSE.
+ */
 
 #define rbuf(buf) if (!xread (f, (char *)buf, sizeof(buf))) return (FALSE);
 #define rval(val) if (!xread (f, (char *)&val, sizeof(val))) return (FALSE);
@@ -605,11 +604,13 @@ restore_game (void)
 	changes or other things.  We recreate them. */
 	
 	free_list = NULL; /* zero all ptrs */
-	for (i = 0; i < MAP_SIZE; i++) {
+	for (i = 0; i < MAP_SIZE; i++)
+	{
 		map[i].cityp = NULL;
 		map[i].objp = NULL;
 	}
-	for (i = 0; i < LIST_SIZE; i++) {
+	for (i = 0; i < LIST_SIZE; i++)
+	{
 		object[i].loc_link.next = NULL;
 		object[i].loc_link.prev = NULL;
 		object[i].cargo_link.next = NULL;
@@ -619,7 +620,8 @@ restore_game (void)
 		object[i].ship = NULL;
 		object[i].cargo = NULL;
 	}
-	for (j = 0; j < NUM_OBJECTS; j++) {
+	for (j = 0; j < NUM_OBJECTS; j++)
+	{
 		comp_obj[j] = NULL;
 		user_obj[j] = NULL;
 	}
@@ -628,12 +630,13 @@ restore_game (void)
 		map[city[i].loc].cityp = &(city[i]);
 	
 	/* put pieces in free list or on map and in object lists */
-	for (i = 0; i < LIST_SIZE; i++) {
+	for (i = 0; i < LIST_SIZE; i++)
+	{
 		obj = &(object[i]);
-		if (object[i].owner == UNOWNED || object[i].hits == 0) {
+		if (object[i].owner == UNOWNED || object[i].hits == 0)
+		{
 			LINK (free_list, obj, piece_link);
-		}
-		else {
+		} else {
 			list = LIST (object[i].owner);
 			LINK (list[object[i].type], obj, piece_link);
 			LINK (map[object[i].loc].objp, obj, loc_link);
@@ -653,10 +656,10 @@ restore_game (void)
 }
 	
 /*
-Embark cargo on a ship.  We loop through the list of ships.
-We then loop through the pieces at the ship's location until
-the ship has the same amount of cargo it previously had.
-*/
+ * Embark cargo on a ship.  We loop through the list of ships.
+ * We then loop through the pieces at the ship's location until
+ * the ship has the same amount of cargo it previously had.
+ */
 
 void
 read_embark (piece_info_t *list, piece_type_t piece_type)
@@ -688,9 +691,9 @@ inconsistent (void)
 }
 
 /*
-Write a buffer to a file.  If we cannot write everything, return FALSE.
-Also, tell the user why the write did not work if it didn't.
-*/
+ * Write a buffer to a file.  If we cannot write everything, return FALSE.
+ * Also, tell the user why the write did not work if it didn't.
+ */
 
 int
 xwrite (FILE *f, char *buf, int size)
@@ -710,9 +713,9 @@ xwrite (FILE *f, char *buf, int size)
 }
 
 /*
-Read a buffer from a file.  If the read fails, we tell the user why
-and return FALSE.
-*/
+ * Read a buffer from a file.  If the read fails, we tell the user why
+ * and return FALSE.
+ */
 
 int
 xread (FILE *f, char *buf, int size)
@@ -732,10 +735,10 @@ xread (FILE *f, char *buf, int size)
 }
 
 /*
-Save a movie screen.  For each cell on the board, we write out
-the character that would appear on either the user's or the
-computer's screen.  This information is appended to 'empmovie.dat'.
-*/
+ * Save a movie screen.  For each cell on the board, we write out
+ * the character that would appear on either the user's or the
+ * computer's screen.  This information is appended to 'empmovie.dat'.
+ */
 
 static char mapbuf[MAP_SIZE];
 
@@ -774,9 +777,9 @@ save_movie_screen (void)
 }
 
 /*
-Replay a movie.  We read each buffer from the file and
-print it using a zoomed display.
-*/
+ * Replay a movie.  We read each buffer from the file and
+ * print it using a zoomed display.
+ */
 
 void
 replay_movie (void)
@@ -810,15 +813,15 @@ replay_movie (void)
 }
 
 /*
-Display statistics about the game.  At the top of the screen we
-print:
-
-nn O  nn A  nn F  nn P  nn D  nn S  nn T  nn C  nn B  nn Z  xxxxx
-nn X  nn a  nn f  nn p  nn d  nn s  nn t  nn c  nn b  nn z  xxxxx
-
-There may be objects in cities and boats that aren't displayed.
-The "xxxxx" field is the cumulative cost of building the hardware.
-*/
+ * Display statistics about the game.  At the top of the screen we
+ * print:
+ * 
+ * nn O  nn A  nn F  nn P  nn D  nn S  nn T  nn C  nn B  nn Z  xxxxx
+ * nn X  nn a  nn f  nn p  nn d  nn s  nn t  nn c  nn b  nn z  xxxxx
+ * 
+ * There may be objects in cities and boats that aren't displayed.
+ * The "xxxxx" field is the cumulative cost of building the hardware.
+ */
 
 /* in declared order, with city first */
 static const char *pieces = "OAFPDSTCBZXafpdstcbz";

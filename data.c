@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: data.c,v 1.9 1998/08/08 23:21:34 jwise Exp $
+ * $Id: data.c,v 1.10 1998/08/09 00:04:36 jwise Exp $
  */
 
 /*
@@ -248,7 +248,6 @@ const int edit_lines = 22;
 int SMOOTH;		/* number of times to smooth map */
 int WATER_RATIO;	/* percentage of map that is water */
 int MIN_CITY_DIST;	/* cities must be at least this far apart */
-int delay_time;
 int save_interval;	/* turns between autosaves */
 
 real_map_t map[MAP_SIZE];	/* the way the world really looks */

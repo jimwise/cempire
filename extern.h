@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: extern.h,v 1.72 1998/08/08 23:41:00 jwise Exp $
+ * $Id: extern.h,v 1.73 1998/08/09 00:04:36 jwise Exp $
  */
 
 /* extern.h -- define global non-constant storage.  */
@@ -15,7 +15,6 @@
 extern int SMOOTH;		/* number of times to smooth map		*/
 extern int WATER_RATIO;		/* percentage of map that is water		*/
 extern int MIN_CITY_DIST;	/* cities must be at least this far apart	*/
-extern int delay_time;		/* time to napms() for in error()		*/
 extern int save_interval;	/* turns between autosaves			*/
 
 extern real_map_t map[MAP_SIZE];	/* the way the world really looks	*/

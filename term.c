@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.3 1998/02/24 23:48:05 jim Exp $
+ * $Id: term.c,v 1.4 1998/02/25 22:22:18 jim Exp $
  */
 
 /*
@@ -32,11 +32,15 @@ to read the lines.  The new information is then displayed, and the
 */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <curses.h>
 #include <ctype.h>
 
 #include "empire.h"
 #include "extern.h"
+
+char	get_cq (void);
+void	get_strq (char *, int);
 
 static int need_delay;
 
@@ -206,7 +210,7 @@ Get a character from the user and convert it to uppercase.
 char
 get_chx()
 {
-	char c;
+	uchar c;
 
 	c = get_cq ();
 

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: extern.h,v 1.3 1998/02/24 23:48:01 jim Exp $
+ * $Id: extern.h,v 1.4 1998/02/25 00:56:35 jim Exp $
  */
 
 /*
@@ -108,14 +108,13 @@ int comp_score;
 		sector_col(sector)*COLS_PER_SECTOR+COLS_PER_SECTOR/2)
 		
 /* global routines */
+void	empire (void);		/* empire.c */
+void	attack (piece_info_t *, long);	/* attack.c */
+void	comp_move (int);	/* compmove.c */
+void	user_move (void);	/* usermove.c */
+void	edit(void);		/* edit.c */
 
-void empire();
-
-void attack();
-void comp_move();
-void user_move();
-void edit();
-
+#if 0
 /* map routines */
 void vmap_cont();
 void rmap_cont();
@@ -211,24 +210,21 @@ void huh();
 void help();
 void set_need_delay();
 
-/* utility routines */
-void ttinit();
-void redraw();
-void clear_screen();
-void delay();
+/* from util.c but not used elsewhere */
 void close_disp();
-void pos_str();
-void addprintf();
-void assert();
-void empend();
-void ver();
-char upper();
 void tupper();
-void check();
+#endif
 
-/* randon routines we use */
-long time();
-void exit();
-void perror();
-void srand();
-char *strcpy();
+/* utility routines */
+void	ttinit (void);
+void	redraw (void);
+void	clear_screen (void);
+void	delay (void);
+void	pos_str (int, int, char *, ...);
+void	addprintf();
+void	addprintf (char *, ...);
+void	assert(char *, char *, int);
+void	empend(void);
+void	ver(void);
+char	upper(char);
+void	check(void);

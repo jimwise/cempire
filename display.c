@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.4 1998/02/25 00:16:27 jim Exp $
+ * $Id: display.c,v 1.5 1998/02/25 01:02:45 jim Exp $
  */
 
 /*
@@ -38,7 +38,7 @@ void	display_loc (int, view_map_t[], long);
 void	display_locx (int, view_map_t[], long);
 void	show_loc (view_map_t[], long);
 void	print_sector (char, view_map_t[], int);
-static int	disp_square(view_map_t *);
+void	disp_square(view_map_t *);
 void	display_screen (view_map_t[]);
 int	move_cursor (long *, int);
 int	on_screen (long);
@@ -245,7 +245,7 @@ print_sector (char whose, view_map_t vmap[], int sector)
 		else pos_str (r-ref_row+NUMTOPS, cols-NUMSIDES+1, "  ");
 	}
 	/* print round number */
-	(void) sprintf (jnkbuf, "Sector %d Round %d", sector, date);
+	(void) sprintf (jnkbuf, "Sector %d Round %ld", sector, date);
 	for (r = 0; jnkbuf[r] != '\0'; r++) {
 		if (r+NUMTOPS >= MAP_HEIGHT) break;
 		(void) move (r+NUMTOPS, cols-NUMSIDES+4);
@@ -262,7 +262,7 @@ pretty.
 */
 
 
-static int
+void
 disp_square(view_map_t *vp)
 {
 #ifdef A_COLOR

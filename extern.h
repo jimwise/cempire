@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: extern.h,v 1.5 1998/02/25 00:57:04 jim Exp $
+ * $Id: extern.h,v 1.6 1998/02/25 01:02:46 jim Exp $
  */
 
 /*
@@ -163,7 +163,6 @@ void replay_movie();
 
 void get_str(); /* input routines */
 void get_strq();
-char get_chx();
 int getint();
 char get_c();
 char get_cq();
@@ -201,7 +200,6 @@ void pdebug();
 void topini();
 void clreol();
 void topmsg();
-void prompt();
 void error();
 void info();
 void comment();
@@ -215,6 +213,12 @@ void close_disp();
 void tupper();
 #endif
 
+/* input routines */
+char	get_chx (void);
+
+/* terminal routines */
+void	prompt (char *buf, ...);
+
 /* utility routines */
 void	ttinit (void);
 void	redraw (void);
@@ -222,8 +226,8 @@ void	clear_screen (void);
 void	delay (void);
 void	pos_str (int, int, char *, ...);
 void	addprintf (char *, ...);
-void	assert(char *, char *, int);
-void	empend(void);
-void	ver(void);
-char	upper(char);
-void	check(void);
+void	assert (char *, char *, int);
+void	empend (void);
+void	ver (void);
+char	upper (char);
+void	check (void);

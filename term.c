@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.63 1998/08/08 17:21:29 jwise Exp $
+ * $Id: term.c,v 1.64 1998/08/08 19:11:56 jwise Exp $
  */
 
 /*
@@ -164,7 +164,7 @@ get_chx (void)
  */
 
 int
-get_int (char *message, int low, int high)
+get_int (const char *message, int low, int high)
 {
 	char	buf[STRSIZE], *end;
 	long	l;

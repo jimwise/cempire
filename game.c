@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: game.c,v 1.34 1998/03/11 02:57:15 jim Exp $
+ * $Id: game.c,v 1.35 1998/08/08 19:11:55 jwise Exp $
  */
 
 /*
@@ -821,7 +821,7 @@ The "xxxxx" field is the cumulative cost of building the hardware.
 */
 
 /* in declared order, with city first */
-static char *pieces = "OAFPDSTCBZXafpdstcbz";
+static const char *pieces = "OAFPDSTCBZXafpdstcbz";
 
 void
 stat_display (char *mbuf, int round)

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: extern.h,v 1.66 1998/08/08 18:08:37 jwise Exp $
+ * $Id: extern.h,v 1.67 1998/08/08 19:11:55 jwise Exp $
  */
 
 /*
@@ -200,7 +200,7 @@ void	alert (void);
 void	error (const char *, ...);
 char    get_chx (void);
 char    get_cq (void);
-int	get_int (char *, int, int);
+int	get_int (const char *, int, int);
 int     getyn (const char *);
 void    get_str (char *, int);
 void	huh (void);

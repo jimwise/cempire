@@ -5,7 +5,7 @@
  * and warranty information.
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: edit.c,v 1.12 1998/02/27 02:43:54 jim Exp $
+ * $Id: edit.c,v 1.13 1998/02/27 02:44:49 jim Exp $
  */
 
 /*
@@ -15,6 +15,7 @@ edit.c -- Routines to handle edit mode commands.
 #include <assert.h>
 #include <curses.h>
 #include <ctype.h>
+#include <stdio.h>
 #include <string.h>
 #include "empire.h"
 #include "extern.h"

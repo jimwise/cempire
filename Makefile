@@ -1,7 +1,7 @@
 #
 #	Copyright (C) 1987, 1988 Chuck Simmons
 #
-# $Id: Makefile,v 1.18 1998/08/09 00:41:17 jwise Exp $
+# $Id: Makefile,v 1.19 1998/08/09 01:54:36 jwise Exp $
 #
 # See the file COPYING, distributed with empire, for restriction
 # and warranty information.
@@ -33,6 +33,7 @@ TARGET = cempire
 
 CPPFLAGS = -DUSE_NCURSES -I/usr/pkg/include
 CFLAGS = $(DEBUG) $(PROFILE)
+LINTFLAGS = -brxH
 
 FILES = \
 	attack.c \
@@ -74,7 +75,7 @@ $(TARGET): $(OFILES)
 	$(CC) $(PROFILE) -o $(TARGET) $(OFILES) $(LIBS)
 
 lint: $(FILES)
-	lint $(CPPFLAGS) -u $(FILES) $(LIBS)
+	lint $(LINTFLAGS) $(CPPFLAGS) $(FILES) $(LIBS)
 
 ARCHIVES = cempire-$(VERSION).tar cempire-$(VERSION).tar.gz cempire-$(VERSION).shar
 

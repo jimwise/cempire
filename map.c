@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: map.c,v 1.25 1998/08/09 00:41:21 jwise Exp $
+ * $Id: map.c,v 1.26 1998/08/09 01:54:37 jwise Exp $
  */
 
 /*
@@ -19,7 +19,6 @@
 #include "extern.h"
 
 void	add_cell (path_map_t *, long, perimeter_t *, int, int, int);
-int	best_adj (const path_map_t *, long, int);
 void	expand_perimeter (path_map_t *, const view_map_t *, const move_info_t *, perimeter_t *,
 		int, int, int, int, perimeter_t *, perimeter_t *);
 void	expand_prune (view_map_t *, path_map_t *, long, int, perimeter_t *, int *);
@@ -322,24 +321,6 @@ vmap_find_lwobj (path_map_t path_map[], const view_map_t *vmap, long loc, const 
 	}
 }
 
-/* Return the cost to reach the adjacent cell of the correct type with the lowest cost. */
-
-int
-best_adj (const path_map_t *pmap, long loc, int type)
-{
-	int i;
-	long new_loc;
-	int best;
-
-	best = INFINITY;
-	
-	FOR_ADJ (loc, new_loc, i)
-	if (pmap[new_loc].terrain == type && pmap[new_loc].cost < best)
-			best = pmap[new_loc].cost;
-
-	return best;
-}
-
 /*
  * Find an objective moving from water to land.
  * Here, we expand water to either land or water.
@@ -564,9 +545,11 @@ terrain_type (const path_map_t *pmap, const view_map_t *vmap, const move_info_t 
 	{
 	    case '.':
 	   	 return T_WATER;
+		 /* NOTREACHED */
 		 break;
 	    case '+':
 	   	 return T_LAND;
+		 /* NOTREACHED */
 		 break;
 	    case '*':
 		if (map[to_loc].cityp->owner == move_info->city_owner)
@@ -576,9 +559,10 @@ terrain_type (const path_map_t *pmap, const view_map_t *vmap, const move_info_t 
 	    default:
 		panic("Unknown terrain");
 		/* NOTREACHED */
-		return T_UNKNOWN;
 		break;
 	}
+	/* NOTREACHED */
+	return T_UNKNOWN;
 }
 
 /*

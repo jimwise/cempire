@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.54 1998/03/11 00:44:25 jim Exp $
+ * $Id: display.c,v 1.55 1998/03/11 01:06:10 jim Exp $
  */
 
 /*
@@ -409,19 +409,21 @@ print_pzoom (char *s, path_map_t *pmap, view_map_t *vmap)
 	int row_inc, col_inc;
 	int r, c;
 
-	kill_display ();
+	kill_display();
+
+	wclear(stdscr);
 
 	row_inc = (MAP_HEIGHT + lines - NUMTOPS - 1) / (lines - NUMTOPS);
 	col_inc = (MAP_WIDTH + cols - 1) / (cols - 1);
 
 	for (r = 0; r < MAP_HEIGHT; r += row_inc)
-	for (c = 0; c < MAP_WIDTH; c += col_inc)
-	print_pzoom_cell (pmap, vmap, r, c, row_inc, col_inc);
+		for (c = 0; c < MAP_WIDTH; c += col_inc)
+			print_pzoom_cell(pmap, vmap, r, c, row_inc, col_inc);
 
-	prompt (s);
-	get_chx (); /* wait for user */
-	
 	wrefresh(stdscr);
+	prompt(s);
+
+	get_chx (); /* wait for user */
 }
 
 /*
@@ -444,28 +446,38 @@ print_pzoom_cell (path_map_t *pmap, view_map_t *vmap, int row, int col, int row_
 	d = 0; /* number of squares in cell */
 	
 	for (r = row; r < row + row_inc; r++)
-	for (c = col; c < col + col_inc; c++) {
-		sum += pmap[row_col_loc(r,c)].cost;
-		d += 1;
-	}
+		for (c = col; c < col + col_inc; c++)
+		{
+			sum += pmap[row_col_loc(r,c)].cost;
+			d += 1;
+		}
 	sum /= d;
 	
-	if (pmap[row_col_loc(row,col)].terrain == T_PATH) cell = '-';
-	else if (sum < 0) cell = '!';
-	else if (sum == INFINITY/2) cell = 'P';
-	else if (sum == INFINITY) cell = ' ';
-	else if (sum > INFINITY/2) cell = 'U';
-	else {
+	if (pmap[row_col_loc(row,col)].terrain == T_PATH)
+		cell = '-';
+	else if (sum < 0)
+		cell = '!';
+	else if (sum == INFINITY/2)
+		cell = 'P';
+	else if (sum == INFINITY)
+		cell = ' ';
+	else if (sum > INFINITY/2)
+		cell = 'U';
+	else
+	{
 		sum %= 36;
-		if (sum < 10) cell = sum + '0';
-		else cell = sum - 10 + 'a';
+		if (sum < 10)
+			cell = sum + '0';
+		else
+			cell = sum - 10 + 'a';
 	}
 	
 	if (cell == ' ')
 		print_zoom_cell (vmap, row, col, row_inc, col_inc);
-	else {
-		wmove (mapwin, row/row_inc, col/col_inc);
-		waddch (mapwin, (chtype)cell);
+	else
+	{
+		wmove (stdscr, row/row_inc, col/col_inc);
+		waddch (stdscr, cell);
 	}
 }
 

@@ -5,7 +5,7 @@
  * and warranty information.
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: edit.c,v 1.23 1998/03/06 22:40:26 jim Exp $
+ * $Id: edit.c,v 1.24 1998/03/06 22:54:39 jim Exp $
  */
 
 /*
@@ -44,8 +44,8 @@ void	e_print (long *);
 void	e_prod (long);
 void	e_random (long);
 void	e_repair (long);
-void	e_set_city_func (city_info_t *, int, long);
-void	e_set_func (long, long);
+void	e_set_city_func (city_info_t *, int, function_t);
+void	e_set_func (long, function_t);
 void	e_sleep (long);
 void	e_stasis (long);
 void	e_transport (long);
@@ -190,7 +190,7 @@ Set the function of a piece.
 */
 
 void
-e_set_func (long loc, long func)
+e_set_func (long loc, function_t func)
 {
 	piece_info_t *obj;
 	obj = find_obj_at_loc (loc);
@@ -204,7 +204,7 @@ e_set_func (long loc, long func)
 /* Set the function of a city for some piece. */
 
 void
-e_set_city_func (city_info_t *cityp, int type, long func)
+e_set_city_func (city_info_t *cityp, int type, function_t func)
 {
 	cityp->func[type] = func;
 }

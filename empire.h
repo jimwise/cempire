@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: empire.h,v 1.25 1998/03/06 22:31:18 jim Exp $
+ * $Id: empire.h,v 1.26 1998/03/06 22:54:40 jim Exp $
  */
 
 /*
@@ -35,31 +35,6 @@
 #define COMP 2
 
 #define LIST_SIZE 5000 /* max number of pieces on board */
-
-/*
-Types of programmed movement.  Use negative numbers for special
-functions, use positive numbers to move toward a specific location.
-*/
-
-#define NOFUNC -1       /* no programmed function */
-#define RANDOM -2       /* move randomly */
-#define SENTRY -3       /* sleep */
-#define FILL -4         /* fill transport */
-#define LAND -5         /* land fighter at city */
-#define EXPLORE -6      /* piece explores nearby */
-#define ARMYLOAD -7     /* army moves toward and boards a transport */
-#define ARMYATTACK -8   /* army looks for city to attack */
-#define TTLOAD -9       /* transport moves toward loading armies */
-#define REPAIR -10      /* ship moves toward port */
-#define WFTRANSPORT -11 /* army boards a transport */
-#define MOVE_N -12      /* move north */
-#define MOVE_NE -13     /* move northeast */
-#define MOVE_E -14      /* move east */
-#define MOVE_SE -15     /* move southeast */
-#define MOVE_S -16      /* move south */
-#define MOVE_SW -17     /* move southwest */
-#define MOVE_W -18      /* move west */
-#define MOVE_NW -19     /* move northwest */
 
 #define INFINITY 1000000 /* a large number */
 
@@ -115,13 +90,41 @@ typedef enum
 #define FIRST_OBJECT	ARMY
 #define	NUM_OBJECTS	9
 
+/*
+Types of programmed movement.  Use negative numbers for special
+functions, use positive numbers to move toward a specific location.
+*/
+enum
+{
+        NOFUNC=-1,      /* no programmed function */
+        RANDOM=-2,      /* move randomly */
+        SENTRY=-3,      /* sleep */
+        FILL=-4,        /* fill transport */
+        LAND=-5,        /* land fighter at city */
+        EXPLORE=-6,     /* piece explores nearby */
+        ARMYLOAD=-7,    /* army moves toward and boards a transport */
+        ARMYATTACK=-8,  /* army looks for city to attack */
+        TTLOAD=-9,      /* transport moves toward loading armies */
+        REPAIR=-10,     /* ship moves toward port */
+        WFTRANSPORT=-11,/* army boards a transport */
+        MOVE_N=-12,     /* move north */
+        MOVE_NE=-13,    /* move northeast */
+        MOVE_E=-14,     /* move east */
+        MOVE_SE=-15,    /* move southeast */
+        MOVE_S=-16,     /* move south */
+        MOVE_SW=-17,    /* move southwest */
+        MOVE_W=-18,     /* move west */
+        MOVE_NW=-19     /* move northwest */
+};
+typedef long    function_t;
+
 typedef struct
 {
-	long loc; /* location of city */
-	uchar owner; /* UNOWNED, USER, COMP */
-	long func[NUM_OBJECTS]; /* function for each object */
-	long work; /* units of work performed */
-	piece_type_t prod; /* item being produced */
+	long		loc; /* location of city */
+	uchar		owner; /* UNOWNED, USER, COMP */
+	function_t	func[NUM_OBJECTS]; /* function for each object */
+	long		work; /* units of work performed */
+	piece_type_t	prod; /* item being produced */
 } city_info_t;
 
 /*
@@ -137,19 +140,19 @@ typedef struct
 
 typedef struct piece_info
 {
-	link_t piece_link; /* linked list of pieces of this type */
-	link_t loc_link; /* linked list of pieces at a location */
-	link_t cargo_link; /* linked list of cargo pieces */
-	int owner; /* owner of piece */
-	piece_type_t type; /* type of piece */
-	long loc; /* location of piece */
-	long func; /* programmed type of movement */
-	short hits; /* hits left */
-	int moved; /* moves made */
-	struct piece_info *ship; /* pointer to containing ship */
-	struct piece_info *cargo; /* pointer to cargo list */
-	short count; /* count of items on board */
-	short range; /* current range (if applicable) */
+	link_t		piece_link; /* linked list of pieces of this type */
+	link_t		loc_link; /* linked list of pieces at a location */
+	link_t		cargo_link; /* linked list of cargo pieces */
+	int		owner; /* owner of piece */
+	piece_type_t	type; /* type of piece */
+	long		loc; /* location of piece */
+	function_t	func; /* programmed type of movement */
+	short		hits; /* hits left */
+	int		moved; /* moves made */
+	struct piece_info	*ship; /* pointer to containing ship */
+	struct piece_info	*cargo; /* pointer to cargo list */
+	short		count; /* count of items on board */
+	short		range; /* current range (if applicable) */
 } piece_info_t;
 
 /*

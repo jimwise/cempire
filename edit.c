@@ -5,7 +5,7 @@
  * and warranty information.
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: edit.c,v 1.25 1998/03/09 18:57:04 jim Exp $
+ * $Id: edit.c,v 1.26 1998/03/10 22:24:54 jim Exp $
  */
 
 /*
@@ -131,8 +131,6 @@ edit (long edit_cursor)
 
 /*
 Get the next command.  We handle cursor movement here.
-This routine is an attempt to make cursor movement reasonably
-fast.
 */
 
 static char dirchars[] = "WwEeDdCcXxZzAaQq";

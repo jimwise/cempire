@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: attack.c,v 1.15 1998/03/03 13:15:11 jim Exp $
+ * $Id: attack.c,v 1.16 1998/03/03 13:32:34 jim Exp $
  */
 
 /*
@@ -73,9 +73,8 @@ attack_city (piece_info_t *att_obj, long loc)
 
 		if (att_owner == USER)
 		{
-			error ("City at %d has been subjugated!", cityp->loc);
-
-			extra ("Your army has been dispersed to enforce control.");
+			info("City at %d has been subjugated!", cityp->loc);
+			info("Your army has been dispersed to enforce control.");
 			set_prod (cityp);
 		}
 		else if (city_owner == USER)

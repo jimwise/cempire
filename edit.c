@@ -5,7 +5,7 @@
  * and warranty information.
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: edit.c,v 1.20 1998/03/03 17:32:57 jim Exp $
+ * $Id: edit.c,v 1.21 1998/03/04 13:27:17 jim Exp $
  */
 
 /*
@@ -177,7 +177,7 @@ e_print (long *edit_cursor)
 {
         int sector;
 	
-	sector = get_range ("New Sector? ", 0, NUM_SECTORS-1);
+	sector = get_int ("New Sector? ", 0, NUM_SECTORS-1);
 
 	/* position cursor at center of sector */
 	*edit_cursor = sector_loc (sector);

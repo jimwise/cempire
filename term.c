@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.45 1998/03/04 12:50:00 jim Exp $
+ * $Id: term.c,v 1.46 1998/03/04 13:27:19 jim Exp $
  */
 
 /*
@@ -37,12 +37,10 @@ void    delay (void);
 void	empend (void);
 void	emp_beep (void);
 void    error (char *, ...);
-int	getint (char *message);
 int	getyn (char *message);
 char	get_chx (void);
 char	get_c (void);
 char    get_cq (void);
-int     get_range (char *, int, int);
 void	get_str (char *, int);
 void    get_strq (char *, int);
 void    help (char **, int);
@@ -174,30 +172,33 @@ get_chx (void)
 }
 
 /*
-Input an integer from the user.
-*/
+ * Input an integer from the user.
+ * low and high set bounds
+ */
 
 int
-getint (char *message)
+get_int (char *message, int low, int high)
 {
-	char buf[STRSIZE];
-	char *p;
+	char	buf[STRSIZE], *end;
+	long	l;
 
-	for (;;) { /* until we get a legal number */
-		prompt (message);
-		get_str (buf, sizeof (buf));
-		
-		for (p = buf; *p; p++) {
-			if (*p < '0' || *p > '9') {
-				error ("Please enter an integer.");
-				break;
-			}
+	while (1)
+	{
+		prompt(message);
+		get_str(buf, sizeof(buf));
+
+		l = strtol(buf, &end, 10);
+
+		if (*end != '\0')
+		{
+			error ("Please enter an integer.");
+			continue;
 		}
-		if (*p == 0) { /* no error yet? */
-			if (p - buf > 7) /* too many digits? */
-				error ("Please enter a small integer.");
-			else return (atoi (buf));
-		}
+
+		if ((l >= low) && (l <= high))
+			return (l);
+		else
+			error ("Please enter an integer in the range %d..%d.", low, high);
 	}
 }
 
@@ -249,25 +250,6 @@ getyn (char *message)
 		if (c == 'N') return (FALSE);
 
 		error ("Please answer Y or N.");
-	}
-}
-
-/*
-Input an integer in a range.
-*/
-
-int
-get_range (char *message, int low, int high)
-{
-	int result;
-
-	for (;;) {
-		result = getint (message);
-
-		if (result >= low && result <= high) return (result);
-
-		error ("Please enter an integer in the range %d..%d.",
-			low, high);
 	}
 }
 

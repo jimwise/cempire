@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: game.c,v 1.23 1998/03/03 13:15:13 jim Exp $
+ * $Id: game.c,v 1.24 1998/03/04 13:27:19 jim Exp $
  */
 
 /*
@@ -330,7 +330,7 @@ select_cities (void)
 	make_pair (); /* create list of ranked pairs */
 
 	sprintf(jnkbuf, "Choose a difficulty level where 0 is easy and %d is hard: ", ncont*ncont-1);
-	pair = get_range(jnkbuf, 0, ncont*ncont-1);
+	pair = get_int(jnkbuf, 0, ncont*ncont-1);
 
 	comp_cont = pair_tab[pair].comp_cont;
 	user_cont = pair_tab[pair].user_cont;

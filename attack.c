@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: attack.c,v 1.25 2001/02/08 19:42:07 jwise Exp $
+ * $Id: attack.c,v 1.26 2002/11/11 06:25:45 jwise Exp $
  */
 
 /*
@@ -39,9 +39,9 @@ void
 attack (piece_info_t *att_obj, long loc)
 {
 	if (map[loc].contents == '*') /* attacking a city? */
-		attack_city (att_obj, loc);
+		attack_city(att_obj, loc);
 	else
-		attack_obj (att_obj, loc); /* attacking a piece */
+		attack_obj(att_obj, loc); /* attacking a piece */
 }
 
 static void
@@ -50,8 +50,8 @@ attack_city (piece_info_t *att_obj, long loc)
 	city_info_t *cityp;
 	unsigned char att_owner, city_owner;
 
-	cityp = find_city (loc);
-	assert (cityp);
+	cityp = find_city(loc);
+	assert(cityp);
 	
 	att_owner = att_obj->owner;
 	city_owner = cityp->owner;
@@ -62,27 +62,27 @@ attack_city (piece_info_t *att_obj, long loc)
 		else if (city_owner == USER)
 			info("Your city at %d is under attack.", cityp->loc);
 		
-		kill_obj (att_obj, loc);
+		kill_obj(att_obj, loc);
 	}
 	else
 	{
 		/* attack succeeded */
-		kill_city (cityp);
+		kill_city(cityp);
 		cityp->owner = att_owner;
-		kill_obj (att_obj, loc);
+		kill_obj(att_obj, loc);
 
 		if (att_owner == USER)
 		{
 			info("City at %d has been subjugated!", cityp->loc);
 			info("Your army has been dispersed to enforce control.");
-			set_prod (cityp);
+			set_prod(cityp);
 		}
 		else if (city_owner == USER)
 			info("City at %d has been lost to the enemy!", cityp->loc);
 	}
 	/* let city owner see all results */
 	if (city_owner != UNOWNED)
-		scan (MAP(city_owner), loc);
+		scan(MAP(city_owner), loc);
 }
 
 /*
@@ -96,8 +96,8 @@ attack_obj (piece_info_t *att_obj, long loc)
 	piece_info_t *def_obj; /* defender */
 	int owner;
 
-	def_obj = find_obj_at_loc (loc);
-	assert (def_obj != NULL); /* can't find object to attack? */
+	def_obj = find_obj_at_loc(loc);
+	assert(def_obj != NULL); /* can't find object to attack? */
 	
 	if (def_obj->type == SATELLITE)
 		return; /* can't attack a satellite */
@@ -113,21 +113,21 @@ attack_obj (piece_info_t *att_obj, long loc)
 	if (att_obj->hits > 0)
 	{
 		/* attacker won */
-		describe (att_obj, def_obj, loc);
+		describe(att_obj, def_obj, loc);
 		owner = def_obj->owner;
-		kill_obj (def_obj, loc); /* kill loser */
-		survive (att_obj, loc); /* move attacker */
+		kill_obj(def_obj, loc); /* kill loser */
+		survive(att_obj, loc); /* move attacker */
 	}
 	else
 	{
 		/* defender won */
-		describe (def_obj, att_obj, loc);
+		describe(def_obj, att_obj, loc);
 		owner = att_obj->owner;
-		kill_obj (att_obj, loc);
-		survive (def_obj, loc);
+		kill_obj(att_obj, loc);
+		survive(def_obj, loc);
 	}
 	/* show results to first killed */
-	scan (MAP(owner), loc);
+	scan(MAP(owner), loc);
 }
 
 /*
@@ -141,9 +141,9 @@ static void
 survive (piece_info_t *obj, long loc)
 {
 	while (obj_capacity (obj) < obj->count)
-		kill_obj (obj->cargo, loc);
+		kill_obj(obj->cargo, loc);
 		
-	move_obj (obj, loc);
+	move_obj(obj, loc);
 }
 
 static void

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: main.c,v 1.3 1998/02/24 23:48:02 jim Exp $
+ * $Id: main.c,v 1.4 1998/02/25 02:20:55 jim Exp $
  */
 
 /*
@@ -28,11 +28,13 @@ options:
 */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include "empire.h"
 #include "extern.h"
 
 #define OPTFLAGS "w:s:d:S:"
 
+int
 main (argc, argv)
 int argc;
 char *argv[];

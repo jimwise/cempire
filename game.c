@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: game.c,v 1.3 1998/02/24 23:48:02 jim Exp $
+ * $Id: game.c,v 1.4 1998/02/25 02:20:54 jim Exp $
  */
 
 /*
@@ -24,7 +24,13 @@ game.c -- Routines to initialize, save, and restore a game.
 #include "empire.h"
 #include "extern.h"
 
-long remove_land();
+int	find_next (long *);
+int	good_cont (long);
+void	mark_cont (long);
+long	remove_land (long, long);
+void	stat_display (char *, int);
+int	xread (FILE *, char *, int);
+int	xwrite (FILE *, char *, int);
 
 /*
 Initialize a new game.  Here we generate a new random map, put cities
@@ -403,8 +409,6 @@ static long ncity, nland, nshore;
 int good_cont (mapi)
 long mapi;
 {
-	static void mark_cont();
-
 	long val;
 
 	ncity = 0; /* nothing seen yet */
@@ -437,7 +441,7 @@ to see if it is a shore city, and we install it in the list of
 cities for the continent.  We then examine each surrounding cell.
 */
 
-static void
+void
 mark_cont (mapi)
 long mapi;
 {
@@ -796,6 +800,7 @@ The "xxxxx" field is the cumulative cost of building the hardware.
 /* in declared order, with city first */
 static char *pieces = "OAFPDSTCBZXafpdstcbz";
 
+void
 stat_display (mbuf, round)
 char *mbuf;
 int round;

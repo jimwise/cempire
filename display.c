@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.53 1998/03/11 00:13:08 jim Exp $
+ * $Id: display.c,v 1.54 1998/03/11 00:44:25 jim Exp $
  */
 
 /*
@@ -37,7 +37,6 @@ void    help (char **, int);
 void	kill_display (void);
 int     move_cursor (long *, int);
 int     on_screen (long);
-void    print_movie_cell (char *, int, int, int, int);
 void	print_movie_screen(char *);
 void    print_sector (char, view_map_t[], int);
 void    print_pzoom (char *, path_map_t *, view_map_t *);
@@ -482,38 +481,34 @@ display_score (void)
 	wrefresh(stdscr);
 }
 
+/*
+ * given a frame of a movie (i.e. the map at one particular point), print a zoomed map at that point)
+ */
+
 void
 print_movie_screen(char *mapbuf)
 {
 	int row_inc, col_inc;
-	int r, c;
+	int r, c, i, j;
+	char cell;
 
 	row_inc = (MAP_HEIGHT + lines - NUMTOPS - 2) / (lines - NUMTOPS);
 	col_inc = (MAP_WIDTH + cols - 1) / (cols - 1);
 
 	for (r = 0; r < MAP_HEIGHT; r += row_inc)
 		for (c = 0; c < MAP_WIDTH; c += col_inc)
-			print_movie_cell (mapbuf, r, c, row_inc, col_inc);
+		{
+			cell = ' ';
+
+			for (i = r; i < r + row_inc; i++)
+				for (j = c; j < c + col_inc; j++)
+					if (strchr(zoom_list, mapbuf[row_col_loc(i,j)]) < strchr(zoom_list, cell))
+						cell = mapbuf[row_col_loc(i,j)];
+
+			mvwaddch(stdscr, r/row_inc + NUMTOPS, c/col_inc, cell);
+		}
 
 	wrefresh(stdscr);
-}
-
-/*
-Print a single cell in condensed format.
-*/
-
-void
-print_movie_cell (char *mbuf, int row, int col, int row_inc, int col_inc)
-{
-        int r, c;
-        char cell = ' ';
-
-        for (r = row; r < row + row_inc; r++)
-                for (c = col; c < col + col_inc; c++)
-                        if (strchr(zoom_list, mbuf[row_col_loc(r,c)]) < strchr(zoom_list, cell))
-                                cell = mbuf[row_col_loc(r,c)];
-
-        mvwaddch(stdscr, row/row_inc + NUMTOPS, col/col_inc, cell);
 }
 
 /*

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: empire.h,v 1.7 1998/02/26 23:41:58 jim Exp $
+ * $Id: empire.h,v 1.8 1998/02/26 23:47:38 jim Exp $
  */
 
 /*
@@ -41,8 +41,6 @@ char *memcpy();
 
 typedef unsigned char uchar;
 
-#include <assert.h>
-#define ASSERT(x)	assert(x)
 #define ABORT	assert(0);
 
 /* directions one can move */

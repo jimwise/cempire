@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: compmove.c,v 1.10 1998/02/26 02:17:43 jim Exp $
+ * $Id: compmove.c,v 1.11 1998/02/26 23:47:37 jim Exp $
  */
 
 /*
@@ -25,6 +25,7 @@ For each move the user wants us to make, we do the following:
 #include <strings.h>
 #endif
 
+#include <assert.h>
 #include <curses.h>
 #include "empire.h"
 #include "extern.h"
@@ -182,7 +183,7 @@ comp_prod (city_info_t *cityp, int is_lake)
 	if (cont_map[i]) { /* for each cell of continent */
 		if (comp_map[i].contents == 'X') {
 			p = find_city (i);
-			ASSERT (p != NULL && p->owner == COMP);
+			assert (p != NULL && p->owner == COMP);
 			if (p->prod == ARMY) comp_ac += 1;
 		}
 	}

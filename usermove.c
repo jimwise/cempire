@@ -6,13 +6,14 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: usermove.c,v 1.6 1998/02/26 23:16:24 jim Exp $
+ * $Id: usermove.c,v 1.7 1998/02/26 23:47:40 jim Exp $
  */
 
 /*
 usermove.c -- Let the user move her troops.
 */
 
+#include <assert.h>
 #include <curses.h>
 #include <ctype.h>
 #include "empire.h"
@@ -360,7 +361,7 @@ move_armyattack (piece_info_t *obj)
 	path_map_t path_map[MAP_SIZE];
 	long loc;
 
-	ASSERT (obj->type == ARMY);
+	assert (obj->type == ARMY);
 
 	loc = vmap_find_lobj (path_map, user_map, obj->loc, &user_army_attack);
 	
@@ -389,7 +390,7 @@ move_repair (piece_info_t *obj)
 	path_map_t path_map[MAP_SIZE];
 	long loc;
 
-	ASSERT (obj->type > FIGHTER);
+	assert (obj->type > FIGHTER);
 	
 	if (obj->hits == piece_attr[obj->type].max_hits) {
 		obj->func = NOFUNC;
@@ -528,7 +529,7 @@ move_to_dest (piece_info_t *obj, long dest)
 	vmap_mark_path (path_map, user_map, dest);
 	new_loc = vmap_find_dir (path_map, user_map, obj->loc, mterrain, " .");
 	if (new_loc == obj->loc) return; /* can't move ahead */
-	ASSERT (good_loc (obj, new_loc));
+	assert (good_loc (obj, new_loc));
 	move_obj (obj, new_loc); /* everything looks good */
 }
 
@@ -821,7 +822,7 @@ user_build (piece_info_t *obj)
 		return;
 	}
 	cityp = find_city (obj->loc);
-	ASSERT (cityp != NULL);
+	assert (cityp != NULL);
 	set_prod (cityp);
 }
 

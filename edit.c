@@ -5,7 +5,7 @@
  * and warranty information.
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: edit.c,v 1.6 1998/02/26 01:54:38 jim Exp $
+ * $Id: edit.c,v 1.7 1998/02/26 23:47:38 jim Exp $
  */
 
 /*
@@ -18,6 +18,7 @@ edit.c -- Routines to handle edit mode commands.
 #include <strings.h>
 #endif
 
+#include <assert.h>
 #include <curses.h>
 #include <ctype.h>
 #include "empire.h"
@@ -481,7 +482,7 @@ e_end (long *path_start, long loc, int path_type)
 	else if (path_type == NOPIECE) e_set_func (*path_start, loc);
 	else {
 		cityp = find_city (*path_start);
-		ASSERT (cityp);
+		assert (cityp);
 		e_set_city_func (cityp, path_type, loc);
 	}
 
@@ -535,7 +536,7 @@ e_piece_info (long edit_cursor, char ab)
 	type = p - type_chars;
 
 	obj = find_obj (type, edit_cursor);
-	ASSERT (obj != NULL);
+	assert (obj != NULL);
 	describe_obj (obj);
 }
 
@@ -574,7 +575,7 @@ e_city_info (long edit_cursor)
 	else (void) sprintf (jnkbuf, "%d fighters landed, %d ships docked", f, s);
 
 	cityp = find_city (edit_cursor);
-	ASSERT (cityp != NULL);
+	assert (cityp != NULL);
 
 	*func_buf = 0; /* nothing in buffer */
 	for (s = 0; s < NUM_OBJECTS; s++) { /* for each piece */

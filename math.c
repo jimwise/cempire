@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: math.c,v 1.6 1998/02/26 02:07:46 jim Exp $
+ * $Id: math.c,v 1.7 1998/02/26 23:47:39 jim Exp $
  */
 
 /*
@@ -24,6 +24,7 @@ Other routines include:
     dist (a, b) -- returns the straight-line distance between two locations.
 */
 
+#include <assert.h>
 #include <sys/types.h>
 #include <stdlib.h>
 #include <time.h>
@@ -92,7 +93,7 @@ isqrt (int n)
 {
 	int guess;
 	
-	ASSERT (n >= 0); /* can't take sqrt of negative number */
+	assert (n >= 0); /* can't take sqrt of negative number */
 
 	if (n <= 1) return (n); /* do easy cases and avoid div by zero */
 		

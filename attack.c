@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: attack.c,v 1.6 1998/02/26 02:17:42 jim Exp $
+ * $Id: attack.c,v 1.7 1998/02/26 23:47:36 jim Exp $
  */
 
 /*
@@ -27,6 +27,7 @@ the dead object.  Tell user who won and how many hits her piece has left,
 if any.
 */
 
+#include <assert.h>
 #include "empire.h"
 #include "extern.h"
 
@@ -52,7 +53,7 @@ attack_city (piece_info_t *att_obj, long loc)
 	int att_owner, city_owner;
 
 	cityp = find_city (loc);
-	ASSERT (cityp);
+	assert (cityp);
 	
 	att_owner = att_obj->owner;
 	city_owner = cityp->owner;
@@ -100,7 +101,7 @@ attack_obj (piece_info_t *att_obj, long loc)
 	int owner;
 
 	def_obj = find_obj_at_loc (loc);
-	ASSERT (def_obj != NULL); /* can't find object to attack? */
+	assert (def_obj != NULL); /* can't find object to attack? */
 	
 	if (def_obj->type == SATELLITE) return; /* can't attack a satellite */
 

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: game.c,v 1.6 1998/02/26 21:36:05 jim Exp $
+ * $Id: game.c,v 1.7 1998/02/26 23:47:39 jim Exp $
  */
 
 /*
@@ -19,6 +19,7 @@ game.c -- Routines to initialize, save, and restore a game.
 #include <strings.h>
 #endif
 
+#include <assert.h>
 #include <ctype.h>
 #include <curses.h>
 #include "empire.h"
@@ -242,7 +243,7 @@ regen_land (long placed)
 	}
 	if (placed > 0) { /* don't decrement 1st time */
 		MIN_CITY_DIST -= 1;
-		ASSERT (MIN_CITY_DIST >= 0);
+		assert (MIN_CITY_DIST >= 0);
 	}
 	for (i = 0; i < placed; i++) { /* for each placed city */
 		num_land = remove_land (city[i].loc, num_land);

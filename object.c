@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: object.c,v 1.6 1998/02/26 22:20:23 jim Exp $
+ * $Id: object.c,v 1.7 1998/02/26 23:47:40 jim Exp $
  */
 
 /*
@@ -19,6 +19,7 @@ object.c -- routines for manipulating objects.
 #include <strings.h>
 #endif
 
+#include <assert.h>
 #include <ctype.h>
 #include <stdio.h>
 #include "empire.h"
@@ -314,7 +315,7 @@ produce (city_info_t *cityp)
 
 	cityp->work -= piece_attr[cityp->prod].build_time;
 	
-	ASSERT (free_list); /* can we allocate? */
+	assert (free_list); /* can we allocate? */
 	new = free_list;
 	UNLINK (free_list, new, piece_link);
 	LINK (list[cityp->prod], new, piece_link);
@@ -353,7 +354,7 @@ move_obj (piece_info_t *obj, long new_loc)
 	long old_loc;
 	piece_info_t *p;
 
-	ASSERT (obj->hits);
+	assert (obj->hits);
 	vmap = MAP(obj->owner);
 
 	old_loc = obj->loc; /* save original location */
@@ -561,7 +562,7 @@ scan (view_map_t vmap[], long loc)
 #ifdef DEBUG
 	check (); /* perform a consistency check */
 #endif
-	ASSERT (map[loc].on_board); /* passed loc must be on board */
+	assert (map[loc].on_board); /* passed loc must be on board */
 
 	for (i = 0; i < 8; i++) { /* for each surrounding cell */
 		xloc = loc + dir_offset[i];
@@ -580,7 +581,7 @@ scan_sat (view_map_t *vmap, long loc)
 	int i;
 	long xloc;
 	
-	ASSERT (map[loc].on_board);
+	assert (map[loc].on_board);
 
 	for (i = 0; i < 8; i++) { /* for each surrounding cell */
 		xloc = loc + 2 * dir_offset[i];

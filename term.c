@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.46 1998/03/04 13:27:19 jim Exp $
+ * $Id: term.c,v 1.47 1998/03/04 13:31:15 jim Exp $
  */
 
 /*
@@ -39,7 +39,6 @@ void	emp_beep (void);
 void    error (char *, ...);
 int	getyn (char *message);
 char	get_chx (void);
-char	get_c (void);
 char    get_cq (void);
 void	get_str (char *, int);
 void    get_strq (char *, int);
@@ -203,21 +202,6 @@ get_int (char *message, int low, int high)
 }
 
 /*
-Input a character from the user with echoing.
-*/
-
-char
-get_c (void)
-{
-	char c; /* one char and a null */
-
-	echo ();
-	c = get_cq ();
-	noecho ();
-	return (c);
-}
-
-/*
 Input a character quietly.
 */
 
@@ -242,12 +226,15 @@ getyn (char *message)
 {
 	char c;
 
-	for (;;) {
+	while (1)
+	{
 		prompt (message);
 		c = get_chx ();
 
-		if (c == 'Y') return (TRUE);
-		if (c == 'N') return (FALSE);
+		if (c == 'Y')
+			return (TRUE);
+		if (c == 'N')
+			return (FALSE);
 
 		error ("Please answer Y or N.");
 	}

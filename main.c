@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: main.c,v 1.6 1998/02/27 00:18:51 jim Exp $
+ * $Id: main.c,v 1.7 1998/02/27 23:40:02 jim Exp $
  */
 
 /*
@@ -73,8 +73,9 @@ main (int argc, char *argv[])
 			break;
 		}
 	}
-	if (errflg || (argc-optind) != 0) {
-		printf ("empire: usage: empire [-w water] [-s smooth] [-d delay]\n");
+	if (errflg || ((argc - optind) != 0))
+	{
+		printf ("empire: usage: empire [-w water] [-s smooth] [-d delay] [-S save_interval]\n");
 		exit (1);
 	}
 

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: math.c,v 1.7 1998/02/26 23:47:39 jim Exp $
+ * $Id: math.c,v 1.8 1998/02/27 23:40:02 jim Exp $
  */
 
 /*
@@ -46,9 +46,9 @@ rndini (void)
 long
 irand (long high)
 {
-	if (high < 2) {
+	if (high < 2)
 		return (0);
-	}
+
 	return (rand() % high);
 }
 

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: empire.c,v 1.33 1998/03/11 02:31:15 jim Exp $
+ * $Id: empire.c,v 1.34 1998/03/11 02:57:14 jim Exp $
  */
 
 /*
@@ -357,9 +357,9 @@ c_movie (void)
 void
 emp_start (void)
 {
-	term_init(); /* init tty, and info and status windows */
-	map_init(); /* init map window */
-	rand_init(); /* init random number generator */
+	term_init();	/* init tty, and info and status windows */
+	map_init();	/* init map window */
+	rand_init();	/* init random number generator */
 }
 
 /*
@@ -370,5 +370,5 @@ void
 emp_end (void)
 {
 	term_end();
-	exit (0);
+	exit(0);
 }

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: game.c,v 1.33 1998/03/11 02:38:35 jim Exp $
+ * $Id: game.c,v 1.34 1998/03/11 02:57:15 jim Exp $
  */
 
 /*
@@ -67,18 +67,25 @@ init_game (void)
 	user_score = 0;
 	comp_score = 0;
 	
-	for (i = 0; i < MAP_SIZE; i++) {
+	for (i = 0; i < MAP_SIZE; i++)
+	{
 		user_map[i].contents = ' '; /* nothing seen yet */
 		user_map[i].seen = 0;
 		comp_map[i].contents = ' ';
 		comp_map[i].seen = 0;
 	}
-	for (j = FIRST_OBJECT; j < NUM_OBJECTS; j++) {
+
+	for (j = FIRST_OBJECT; j < NUM_OBJECTS; j++)
+	{
 		user_obj[j] = NULL;
 		comp_obj[j] = NULL;
 	}
+
 	free_list = NULL; /* nothing free yet */
-	for (i = 0; i < LIST_SIZE; i++) { /* for each object */
+
+	for (i = 0; i < LIST_SIZE; i++)
+	{
+		/* for each object */
 		piece_info_t *obj = &(object[i]);
 		obj->hits = 0; /* mark object as dead */
 		obj->owner = UNOWNED;
@@ -87,13 +94,17 @@ init_game (void)
 
 	make_map (); /* make land and water */
 
-	do {
-		for (i = 0; i < MAP_SIZE; i ++) { /* remove cities */
+	do
+	{
+		for (i = 0; i < MAP_SIZE; i ++)
+		{
+			/* remove cities */
 			if (map[i].contents == '*')
 				map[i].contents = '+'; /* land */
 		}
-		place_cities (); /* place cities on map */
-	} while (!select_cities ()); /* choose a city for each player */
+		place_cities(); /* place cities on map */
+	}
+	while (!select_cities()); /* choose a city for each player */
 }
 
 /*

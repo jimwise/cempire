@@ -3,6 +3,10 @@
  * 
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
+ *
+ * Portions of this file Copyright (C) 1998 Jim Wise
+ *
+ * $Id: empire.h,v 1.4 1998/02/24 23:48:01 jim Exp $
  */
 
 /*

@@ -3,6 +3,10 @@
  * 
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
+ *
+ * Portions of this file Copyright (C) 1998 Jim Wise
+ *
+ * $Id: compmove.c,v 1.7 1998/02/24 23:47:58 jim Exp $
  */
 
 /*

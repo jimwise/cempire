@@ -3,6 +3,10 @@
  * 
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
+ *
+ * Portions of this file Copyright (C) 1998 Jim Wise
+ *
+ * $Id: extern.h,v 1.3 1998/02/24 23:48:01 jim Exp $
  */
 
 /*

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.41 1998/03/09 16:19:47 jim Exp $
+ * $Id: display.c,v 1.42 1998/03/09 17:07:08 jim Exp $
  */
 
 /*
@@ -227,22 +227,32 @@ print_sector (char whose, view_map_t vmap[], int sector)
 	/* print x-coordinates along bottom of screen */
 	for (c = ref_col; c < ref_col + display_cols && c < MAP_WIDTH; c++)
 		if (c % 10 == 0)
-			pos_str (lines-1, c-ref_col+1, "%d", c);
+		{
+			wmove(stdscr, lines-1, c-ref_col+1);
+			wprintw(stdscr, "%d", c);
+		}
 
 	/* print y-coordinates along right of screen */
 	for (r = ref_row; r < ref_row + display_rows && r < MAP_HEIGHT; r++)
 		if (r % 2 == 0)
-			pos_str (r-ref_row+NUMTOPS+1, cols-NUMSIDES, "%2d", r);
+			mvwprintw(stdscr, r-ref_row+NUMTOPS+1, cols-NUMSIDES, "%2d", r);
 		else
-			pos_str (r-ref_row+NUMTOPS+1, cols-NUMSIDES, "  ");
+		{
+			wmove(stdscr, r-ref_row+NUMTOPS+1, cols-NUMSIDES);
+			wclrtoeol(stdscr);
+		}
 	
 	/* print round number */
 	sprintf (jnkbuf, "Sector %d Round %ld", sector, date);
-	for (r = 0; jnkbuf[r] != '\0'; r++) {
-		if (r+NUMTOPS >= MAP_HEIGHT) break;
-		wmove (stdscr, r+NUMTOPS, cols-NUMSIDES+4);
-		waddch(stdscr,(chtype)jnkbuf[r]);
+	for (r = 0; jnkbuf[r] != '\0'; r++)
+	{
+		if (r+NUMTOPS >= MAP_HEIGHT)
+			break;
+
+		mvwaddch(stdscr, r+NUMTOPS, cols-NUMSIDES+4, jnkbuf[r]);
 	}
+
+	wrefresh(stdscr);
 }
 
 /*
@@ -467,8 +477,9 @@ Display the score off in the corner of the screen.
 void
 display_score (void)
 {
-	pos_str (0, cols-12, " User  Comp");
-	pos_str (1, cols-12, "%5d %5d", user_score, comp_score);
+	mvwprintw(stdscr, 0, cols-12, " User  Comp");
+	mvwprintw(stdscr, 1, cols-12, "%5d %5d", user_score, comp_score);
+	wrefresh(stdscr);
 }
 
 /*
@@ -479,12 +490,12 @@ void
 print_movie_cell (char *mbuf, int row, int col, int row_inc, int col_inc)
 {
         int r, c;
-        char cell[] = " ";
+        char cell = ' ';
 
         for (r = row; r < row + row_inc; r++)
                 for (c = col; c < col + col_inc; c++)
-                        if (strchr(zoom_list, mbuf[row_col_loc(r,c)]) < strchr(zoom_list, *cell))
-                                *cell = mbuf[row_col_loc(r,c)];
+                        if (strchr(zoom_list, mbuf[row_col_loc(r,c)]) < strchr(zoom_list, cell))
+                                cell = mbuf[row_col_loc(r,c)];
 
-        pos_str(row/row_inc + NUMTOPS, col/col_inc, cell);
+        mvwaddch(stdscr, row/row_inc + NUMTOPS, col/col_inc, cell);
 }

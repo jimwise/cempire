@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.58 1998/03/09 18:57:04 jim Exp $
+ * $Id: term.c,v 1.59 1998/03/10 22:20:02 jim Exp $
  */
 
 /*
@@ -108,7 +108,7 @@ error (char *fmt, ...)
 	vwprintw(statuswin, fmt, ap);
 	wrefresh(statuswin);
 	beep();
-	delay();
+	napms(delay_time);
 	wscrl(statuswin, -1);
 	wrefresh(statuswin);
 	scrollok(statuswin, FALSE);

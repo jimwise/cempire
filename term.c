@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.32 1998/03/02 18:28:01 jim Exp $
+ * $Id: term.c,v 1.33 1998/03/03 12:34:55 jim Exp $
  */
 
 /*
@@ -58,7 +58,6 @@ void	term_clear (void);
 void    term_end (void);
 void    term_init (void);
 void    topini (void);
-void    topmsg(int, char *, ...);
 void	vcomment (char *, va_list);
 void	vtopmsg(int, char *, va_list);
 
@@ -91,21 +90,10 @@ topini (void)
 	wclear(infowin);
 	wrefresh(infowin);
 }
+
 /*
 Write a message to one of the top lines.
 */
-
-void
-topmsg (int linep, char *buf, ...)
-{
-	va_list ap;
-
-	va_start(ap, buf);
-
-	vtopmsg(linep, buf, ap);
-
-	va_end(ap);
-}
 
 void
 vtopmsg (int linep, char *buf, va_list ap)
@@ -217,9 +205,8 @@ comment (char *buf, ...)
 void
 vcomment (char *buf, va_list ap)
 {
-	topmsg (1, 0);
-	topmsg (2, 0);
-	vtopmsg (3, buf, ap);
+	topini();
+	vtopmsg(3, buf, ap);
 }
 	
 /*

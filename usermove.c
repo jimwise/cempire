@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: usermove.c,v 1.30 1998/09/11 16:51:11 jwise Exp $
+ * $Id: usermove.c,v 1.31 1998/09/11 17:22:34 jwise Exp $
  */
 
 /* usermove.c -- Let the user move her troops. */
@@ -42,7 +42,6 @@ void	user_dir_fighter (piece_info_t *, long);
 void	user_dir_ship (piece_info_t *, long);
 void	user_explore (piece_info_t *);
 void	user_fill (piece_info_t *);
-void	user_help (void);
 void	user_land (piece_info_t *);
 void	user_random (piece_info_t *);
 void	user_repair (piece_info_t *);
@@ -569,7 +568,7 @@ ask_user (piece_info_t *obj)
 	case 'Y': user_armyattack (obj); return;
 
 	case 'B': user_build (obj); break;
-	case 'H': user_help (); break;
+	case 'H': help (help_user, user_lines);; break;
 	case 'K': user_wake (obj); break;
 	case 'O': user_cancel_auto (); break;
 	case '\014':
@@ -627,14 +626,6 @@ user_fill (piece_info_t *obj)
 	if (obj->type != TRANSPORT && obj->type != CARRIER)
 		alert();
 	else obj->func = FILL;
-}
-
-/* Print out help information. */
-
-void
-user_help (void)
-{
-	help (help_user, user_lines);
 }
 
 /* Set an object's function to move in a certain direction. */

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: compmove.c,v 1.33 1998/03/11 02:38:34 jim Exp $
+ * $Id: compmove.c,v 1.34 1998/03/11 02:49:38 jim Exp $
  */
 
 /*
@@ -1107,6 +1107,8 @@ the game is over.  If the computer has less than half as many cities
 and armies as the user, then the computer will give up.
 */
 
+static int	to_the_death = FALSE;
+
 void
 check_endgame (void)
 { /* see if game is over */
@@ -1140,16 +1142,19 @@ check_endgame (void)
 		
 	if ((ncomp_city < nuser_city / 3) && (ncomp_army < nuser_army / 3))
 	{
-		if (getyn("The computer acknowledges defeat. Do you accept?"))
-			emp_end ();
+		if (!to_the_death)
+			if (getyn("The computer acknowledges defeat. Do you accept?"))
+			{
+				info("The enemy inadvertantly revealed its code used for");
+				info("receiving battle information. You can display what");
+				info("they've learned with the ''E'' command.");
 
-		info("The enemy inadvertantly revealed its code used for");
-		info("receiving battle information. You can display what");
-		info("they've learned with the ''E'' command.");
-
-		resigned = TRUE;
-		win = USER;
-		automove = FALSE;
+				resigned = TRUE;
+				win = USER;
+				automove = FALSE;
+			}
+			else
+				to_the_death = TRUE;
 	}
 	else if ((ncomp_city == 0) && (ncomp_army == 0))
 	{

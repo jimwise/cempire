@@ -6,15 +6,12 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: extern.h,v 1.25 1998/02/27 00:02:31 jim Exp $
+ * $Id: extern.h,v 1.26 1998/02/27 01:35:00 jim Exp $
  */
 
 /*
 extern.h -- define global non-constant storage.
 */
-
-/* for now, because of va_list, below */
-#include <stdarg.h>
 
 /* user-supplied parameters */
 int SMOOTH;        /* number of times to smooth map */
@@ -197,6 +194,9 @@ void	scan (view_map_t[], long);
 void	set_prod (city_info_t *);
 
 /* terminal routines (term.c) */
+void    clear_screen (void);
+void    delay (void);
+void    empend (void);
 void	comment (char *, ...);
 void	error (char *, ...);
 void	extra (char *, ...);
@@ -208,6 +208,9 @@ void    get_str (char *, int);
 void	help (char **, int);
 void	huh (void);
 void	info (char *, char *, char *);
+void    pos_str (int, int, char *, ...);
+void    redraw (void);
+void    ttinit (void);
 void	pdebug (char *, ...);
 void	prompt (char *, ...);
 void	set_need_delay (void);
@@ -216,13 +219,6 @@ void	topmsg(int, char *, ...);
 
 /* utility routines (util.c) */
 void    check (void);
-void    clear_screen (void);
-void    delay (void);
-void    empend (void);
 void	emp_panic (char *file, int line);
-void    pos_str (int, int, char *, ...);
-void    redraw (void);
-void    ttinit (void);
 char    upper (uchar);
-void    vaddprintf (char *, va_list);
 void    ver (void);

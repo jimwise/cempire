@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.12 1998/02/27 00:18:52 jim Exp $
+ * $Id: term.c,v 1.13 1998/02/27 01:35:00 jim Exp $
  */
 
 /*
@@ -31,6 +31,7 @@ to read the lines.  The new information is then displayed, and the
 'need_delay' flag is set.
 */
 
+#include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <curses.h>
@@ -39,7 +40,12 @@ to read the lines.  The new information is then displayed, and the
 #include "empire.h"
 #include "extern.h"
 
+void	clear_screen (void);
+void    close_disp (void);
+void    clreol (int, int);
 void    comment (char *, ...);
+void    delay (void);
+void	empend (void);
 void    error (char *, ...);
 void    extra (char *, ...);
 int	getint (char *message);
@@ -54,10 +60,14 @@ void    help (char **, int);
 void    huh (void);
 void    info (char *, char *, char *);
 void    pdebug (char *, ...);
+void    pos_str (int, int, char *, ...);
 void    prompt (char *, ...);
+void    redraw (void);
 void    set_need_delay (void);
 void    topini (void);
 void    topmsg(int, char *, ...);
+void    ttinit (void);
+void    vaddprintf (char *, va_list);
 void	vcomment (char *, va_list);
 void	vtopmsg(int, char *, va_list);
 
@@ -413,5 +423,124 @@ help (char **text, int nlines)
 
 	}
 	refresh ();
+}
+
+/*
+Clear the end of a specified line starting at the specified column.
+*/
+
+void
+clreol(int linep, int colp)
+{
+	move (linep, colp);
+	clrtoeol();
+}
+
+/*
+Clear the screen.  We must also kill information maintained about the
+display.
+*/
+
+void
+clear_screen (void)
+{
+	clear ();
+	refresh ();
+	kill_display ();
+}
+
+/*
+Redraw the screen.
+*/
+
+void
+redraw (void)
+{
+	clearok (curscr, TRUE);
+	refresh ();
+}
+
+/*
+Wait a little bit to give user a chance to see a message.  We refresh
+the screen and pause for a few milliseconds.
+*/
+
+void
+delay (void)
+{
+	refresh ();
+	napms (delay_time); /* pause a bit */
+}
+
+
+/*
+Clean up the display.  This routine gets called as we leave the game.
+*/
+
+void
+close_disp (void)
+{
+	move (LINES - 1, 0);
+	clrtoeol ();
+	refresh ();
+	endwin ();
+}
+
+/*
+Position the cursor and output a string.
+*/
+
+void
+pos_str (int row, int col, char *str, ...)
+{
+	va_list ap;
+
+	va_start(ap, str);
+
+	move (row, col);
+	vaddprintf (str, ap);
+
+	va_end(ap);
+}
+
+void
+vaddprintf (char *str, va_list ap)
+{
+	char junkbuf[STRSIZE];
+
+	vsprintf (junkbuf, str, ap);
+	addstr (junkbuf);
+}
+
+/*
+Initialize the terminal.
+*/
+
+void
+ttinit (void)
+{
+	initscr();
+	noecho();
+	crmode();
+#ifdef USE_COLOR
+	init_colors();
+#endif /* USE_COLOR */
+	lines = LINES;
+	cols = COLS;
+	if (lines > MAP_HEIGHT + NUMTOPS + 1)
+		lines = MAP_HEIGHT + NUMTOPS + 1;
+	if (cols > MAP_WIDTH + NUMSIDES)
+		cols = MAP_WIDTH + NUMSIDES;
+}
+
+/*
+End the game by cleaning up the display.
+*/
+
+void
+empend (void)
+{
+        close_disp ();
+        exit (0);
 }
 

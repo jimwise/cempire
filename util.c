@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: util.c,v 1.12 1998/02/27 00:18:54 jim Exp $
+ * $Id: util.c,v 1.13 1998/02/27 01:35:01 jim Exp $
  */
 
 /*
@@ -14,7 +14,6 @@ util.c -- various utility routines.
 */
 
 #include <assert.h>
-#include <stdarg.h>
 #include <stdio.h>
 #include <curses.h>
 #include <ctype.h>
@@ -25,18 +24,9 @@ void    check (void);
 void	check_cargo (piece_info_t *, int);
 void	check_obj (piece_info_t **, int);
 void	check_obj_cargo (piece_info_t **);
-void    clear_screen (void);
-void	close_disp (void);
-void    clreol(int, int);
-void    delay (void);
-void    empend (void);
 void	emp_panic (char *, int);
-void    pos_str (int, int, char *, ...);
-void    redraw (void);
-void    ttinit (void);
 void    tupper (uchar *);
 char    upper (uchar);
-void	vaddprintf (char *, va_list);
 void    ver (void);
 
 /*
@@ -63,126 +53,6 @@ upper (uchar c)
 	if (islower (c))
 		return toupper (c);
 	else return c;
-}
-
-/*
-Clear the end of a specified line starting at the specified column.
-*/
-
-void
-clreol(int linep, int colp)
-{
-	move (linep, colp);
-	clrtoeol();
-}
-
-/*
-Initialize the terminal.
-*/
-
-void
-ttinit (void)
-{
-	initscr();
-	noecho();
-	crmode();
-#ifdef USE_COLOR
-	init_colors();
-#endif /* USE_COLOR */
-	lines = LINES;
-	cols = COLS;
-	if (lines > MAP_HEIGHT + NUMTOPS + 1)
-		lines = MAP_HEIGHT + NUMTOPS + 1;
-	if (cols > MAP_WIDTH + NUMSIDES)
-		cols = MAP_WIDTH + NUMSIDES;
-}
-
-
-/*
-Clear the screen.  We must also kill information maintained about the
-display.
-*/
-
-void
-clear_screen (void)
-{
-	clear ();
-	refresh ();
-	kill_display ();
-}
-
-/*
-Redraw the screen.
-*/
-
-void
-redraw (void)
-{
-	clearok (curscr, TRUE);
-	refresh ();
-}
-
-/*
-Wait a little bit to give user a chance to see a message.  We refresh
-the screen and pause for a few milliseconds.
-*/
-
-void
-delay (void)
-{
-	refresh ();
-	napms (delay_time); /* pause a bit */
-}
-
-
-/*
-Clean up the display.  This routine gets called as we leave the game.
-*/
-
-void
-close_disp (void)
-{
-	move (LINES - 1, 0);
-	clrtoeol ();
-	refresh ();
-	endwin ();
-}
-
-/*
-Position the cursor and output a string.
-*/
-
-void
-pos_str (int row, int col, char *str, ...)
-{
-	va_list ap;
-
-	va_start(ap, str);
-
-	move (row, col);
-	vaddprintf (str, ap);
-
-	va_end(ap);
-}
-
-void
-vaddprintf (char *str, va_list ap)
-{
-	char junkbuf[STRSIZE];
-	
-	vsprintf (junkbuf, str, ap);
-	addstr (junkbuf);
-}
-
-/*
-End the game by cleaning up the display.
-*/
-
-void
-empend (void)
-{
-	close_disp ();
-	exit (0);
 }
 
 void

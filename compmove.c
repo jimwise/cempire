@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: compmove.c,v 1.21 1998/03/02 12:10:49 jim Exp $
+ * $Id: compmove.c,v 1.22 1998/03/03 12:25:07 jim Exp $
  */
 
 /*
@@ -1133,15 +1133,14 @@ check_endgame (void)
 	if ((ncomp_city < nuser_city / 3) && (ncomp_army < nuser_army / 3))
 	{
 		term_clear();
-		topmsg(1, "The computer acknowledges defeat. Do");
-		topmsg(2, "you wish to smash the rest of the enemy? ");
+		prompt("The computer acknowledges defeat. Do you accept?");
 
 		if (get_chx() !=  'Y')
 			empend ();
 
-		topmsg(1, "\nThe enemy inadvertantly revealed its code used for");
-		topmsg(2, "\nreceiving battle information. You can display what");
-		topmsg(3, "\nthey've learned with the ''E'' command.");
+		info("The enemy inadvertantly revealed its code used for");
+		info("receiving battle information. You can display what");
+		info("they've learned with the ''E'' command.");
 
 		resigned = TRUE;
 		win = 2;
@@ -1151,9 +1150,9 @@ check_endgame (void)
 	{
 		term_clear();
 
-		topmsg(1, "The enemy is incapable of defeating you.\n");
-	    	topmsg(2, "There may be, however, remnants of the enemy fleet\n");
-	    	topmsg(3, "to be routed out and destroyed.\n");
+		info("The enemy is incapable of defeating you.");
+	    	info("There may be, however, remnants of the enemy fleet");
+	    	info("to be routed out and destroyed.");
 
 		win = 1;
 		automove = FALSE;
@@ -1162,9 +1161,9 @@ check_endgame (void)
 	{
 	    	term_clear();
 
-	    	topmsg(1, "You have been rendered incapable of defeating\n");
-	    	topmsg(2, "the rampaging enemy. The empire is lost. If you\n");
-	    	topmsg(3, "have any ships left, you may hold out at sea.\n");
+	    	info("You have been rendered incapable of defeating");
+	    	info("the rampaging enemy. The empire is lost. If you");
+	    	info("have any ships left, you may hold out at sea.");
 
 		win = 1;
 		automove = FALSE;

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: extern.h,v 1.42 1998/03/02 18:28:01 jim Exp $
+ * $Id: extern.h,v 1.43 1998/03/03 12:25:08 jim Exp $
  */
 
 /*
@@ -218,7 +218,6 @@ void	pdebug (char *, ...);
 void	prompt (char *, ...);
 void	set_need_delay (void);
 void	topini (void);
-void	topmsg(int, char *, ...);
 
 /* utility routines (util.c) */
 void    check (void);

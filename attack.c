@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: attack.c,v 1.13 1998/03/02 17:55:44 jim Exp $
+ * $Id: attack.c,v 1.14 1998/03/03 12:25:06 jim Exp $
  */
 
 /*
@@ -163,17 +163,17 @@ describe (piece_info_t *win_obj, piece_info_t *lose_obj, long loc)
 		{
 			user_score += piece_attr[lose_obj->type].build_time;
 			
-			topmsg (1, "Enemy %s at %d destroyed.", piece_attr[lose_obj->type].name, loc);
-			topmsg (2, "Your %s has %d hits left.", piece_attr[win_obj->type].name, win_obj->hits);
+			info("Enemy %s at %d destroyed.", piece_attr[lose_obj->type].name, loc);
+			info("Your %s has %d hits left.", piece_attr[win_obj->type].name, win_obj->hits);
 				
 			diff = win_obj->count - obj_capacity (win_obj);
 			if (diff > 0) switch (win_obj->cargo->type)
 			{
 		 	    case ARMY:
-				topmsg (3, "%d armies fell overboard and drowned in the assault.", diff);
+				info("%d armies fell overboard and drowned in the assault.", diff);
 				break;
 			    case FIGHTER:
-				topmsg (3, "%d fighters fell overboard and were lost in the assault.", diff);
+				info("%d fighters fell overboard and were lost in the assault.", diff);
 				break;
 			    default:
 				panic("cargo is not fighter or army");
@@ -184,7 +184,7 @@ describe (piece_info_t *win_obj, piece_info_t *lose_obj, long loc)
 		{
 			comp_score += piece_attr[lose_obj->type].build_time;
 			
-			topmsg (3, "Your %s at %d destroyed.", piece_attr[lose_obj->type].name, loc);
+			info("Your %s at %d destroyed.", piece_attr[lose_obj->type].name, loc);
 		}
 		delay ();
 	}

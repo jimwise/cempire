@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: game.c,v 1.21 1998/03/02 18:45:13 jim Exp $
+ * $Id: game.c,v 1.22 1998/03/03 12:25:09 jim Exp $
  */
 
 /*
@@ -839,5 +839,5 @@ stat_display (char *mbuf, int round)
 
 	pos_str (1, (int) i * 6, "%5d", user_cost);
 	pos_str (2, (int) i * 6, "%5d", comp_cost);
-	topmsg(0, "Round %3d", (round + 1) / 2);
+	prompt("Round %3d", (round + 1) / 2);
 }

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: map.c,v 1.14 1998/08/08 18:05:29 jwise Exp $
+ * $Id: map.c,v 1.15 1998/08/08 19:17:06 jwise Exp $
  */
 
 /*
@@ -46,6 +46,7 @@ long    vmap_find_lobj (path_map_t[], view_map_t *, long, move_info_t *);
 long    vmap_find_lwobj (path_map_t[], view_map_t *, long, move_info_t *, int);
 long    vmap_find_wobj (path_map_t[], view_map_t *, long, move_info_t *);
 long    vmap_find_wlobj (path_map_t[], view_map_t *, long, move_info_t *);
+long	vmap_find_xobj (path_map_t[], view_map_t *, long, move_info_t *, int, int);
 void    vmap_mark_adjacent (path_map_t[], long);
 void    vmap_mark_near_path (path_map_t[], long);
 void    vmap_mark_path (path_map_t *, view_map_t *, long);

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: extern.h,v 1.62 1998/03/11 02:14:40 jim Exp $
+ * $Id: extern.h,v 1.63 1998/03/11 02:54:20 jim Exp $
  */
 
 /*
@@ -140,9 +140,6 @@ void    e_city_random (city_info_t *, int);
 void    e_city_repair (city_info_t *, int);
 void    e_city_stasis (city_info_t *, int);
 void    e_city_wake (city_info_t *, int);
-
-/* driver routines (empire.c) */
-void	emp_end (void);
 
 /* game routines (game.c) */
 void	init_game (void);

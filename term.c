@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.57 1998/03/09 18:51:36 jim Exp $
+ * $Id: term.c,v 1.58 1998/03/09 18:57:04 jim Exp $
  */
 
 /*
@@ -102,7 +102,6 @@ error (char *fmt, ...)
 
 	va_start(ap, fmt);
 
-	idlok(statuswin, TRUE);
 	scrollok(statuswin, TRUE);
 	wscrl(statuswin, 1);
 	wmove(statuswin, 0, 0);

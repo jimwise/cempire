@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.48 1998/03/09 18:49:24 jim Exp $
+ * $Id: display.c,v 1.49 1998/03/09 18:57:03 jim Exp $
  */
 
 /*
@@ -570,6 +570,7 @@ help (char **text, int nlines)
 
 	prompt("Press any key to continue");
 	get_chx();
+	prompt("");
 
 	scrollok(helpwin, TRUE);
 	wscrl(helpwin, -help_height);

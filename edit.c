@@ -5,7 +5,7 @@
  * and warranty information.
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: edit.c,v 1.24 1998/03/06 22:54:39 jim Exp $
+ * $Id: edit.c,v 1.25 1998/03/09 18:57:04 jim Exp $
  */
 
 /*
@@ -34,7 +34,6 @@ char	e_cursor (long *);
 void	e_end (long *, long, int);
 void	e_explore (long);
 void	e_fill (long);
-void	e_help (void);
 void	e_info (long);
 void	e_land (long);
 void	e_leave (void);
@@ -75,7 +74,7 @@ edit (long edit_cursor)
 			e_explore (edit_cursor);
 			break;
 		case 'H': /* help */
-			e_help ();
+			help (help_edit, edit_lines);
 			break;
 		case 'I': /* directional stasis */
 			e_stasis (edit_cursor);
@@ -601,16 +600,4 @@ e_prod (long loc)
 
 	if (cityp == NULL) huh (); /* no city? */
 	else set_prod (cityp);
-}
-
-/*
-get help
-*/
-
-void
-e_help (void)
-{
-	help (help_edit, edit_lines);
-	prompt ("Press any key to continue: ");
-	get_chx ();
 }

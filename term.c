@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.17 1998/03/01 01:27:03 jim Exp $
+ * $Id: term.c,v 1.18 1998/03/01 01:31:29 jim Exp $
  */
 
 /*
@@ -41,7 +41,6 @@ to read the lines.  The new information is then displayed, and the
 #include "extern.h"
 
 void	clear_screen (void);
-void    close_disp (void);
 void    clreol (int, int);
 void    comment (char *, ...);
 void    delay (void);
@@ -65,6 +64,8 @@ void    pos_str (int, int, char *, ...);
 void    prompt (char *, ...);
 void    redraw (void);
 void    set_need_delay (void);
+void    term_end (void);
+void    term_init (void);
 void    topini (void);
 void    topmsg(int, char *, ...);
 void    term_init (void);
@@ -479,7 +480,7 @@ Clean up the display.  This routine gets called as we leave the game.
 */
 
 void
-close_disp (void)
+term_end (void)
 {
 	move (LINES - 1, 0);
 	clrtoeol ();
@@ -541,7 +542,7 @@ End the game by cleaning up the display.
 void
 empend (void)
 {
-        close_disp ();
+        term_end();
         exit (0);
 }
 

@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: object.c,v 1.24 1998/08/09 01:25:54 jwise Exp $
+ * $Id: object.c,v 1.25 2001/02/07 03:28:09 jwise Exp $
  */
 
 /* object.c -- routines for manipulating objects. */
@@ -16,7 +16,6 @@
 #include "empire.h"
 #include "extern.h"
 
-long	bounce (long, long, long, long);
 void    describe_obj (const piece_info_t *);
 void    disembark (piece_info_t *);
 void    embark (piece_info_t *, piece_info_t *);
@@ -30,17 +29,18 @@ int     get_piece_name (void);
 int     good_loc (const piece_info_t *, long);
 void    kill_city (city_info_t *);
 void    kill_obj (piece_info_t *, long);
-void	kill_one (piece_info_t **, piece_info_t *);
 void    move_obj (piece_info_t *, long);
 void    move_sat (piece_info_t *);
-void	move_sat1 (piece_info_t *obj);
 int     obj_capacity (const piece_info_t *);
 int     obj_moves (const piece_info_t *);
 void    produce (city_info_t *);
 void    scan (view_map_t[], long);
-void	scan_sat (view_map_t *, long);
 void    set_prod (city_info_t *);
-void	update (view_map_t[], long);
+static long	bounce (long, long, long, long);
+static void	kill_one (piece_info_t **, piece_info_t *);
+static void	move_sat1 (piece_info_t *obj);
+static void	scan_sat (view_map_t *, long);
+static void	update (view_map_t[], long);
 
 /*
  * Find the nearest city to a location.  Return the location
@@ -220,7 +220,7 @@ kill_obj (piece_info_t *obj, long loc)
 
 /* kill an object without scanning */
 
-void
+static void
 kill_one (piece_info_t **list, piece_info_t *obj)
 {
 	UNLINK (list[obj->type], obj, piece_link); /* unlink obj from all lists */
@@ -386,7 +386,7 @@ move_obj (piece_info_t *obj, long new_loc)
 
 /* Return next direction for a sattellite to travel. */
 
-long
+static long
 bounce (long loc, long dir1, long dir2, long dir3)
 {
 	int new_loc;
@@ -402,7 +402,7 @@ bounce (long loc, long dir1, long dir2, long dir3)
 
 /* Move a satellite one square. */
 
-void
+static void
 move_sat1 (piece_info_t *obj)
 {
 	int dir;
@@ -562,7 +562,7 @@ scan (view_map_t vmap[], long loc)
 
 /* Scan a portion of the board for a satellite. */
 
-void
+static void
 scan_sat (view_map_t *vmap, long loc)
 {
 	int i;
@@ -584,7 +584,7 @@ scan_sat (view_map_t *vmap, long loc)
  * city type.
  */
 
-void
+static void
 update (view_map_t vmap[], long loc)
 {
 	piece_info_t *p;

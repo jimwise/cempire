@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: extern.h,v 1.76 2001/02/07 03:19:55 jwise Exp $
+ * $Id: extern.h,v 1.77 2001/02/07 03:28:09 jwise Exp $
  */
 
 /* extern.h -- define global non-constant storage.  */
@@ -194,15 +194,15 @@ void	alert (void);
 void	error (const char *, ...);
 char    get_chx (void);
 int	get_int (const char *, int, int);
-int     getyn (const char *);
 void    get_str (char *, int);
+int     getyn (const char *);
 void	huh (void);
 void	info (const char *, ...);
+void	prompt (const char *, ...);
 void    redraw (void);
 void    term_clear (void);
 void	term_end (void);
 void    term_init (void);
-void	prompt (const char *, ...);
 
 /* utility routines (util.c) */
 void    check (void);

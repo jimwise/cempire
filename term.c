@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: term.c,v 1.70 2001/02/07 01:45:31 jwise Exp $
+ * $Id: term.c,v 1.71 2001/02/07 03:28:09 jwise Exp $
  */
 
 /*
@@ -38,9 +38,10 @@
 
 void	alert (void);
 void    error (const char *, ...);
-int	getyn (const char *message);
 char	get_chx (void);
+int	get_int (const char *, int, int);
 void	get_str (char *, const int);
+int	getyn (const char *message);
 void    huh (void);
 void	info (const char *, ...);
 void    prompt (const char *, ...);

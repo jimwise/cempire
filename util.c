@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: util.c,v 1.28 2001/01/13 03:09:24 jwise Exp $
+ * $Id: util.c,v 1.29 2001/02/07 03:28:09 jwise Exp $
  */
 
 /* util.c -- various utility routines. */
@@ -16,10 +16,10 @@
 #include "extern.h"
 
 void	check (void);
+void	emp_panic (const char *, const int, const char *);
 static void	check_cargo (const piece_info_t *, const piece_type_t);
 static void	check_obj (piece_info_t **, const int);
 static void	check_obj_cargo (piece_info_t **);
-void	emp_panic (const char *, const int, const char *);
 
 /*
  * Here is a little routine to perform consistency checking on the

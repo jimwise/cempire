@@ -2,7 +2,7 @@
 #	Copyright (C) 1987, 1988 Chuck Simmons
 #	Portions of this file Copyright (C) 1998 Jim Wise
 #
-# $Id: Makefile,v 1.12 1998/08/08 17:21:27 jwise Exp $
+# $Id: Makefile,v 1.13 1998/08/08 20:57:33 jwise Exp $
 #
 # See the file COPYING, distributed with empire, for restriction
 # and warranty information.
@@ -35,7 +35,8 @@ LIBS = -L/usr/pkg/lib -lncurses
 
 TARGET = empire
 
-CFLAGS = $(DEBUG) $(PROFILE) -DUSE_NCURSES -I/usr/pkg/include
+CPPFLAGS = -DUSE_NCURSES -I/usr/pkg/include
+CFLAGS = $(DEBUG) $(PROFILE)
 
 FILES = \
 	attack.c \
@@ -77,7 +78,7 @@ $(TARGET): $(OFILES)
 	$(CC) $(PROFILE) -o empire $(OFILES) $(LIBS)
 
 lint: $(FILES)
-	lint -u $(FILES) -lcurses
+	lint $(CPPFLAGS) -u $(FILES) -lcurses
 
 clean:
 	rm -f *.o $(TARGET)

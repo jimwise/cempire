@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: util.c,v 1.10 1998/02/26 23:55:08 jim Exp $
+ * $Id: util.c,v 1.11 1998/02/27 00:02:32 jim Exp $
  */
 
 /*
@@ -30,7 +30,7 @@ void	close_disp (void);
 void    clreol(int, int);
 void    delay (void);
 void    empend (void);
-void	panic (char *s);
+void	emp_panic (char *, int);
 void    pos_str (int, int, char *, ...);
 void    redraw (void);
 void    ttinit (void);
@@ -399,13 +399,9 @@ check_obj_cargo (piece_info_t **list)
  */
 
 void
-panic (char *s)
+emp_panic (char *file, int line)
 {
-	if (s)
-		printf("empire panic: %s\n", s);
-	else
-		printf("empire panic");
+	printf("empire panic: file %s, line %d\n", file, line);
 	
 	abort();
 }
-

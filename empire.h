@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: empire.h,v 1.9 1998/02/26 23:55:07 jim Exp $
+ * $Id: empire.h,v 1.10 1998/02/27 00:02:31 jim Exp $
  */
 
 /*
@@ -41,7 +41,8 @@ char *memcpy();
 
 typedef unsigned char uchar;
 
-#define ABORT	panic(NULL);
+#define ABORT	panic()
+#define panic()	emp_panic(__FILE__, __LINE__)
 
 /* directions one can move */
 #define NORTH 0

@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: usermove.c,v 1.32 2001/02/08 19:29:33 jwise Exp $
+ * $Id: usermove.c,v 1.33 2001/02/08 19:42:07 jwise Exp $
  */
 
 /* usermove.c -- Let the user move her troops. */
@@ -995,7 +995,7 @@ int
 awake (piece_info_t *obj)
 {
 	int i;
-	uchar c;
+	unsigned char c;
 	long t;
 
 	if (obj->type == ARMY && vmap_at_sea (user_map, obj->loc)) {

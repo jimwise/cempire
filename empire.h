@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: empire.h,v 1.33 2001/02/08 19:20:22 jwise Exp $
+ * $Id: empire.h,v 1.34 2001/02/08 19:42:07 jwise Exp $
  */
 
 /*
@@ -51,12 +51,6 @@
 #define COLS_PER_SECTOR ((MAP_WIDTH+SECTOR_COLS-1)/SECTOR_COLS)
 
 #define VERSION_STRING "EMPIRE, Version 1.3_ALPHA, February 1998"
-
-/*
- * types and related constants
- */
-
-typedef unsigned char uchar;
 
 /* directions one can move */
 typedef enum
@@ -119,7 +113,7 @@ typedef int    function_t;
 typedef struct
 {
 	long		loc;			/* location of city		*/
-	uchar		owner;			/* UNOWNED, USER, COMP		*/
+	unsigned char	owner;			/* UNOWNED, USER, COMP		*/
 	function_t	func[NUM_OBJECTS];	/* function for each object	*/
 	long		work;			/* units of work performed	*/
 	piece_type_t	prod;			/* item being produced		*/
@@ -139,7 +133,7 @@ typedef struct piece_info
 	link_t		piece_link;	/* linked list of pieces of this type	*/
 	link_t		loc_link;	/* linked list of pieces at a location	*/
 	link_t		cargo_link;	/* linked list of cargo pieces		*/
-	uchar		owner;		/* owner of piece			*/
+	unsigned char	owner;		/* owner of piece			*/
 	piece_type_t	type;		/* type of piece			*/
 	long		loc;		/* location of piece			*/
 	function_t	func;		/* programmed type of movement		*/
@@ -159,17 +153,17 @@ typedef struct piece_info
 
 typedef struct
 {
-        char sname;		/* eg 'C'					*/
-        char name[20];		/* eg "aircraft carrier"			*/
-        char nickname[20];	/* eg "carrier"					*/
-        char article[20];	/* eg "an aircraft carrier"			*/
-        char plural[20];	/* eg "aircraft carriers"			*/
-        char terrain[4];	/* terrain piece can pass over eg "."		*/
-        uchar build_time;	/* time needed to build unit			*/
-        uchar strength;		/* attack strength				*/
-        uchar max_hits;		/* number of hits when completely repaired	*/
-        uchar speed;		/* number of squares moved per turn		*/
-        uchar capacity;		/* max objects that can be held			*/
+        char sname;			/* eg 'C'					*/
+        char name[20];			/* eg "aircraft carrier"			*/
+        char nickname[20];		/* eg "carrier"					*/
+        char article[20];		/* eg "an aircraft carrier"			*/
+        char plural[20];		/* eg "aircraft carriers"			*/
+        char terrain[4];		/* terrain piece can pass over eg "."		*/
+        unsigned char build_time;	/* time needed to build unit			*/
+        unsigned char strength;		/* attack strength				*/
+        unsigned char max_hits;		/* number of hits when completely repaired	*/
+        unsigned char speed;		/* number of squares moved per turn		*/
+        unsigned char capacity;		/* max objects that can be held			*/
         long range;		/* range of piece				*/
 } piece_attr_t;
 
@@ -190,7 +184,7 @@ typedef struct
 {
         /* a cell of the actual map */
         char contents;		/* '+', '.', or '*'			*/
-        uchar on_board;		/* TRUE iff on the board		*/
+        unsigned char on_board;		/* TRUE iff on the board		*/
         city_info_t *cityp;	/* ptr to city at this location		*/
         piece_info_t *objp;	/* list of objects at this location	*/
 } real_map_t;
@@ -198,7 +192,7 @@ typedef struct
 typedef struct
 {
         /* a cell of one player's world view */
-        uchar contents;		/* '+', '.', '*', 'A', 'a', etc	*/
+        unsigned char contents;		/* '+', '.', '*', 'A', 'a', etc	*/
         long seen;		/* date when last updated	*/
 } view_map_t;
 
@@ -226,7 +220,7 @@ typedef struct {
 /* Information we need for finding a path for moving a piece. */
 
 typedef struct {
-        uchar city_owner;		/* char that represents home city	*/
+        unsigned char city_owner;		/* char that represents home city	*/
         const char *objectives;		/* list of objectives			*/
         int weights[11];		/* weight of each objective		*/
 } move_info_t;

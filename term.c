@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.37 1998/03/03 13:46:49 jim Exp $
+ * $Id: term.c,v 1.38 1998/03/03 13:47:40 jim Exp $
  */
 
 /*
@@ -56,7 +56,6 @@ void    term_end (void);
 void    term_init (void);
 void    topini (void);
 void	vcomment (char *, va_list);
-void	vtopmsg(int, char *, va_list);
 
 static WINDOW *statuswin, *infowin;
 
@@ -70,26 +69,6 @@ void
 topini (void)
 {
 	wclear(infowin);
-	wrefresh(infowin);
-}
-
-/*
-Write a message to one of the top lines.
-*/
-
-void
-vtopmsg (int linep, char *buf, va_list ap)
-{
-        if ((linep < 1) || (linep > NUMTOPS))
-                linep = 1;
-
-        wmove(infowin, linep - 1, 0);
-
-        if (buf != NULL && strlen (buf) > 0)
-                vwprintw(infowin, buf, ap);
-
-        wclrtoeol(infowin);
-
 	wrefresh(infowin);
 }
 

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: extern.h,v 1.21 1998/02/26 23:16:23 jim Exp $
+ * $Id: extern.h,v 1.22 1998/02/26 23:29:17 jim Exp $
  */
 
 /*
@@ -215,14 +215,14 @@ void	topini (void);
 void	topmsg(int, char *, ...);
 
 /* utility routines (util.c) */
-void	ttinit (void);
-void	redraw (void);
-void	clear_screen (void);
-void	delay (void);
-void	pos_str (int, int, char *, ...);
-void	addprintf (char *, va_list ap);
-void	assert (char *, char *, int);
-void	empend (void);
-void	ver (void);
-char	upper (uchar);
-void	check (void);
+void    assert (char *, char *, int);
+void    check (void);
+void    clear_screen (void);
+void    delay (void);
+void    empend (void);
+void    pos_str (int, int, char *, ...);
+void    redraw (void);
+void    ttinit (void);
+char    upper (uchar);
+void    vaddprintf (char *, va_list);
+void    ver (void);

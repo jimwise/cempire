@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.10 1998/02/26 22:28:35 jim Exp $
+ * $Id: term.c,v 1.11 1998/02/26 23:29:18 jim Exp $
  */
 
 /*
@@ -114,7 +114,7 @@ vtopmsg (int linep, char *buf, va_list ap)
         move (linep - 1, 0);
 
         if (buf != NULL && strlen (buf) > 0)
-                addprintf (buf, ap);
+                vaddprintf (buf, ap);
 
         clrtoeol ();
 }

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: util.c,v 1.6 1998/02/26 01:02:58 jim Exp $
+ * $Id: util.c,v 1.7 1998/02/26 23:29:18 jim Exp $
  */
 
 /*
@@ -20,6 +20,23 @@ util.c -- various utility routines.
 #include "empire.h"
 #include "extern.h"
 
+void    assert (char *, char *, int);
+void    check (void);
+void	check_cargo (piece_info_t *, int);
+void	check_obj (piece_info_t **, int);
+void	check_obj_cargo (piece_info_t **);
+void    clear_screen (void);
+void	close_disp (void);
+void    clreol(int, int);
+void    delay (void);
+void    empend (void);
+void    pos_str (int, int, char *, ...);
+void    redraw (void);
+void    ttinit (void);
+void    tupper (uchar *);
+char    upper (uchar);
+void	vaddprintf (char *, va_list);
+void    ver (void);
 
 /*
 Convert a string to uppercase.
@@ -27,8 +44,7 @@ Shirley this is defined elsewhere?
 */
 
 void
-tupper (str)
-uchar	*str;
+tupper (uchar *str)
 {
 	while (*str) {
 		if (islower (*str)) *str = upper (*str);
@@ -41,8 +57,7 @@ Convert a character to uppercase (if it is lowercase)
 */
 
 char
-upper (c)
-uchar c;
+upper (uchar c)
 {
 	if (islower (c))
 		return toupper (c);
@@ -54,8 +69,7 @@ Clear the end of a specified line starting at the specified column.
 */
 
 void
-clreol(linep, colp)
-int linep, colp;
+clreol(int linep, int colp)
 {
 	(void) move (linep, colp);
 	(void) clrtoeol();
@@ -66,7 +80,7 @@ Initialize the terminal.
 */
 
 void
-ttinit()
+ttinit (void)
 {
 	(void) initscr();
 	(void) noecho();
@@ -89,9 +103,10 @@ display.
 */
 
 void
-clear_screen () {
-	(void) clear ();
-	(void) refresh ();
+clear_screen (void)
+{
+	clear ();
+	refresh ();
 	kill_display ();
 }
 
@@ -100,9 +115,10 @@ Redraw the screen.
 */
 
 void
-redraw () {
-	(void) clearok (curscr, TRUE);
-	(void) refresh ();
+redraw (void)
+{
+	clearok (curscr, TRUE);
+	refresh ();
 }
 
 /*
@@ -111,9 +127,10 @@ the screen and pause for a few milliseconds.
 */
 
 void
-delay () {
-	(void) refresh ();
-	(void) napms (delay_time); /* pause a bit */
+delay (void)
+{
+	refresh ();
+	napms (delay_time); /* pause a bit */
 }
 
 
@@ -122,7 +139,7 @@ Clean up the display.  This routine gets called as we leave the game.
 */
 
 void
-close_disp()
+close_disp (void)
 {
 	(void) move (LINES - 1, 0);
 	(void) clrtoeol ();
@@ -141,19 +158,19 @@ pos_str (int row, int col, char *str, ...)
 
 	va_start(ap, str);
 
-	(void) move (row, col);
-	addprintf (str, ap);
+	move (row, col);
+	vaddprintf (str, ap);
 
 	va_end(ap);
 }
 
 void
-addprintf (char *str, va_list ap)
+vaddprintf (char *str, va_list ap)
 {
 	char junkbuf[STRSIZE];
 	
-	(void) vsprintf (junkbuf, str, ap);
-	(void) addstr (junkbuf);
+	vsprintf (junkbuf, str, ap);
+	addstr (junkbuf);
 }
 
 /*
@@ -161,18 +178,15 @@ Report a bug.
 */
 
 void
-assert (expression, file, line)
-char *expression;
-char *file;
-int line;
+assert (char *expression, char *file, int line)
 {
 	char buf[STRSIZE];
 	int a;
 
-	(void) move (lines, 0);
+	move (lines, 0);
 	close_disp ();
 
-	(void) sprintf (buf, "assert failed: file %s line %d: %s",
+	sprintf (buf, "assert failed: file %s line %d: %s",
 			file, line, expression);
 
 	a = 1; /* keep lint quiet */
@@ -185,22 +199,14 @@ End the game by cleaning up the display.
 */
 
 void
-empend ()
+empend (void)
 {
 	close_disp ();
 	exit (0);
 }
 
-/*
- * 03a 01Apr88 aml .Hacked movement algorithms for computer.
- * 02b 01Jun87 aml .First round of bug fixes.
- * 02a 01Jan87 aml .Translated to C.
- * 01b 27May85 cal .Fixed round number update bug. Made truename simple.
- * 01a 01Sep83 cal .Taken from a Decus tape
- */
-
 void
-ver ()
+ver (void)
 {
         (void) addstr ("EMPIRE, Version 5.00 site Amdahl 1-Apr-1988");
 }
@@ -235,9 +241,8 @@ static int in_loc[LIST_SIZE]; /* TRUE if object in a loc list */
 static int in_cargo[LIST_SIZE]; /* TRUE if object in a cargo list */
 
 void
-check () {
-	void check_cargo(), check_obj(), check_obj_cargo();
-	
+check (void)
+{
 	long i, j;
 	piece_info_t *p;
 	
@@ -324,9 +329,7 @@ Check object lists.  We look for:
 */
 
 void
-check_obj (list, owner)
-piece_info_t **list;
-int owner;
+check_obj (piece_info_t **list, int owner)
 {
 	long i, j;
 	piece_info_t *p;
@@ -367,9 +370,7 @@ Check for:
 */
 
 void
-check_cargo (list, cargo_type)
-piece_info_t *list;
-int cargo_type;
+check_cargo (piece_info_t *list, int cargo_type)
 {
 	piece_info_t *p, *q;
 	long j, count;
@@ -402,8 +403,7 @@ lists are valid.
 */
 
 void
-check_obj_cargo (list)
-piece_info_t **list;
+check_obj_cargo (piece_info_t **list)
 {
 	piece_info_t *p;
 	long i;

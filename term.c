@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: term.c,v 1.39 1998/03/03 13:48:59 jim Exp $
+ * $Id: term.c,v 1.40 1998/03/03 13:52:06 jim Exp $
  */
 
 /*
@@ -54,22 +54,13 @@ void    redraw (void);
 void	term_clear (void);
 void    term_end (void);
 void    term_init (void);
-void    topini (void);
 
 static WINDOW *statuswin, *infowin;
 
 /*
 Here are routines that handle printing to the top few lines of the
-screen.  'topini' should be called at initialization, and whenever
-we finish printing information to the screen.
+screen.
 */
-
-void
-topini (void)
-{
-	wclear(infowin);
-	wrefresh(infowin);
-}
 
 /*
 Print a prompt on the status line.
@@ -167,7 +158,6 @@ get_strq (char *buf, int sizep)
 	nocrmode ();
 	wrefresh(infowin);
 	getstr (buf);
-	topini();
 	crmode ();
 }
 
@@ -240,7 +230,6 @@ get_cq (void)
 	crmode ();
 	wrefresh(infowin);
 	c = getch ();
-	topini (); /* clear information lines */
 	nocrmode ();
 	return (c);
 }

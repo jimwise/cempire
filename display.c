@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: display.c,v 1.65 1998/08/08 19:27:02 jwise Exp $
+ * $Id: display.c,v 1.66 1998/08/08 21:06:04 jwise Exp $
  */
 
 /*
@@ -39,7 +39,7 @@ void    display_locx (int, view_map_t[], long);
 void    display_score (void);
 void    display_screen (view_map_t[]);
 void    disp_square(view_map_t *);
-void    help (char **, int);
+void    help (const char **, int);
 void	kill_display (void);
 int     move_cursor (long *, int);
 int     on_screen (long);
@@ -592,7 +592,7 @@ Print a screen of help information.
 #define MIN(a,b) ((a)<(b) ? (a) : (b))
 
 void
-help (char **text, int nlines)
+help (const char **text, int nlines)
 {
         int	i, r, c;
         piece_type_t j;

@@ -2,7 +2,7 @@
 #	Copyright (C) 1987, 1988 Chuck Simmons
 #	Portions of this file Copyright (C) 1998 Jim Wise
 #
-# $Id: Makefile,v 1.13 1998/08/08 20:57:33 jwise Exp $
+# $Id: Makefile,v 1.14 1998/08/08 21:06:03 jwise Exp $
 #
 # See the file COPYING, distributed with empire, for restriction
 # and warranty information.
@@ -78,7 +78,7 @@ $(TARGET): $(OFILES)
 	$(CC) $(PROFILE) -o empire $(OFILES) $(LIBS)
 
 lint: $(FILES)
-	lint $(CPPFLAGS) -u $(FILES) -lcurses
+	lint $(CPPFLAGS) -u $(FILES) $(LIBS)
 
 clean:
 	rm -f *.o $(TARGET)

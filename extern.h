@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: extern.h,v 1.68 1998/08/08 19:27:03 jwise Exp $
+ * $Id: extern.h,v 1.69 1998/08/08 21:06:04 jwise Exp $
  */
 
 /*
@@ -44,7 +44,7 @@ extern int cols; /* columns on screen */
 /* constant data */
 extern piece_attr_t piece_attr[];
 extern int dir_offset[];
-extern char *func_name[];
+extern const char *func_name[];
 extern int move_order[];
 extern char type_chars[];
 extern char tt_attack[];
@@ -67,9 +67,9 @@ extern move_info_t user_fighter;
 extern move_info_t user_ship;
 extern move_info_t user_ship_repair;
 
-extern char *help_cmd[];
-extern char *help_edit[];
-extern char *help_user[];
+extern const char *help_cmd[];
+extern const char *help_edit[];
+extern const char *help_user[];
 extern int cmd_lines;
 extern int edit_lines;
 extern int user_lines;
@@ -123,7 +123,7 @@ int	cur_sector (void);
 void	display_loc (int, view_map_t[], long);
 void	display_locx (int, view_map_t[], long);
 void    display_score (void);
-void    help (char **, int);
+void    help (const char **, int);
 void	kill_display (void);
 int	move_cursor (long *, int);
 void    print_movie_screen(char *);

@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: usermove.c,v 1.26 1998/08/08 19:48:40 jwise Exp $
+ * $Id: usermove.c,v 1.27 1998/08/08 21:06:05 jwise Exp $
  */
 
 /*
@@ -643,11 +643,9 @@ Print out help information.
 void
 user_help (void)
 {
-	char c;
-
 	help (help_user, user_lines);
 	prompt ("Press any key to continue: ");
-	c = get_chx ();
+	get_chx ();
 }
 
 /*

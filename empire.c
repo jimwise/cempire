@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: empire.c,v 1.11 1998/03/01 01:27:01 jim Exp $
+ * $Id: empire.c,v 1.12 1998/03/01 01:35:38 jim Exp $
  */
 
 /*
@@ -35,7 +35,7 @@ empire (void)
 	int turn = 0;
 
 	term_init(); /* init tty */
-	rndini(); /* init random number generator */
+	rand_init(); /* init random number generator */
 
 	clear_screen (); /* nothing on screen */
 	comment(VERSION_STRING);

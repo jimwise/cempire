@@ -6,14 +6,14 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: math.c,v 1.8 1998/02/27 23:40:02 jim Exp $
+ * $Id: math.c,v 1.9 1998/03/01 01:35:39 jim Exp $
  */
 
 /*
 math.c -- various mathematical routines.
 
 This file contains routines used to create random integers.  The
-initialization routine 'rndini' should be called at program startup.
+initialization routine 'rand_init' should be called at program startup.
 The flavors of random integers that can be generated are:
 
     irand(n) -- returns a random integer in the range 0..n-1
@@ -34,11 +34,11 @@ Other routines include:
 long	dist (long, long);
 long	irand (long);
 int	isqrt (int);
-void	rndini (void);
+void	rand_init (void);
 int	rndint (int, int);
 
 void
-rndini (void)
+rand_init (void)
 {
 	srand((unsigned)(time(0) & 0xFFFF));
 }

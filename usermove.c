@@ -6,7 +6,7 @@
  *
  * Portions of this file Copyright (C) 1998 Jim Wise
  *
- * $Id: usermove.c,v 1.23 1998/03/10 23:24:00 jim Exp $
+ * $Id: usermove.c,v 1.24 1998/03/10 23:36:00 jim Exp $
  */
 
 /*
@@ -49,7 +49,6 @@ void	user_fill (piece_info_t *);
 void	user_help (void);
 void	user_land (piece_info_t *);
 void	user_random (piece_info_t *);
-void	user_redraw (void);
 void	user_repair (piece_info_t *);
 void	user_set_city_func (piece_info_t *);
 void	user_set_dir (piece_info_t *);
@@ -581,7 +580,7 @@ ask_user (piece_info_t *obj)
 	case 'K': user_wake (obj); break;
 	case 'O': user_cancel_auto (); break;
 	case '\014':
-	case 'P': user_redraw (); break;
+	case 'P': redraw (); break;
 	case '?': describe_obj (obj); break;
 
 	default: alert();

@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: map.c,v 1.29 2001/02/07 03:19:56 jwise Exp $
+ * $Id: map.c,v 1.30 2001/11/12 15:40:52 jwise Exp $
  */
 
 /*
@@ -69,7 +69,7 @@ static long best_loc;
 void
 vmap_cont (int *cont_map, const view_map_t *vmap, long loc, char bad_terrain)
 {
-	bzero(cont_map, MAP_SIZE * sizeof(int));
+	memset(cont_map, 0, MAP_SIZE * sizeof(int));
 	vmap_mark_up_cont (cont_map, vmap, loc, bad_terrain);
 }
 
@@ -133,7 +133,7 @@ vmap_cont_scan (int *cont_map, const view_map_t *vmap)
 	scan_counts_t counts;
 	long i;
 
-	bzero(&counts, sizeof(scan_counts_t));
+	memset(&counts, 0, sizeof(scan_counts_t));
 	
 	for (i = 0; i < MAP_SIZE; i++) {
 		if (cont_map[i])
@@ -604,7 +604,7 @@ vmap_prune_explore_locs (view_map_t *vmap)
 	long i;
 	long copied;
 
-	bzero(pmap, sizeof(pmap));
+	memset(pmap, 0, sizeof(pmap));
 	from = &p1;
 	to = &p2;
 	from->len = 0;
@@ -858,7 +858,7 @@ vmap_mark_near_path (path_map_t path_map[], long loc)
 	long new_loc, xloc;
 	int hit_loc[8];
 
-	bzero(hit_loc, 8 * sizeof(int));
+	memset(hit_loc, 0, 8 * sizeof(int));
 	
 	FOR_ADJ_ON (loc, new_loc, i) {
 		FOR_ADJ_ON (new_loc, xloc, j)

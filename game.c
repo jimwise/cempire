@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: game.c,v 1.44 2001/02/08 21:27:59 jwise Exp $
+ * $Id: game.c,v 1.45 2001/11/12 15:40:52 jwise Exp $
  */
 
 /* game.c -- Routines to initialize, save, and restore a game. */
@@ -941,7 +941,7 @@ stat_display (char *mbuf, int round)
 	char *p;
 	char buf1[STRSIZE], buf2[STRSIZE];
 	
-	bzero(counts, sizeof(counts));
+	memset(counts, 0, sizeof(counts));
 	
 	for (i = 0; i < MAP_SIZE; i++)
 	{

@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: term.c,v 1.74 2003/10/22 22:16:43 jwise Exp $
+ * $Id: term.c,v 1.75 2009/09/15 15:11:40 jwise Exp $
  */
 
 /*
@@ -37,14 +37,14 @@
 #include <ctype.h>
 
 void	alert (void);
-void    error (const char *, ...);
+void    error (char *, ...);
 char	get_chx (void);
-int	get_int (const char *, int, int);
+int	get_int (char *, int, int);
 void	get_str (char *, const int);
-int	getyn (const char *message);
+int	getyn (char *message);
 void    huh (void);
-void	info (const char *, ...);
-void    prompt (const char *, ...);
+void	info (char *, ...);
+void    prompt (char *, ...);
 void    redraw (void);
 void	term_clear (void);
 void    term_end (void);
@@ -60,7 +60,7 @@ static WINDOW *statuswin, *infowin;
 /* Print a prompt on the status line. */
 
 void
-prompt (const char *buf, ...)
+prompt (char *buf, ...)
 {
 	va_list ap;
 
@@ -75,7 +75,7 @@ prompt (const char *buf, ...)
 }
 
 void
-info (const char *fmt, ...)
+info (char *fmt, ...)
 {
 	va_list ap;
 
@@ -94,7 +94,7 @@ info (const char *fmt, ...)
 /* Print an error message on the second message line. */
 
 void
-error (const char *fmt, ...)
+error (char *fmt, ...)
 {
 	va_list ap;
 
@@ -160,7 +160,7 @@ get_chx (void)
  */
 
 int
-get_int (const char *message, int low, int high)
+get_int (char *message, int low, int high)
 {
 	char	buf[STRSIZE], *end;
 	long	l;
@@ -191,7 +191,7 @@ get_int (const char *message, int low, int high)
  */
 
 int
-getyn (const char *message)
+getyn (char *message)
 {
 	char c;
 

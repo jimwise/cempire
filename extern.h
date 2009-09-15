@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: extern.h,v 1.79 2003/10/23 16:31:16 jwise Exp $
+ * $Id: extern.h,v 1.80 2009/09/15 15:11:40 jwise Exp $
  */
 
 /* extern.h -- define global non-constant storage.  */
@@ -124,7 +124,7 @@ void    help (const char **, int);
 void	kill_display (void);
 int	move_cursor (long *, int);
 void    print_movie_screen (const char *);
-void	print_pzoom (const char *, const path_map_t *, const view_map_t *);
+void	print_pzoom (char *, const path_map_t *, const view_map_t *);
 void	print_sector (char, view_map_t[], int);
 void	print_zoom (const view_map_t *);
 void    sector_change (void);
@@ -193,14 +193,14 @@ void	set_prod (city_info_t *);
 
 /* terminal routines (term.c) */
 void	alert (void);
-void	error (const char *, ...);
+void	error (char *, ...);
 char    get_chx (void);
-int	get_int (const char *, int, int);
+int	get_int (char *, int, int);
 void    get_str (char *, int);
-int     getyn (const char *);
+int     getyn (char *);
 void	huh (void);
-void	info (const char *, ...);
-void	prompt (const char *, ...);
+void	info (char *, ...);
+void	prompt (char *, ...);
 void    redraw (void);
 void    term_clear (void);
 void	term_end (void);

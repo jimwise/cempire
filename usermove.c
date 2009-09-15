@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: usermove.c,v 1.35 2003/10/22 22:19:18 jwise Exp $
+ * $Id: usermove.c,v 1.36 2009/09/15 15:11:40 jwise Exp $
  */
 
 /* usermove.c -- Let the user move her troops. */
@@ -18,7 +18,7 @@
 
 void	ask_user (piece_info_t *);
 int	awake (piece_info_t *);
-void	fatal (piece_info_t *, long, const char *, const char *);
+void	fatal (piece_info_t *, long, char *, char *);
 void	move_armyattack (piece_info_t *);
 void	move_armyload (piece_info_t *);
 void	move_army_to_city (piece_info_t *, long);
@@ -1028,7 +1028,7 @@ awake (piece_info_t *obj)
  */
 
 void
-fatal (piece_info_t *obj, long loc, const char *message, const char *response)
+fatal (piece_info_t *obj, long loc, char *message, char *response)
 {
 	if (getyn (message)) {
 		info(response);

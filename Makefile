@@ -1,7 +1,7 @@
 #
 #	Copyright (C) 1987, 1988 Chuck Simmons
 #
-# $Id: Makefile,v 1.46 2003/10/23 16:31:16 jwise Exp $
+# $Id: Makefile,v 1.47 2009/09/15 15:11:39 jwise Exp $
 #
 # See the file COPYING, distributed with empire, for restriction
 # and warranty information.
@@ -37,7 +37,7 @@ MANDIR=${PREFIX}/man/man6
 #	Otherwise, do:
 #		INSTALL=./install-sh
 #
-CC=gcc
+CC=cc -m64 -xc99=all
 INSTALL=install
 
 #
@@ -59,7 +59,7 @@ INSTALL=install
 #		-DUSE_ZLIB		define this to compress saved files on write and
 #					decompress them on reads.  Saves a lot of space.
 #
-DEFINES=-D__EXTENSIONS__ -DUSE_ZLIB -DUSE_COLOR
+DEFINES= -DUSE_ZLIB -DUSE_COLOR -D_XOPEN_SOURCE=600 # -D__EXTENSIONS__
 
 #
 # 4.) Pick your library specifications
@@ -108,10 +108,11 @@ INCLUDES=
 # Don't try to use this if you are using another compiler.  If cempire
 # isn't happy this way on your system, please let me know...
 #
-WARNS=-ansi -pedantic-errors -Werror -Wall -W -pedantic \
-	-Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings \
-	-Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations \
-	-Wnested-externs -Winline -Wundef -Wbad-function-cast -Wsign-compare
+WARNS=-errwarn -Xc -v -xO3 -xalias_level=strong
+#-ansi -pedantic-errors -Werror -Wall -W -pedantic \
+#	-Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings \
+#	-Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations \
+#	-Wnested-externs -Winline -Wundef -Wbad-function-cast -Wsign-compare
 
 # The following warnings warn about acceptable code in this software
 # -Wconversion -Wredundant-decls -Waggregate-return

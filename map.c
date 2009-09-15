@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: map.c,v 1.31 2001/11/12 15:46:10 jwise Exp $
+ * $Id: map.c,v 1.32 2009/09/15 15:11:40 jwise Exp $
  */
 
 /*
@@ -540,28 +540,26 @@ terrain_type (const path_map_t *pmap, const view_map_t *vmap, const move_info_t 
 	if (vmap[to_loc].contents == '%') return T_UNKNOWN; /* magic objective */
 	if (vmap[to_loc].contents == ' ') return pmap[from_loc].terrain;
 	
+	int ret = T_UNKNOWN;
 	switch (map[to_loc].contents)
 	{
 	    case '.':
-	   	 return T_WATER;
-		 /* NOTREACHED */
-		 break;
+	      ret = T_WATER;
+	      break;
 	    case '+':
-	   	 return T_LAND;
-		 /* NOTREACHED */
-		 break;
+	      ret = T_LAND;
+	      break;
 	    case '*':
 		if (map[to_loc].cityp->owner == move_info->city_owner)
-			return T_WATER;
+		  ret = T_WATER;
 		else
-			return T_UNKNOWN; /* cannot cross */
+		  ret = T_UNKNOWN; /* cannot cross */
+		break;
 	    default:
 		panic("Unknown terrain");
-		/* NOTREACHED */
 		break;
 	}
-	/* NOTREACHED */
-	return T_UNKNOWN;
+	return ret;
 }
 
 /*

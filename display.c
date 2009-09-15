@@ -4,7 +4,7 @@
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
- * $Id: display.c,v 1.75 2001/02/08 21:27:59 jwise Exp $
+ * $Id: display.c,v 1.76 2009/09/15 15:11:40 jwise Exp $
  */
 
 /*
@@ -20,6 +20,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <strings.h>
 #include <ctype.h>
 #include "empire.h"
 #include "extern.h"
@@ -40,7 +41,7 @@ void	map_init (void);
 int     move_cursor (long *, int);
 void	print_movie_screen(const char *);
 void    print_sector (char, view_map_t[], int);
-void    print_pzoom (const char *, const path_map_t *, const view_map_t *);
+void    print_pzoom (char *, const path_map_t *, const view_map_t *);
 void    print_zoom (const view_map_t *);
 void	sector_change (void);
 static void	display_screen (view_map_t[]);
@@ -414,7 +415,7 @@ print_zoom_cell (const view_map_t *vmap, int row, int col, int row_inc, int col_
 /* Print a condensed version of a pathmap. */
 
 void
-print_pzoom (const char *s, const path_map_t *pmap, const view_map_t *vmap)
+print_pzoom (char *s, const path_map_t *pmap, const view_map_t *vmap)
 {
 	int row_inc, col_inc;
 	int r, c;

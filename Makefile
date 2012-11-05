@@ -37,7 +37,7 @@ MANDIR=${PREFIX}/man/man6
 #	Otherwise, do:
 #		INSTALL=./install-sh
 #
-CC=cc -m64 -xc99=all
+CC=cc
 INSTALL=install
 
 #
@@ -129,7 +129,7 @@ DEBUG=-g -DDEBUG
 #
 # Here's where you put your favorite c compiler options
 #
-COPTS=
+COPTS=-m64 -xc99=all
 
 #
 # You shouldn't have to modify anything below this line.
@@ -170,7 +170,7 @@ ARCHIVES= cempire-$(VERSION).tar cempire-$(VERSION).tar.gz \
 all: $(TARGET)
 
 $(TARGET): $(OBJS)
-	$(CC) -o $(TARGET) $(OBJS) $(LIBS)
+	$(CC) -m64 -o $(TARGET) $(OBJS) $(LIBS)
 
 lint: $(SRCS)
 	lint $(LINTFLAGS) $(CPPFLAGS) $(SRCS) $(LIBS)

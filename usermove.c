@@ -1,6 +1,6 @@
 /*
  *    Copyright (C) 1987, 1988 Chuck Simmons
- * 
+ *
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
@@ -101,7 +101,7 @@ user_move (void)
 		next_obj = obj->piece_link.next;
 		move_sat (obj);
 	}
-	
+
 	sec_start = cur_sector (); /* get currently displayed sector */
 	if (sec_start == -1) sec_start = 0;
 
@@ -167,7 +167,7 @@ piece_move (piece_info_t *obj)
 			display_loc_u (obj->loc); /* let user see result */
 			need_input = FALSE; /* we got it */
 		}
-		
+
 		if (obj->moved == saved_moves) /* user set function? */
 		switch (obj->func) { /* handle preprogrammed function */
 		case NOFUNC:    break;
@@ -196,7 +196,7 @@ piece_move (piece_info_t *obj)
 		}
 
 		if (obj->moved == saved_moves) need_input = TRUE;
-		
+
 		/*
 		 * handle fighters specially.  If in a city or carrier, turn
 		 * is over and reset range to max.  Otherwise, if
@@ -231,7 +231,7 @@ piece_move (piece_info_t *obj)
 
 /*
  * Move a piece at random.  We create a list of empty squares to which
- * the piece can move.  If there are none, we do nothing, otherwise we 
+ * the piece can move.  If there are none, we do nothing, otherwise we
  * move the piece to a random adjacent square.
  */
 
@@ -283,7 +283,7 @@ move_explore (piece_info_t *obj)
 		terrain = ".O";
 		break;
 	}
-	
+
 	if (loc == obj->loc) return; /* nothing to explore */
 
 	if (user_map[loc].contents == ' ' && path_map[loc].cost == 2)
@@ -307,7 +307,7 @@ move_transport (piece_info_t *obj)
 
 	/* look for an adjacent transport */
 	loc = find_transport (USER, obj->loc);
-	
+
 	if (loc != obj->loc) {
 		move_obj (obj, loc);
 		obj->func = NOFUNC;
@@ -331,7 +331,7 @@ move_armyload (piece_info_t *obj)
 	int i;
 
 	panic("move_armyload() is not implemented");	/* why? */
-	
+
 	/* look for an adjacent transport */
 	loc = find_transport (USER, obj->loc);
 
@@ -345,13 +345,13 @@ move_armyload (piece_info_t *obj)
 		for (p = user_obj[TRANSPORT]; p; p = p->piece_link.next)
 		if (p->count < obj_capacity (p)) /* not full? */
 		amap[p->loc].contents = '$';
-		
+
 		for (i = 0; i < NUM_CITY; i++)
 		if (city[i].owner == USER && city[i].prod == TRANSPORT)
 		amap[city[i].loc].contents = '$';
 	}
 }
-		
+
 /* Move an army toward an attackable city or enemy army. */
 
 void
@@ -363,7 +363,7 @@ move_armyattack (piece_info_t *obj)
 	assert (obj->type == ARMY);
 
 	loc = vmap_find_lobj (path_map, user_map, obj->loc, &user_army_attack);
-	
+
 	if (loc == obj->loc) return; /* nothing to attack */
 
 	vmap_mark_path (path_map, user_map, loc);
@@ -376,7 +376,6 @@ void
 move_ttload (piece_info_t *obj)
 {
 	panic("move_ttload() is not implemented");
-	obj = obj;
 }
 
 /* Move a ship toward port.  If the ship is healthy, wake it up. */
@@ -388,19 +387,19 @@ move_repair (piece_info_t *obj)
 	long loc;
 
 	assert (obj->type > FIGHTER);
-	
+
 	if (obj->hits == piece_attr[obj->type].max_hits) {
 		obj->func = NOFUNC;
 		return;
 	}
-	
+
 	if (user_map[obj->loc].contents == 'O') { /* it is in port? */
 		obj->moved += 1;
 		return;
 	}
 
 	loc = vmap_find_wobj (path_map, user_map, obj->loc, &user_ship_repair);
-	
+
 	if (loc == obj->loc) return; /* no reachable city */
 
 	vmap_mark_path (path_map, user_map, loc);
@@ -448,10 +447,10 @@ move_land (piece_info_t *obj)
 		}
 	}
 	if (best_dist == 0) obj->moved += 1; /* fighter is on a city */
-	
+
 	else if (best_dist <= obj->range)
 		move_to_dest (obj, best_loc);
-		
+
 	else obj->func = NOFUNC; /* can't reach city or carrier */
 }
 
@@ -503,7 +502,7 @@ move_to_dest (piece_info_t *obj, long dest)
 	int fterrain;
 	const char *mterrain;
 	long new_loc;
-	
+
 	switch (obj->type) {
 	case ARMY:
 		fterrain = T_LAND;
@@ -518,11 +517,11 @@ move_to_dest (piece_info_t *obj, long dest)
 		mterrain = ".O";
 		break;
 	}
-	
+
 	new_loc = vmap_find_dest (path_map, user_map, obj->loc, dest,
-                                  USER, fterrain);
+				  USER, fterrain);
 	if (new_loc == obj->loc) return; /* can't get there */
-	
+
 	vmap_mark_path (path_map, user_map, dest);
 	new_loc = vmap_find_dir (path_map, user_map, obj->loc, mterrain, " .");
 	if (new_loc == obj->loc) return; /* can't move ahead */
@@ -556,7 +555,7 @@ ask_user (piece_info_t *obj)
 
 	case 'J': edit (obj->loc); reset_func (obj); return;
 	case 'V': user_set_city_func (obj); reset_func (obj); return;
-	
+
 	case ' ': user_skip (obj); return;
 	case 'F': user_fill (obj); return;
 	case 'I': user_set_dir (obj); return;
@@ -592,14 +591,14 @@ void
 reset_func (piece_info_t *obj)
 {
 	city_info_t *cityp;
-	
+
 	cityp = find_city (obj->loc);
 
 	if (cityp != NULL)
 	if (cityp->func[obj->type] != NOFUNC) {
 		obj->func = cityp->func[obj->type];
 		awake (obj);
-	} 
+	}
 }
 
 /*
@@ -740,9 +739,9 @@ user_set_city_func (piece_info_t *obj)
 		alert ();
 		return;
 	}
-	
+
 	e = get_chx ();
-	
+
 	switch (e) {
 	case 'F': /* fill */
 		e_city_fill (cityp, type);
@@ -824,7 +823,7 @@ void
 user_dir_army (piece_info_t *obj, long loc)
 {
 	int enemy_killed;
-	
+
 	enemy_killed = FALSE;
 
 	if (user_map[loc].contents == 'O') /* attacking own city */
@@ -849,7 +848,7 @@ user_dir_army (piece_info_t *obj, long loc)
 		else { /* attack something at sea */
 			enemy_killed = islower (user_map[loc].contents);
 			attack (obj, loc);
-	
+
 			if (obj->hits > 0) /* ship won? */
 			info("Your army regretfully drowns after its successful assault.");
 		}
@@ -858,7 +857,7 @@ user_dir_army (piece_info_t *obj, long loc)
 			if (enemy_killed) scan (comp_map, loc);
 		}
 	}
-		
+
 	else if (isupper (user_map[loc].contents)
 		&& user_map[loc].contents != 'X') { /* attacking self */
 		if (!getyn (
@@ -900,7 +899,7 @@ user_dir_fighter (piece_info_t *obj, long loc)
  * shore.  Our cases are: moving ashore (and subcases), attacking
  * a city, attacking self, attacking enemy.
  */
-	
+
 void
 user_dir_ship (piece_info_t *obj, long loc)
 {
@@ -937,7 +936,7 @@ user_dir_ship (piece_info_t *obj, long loc)
 			if (enemy_killed) scan (comp_map, loc);
 		}
 	}
-		
+
 	else if (isupper (user_map[loc].contents)) { /* attacking self */
 		if (!getyn (
 	"Sir, those are our men!  Do you really want to attack them? "))
@@ -1003,7 +1002,7 @@ awake (piece_info_t *obj)
 	    return (FALSE);
 	}
 	if (obj->func == NOFUNC) return (TRUE); /* object is awake */
-	
+
 	if (obj->type == FIGHTER /* wake fighters */
 	    && obj->func != LAND /* that aren't returning to base */
 	    && obj->func < 0 /* and which don't have a path */

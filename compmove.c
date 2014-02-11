@@ -555,6 +555,7 @@ army_move (piece_info_t *obj)
 			break;
 		    default:
 			panic("unrecognized objective");
+			return;
 			break;
 		}
 		cross_cost = path_map[new_loc].cost * 2 - cross_cost;

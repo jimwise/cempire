@@ -22,7 +22,7 @@ MANDIR=${PREFIX}/man/man6
 # 2.) Pick your compiler and `install' program
 #	If you want to use your system's native compiler, use the following.
 #	It MUST be at least relatively ANSI compliant for this to work.
-#       	CC=cc
+#		CC=cc
 #
 #	Pick the following to use GCC (or EGCS).  Needed if your system's
 #	native compiler is not ANSI compliant (or not present)
@@ -37,7 +37,7 @@ MANDIR=${PREFIX}/man/man6
 #	Otherwise, do:
 #		INSTALL=./install-sh
 #
-CC=cc
+CC?=cc
 INSTALL=install
 
 #
@@ -79,7 +79,7 @@ DEFINES= -DUSE_ZLIB -DUSE_COLOR -D_XOPEN_SOURCE=600 # -D__EXTENSIONS__
 #	wonderful package system.
 #		LIBS=-L/usr/pkg/lib -lncurses
 #
-#	if you defined USE_ZLIB above, you need to use the following. 
+#	if you defined USE_ZLIB above, you need to use the following.
 #	Change /usr/local/lib to wherever you have the zlib library
 #	installed, or remove the -L/usr/local/lib if you are on a
 #	system which has zlib in its default library path.
@@ -93,7 +93,7 @@ LIBS=-lz -lcurses
 #	If your system curses works, use this:
 #		INCLUDES=
 #
-# 	if you are using ncurses, you need this.  Change /usr/local/include to
+#	if you are using ncurses, you need this.  Change /usr/local/include to
 #	wherever you have the ncurses headers installed, and turn on
 #	-DUSE_NCURSES and your curses library, above
 #		INCLUDES=-I/usr/local/include
@@ -108,7 +108,8 @@ INCLUDES=
 # Don't try to use this if you are using another compiler.  If cempire
 # isn't happy this way on your system, please let me know...
 #
-WARNS=-errwarn -Xc -v -xO3 -xalias_level=strong
+#WARNS=-errwarn -Xc -v -xO3 -xalias_level=strong
+WARNS=-Wall -Werror -ansi -pedantic -std=c99
 #-ansi -pedantic-errors -Werror -Wall -W -pedantic \
 #	-Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings \
 #	-Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations \
@@ -129,7 +130,8 @@ DEBUG=-g -DDEBUG
 #
 # Here's where you put your favorite c compiler options
 #
-COPTS=-m64 -xc99=all
+#COPTS=-m64 -xc99=all
+COPTS=-m64
 
 #
 # You shouldn't have to modify anything below this line.
@@ -142,7 +144,7 @@ CFLAGS= $(CPPFLAGS) $(COPTS) $(DEBUG) $(WARNS)
 LINTFLAGS = -Habcnrsuxz -w
 
 # Code noted by the following lint checks has been checked for errors
-# -aa -e -h 
+# -aa -e -h
 
 # The following flags in the above make lint less strict:
 # -n -- do not check against standard library

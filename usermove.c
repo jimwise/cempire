@@ -1,3 +1,4 @@
+
 /*
  *    Copyright (C) 1987, 1988 Chuck Simmons
  *
@@ -121,11 +122,12 @@ user_move (void)
 					if (loc_sector (obj->loc) == sec) /* object in sector? */
 						piece_move (obj); /* yup; move the object */
 			}
-			if (cur_sector() == sec)
-			{
-				/* is sector displayed? */
-				print_sector_u (sec); /* make screen up-to-date */
-			}
+                
+                if (cur_sector() == sec)
+                {
+                        /* is sector displayed? */
+			print_sector_u (sec); /* make screen up-to-date */
+		}
 	}
 	if (save_movie) save_movie_screen ();
 }

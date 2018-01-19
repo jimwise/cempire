@@ -14,11 +14,23 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#ifdef USE_ZLIB
-#include <zlib.h>
-#endif
 #include "empire.h"
 #include "extern.h"
+
+#ifdef USE_ZLIB
+#include <zlib.h>
+typedef gzFile file;
+#define open_file(f, m) gzopen(f, m)
+#define close_file(f) gzclose(f)
+#define read_file(f, b, s) gzread(f, b, s)
+#define write_file(f, b, s) gzwrite(f, b, s)
+#else
+typedef FILE *file;
+#define open_file(x, y) fopen(x, y)
+#define close_file(x) fclose(x)
+#define read_file(f, b, s) fread(b, 1, s, f)
+#define write_file(f, b, s) fwrite(b, 1, s, f)
+#endif
 
 void	init_game (void);
 void	replay_movie (void);
@@ -39,13 +51,8 @@ static long	regen_land (long);
 static long    remove_land (long, long);
 static int	select_cities (void);
 static void	stat_display (char *, int);
-#ifndef USE_ZLIB
-static int	xread (FILE *, void *, int);
-static int	xwrite (FILE *, void *, int);
-#else
-static int	xread (gzFile *, void *, int);
-static int	xwrite (gzFile *, void *, int);
-#endif
+static int	xread (file, void *, int);
+static int	xwrite (file, void *, int);
 /*
  * Initialize a new game.  Here we generate a new random map, put cities
  * on the map, select cities for each opponent, and zero out the lists of
@@ -539,17 +546,9 @@ make_pair (void)
 void
 save_game (void)
 {
-#ifndef USE_ZLIB
-	FILE *f; /* file to save game in */
-#else
-	gzFile f; /* compressing file to save game in */
-#endif
+	file f; /* file to save game in */
 
-#ifndef USE_ZLIB
-	f = fopen("empsave.dat", "w"); /* open for output */
-#else
-	f = gzopen("empsave.dat", "w"); /* open for compressing output */
-#endif
+	f = open_file("empsave.dat", "w"); /* open for output */
 	if (f == NULL) {
 		error ("Cannot save empsave.dat");
 		return;
@@ -571,11 +570,7 @@ save_game (void)
 	wval (user_score);
 	wval (comp_score);
 
-#ifndef USE_ZLIB
-	fclose(f);
-#else
-	gzclose(f);
-#endif
+	close_file(f);
 	info("Game saved.");
 }
 
@@ -590,21 +585,13 @@ save_game (void)
 int
 restore_game (void)
 {
-#ifndef USE_ZLIB
-	FILE *f; /* file to save game in */
-#else
-	gzFile f; /* compressing file to save game in */
-#endif
+	file f; /* file to save game in */
 	long i;
 	piece_type_t j;
 	piece_info_t **list;
 	piece_info_t *obj;
 
-#ifndef USE_ZLIB
-	f = fopen("empsave.dat", "r"); /* open for input */
-#else
-	f = gzopen("empsave.dat", "r"); /* open for decompressing input */
-#endif
+	f = open_file("empsave.dat", "r"); /* open for input */
 	if (f == NULL) {
 		error("Cannot open empsave.dat");
 		return (FALSE);
@@ -675,11 +662,7 @@ restore_game (void)
 	read_embark (comp_obj[TRANSPORT], ARMY);
 	read_embark (comp_obj[CARRIER], FIGHTER);
 	
-#ifndef USE_ZLIB
-	fclose(f);
-#else
-	gzclose(f);
-#endif
+	close_file(f);
 	kill_display (); /* what we had is no longer good */
 	info("Game restored from empsave.dat.");
 	return (TRUE);
@@ -720,18 +703,17 @@ inconsistent (void)
 	exit (1);
 }
 
-#ifndef USE_ZLIB
 /*
  * Write a buffer to a file.  If we cannot write everything, return FALSE.
  * Also, tell the user why the write did not work if it didn't.
  */
 
 static int
-xwrite (FILE *f, void *buf, int size)
+xwrite (file f, void *buf, int size)
 {
 	int bytes;
- 
-	bytes = fwrite (buf, 1, size, f);
+
+	bytes = write_file(f, buf, size);
 	if (bytes == -1) {
 		error ("Write to save file failed");
 		return (FALSE);
@@ -743,44 +725,17 @@ xwrite (FILE *f, void *buf, int size)
 	return (TRUE);
 }
 
-#else
-/*
- * Write a buffer to a file, compressing as we go.  If we cannot write
- * everything, return FALSE.  Also, tell the user why the write did not
- * work if it didn't.
- */
-
-static int
-xwrite (gzFile *f, void *buf, int size)
-{
-        int bytes;
-
-        bytes = gzwrite (f, buf, size);
-        if (bytes == 0) {
-                error ("Write to save file failed");
-                return (FALSE);
-        } 
-        if (bytes != size) {
-                error ("Cannot complete write to save file.\n");
-                return (FALSE);
-        }
-        return (TRUE);
-}
-
-#endif
-
-#ifndef USE_ZLIB
 /*
  * Read a buffer from a file.  If the read fails, we tell the user why
  * and return FALSE.
  */
 
 static int
-xread (FILE *f, void *buf, int size)
+xread (file f, void *buf, int size)
 {
 	int bytes;
 
-	bytes = fread (buf, 1, size, f);
+	bytes = read_file (f, buf, size);
 	if (bytes == 0) {
 		error ("Read from save file failed");
 		return (FALSE);
@@ -791,30 +746,6 @@ xread (FILE *f, void *buf, int size)
 	}
 	return (TRUE);
 }
-
-#else
-/*
- * Read a buffer from a file, decompressing as we go.  If the read fails,
- * we tell the user why and return FALSE.
- */
-
-static int
-xread (gzFile *f, void *buf, int size)
-{
-        int bytes;
-
-        bytes = gzread (f, buf, size);
-        if (bytes == -1) {
-                error ("Read from save file failed");
-                return (FALSE);
-        }
-        if (bytes != size) {
-                error ("Saved file is too short.\n");
-                return (FALSE);
-        }
-        return (TRUE);
-}
-#endif
 
 /*
  * Save a movie screen.  For each cell on the board, we write out
@@ -827,19 +758,11 @@ static char mapbuf[MAP_SIZE];
 void
 save_movie_screen (void)
 {
-#ifndef USE_ZLIB
-	FILE *f; /* file to save movie in */
-#else
-	gzFile f; /* compressing file to save movie in */
-#endif
+	file f; /* file to save movie in */
 	long i;
 	piece_info_t *p;
 
-#ifndef USE_ZLIB
-	f = fopen("empmovie.dat", "a"); /* open for append */
-#else
-	f =gzopen("empmovie.dat", "a"); /* open for append */
-#endif
+	f = open_file("empmovie.dat", "a"); /* open for append */
 	if (f == NULL)
 	{
 		error ("Cannot open empmovie.dat");
@@ -863,11 +786,7 @@ save_movie_screen (void)
 		}
 	}
 	wbuf (mapbuf);
-#ifndef USE_ZLIB
-	fclose(f);
-#else
-	gzclose(f);
-#endif
+	close_file(f);
 }
 
 /*
@@ -878,18 +797,10 @@ save_movie_screen (void)
 void
 replay_movie (void)
 {
-#ifndef USE_ZLIB
-	FILE *f; /* file to read movie from */
-#else
-	gzFile f; /* compressing file to read movie from */
-#endif
+	file f; /* file to read movie from */
 	int round;
 	
-#ifndef USE_ZLIB
-	f = fopen("empmovie.dat", "r"); /* open for input */
-#else
-	f = gzopen("empmovie.dat", "r");
-#endif
+	f = open_file("empmovie.dat", "r"); /* open for input */
 	if (f == NULL)
 	{
 		error ("Cannot open empmovie.dat");
@@ -911,11 +822,7 @@ replay_movie (void)
 		print_movie_screen(mapbuf);
 	}
 
-#ifndef USE_ZLIB
-	fclose(f);
-#else
-	gzclose(f);
-#endif
+	close_file(f);
 }
 
 /*

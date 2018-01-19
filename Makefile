@@ -59,7 +59,7 @@ INSTALL=install
 #		-DUSE_ZLIB		define this to compress saved files on write and
 #					decompress them on reads.  Saves a lot of space.
 #
-DEFINES= -DUSE_ZLIB -DUSE_COLOR -D_XOPEN_SOURCE=600 # -D__EXTENSIONS__
+DEFINES= -DUSE_COLOR -DUSE_ZLIB # -D_XOPEN_SOURCE=600 -D__EXTENSIONS__
 
 #
 # 4.) Pick your library specifications
@@ -109,7 +109,7 @@ INCLUDES=
 # isn't happy this way on your system, please let me know...
 #
 #WARNS=-errwarn -Xc -v -xO3 -xalias_level=strong
-WARNS=-Wall -Werror -ansi -pedantic -std=c99
+WARNS=-Wall -Werror -pedantic -std=c99
 #-ansi -pedantic-errors -Werror -Wall -W -pedantic \
 #	-Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings \
 #	-Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations \
@@ -131,7 +131,7 @@ DEBUG=-g -DDEBUG
 # Here's where you put your favorite c compiler options
 #
 #COPTS=-m64 -xc99=all
-COPTS=-m64
+COPTS=
 
 #
 # You shouldn't have to modify anything below this line.

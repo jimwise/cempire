@@ -59,7 +59,7 @@ INSTALL=install
 #		-DUSE_ZLIB		define this to compress saved files on write and
 #					decompress them on reads.  Saves a lot of space.
 #
-DEFINES= -DUSE_COLOR -DUSE_ZLIB # -D_XOPEN_SOURCE=600 -D__EXTENSIONS__
+DEFINES= -DUSE_COLOR -DUSE_ZLIB -D_XOPEN_SOURCE=700 # -D__EXTENSIONS__
 
 #
 # 4.) Pick your library specifications

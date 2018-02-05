@@ -50,6 +50,13 @@ void	term_clear (void);
 void    term_end (void);
 void    term_init (void);
 
+#ifdef USE_COLOR
+static void color_pairs(void);
+void color_on(view_map_t *);
+void color_off(void);
+#endif
+
+
 static WINDOW *statuswin, *infowin;
 
 /*
@@ -247,6 +254,10 @@ void
 term_init (void)
 {
 	initscr();
+#ifdef USE_COLOR
+        start_color();
+        color_pairs();
+#endif        
 	noecho();
 	crmode();
 	lines = LINES;
@@ -266,3 +277,97 @@ alert (void)
 {
 	beep();
 }
+
+#ifdef USE_COLOR
+
+#define PAIR_UNKNOWN 1
+#define PAIR_LAND_UNOWNED 2
+#define PAIR_SEA_UNOWNED 3
+#define PAIR_LAND_USER 4
+#define PAIR_SEA_USER 5
+#define PAIR_LAND_COMP 6
+#define PAIR_SEA_COMP 7
+/* hack -- need to rework, so we know terrain type */
+#define PAIR_AIR_USER 8
+#define PAIR_AIR_COMP 9
+#define PAIR_UI 10
+static int cur_color = PAIR_UI;
+
+static void
+color_pairs(void)
+{
+  init_pair(PAIR_UNKNOWN, COLOR_BLACK, COLOR_BLACK);
+  init_pair(PAIR_LAND_UNOWNED, COLOR_BLACK, COLOR_GREEN);
+  init_pair(PAIR_SEA_UNOWNED, COLOR_BLACK, COLOR_CYAN);
+  init_pair(PAIR_LAND_USER, COLOR_BLUE, COLOR_GREEN);
+  init_pair(PAIR_SEA_USER, COLOR_BLUE, COLOR_CYAN);
+  init_pair(PAIR_LAND_COMP, COLOR_RED, COLOR_GREEN);
+  init_pair(PAIR_SEA_COMP, COLOR_RED, COLOR_CYAN);
+  init_pair(PAIR_AIR_USER, COLOR_BLUE, COLOR_WHITE);
+  init_pair(PAIR_AIR_COMP, COLOR_RED, COLOR_WHITE);
+  init_pair(PAIR_UI, COLOR_WHITE, COLOR_BLACK);
+  attron(COLOR_PAIR(PAIR_UI));
+}
+
+void
+color_on(view_map_t *vp)
+{
+  switch(vp->contents) {
+  case ' ':
+    cur_color = PAIR_UNKNOWN;
+    break;
+  case 'O':
+  case 'A':
+    cur_color = PAIR_LAND_USER;
+    break;
+  case 'P':
+  case 'D':
+  case 'S':
+  case 'T':
+  case 'C':
+  case 'B':
+    cur_color = PAIR_SEA_USER;
+    break;
+  case 'X':
+  case 'a':
+    cur_color = PAIR_LAND_COMP;
+    break;
+  case 'p':
+  case 'd':
+  case 's':
+  case 't':
+  case 'c':
+  case 'b':
+    cur_color = PAIR_SEA_COMP;
+    break;
+  case 'F':
+    cur_color = PAIR_AIR_USER;
+    /* if (map[loc].contents == '.') */
+    /*   cur_color = PAIR_SEA_USER; */
+    /* else */
+    /*   cur_color = PAIR_LAND_USER; */
+    break;
+  case 'f':
+    cur_color = PAIR_AIR_COMP;
+    /* if (map[loc].contents == '.') */
+    /*   cur_color = PAIR_SEA_COMP; */
+    /* else */
+    /*   cur_color = PAIR_LAND_COMP; */
+    break;
+  case '+':
+  case '*':
+    cur_color = PAIR_LAND_UNOWNED;
+    break;
+  case '.':
+    cur_color = PAIR_SEA_UNOWNED;
+    break;
+  }
+  attron(COLOR_PAIR(cur_color));
+}
+
+void color_off(void)
+{
+  attroff(COLOR_PAIR(cur_color));
+  attron(COLOR_PAIR(PAIR_UI));
+}
+#endif

@@ -271,3 +271,8 @@ typedef struct {
 /* macro to step through adjacent cells */
 #define FOR_ADJ(loc,new_loc,i) for (i=0; (i<8 ? new_loc=loc+dir_offset[i],1 : 0); i++)
 #define FOR_ADJ_ON(loc,new_loc,i) FOR_ADJ(loc,new_loc,i) if (map[new_loc].on_board)
+
+#ifdef USE_COLOR
+void color_on(view_map_t *);
+void color_off(void);
+#endif

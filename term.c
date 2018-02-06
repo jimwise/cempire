@@ -52,7 +52,7 @@ void    term_init (void);
 
 #ifdef USE_COLOR
 static void color_pairs(void);
-short color_of(view_map_t[], long);
+short color_of(const view_map_t[], const long);
 #endif
 
 
@@ -305,7 +305,7 @@ color_pairs(void)
 }
 
 short
-color_of(view_map_t vmap[], long loc)
+color_of(const view_map_t vmap[], const long loc)
 {
   switch(vmap[loc].contents) {
   case ' ':

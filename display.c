@@ -413,6 +413,7 @@ print_zoom_cell (const view_map_t *vmap, int row, int col, int row_inc, int col_
 				cell = vmap[row_col_loc(r,c)].contents;
 	
 	wmove (mapwin, row/row_inc + 1, col/col_inc + 1);
+        wcolor_set(mapwin, color_of(vmap, row_col_loc(r,c)), (void *)0);
 	waddch (mapwin, (chtype)cell);
 }
 

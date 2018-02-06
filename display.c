@@ -251,8 +251,10 @@ print_sector (char whose, view_map_t vmap[], int sector)
 static void
 disp_square(view_map_t *vp)
 {
-  wcolor_set(mapwin, color_of(vp), (void *)0);
-  wattron(mapwin, A_BOLD);
+  if (color) {
+    wcolor_set(mapwin, color_of(vp), (void *)0);
+    wattron(mapwin, A_BOLD);
+  }
   waddch(mapwin, (chtype)vp->contents);
 }
 

@@ -254,8 +254,10 @@ term_init (void)
 {
 	initscr();
 #ifdef USE_COLOR
-        start_color();
-        color_pairs();
+        if (color) {
+          start_color();
+          color_pairs();
+        }
 #endif        
 	noecho();
 	crmode();

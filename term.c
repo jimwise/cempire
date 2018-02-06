@@ -52,8 +52,7 @@ void    term_init (void);
 
 #ifdef USE_COLOR
 static void color_pairs(void);
-void color_on(view_map_t *);
-void color_off(void);
+short color_of(view_map_t *);
 #endif
 
 
@@ -290,8 +289,9 @@ alert (void)
 /* hack -- need to rework, so we know terrain type */
 #define PAIR_AIR_USER 8
 #define PAIR_AIR_COMP 9
-#define PAIR_UI 10
-static int cur_color = PAIR_UI;
+#define PAIR_LAND_EMPTY 10
+#define PAIR_SEA_EMPTY 11
+static int cur_color = 0;
 
 static void
 color_pairs(void)
@@ -305,12 +305,12 @@ color_pairs(void)
   init_pair(PAIR_SEA_COMP, COLOR_RED, COLOR_CYAN);
   init_pair(PAIR_AIR_USER, COLOR_BLUE, COLOR_WHITE);
   init_pair(PAIR_AIR_COMP, COLOR_RED, COLOR_WHITE);
-  init_pair(PAIR_UI, COLOR_WHITE, COLOR_BLACK);
-  attron(COLOR_PAIR(PAIR_UI));
+  init_pair(PAIR_LAND_EMPTY, COLOR_GREEN, COLOR_GREEN);
+  init_pair(PAIR_SEA_EMPTY, COLOR_CYAN, COLOR_CYAN);
 }
 
-void
-color_on(view_map_t *vp)
+short
+color_of(view_map_t *vp)
 {
   switch(vp->contents) {
   case ' ':
@@ -355,19 +355,15 @@ color_on(view_map_t *vp)
     /*   cur_color = PAIR_LAND_COMP; */
     break;
   case '+':
+    cur_color = PAIR_LAND_EMPTY;
+    break;
   case '*':
     cur_color = PAIR_LAND_UNOWNED;
     break;
   case '.':
-    cur_color = PAIR_SEA_UNOWNED;
+    cur_color = PAIR_SEA_EMPTY;
     break;
   }
-  attron(COLOR_PAIR(cur_color));
-}
-
-void color_off(void)
-{
-  attroff(COLOR_PAIR(cur_color));
-  attron(COLOR_PAIR(PAIR_UI));
+  return cur_color;
 }
 #endif

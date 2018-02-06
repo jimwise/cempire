@@ -52,7 +52,7 @@ void    term_init (void);
 
 #ifdef USE_COLOR
 static void color_pairs(void);
-short color_of(view_map_t *);
+short color_of(view_map_t[], long);
 #endif
 
 
@@ -282,39 +282,32 @@ alert (void)
 #ifdef USE_COLOR
 
 #define PAIR_UNKNOWN 1
-#define PAIR_LAND_UNOWNED 2
-#define PAIR_SEA_UNOWNED 3
-#define PAIR_LAND_USER 4
-#define PAIR_SEA_USER 5
-#define PAIR_LAND_COMP 6
-#define PAIR_SEA_COMP 7
-/* hack -- need to rework, so we know terrain type */
-#define PAIR_AIR_USER 8
-#define PAIR_AIR_COMP 9
-#define PAIR_LAND_EMPTY 10
-#define PAIR_SEA_EMPTY 11
+#define PAIR_CITY_UNOWNED 2
+#define PAIR_LAND_USER 3
+#define PAIR_SEA_USER 4
+#define PAIR_LAND_COMP 5
+#define PAIR_SEA_COMP 6
+#define PAIR_LAND_EMPTY 7
+#define PAIR_SEA_EMPTY 8
 static int cur_color = 0;
 
 static void
 color_pairs(void)
 {
   init_pair(PAIR_UNKNOWN, COLOR_BLACK, COLOR_BLACK);
-  init_pair(PAIR_LAND_UNOWNED, COLOR_BLACK, COLOR_GREEN);
-  init_pair(PAIR_SEA_UNOWNED, COLOR_BLACK, COLOR_CYAN);
+  init_pair(PAIR_CITY_UNOWNED, COLOR_BLACK, COLOR_GREEN);
   init_pair(PAIR_LAND_USER, COLOR_BLUE, COLOR_GREEN);
   init_pair(PAIR_SEA_USER, COLOR_BLUE, COLOR_CYAN);
   init_pair(PAIR_LAND_COMP, COLOR_RED, COLOR_GREEN);
   init_pair(PAIR_SEA_COMP, COLOR_RED, COLOR_CYAN);
-  init_pair(PAIR_AIR_USER, COLOR_BLUE, COLOR_WHITE);
-  init_pair(PAIR_AIR_COMP, COLOR_RED, COLOR_WHITE);
   init_pair(PAIR_LAND_EMPTY, COLOR_GREEN, COLOR_GREEN);
   init_pair(PAIR_SEA_EMPTY, COLOR_CYAN, COLOR_CYAN);
 }
 
 short
-color_of(view_map_t *vp)
+color_of(view_map_t vmap[], long loc)
 {
-  switch(vp->contents) {
+  switch(vmap[loc].contents) {
   case ' ':
     cur_color = PAIR_UNKNOWN;
     break;
@@ -343,24 +336,22 @@ color_of(view_map_t *vp)
     cur_color = PAIR_SEA_COMP;
     break;
   case 'F':
-    cur_color = PAIR_AIR_USER;
-    /* if (map[loc].contents == '.') */
-    /*   cur_color = PAIR_SEA_USER; */
-    /* else */
-    /*   cur_color = PAIR_LAND_USER; */
+    if (map[loc].contents == '.')
+      cur_color = PAIR_SEA_USER;
+    else
+      cur_color = PAIR_LAND_USER;
     break;
   case 'f':
-    cur_color = PAIR_AIR_COMP;
-    /* if (map[loc].contents == '.') */
-    /*   cur_color = PAIR_SEA_COMP; */
-    /* else */
-    /*   cur_color = PAIR_LAND_COMP; */
+    if (map[loc].contents == '.')
+      cur_color = PAIR_SEA_COMP;
+    else
+      cur_color = PAIR_LAND_COMP;
     break;
   case '+':
     cur_color = PAIR_LAND_EMPTY;
     break;
   case '*':
-    cur_color = PAIR_LAND_UNOWNED;
+    cur_color = PAIR_CITY_UNOWNED;
     break;
   case '.':
     cur_color = PAIR_SEA_EMPTY;

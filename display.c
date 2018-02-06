@@ -45,7 +45,7 @@ void    print_pzoom (char *, const path_map_t *, const view_map_t *);
 void    print_zoom (const view_map_t *);
 void	sector_change (void);
 static void	display_screen (view_map_t[]);
-static void	disp_square(view_map_t *);
+static void	disp_square(view_map_t[], long);
 static int	on_screen (long);
 static void	print_pzoom_cell (const path_map_t *, const view_map_t *, int, int, int, int);
 static void	print_zoom_cell (const view_map_t *, int, int, int, int);
@@ -143,7 +143,7 @@ show_loc (view_map_t vmap[], long loc)
 	r = loc_row (loc);
 	c = loc_col (loc);
 	wmove(mapwin, r-ref_row+1, c-ref_col+1);
-	disp_square(&vmap[loc]);
+	disp_square(vmap, loc);
 	save_cursor = loc; /* remember cursor location */
 	wmove(mapwin, r-ref_row+1, c-ref_col+1);
 	wrefresh(mapwin);
@@ -249,13 +249,13 @@ print_sector (char whose, view_map_t vmap[], int sector)
 
 
 static void
-disp_square(view_map_t *vp)
+disp_square(view_map_t vmap[], long loc)
 {
   if (color) {
-    wcolor_set(mapwin, color_of(vp), (void *)0);
+    wcolor_set(mapwin, color_of(vmap, loc), (void *)0);
     wattron(mapwin, A_BOLD);
   }
-  waddch(mapwin, (chtype)vp->contents);
+  waddch(mapwin, (chtype)vmap[loc].contents);
 }
 
 
@@ -276,7 +276,7 @@ display_screen (view_map_t vmap[])
 		{
 			t = row_col_loc (r, c);
 			wmove (mapwin, r-ref_row+1, c-ref_col+1);
-			disp_square(&vmap[t]);
+			disp_square(vmap, t);
 		}
 	box(mapwin, 0, 0);
 	wrefresh(mapwin);

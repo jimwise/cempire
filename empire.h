@@ -273,5 +273,5 @@ typedef struct {
 #define FOR_ADJ_ON(loc,new_loc,i) FOR_ADJ(loc,new_loc,i) if (map[new_loc].on_board)
 
 #ifdef USE_COLOR
-short color_of(view_map_t *);
+short color_of(view_map_t[], long);
 #endif

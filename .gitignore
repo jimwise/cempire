@@ -1,5 +1,6 @@
+*.o
 .depend
 cempire
-empsave.dat
+cempire.exe
 empmovie.dat
-*.o
+empsave.dat

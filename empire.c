@@ -140,7 +140,7 @@ do_command (char orders)
 
 	case 'R': /* restore game */
 		term_clear();
-		e = restore_game();
+		restore_game(); /* XXX only "fails" if it can't find file, so we go on */
 		break;
 
 	case 'S': /* save game */
@@ -314,8 +314,8 @@ c_map (void)
 		while (j >= 0 && line[j] == ' ') /* scan off trailing blanks */
 			j -= 1;
 			
-		line[++j] = '\n';
-		line[++j] = 0; /* trailing null */
+		line[j+1] = '\n';
+		line[j+2] = 0; /* trailing null */
 		fputs (line, f);
 	}
 	fclose (f);

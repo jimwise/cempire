@@ -149,12 +149,7 @@ survive (piece_info_t *obj, long loc)
 static void
 describe (piece_info_t *win_obj, piece_info_t *lose_obj, long loc)
 {
-	char buf[STRSIZE];
-	char buf2[STRSIZE];
 	int diff;
-	
-	*buf = '\0';
-	*buf2 = '\0';
 	
 	if (win_obj->owner != lose_obj->owner)
 	{

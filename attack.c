@@ -1,6 +1,6 @@
 /*
  *    Copyright (C) 1987, 1988 Chuck Simmons
- * 
+ *
  * See the file COPYING, distributed with empire, for restriction
  * and warranty information.
  *
@@ -13,14 +13,14 @@
  * killing off the losing object.  Somewhere far above, our caller is
  * responsible for actually removing the object from its list and actually
  * updating the player's view of the world.
- * 
+ *
  * Find object being attacked.  If it is a city, attacker has 50% chance
  * of taking city.  If successful, give city to attacker.  Otherwise
  * kill attacking piece.  Tell user who won.
- * 
+ *
  * If attacking object is not a city, loop.  On each iteration, select one
  * piece to throw a blow.  Damage the opponent by the strength of the blow
- * thrower.  Stop looping when one object has 0 or fewer hits.  Kill off 
+ * thrower.  Stop looping when one object has 0 or fewer hits.  Kill off
  * the dead object.  Tell user who won and how many hits her piece has left,
  * if any.
  */
@@ -52,7 +52,7 @@ attack_city (piece_info_t *att_obj, long loc)
 
 	cityp = find_city(loc);
 	assert(cityp);
-	
+
 	att_owner = att_obj->owner;
 	city_owner = cityp->owner;
 
@@ -61,7 +61,7 @@ attack_city (piece_info_t *att_obj, long loc)
 			info("The scum defending the city crushed your attacking blitzkrieger.");
 		else if (city_owner == USER)
 			info("Your city at %d is under attack.", cityp->loc);
-		
+
 		kill_obj(att_obj, loc);
 	}
 	else
@@ -98,7 +98,7 @@ attack_obj (piece_info_t *att_obj, long loc)
 
 	def_obj = find_obj_at_loc(loc);
 	assert(def_obj != NULL); /* can't find object to attack? */
-	
+
 	if (def_obj->type == SATELLITE)
 		return; /* can't attack a satellite */
 
@@ -142,7 +142,7 @@ survive (piece_info_t *obj, long loc)
 {
 	while (obj_capacity (obj) < obj->count)
 		kill_obj(obj->cargo, loc);
-		
+
 	move_obj(obj, loc);
 }
 
@@ -150,16 +150,16 @@ static void
 describe (piece_info_t *win_obj, piece_info_t *lose_obj, long loc)
 {
 	int diff;
-	
+
 	if (win_obj->owner != lose_obj->owner)
 	{
 		if (win_obj->owner == USER)
 		{
 			user_score += piece_attr[lose_obj->type].build_time;
-			
+
 			info("Enemy %s at %d destroyed.", piece_attr[lose_obj->type].name, loc);
 			info("Your %s has %d hits left.", piece_attr[win_obj->type].name, win_obj->hits);
-				
+
 			diff = win_obj->count - obj_capacity (win_obj);
 			if (diff > 0) switch (win_obj->cargo->type)
 			{
@@ -177,7 +177,7 @@ describe (piece_info_t *win_obj, piece_info_t *lose_obj, long loc)
 		else
 		{
 			comp_score += piece_attr[lose_obj->type].build_time;
-			
+
 			info("Your %s at %d destroyed.", piece_attr[lose_obj->type].name, loc);
 		}
 	}
